@@ -481,7 +481,7 @@ async function BadgeBar({
   const stride = BADGE_BOX_W + GAP_PX;
   const copyWidth = links.length * stride;
   const TARGET_W = 1200;
-  const reps = Math.max(2, Math.ceil(TARGET_W / copyWidth));
+  const reps = Math.max(1, Math.ceil(TARGET_W / copyWidth));
   const groupWidth = reps * copyWidth;
   const durationS = Math.max(40, Math.round(groupWidth / 30));
   const groupHtml = Array.from(
