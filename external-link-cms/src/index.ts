@@ -36,6 +36,7 @@ export { CheckButton } from './components/check-button';
 // Admin
 export {
   LinkTablePage,
+  LinkDataTable,
   LinkFormPage,
   LinkCheckPage,
   RevalidateButton,
