@@ -1,0 +1,58 @@
+{
+  "name": "fake-jarvis-external-link-cms",
+  "version": "0.1.0",
+  "description": "Standalone external link management CMS for Next.js SaaS apps - badge bar, sr-only link injector, admin CRUD, reciprocal link checker",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./schema/postgres": {
+      "import": "./dist/schema/postgres.js",
+      "types": "./dist/schema/postgres.d.ts"
+    },
+    "./schema/mysql": {
+      "import": "./dist/schema/mysql.js",
+      "types": "./dist/schema/mysql.d.ts"
+    },
+    "./schema/sqlite": {
+      "import": "./dist/schema/sqlite.js",
+      "types": "./dist/schema/sqlite.d.ts"
+    },
+    "./i18n/en": {
+      "import": "./dist/i18n/en.js",
+      "types": "./dist/i18n/en.d.ts"
+    },
+    "./i18n/zh": {
+      "import": "./dist/i18n/zh.js",
+      "types": "./dist/i18n/zh.d.ts"
+    }
+  },
+  "bin": {
+    "fake-jarvis-external-link-cms": "./dist/cli/init.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "peerDependencies": {
+    "drizzle-orm": ">=0.30.0",
+    "next": ">=14.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "zod": ">=3.0.0"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}
