@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties } from 'react';
 
 import type { ExternalLink, ExternalLinkPlacement } from '../types';
 import type { ExternalLinkService } from '../service';
@@ -16,38 +16,26 @@ type BadgeBarProps = {
   links?: ExternalLink[];
 };
 
-function BadgeItem({ link }: { link: ExternalLink }) {
-  const html =
+/**
+ * Build the inner HTML for a single badge link.
+ */
+function buildLinkHtml(link: ExternalLink): string {
+  return (
     link.badgeHtml ||
     `<a href="${link.targetUrl}" target="_blank" rel="noopener noreferrer"${
       link.badgeAlt ? ` title="${link.badgeAlt}"` : ''
-    }><img src="${link.badgeUrl}" alt="${link.badgeAlt || ''}" /></a>`;
-
-  return (
-    <div
-      className="flex shrink-0 items-center justify-center opacity-50 transition-opacity duration-300 hover:opacity-100"
-      style={{ width: `${BADGE_BOX_W}px`, height: `${BADGE_BOX_H}px` }}
-    >
-      <div
-        className="flex h-full w-full items-center justify-center overflow-hidden [&_img]:max-h-full [&_img]:max-w-full [&_img]:object-contain"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    </div>
+    }><img src="${link.badgeUrl}" alt="${link.badgeAlt || ''}" /></a>`
   );
 }
 
 /**
- * Build a group of badge items with unique keys.
- * `reps` copies are needed so the group is at least as wide as the viewport.
+ * Build the full HTML for one badge item (wrapper + link).
+ * Uses CSS classes so Tailwind doesn't need to scan dynamic strings.
  */
-function renderGroup(links: ExternalLink[], reps: number, prefix: string): ReactNode[] {
-  const result: ReactNode[] = [];
-  for (let r = 0; r < reps; r++) {
-    for (let i = 0; i < links.length; i++) {
-      result.push(<BadgeItem key={`${prefix}-${r}-${i}`} link={links[i]} />);
-    }
-  }
-  return result;
+function buildItemHtml(link: ExternalLink): string {
+  return `<div class="elc-badge-item"><div class="elc-badge-item-inner">${buildLinkHtml(
+    link,
+  )}</div></div>`;
 }
 
 export default async function BadgeBar({
@@ -84,35 +72,50 @@ export default async function BadgeBar({
 
   if (links.length === 0) return null;
 
-  const items = links.map((link) => <BadgeItem key={link.id} link={link} />);
-
+  // --- Inline variant (no marquee) ---
   if (variant === 'inline') {
+    const html = links.map(buildItemHtml).join('');
     return (
-      <div className="flex flex-wrap items-center justify-center gap-4">{items}</div>
+      <div
+        className="flex flex-wrap items-center justify-center gap-4"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     );
   }
 
+  // --- Marquee variant ---
   const totalWidth = links.length * BADGE_BOX_W + (links.length - 1) * GAP_PX;
   const useMarquee = totalWidth > MAX_STATIC_WIDTH;
 
+  // Not enough badges to scroll - show static row
   if (!useMarquee) {
+    const html = links.map(buildItemHtml).join('');
     return (
       <div className="border-y border-border/30 bg-muted/20">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 px-4 py-1">
-          {items}
-        </div>
+        <div
+          className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 px-4 py-1"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
       </div>
     );
   }
 
-  // Seamless marquee: render enough copies to fill the viewport,
+  // Seamless marquee: render items enough times to fill the viewport,
   // then duplicate the entire group once for seamless looping.
+  // Minimum 2 copies so the group is at least as wide as the viewport.
   const stride = BADGE_BOX_W + GAP_PX;
   const copyWidth = links.length * stride;
   const TARGET_W = 1200;
-  const reps = Math.max(1, Math.ceil(TARGET_W / copyWidth));
+  const reps = Math.max(2, Math.ceil(TARGET_W / copyWidth));
   const groupWidth = reps * copyWidth;
   const durationS = Math.max(40, Math.round(groupWidth / 30));
+
+  // Build one group's HTML, then duplicate for seamless scroll.
+  // Single dangerouslySetInnerHTML = one entry in RSC payload.
+  const groupHtml = Array.from({ length: reps }, () =>
+    links.map(buildItemHtml).join(''),
+  ).join('');
+  const fullHtml = groupHtml + groupHtml;
 
   return (
     <div
@@ -133,10 +136,8 @@ export default async function BadgeBar({
               '--marquee-distance': `-${groupWidth}px`,
             } as CSSProperties
           }
-        >
-          {renderGroup(links, reps, 'a')}
-          {renderGroup(links, reps, 'b')}
-        </div>
+          dangerouslySetInnerHTML={{ __html: fullHtml }}
+        />
       </div>
     </div>
   );

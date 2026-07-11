@@ -420,32 +420,13 @@ function createLinkHandlers(config) {
 var GAP_PX = 24;
 var MAX_STATIC_WIDTH = 500;
 var BADGE_BOX_W = 100;
-var BADGE_BOX_H = 28;
-function BadgeItem({ link }) {
-  const html = link.badgeHtml || `<a href="${link.targetUrl}" target="_blank" rel="noopener noreferrer"${link.badgeAlt ? ` title="${link.badgeAlt}"` : ""}><img src="${link.badgeUrl}" alt="${link.badgeAlt || ""}" /></a>`;
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      className: "flex shrink-0 items-center justify-center opacity-50 transition-opacity duration-300 hover:opacity-100",
-      style: { width: `${BADGE_BOX_W}px`, height: `${BADGE_BOX_H}px` },
-      children: /* @__PURE__ */ jsx(
-        "div",
-        {
-          className: "flex h-full w-full items-center justify-center overflow-hidden [&_img]:max-h-full [&_img]:max-w-full [&_img]:object-contain",
-          dangerouslySetInnerHTML: { __html: html }
-        }
-      )
-    }
-  );
+function buildLinkHtml(link) {
+  return link.badgeHtml || `<a href="${link.targetUrl}" target="_blank" rel="noopener noreferrer"${link.badgeAlt ? ` title="${link.badgeAlt}"` : ""}><img src="${link.badgeUrl}" alt="${link.badgeAlt || ""}" /></a>`;
 }
-function renderGroup(links, reps, prefix) {
-  const result = [];
-  for (let r = 0; r < reps; r++) {
-    for (let i = 0; i < links.length; i++) {
-      result.push(/* @__PURE__ */ jsx(BadgeItem, { link: links[i] }, `${prefix}-${r}-${i}`));
-    }
-  }
-  return result;
+function buildItemHtml(link) {
+  return `<div class="elc-badge-item"><div class="elc-badge-item-inner">${buildLinkHtml(
+    link
+  )}</div></div>`;
 }
 async function BadgeBar({
   placement,
@@ -475,21 +456,39 @@ async function BadgeBar({
     return true;
   });
   if (links.length === 0) return null;
-  const items = links.map((link) => /* @__PURE__ */ jsx(BadgeItem, { link }, link.id));
   if (variant === "inline") {
-    return /* @__PURE__ */ jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: items });
+    const html = links.map(buildItemHtml).join("");
+    return /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: "flex flex-wrap items-center justify-center gap-4",
+        dangerouslySetInnerHTML: { __html: html }
+      }
+    );
   }
   const totalWidth = links.length * BADGE_BOX_W + (links.length - 1) * GAP_PX;
   const useMarquee = totalWidth > MAX_STATIC_WIDTH;
   if (!useMarquee) {
-    return /* @__PURE__ */ jsx("div", { className: "border-y border-border/30 bg-muted/20", children: /* @__PURE__ */ jsx("div", { className: "mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 px-4 py-1", children: items }) });
+    const html = links.map(buildItemHtml).join("");
+    return /* @__PURE__ */ jsx("div", { className: "border-y border-border/30 bg-muted/20", children: /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: "mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 px-4 py-1",
+        dangerouslySetInnerHTML: { __html: html }
+      }
+    ) });
   }
   const stride = BADGE_BOX_W + GAP_PX;
   const copyWidth = links.length * stride;
   const TARGET_W = 1200;
-  const reps = Math.max(1, Math.ceil(TARGET_W / copyWidth));
+  const reps = Math.max(2, Math.ceil(TARGET_W / copyWidth));
   const groupWidth = reps * copyWidth;
   const durationS = Math.max(40, Math.round(groupWidth / 30));
+  const groupHtml = Array.from(
+    { length: reps },
+    () => links.map(buildItemHtml).join("")
+  ).join("");
+  const fullHtml = groupHtml + groupHtml;
   return /* @__PURE__ */ jsx(
     "div",
     {
@@ -498,7 +497,7 @@ async function BadgeBar({
         maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
         WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)"
       },
-      children: /* @__PURE__ */ jsx("div", { className: "group overflow-hidden", children: /* @__PURE__ */ jsxs(
+      children: /* @__PURE__ */ jsx("div", { className: "group overflow-hidden", children: /* @__PURE__ */ jsx(
         "div",
         {
           className: "flex w-max animate-marquee-seamless items-center gap-6 group-hover:[animation-play-state:paused]",
@@ -506,10 +505,7 @@ async function BadgeBar({
             "--duration": `${durationS}s`,
             "--marquee-distance": `-${groupWidth}px`
           },
-          children: [
-            renderGroup(links, reps, "a"),
-            renderGroup(links, reps, "b")
-          ]
+          dangerouslySetInnerHTML: { __html: fullHtml }
         }
       ) })
     }
