@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 import type { ExternalLink, ExternalLinkPlacement } from '../types';
 import type { ExternalLinkService } from '../service';
@@ -36,6 +36,20 @@ function BadgeItem({ link }: { link: ExternalLink }) {
   );
 }
 
+/**
+ * Build a group of badge items with unique keys.
+ * `reps` copies are needed so the group is at least as wide as the viewport.
+ */
+function renderGroup(links: ExternalLink[], reps: number, prefix: string): ReactNode[] {
+  const result: ReactNode[] = [];
+  for (let r = 0; r < reps; r++) {
+    for (let i = 0; i < links.length; i++) {
+      result.push(<BadgeItem key={`${prefix}-${r}-${i}`} link={links[i]} />);
+    }
+  }
+  return result;
+}
+
 export default async function BadgeBar({
   placement,
   variant = 'marquee',
@@ -60,6 +74,16 @@ export default async function BadgeBar({
 
   if (!links || links.length === 0) return null;
 
+  // Deduplicate by targetUrl to prevent accidental DB dupes
+  const seen = new Set<string>();
+  links = links.filter((l) => {
+    if (seen.has(l.targetUrl)) return false;
+    seen.add(l.targetUrl);
+    return true;
+  });
+
+  if (links.length === 0) return null;
+
   const items = links.map((link) => <BadgeItem key={link.id} link={link} />);
 
   if (variant === 'inline') {
@@ -81,14 +105,14 @@ export default async function BadgeBar({
     );
   }
 
+  // Seamless marquee: render enough copies to fill the viewport,
+  // then duplicate the entire group once for seamless looping.
   const stride = BADGE_BOX_W + GAP_PX;
   const copyWidth = links.length * stride;
-  const TARGET_W = 1920;
+  const TARGET_W = 1200;
   const reps = Math.max(1, Math.ceil(TARGET_W / copyWidth));
-  const groupItems = Array.from({ length: reps }, () => items).flat();
-  const groupCount = reps * links.length;
-  const periodPx = groupCount * stride;
-  const durationS = Math.max(40, Math.round(periodPx / 30));
+  const groupWidth = reps * copyWidth;
+  const durationS = Math.max(40, Math.round(groupWidth / 30));
 
   return (
     <div
@@ -106,12 +130,12 @@ export default async function BadgeBar({
           style={
             {
               '--duration': `${durationS}s`,
-              '--marquee-distance': `-${periodPx}px`,
+              '--marquee-distance': `-${groupWidth}px`,
             } as CSSProperties
           }
         >
-          {groupItems}
-          {groupItems}
+          {renderGroup(links, reps, 'a')}
+          {renderGroup(links, reps, 'b')}
         </div>
       </div>
     </div>
