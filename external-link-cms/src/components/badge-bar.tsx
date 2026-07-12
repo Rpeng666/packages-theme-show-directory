@@ -1,7 +1,7 @@
-import type { CSSProperties } from 'react';
 
 import type { ExternalLink, ExternalLinkPlacement } from '../types';
 import type { ExternalLinkService } from '../service';
+import { MarqueeTrack } from './marquee-track';
 
 const GAP_PX = 24;
 const MAX_STATIC_WIDTH = 500;
@@ -100,9 +100,9 @@ export default async function BadgeBar({
     );
   }
 
-  // Seamless marquee: render items enough times to fill the viewport,
-  // then duplicate the entire group once for seamless looping.
-  // Minimum 2 copies so the group is at least as wide as the viewport.
+  // Seamless marquee: repeat badges enough times to fill the viewport
+  // (reps >= 1). MarqueeTrack then clones the group client-side for
+  // seamless looping — only one copy appears in the HTML source.
   const stride = BADGE_BOX_W + GAP_PX;
   const copyWidth = links.length * stride;
   const TARGET_W = 1200;
@@ -110,12 +110,11 @@ export default async function BadgeBar({
   const groupWidth = reps * copyWidth;
   const durationS = Math.max(40, Math.round(groupWidth / 30));
 
-  // Build one group's HTML, then duplicate for seamless scroll.
-  // Single dangerouslySetInnerHTML = one entry in RSC payload.
+  // Build one group's HTML. Only one copy goes into the server-rendered
+  // HTML. MarqueeTrack (client) clones it in the DOM for seamless scroll.
   const groupHtml = Array.from({ length: reps }, () =>
     links.map(buildItemHtml).join(''),
   ).join('');
-  const fullHtml = groupHtml + groupHtml;
 
   return (
     <div
@@ -127,18 +126,11 @@ export default async function BadgeBar({
           'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
       }}
     >
-      <div className="group overflow-hidden">
-        <div
-          className="flex w-max animate-marquee-seamless items-center gap-6 group-hover:[animation-play-state:paused]"
-          style={
-            {
-              '--duration': `${durationS}s`,
-              '--marquee-distance': `-${groupWidth}px`,
-            } as CSSProperties
-          }
-          dangerouslySetInnerHTML={{ __html: fullHtml }}
-        />
-      </div>
+      <MarqueeTrack
+        html={groupHtml}
+        duration={`${durationS}s`}
+        distance={`-${groupWidth}px`}
+      />
     </div>
   );
 }
