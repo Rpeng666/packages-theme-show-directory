@@ -1,7 +1,7 @@
+import type { CSSProperties } from 'react';
 
 import type { ExternalLink, ExternalLinkPlacement } from '../types';
 import type { ExternalLinkService } from '../service';
-import { MarqueeTrack } from './marquee-track';
 
 const GAP_PX = 24;
 const MAX_STATIC_WIDTH = 500;
@@ -16,9 +16,6 @@ type BadgeBarProps = {
   links?: ExternalLink[];
 };
 
-/**
- * Build the inner HTML for a single badge link.
- */
 function buildLinkHtml(link: ExternalLink): string {
   return (
     link.badgeHtml ||
@@ -28,15 +25,13 @@ function buildLinkHtml(link: ExternalLink): string {
   );
 }
 
-/**
- * Build the full HTML for one badge item (wrapper + link).
- * Uses CSS classes so Tailwind doesn't need to scan dynamic strings.
- */
 function buildItemHtml(link: ExternalLink): string {
   return `<div class="elc-badge-item"><div class="elc-badge-item-inner">${buildLinkHtml(
     link,
   )}</div></div>`;
 }
+
+const CLONE_SCRIPT = `(function(){var s=document.currentScript;if(!s)return;var w=s.closest('[data-marquee-wrapper]');if(!w)return;var t=w.querySelector('[data-marquee-track]');if(!t)return;var c=t.cloneNode(true);c.setAttribute('aria-hidden','true');t.parentElement.appendChild(c);})();`;
 
 export default async function BadgeBar({
   placement,
@@ -62,7 +57,6 @@ export default async function BadgeBar({
 
   if (!links || links.length === 0) return null;
 
-  // Deduplicate by targetUrl to prevent accidental DB dupes
   const seen = new Set<string>();
   links = links.filter((l) => {
     if (seen.has(l.targetUrl)) return false;
@@ -72,7 +66,6 @@ export default async function BadgeBar({
 
   if (links.length === 0) return null;
 
-  // --- Inline variant (no marquee) ---
   if (variant === 'inline') {
     const html = links.map(buildItemHtml).join('');
     return (
@@ -83,11 +76,9 @@ export default async function BadgeBar({
     );
   }
 
-  // --- Marquee variant ---
   const totalWidth = links.length * BADGE_BOX_W + (links.length - 1) * GAP_PX;
   const useMarquee = totalWidth > MAX_STATIC_WIDTH;
 
-  // Not enough badges to scroll - show static row
   if (!useMarquee) {
     const html = links.map(buildItemHtml).join('');
     return (
@@ -100,9 +91,6 @@ export default async function BadgeBar({
     );
   }
 
-  // Seamless marquee: repeat badges enough times to fill the viewport
-  // (reps >= 1). MarqueeTrack then clones the group client-side for
-  // seamless looping — only one copy appears in the HTML source.
   const stride = BADGE_BOX_W + GAP_PX;
   const copyWidth = links.length * stride;
   const TARGET_W = 1200;
@@ -110,14 +98,13 @@ export default async function BadgeBar({
   const groupWidth = reps * copyWidth;
   const durationS = Math.max(40, Math.round(groupWidth / 30));
 
-  // Build one group's HTML. Only one copy goes into the server-rendered
-  // HTML. MarqueeTrack (client) clones it in the DOM for seamless scroll.
   const groupHtml = Array.from({ length: reps }, () =>
     links.map(buildItemHtml).join(''),
   ).join('');
 
   return (
     <div
+      data-marquee-wrapper
       className="border-y border-border/30 bg-muted/20 py-1"
       style={{
         maskImage:
@@ -126,11 +113,24 @@ export default async function BadgeBar({
           'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
       }}
     >
-      <MarqueeTrack
-        html={groupHtml}
-        duration={`${durationS}s`}
-        distance={`-${groupWidth}px`}
-      />
+      <div className="group overflow-hidden">
+        <div
+          className="flex w-max animate-marquee-seamless items-center gap-6 group-hover:[animation-play-state:paused]"
+          style={
+            {
+              '--duration': `${durationS}s`,
+              '--marquee-distance': `-${groupWidth}px`,
+            } as CSSProperties
+          }
+        >
+          <div
+            data-marquee-track
+            className="flex items-center gap-6"
+            dangerouslySetInnerHTML={{ __html: groupHtml }}
+          />
+        </div>
+      </div>
+      <script dangerouslySetInnerHTML={{ __html: CLONE_SCRIPT }} />
     </div>
   );
 }
