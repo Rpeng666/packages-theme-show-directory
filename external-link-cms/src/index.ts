@@ -30,6 +30,7 @@ export { createLinkHandlers, type HandlerConfig } from './api/handlers';
 
 // Components
 export { default as BadgeBar } from './components/badge-bar';
+export { MarqueeTrack } from './components/marquee-track';
 export { LinkInjector } from './components/link-injector';
 export { CheckButton } from './components/check-button';
 

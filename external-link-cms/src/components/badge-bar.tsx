@@ -16,25 +16,22 @@ type BadgeBarProps = {
   links?: ExternalLink[];
 };
 
-function BadgeItem({ link }: { link: ExternalLink }) {
-  const html =
+function buildLinkHtml(link: ExternalLink): string {
+  return (
     link.badgeHtml ||
     `<a href="${link.targetUrl}" target="_blank" rel="noopener noreferrer"${
       link.badgeAlt ? ` title="${link.badgeAlt}"` : ''
-    }><img src="${link.badgeUrl}" alt="${link.badgeAlt || ''}" /></a>`;
-
-  return (
-    <div
-      className="flex shrink-0 items-center justify-center opacity-50 transition-opacity duration-300 hover:opacity-100"
-      style={{ width: `${BADGE_BOX_W}px`, height: `${BADGE_BOX_H}px` }}
-    >
-      <div
-        className="flex h-full w-full items-center justify-center overflow-hidden [&_img]:max-h-full [&_img]:max-w-full [&_img]:object-contain"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    </div>
+    }><img src="${link.badgeUrl}" alt="${link.badgeAlt || ''}" /></a>`
   );
 }
+
+function buildItemHtml(link: ExternalLink): string {
+  return `<div class="elc-badge-item"><div class="elc-badge-item-inner">${buildLinkHtml(
+    link,
+  )}</div></div>`;
+}
+
+const CLONE_SCRIPT = `(function(){var s=document.currentScript;if(!s)return;var w=s.closest('[data-marquee-wrapper]');if(!w)return;var t=w.querySelector('[data-marquee-track]');if(!t)return;var c=t.cloneNode(true);c.setAttribute('aria-hidden','true');t.parentElement.appendChild(c);})();`;
 
 export default async function BadgeBar({
   placement,
@@ -60,11 +57,22 @@ export default async function BadgeBar({
 
   if (!links || links.length === 0) return null;
 
-  const items = links.map((link) => <BadgeItem key={link.id} link={link} />);
+  const seen = new Set<string>();
+  links = links.filter((l) => {
+    if (seen.has(l.targetUrl)) return false;
+    seen.add(l.targetUrl);
+    return true;
+  });
+
+  if (links.length === 0) return null;
 
   if (variant === 'inline') {
+    const html = links.map(buildItemHtml).join('');
     return (
-      <div className="flex flex-wrap items-center justify-center gap-4">{items}</div>
+      <div
+        className="flex flex-wrap items-center justify-center gap-4"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     );
   }
 
@@ -72,26 +80,31 @@ export default async function BadgeBar({
   const useMarquee = totalWidth > MAX_STATIC_WIDTH;
 
   if (!useMarquee) {
+    const html = links.map(buildItemHtml).join('');
     return (
       <div className="border-y border-border/30 bg-muted/20">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 px-4 py-1">
-          {items}
-        </div>
+        <div
+          className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 px-4 py-1"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
       </div>
     );
   }
 
   const stride = BADGE_BOX_W + GAP_PX;
   const copyWidth = links.length * stride;
-  const TARGET_W = 1920;
+  const TARGET_W = 1200;
   const reps = Math.max(1, Math.ceil(TARGET_W / copyWidth));
-  const groupItems = Array.from({ length: reps }, () => items).flat();
-  const groupCount = reps * links.length;
-  const periodPx = groupCount * stride;
-  const durationS = Math.max(40, Math.round(periodPx / 30));
+  const groupWidth = reps * copyWidth;
+  const durationS = Math.max(40, Math.round(groupWidth / 30));
+
+  const groupHtml = Array.from({ length: reps }, () =>
+    links.map(buildItemHtml).join(''),
+  ).join('');
 
   return (
     <div
+      data-marquee-wrapper
       className="border-y border-border/30 bg-muted/20 py-1"
       style={{
         maskImage:
@@ -106,14 +119,18 @@ export default async function BadgeBar({
           style={
             {
               '--duration': `${durationS}s`,
-              '--marquee-distance': `-${periodPx}px`,
+              '--marquee-distance': `-${groupWidth}px`,
             } as CSSProperties
           }
         >
-          {groupItems}
-          {groupItems}
+          <div
+            data-marquee-track
+            className="flex items-center gap-6"
+            dangerouslySetInnerHTML={{ __html: groupHtml }}
+          />
         </div>
       </div>
+      <script dangerouslySetInnerHTML={{ __html: CLONE_SCRIPT }} />
     </div>
   );
 }
