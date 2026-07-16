@@ -82,9 +82,9 @@ export default async function BadgeBar({
   if (!useMarquee) {
     const html = links.map(buildItemHtml).join('');
     return (
-      <div className="border-y border-border/30 bg-muted/20">
+      <div className="mx-auto max-w-l border-y border-border/30 bg-muted/20">
         <div
-          className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 px-4 py-1"
+          className="flex flex-wrap items-center justify-center gap-6 px-4 py-1"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>
@@ -93,7 +93,7 @@ export default async function BadgeBar({
 
   const stride = BADGE_BOX_W + GAP_PX;
   const copyWidth = links.length * stride;
-  const TARGET_W = 1200;
+  const TARGET_W = 768;
   const reps = Math.max(1, Math.ceil(TARGET_W / copyWidth));
   const groupWidth = reps * copyWidth;
   const durationS = Math.max(40, Math.round(groupWidth / 30));
@@ -105,7 +105,7 @@ export default async function BadgeBar({
   return (
     <div
       data-marquee-wrapper
-      className="border-y border-border/30 bg-muted/20 py-1"
+      className="mx-auto max-w-3xl border-y border-border/30 bg-muted/20 py-1"
       style={{
         maskImage:
           'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
