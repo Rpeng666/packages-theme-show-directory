@@ -82,7 +82,7 @@ export default async function BadgeBar({
   if (!useMarquee) {
     const html = links.map(buildItemHtml).join('');
     return (
-      <div className="mx-auto max-w-l border-y border-border/30 bg-muted/20">
+      <div className="mx-auto max-w-3xl border-y border-border/30 bg-muted/20">
         <div
           className="flex flex-wrap items-center justify-center gap-6 px-4 py-1"
           dangerouslySetInnerHTML={{ __html: html }}
