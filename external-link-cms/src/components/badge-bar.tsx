@@ -82,7 +82,7 @@ export default async function BadgeBar({
   if (!useMarquee) {
     const html = links.map(buildItemHtml).join('');
     return (
-      <div className="mx-auto max-w-3xl border-y border-border/30 bg-muted/20">
+      <div className="mx-auto min-w-0 w-full max-w-3xl overflow-hidden border-y border-border/30 bg-muted/20">
         <div
           className="flex flex-wrap items-center justify-center gap-6 px-4 py-1"
           dangerouslySetInnerHTML={{ __html: html }}
@@ -105,7 +105,7 @@ export default async function BadgeBar({
   return (
     <div
       data-marquee-wrapper
-      className="mx-auto max-w-3xl border-y border-border/30 bg-muted/20 py-1"
+      className="mx-auto min-w-0 w-full max-w-3xl overflow-hidden border-y border-border/30 bg-muted/20 py-1"
       style={{
         maskImage:
           'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
