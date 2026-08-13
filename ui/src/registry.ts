@@ -36,7 +36,11 @@ import type { HeroProps } from './contracts/sections/hero'
 import type { FaqProps } from './contracts/sections/faq'
 import type { CtaProps } from './contracts/sections/cta'
 import type { FeaturesGridProps } from './contracts/sections/features-grid'
+import type { FeaturesProps } from './contracts/sections/features'
+import type { FeaturesAccordionProps } from './contracts/sections/features-accordion'
 import type { FeaturesCompareProps } from './contracts/sections/features-compare'
+import type { ToolsGridProps } from './contracts/sections/tools-grid'
+import type { ShowcasesProps } from './contracts/sections/showcases'
 import type { TestimonialsProps } from './contracts/sections/testimonials'
 import type { PricingProps } from './contracts/sections/pricing'
 import type { FeaturesFlowProps, FeaturesListProps } from './contracts/sections/features-media'
@@ -70,7 +74,11 @@ import { Select as DefaultSelect, Toggle as DefaultToggle, ToggleGroup as Defaul
 import { IconFrame as DefaultIconFrame } from './themes/default/iconframe'
 import { Hero as DefaultHero } from './themes/default/sections/hero'
 import { FeaturesGrid as DefaultFeaturesGrid } from './themes/default/sections/features-grid'
+import { Features as DefaultFeatures } from './themes/default/sections/features'
+import { FeaturesAccordion as DefaultFeaturesAccordion } from './themes/default/sections/features-accordion'
 import { FeaturesCompare as DefaultFeaturesCompare } from './themes/default/sections/features-compare'
+import { ToolsGrid as DefaultToolsGrid } from './themes/default/sections/tools-grid'
+import { Showcases as DefaultShowcases } from './themes/default/sections/showcases'
 import { Testimonials as DefaultTestimonials } from './themes/default/sections/testimonials'
 import { Pricing as DefaultPricing } from './themes/default/sections/pricing'
 
@@ -102,7 +110,11 @@ import { Hero as PixelHero } from './themes/pixel/sections/hero'
 import { Faq as PixelFaq } from './themes/pixel/sections/faq'
 import { Cta as PixelCta } from './themes/pixel/sections/cta'
 import { FeaturesGrid as PixelFeaturesGrid } from './themes/pixel/sections/features/features-grid'
+import { Features as PixelFeatures } from './themes/pixel/sections/features/features'
+import { FeaturesAccordion as PixelFeaturesAccordion } from './themes/pixel/sections/features/features-accordion'
 import { FeaturesCompare as PixelFeaturesCompare } from './themes/pixel/sections/features/features-compare'
+import { ToolsGrid as PixelToolsGrid } from './themes/pixel/sections/tools-grid'
+import { Showcases as PixelShowcases } from './themes/pixel/sections/showcases'
 import { Testimonials as PixelTestimonials } from './themes/pixel/sections/testimonials'
 import { Pricing as PixelPricing } from './themes/pixel/sections/pricing'
 import { FeaturesFlow as PixelFeaturesFlow } from './themes/pixel/sections/features/features-flow'
@@ -154,7 +166,11 @@ export interface SectionComponents {
   Faq: ComponentType<FaqProps>
   Cta: ComponentType<CtaProps>
   FeaturesGrid: ComponentType<FeaturesGridProps>
+  Features: ComponentType<FeaturesProps>
+  FeaturesAccordion: ComponentType<FeaturesAccordionProps>
   FeaturesCompare: ComponentType<FeaturesCompareProps>
+  ToolsGrid: ComponentType<ToolsGridProps>
+  Showcases: ComponentType<ShowcasesProps>
   FeaturesFlow: ComponentType<FeaturesFlowProps>
   FeaturesList: ComponentType<FeaturesListProps>
   Blog: ComponentType<BlogProps>
@@ -227,7 +243,11 @@ export const registry: Record<ThemeName, ThemeManifest> = {
     sections: {
       Hero: DefaultHero,
       FeaturesGrid: DefaultFeaturesGrid,
+      Features: DefaultFeatures,
+      FeaturesAccordion: DefaultFeaturesAccordion,
       FeaturesCompare: DefaultFeaturesCompare,
+      ToolsGrid: DefaultToolsGrid,
+      Showcases: DefaultShowcases,
       Testimonials: DefaultTestimonials,
       Pricing: DefaultPricing,
     },
@@ -267,7 +287,11 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Faq: PixelFaq,
       Cta: PixelCta,
       FeaturesGrid: PixelFeaturesGrid,
+      Features: PixelFeatures,
+      FeaturesAccordion: PixelFeaturesAccordion,
       FeaturesCompare: PixelFeaturesCompare,
+      ToolsGrid: PixelToolsGrid,
+      Showcases: PixelShowcases,
       FeaturesFlow: PixelFeaturesFlow,
       FeaturesList: PixelFeaturesList,
       Blog: PixelBlog,
@@ -321,5 +345,5 @@ export function resolveSection<K extends keyof SectionComponents>(
   return (
     getThemeManifest(t).sections?.[key] ??
     getThemeManifest(defaultThemeName).sections?.[key]!
-  )
+  ) as SectionComponents[K]
 }
