@@ -1,0 +1,5 @@
+export { Hero } from './hero'
+export { Pricing } from './pricing'
+export { FeaturesGrid } from './features-grid'
+export { FeaturesCompare } from './features-compare'
+export { Testimonials } from './testimonials'
