@@ -18,6 +18,11 @@
       "import": "./src/themes/pixel/sections/cleaner/index.ts",
       "default": "./src/themes/pixel/sections/cleaner/index.ts"
     },
+    "./themes/pixel/sections/perler-beads": {
+      "types": "./src/themes/pixel/sections/perler-beads/index.ts",
+      "import": "./src/themes/pixel/sections/perler-beads/index.ts",
+      "default": "./src/themes/pixel/sections/perler-beads/index.ts"
+    },
     "./themes/pixel/sections/*": {
       "types": "./src/themes/pixel/sections/*.tsx",
       "import": "./src/themes/pixel/sections/*.tsx",
