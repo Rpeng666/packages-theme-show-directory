@@ -26,7 +26,7 @@ export function Cta({ section, className, LinkComponent }: CtaProps) {
           tone="neutral"
           radius="md"
           padding="none"
-          className="border-2 border-foreground/15 bg-secondary shadow-md flex flex-col items-center justify-between gap-6 px-6 py-8 md:flex-row md:px-10 md:py-8"
+          className="border-2 border-foreground/15 bg-retro-gold/20 shadow-md flex flex-col items-center justify-between gap-6 px-6 py-8 md:flex-row md:px-10 md:py-8"
         >
           <div className="text-center md:text-left">
             <h2 className="font-display text-xl font-normal uppercase tracking-wider text-balance md:text-2xl">
