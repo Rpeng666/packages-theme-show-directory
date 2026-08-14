@@ -24,3 +24,5 @@ export type { PerlerMagnifierSelectionOverlayProps } from './magnifier-selection
 export { FocusCanvas } from './focus-canvas'
 export type { PerlerFocusCanvasProps } from './focus-canvas'
 export type { PerlerMappedPixel } from '../../../../contracts/perler-beads/types'
+export { PixelatedPreviewCanvas } from './pixelated-preview-canvas'
+export type { PerlerPixelatedPreviewCanvasProps } from './pixelated-preview-canvas'
