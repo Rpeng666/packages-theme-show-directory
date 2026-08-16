@@ -56,6 +56,12 @@ export function genNum(v: string | number): number {
 export function genStr(v: string | number): string {
   return String(v);
 }
+export function genBool(v: unknown, fallback = false): boolean {
+  if (typeof v === 'boolean') return v;
+  if (v === 'true') return true;
+  if (v === 'false') return false;
+  return fallback;
+}
 
 /**
  * ParamGeneratorDemo — the shared "params → live preview → export" skeleton

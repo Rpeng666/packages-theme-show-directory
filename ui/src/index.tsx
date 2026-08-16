@@ -230,7 +230,7 @@ export type {
   PixelPattern,
   PatternStats,
 } from './themes/pixel/light-tool-demo'
-export { genNum, genStr } from './themes/pixel/light-tool-demo'
+export { genNum, genStr, genBool } from './themes/pixel/light-tool-demo'
 export { setToolHandoff, stageWorkbenchHandoff, consumeWorkbenchHandoff } from './themes/pixel/light-tool-demo'
 export type { WorkbenchHandoff } from './themes/pixel/light-tool-demo'
 export type { LightToolDemoProps, LightToolDemoProcessor, LightToolDemoResult, GenParam, GenValues, GenTool, GenListRow, ParamGeneratorDemoProps, LightToolParamSpec } from './themes/pixel/light-tool-demo'

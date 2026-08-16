@@ -19,7 +19,7 @@ export type { LightToolDemoProps, LightToolDemoProcessor, LightToolDemoResult, L
 export { setToolHandoff, stageWorkbenchHandoff, consumeWorkbenchHandoff } from './handoff'
 export type { WorkbenchHandoff } from './handoff'
 export { BeforeAfter } from './before-after'
-export { ParamGeneratorDemo, genNum, genStr } from './param-generator-demo'
+export { ParamGeneratorDemo, genNum, genStr, genBool } from './param-generator-demo'
 export type { GenParam, GenValues, GenTool, GenListRow, ParamGeneratorDemoProps } from './param-generator-demo'
 export { BackgroundGeneratorDemo } from './background-generator-demo'
 export { GameIconGeneratorDemo } from './game-icon-generator-demo'
