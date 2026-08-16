@@ -12,19 +12,17 @@ import type { NavItem } from '../../types/common'
  * (external-link badge bar from the database), `localeThemeSlot` (locale +
  * theme togglers).
  */
-export function Footer({
-  footer,
+export function Footer({ footer,
   brandSlot,
   badgesSlot,
   localeThemeSlot,
   LinkComponent,
-  className,
-}: FooterProps) {
+  className, ...rest }: FooterProps) {
   const navColumns = footer.nav?.items ?? []
   const Link = LinkComponent ?? defaultLink
 
   return (
-    <footer
+    <footer {...rest}
       id={footer.id}
       className={`py-6 sm:py-8 ${footer.className || ''} ${className || ''} overflow-x-hidden`}
     >

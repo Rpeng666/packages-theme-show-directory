@@ -16,17 +16,15 @@ import type { HeaderProps } from '../../contracts/header'
  * (left) and `business` (right). Dropdown submenus use Radix
  * NavigationMenu with a simplified inline panel (no animated viewport).
  */
-export function Header({
-  nav,
+export function Header({ nav,
   brandSlot,
   actions,
   business,
-  className,
-}: HeaderProps) {
+  className, ...rest }: HeaderProps) {
   const navItems = nav ?? []
 
   return (
-    <header
+    <header {...rest}
       className={cn(
         'relative z-50 border-b border-border/60 bg-background/80 backdrop-blur-md',
         className

@@ -17,11 +17,11 @@ export interface ToolItem extends SectionItem {
  * Default (shadcn) tools-grid — simple card grid. Kept lightweight; the pixel
  * theme's ToolsGrid is the richer pxlkit rendering.
  */
-export function ToolsGrid({ section, className, LinkComponent }: ToolsGridProps) {
+export function ToolsGrid({ section, className, LinkComponent, ...rest }: ToolsGridProps) {
   const items = (section.items || []) as ToolItem[];
 
   return (
-    <section
+    <section {...rest}
       id={section.id || 'tools'}
       className={cn('bg-background py-12 md:py-20', section.className, className)}
     >

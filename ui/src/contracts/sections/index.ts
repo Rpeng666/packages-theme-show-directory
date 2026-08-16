@@ -6,11 +6,17 @@
  */
 export type { HeroProps, SectionLink, SectionImage } from './hero'
 export type { FeaturesGridProps } from './features-grid'
+export type { FeaturesStepProps } from './features-step'
 export type { FeaturesProps } from './features'
 export type { FeaturesAccordionProps } from './features-accordion'
 export type { FeaturesCompareProps } from './features-compare'
 export type { ToolsGridProps, ToolGridLink } from './tools-grid'
 export type { ShowcasesProps, ShowcaseLink, ShowcaseImage } from './showcases'
+export type {
+  ShowcasesFlowProps,
+  ShowcasesFlowLink,
+  ShowcasesFlowImage,
+} from './showcases-flow'
 export type { TestimonialsProps } from './testimonials'
 export type { PricingProps } from './pricing'
 export type { FaqProps } from './faq'

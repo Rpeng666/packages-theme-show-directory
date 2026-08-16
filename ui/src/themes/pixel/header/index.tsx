@@ -19,9 +19,11 @@ export function Header({
   actions,
   business,
   className,
+  ...rest
 }: HeaderProps) {
   return (
     <header
+      {...rest}
       className={`relative flex h-16 items-center justify-between border-b border-retro-border px-6 ${className ?? ''}`}
     >
       {/* Left: brand */}

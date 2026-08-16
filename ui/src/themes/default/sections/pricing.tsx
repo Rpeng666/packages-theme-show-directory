@@ -24,8 +24,7 @@ import type { PricingItem } from '../../../types/pricing';
  * i18n, currency persistence) lives in the app's usePricing hook; this
  * component receives the results as props and renders the shadcn Card grid.
  */
-export function Pricing({
-  section,
+export function Pricing({ section,
   className,
   currentProductId,
   isLoading,
@@ -35,8 +34,7 @@ export function Pricing({
   onPayment,
   paymentModal,
   tCurrentPlan,
-  tProcessing,
-}: PricingProps) {
+  tProcessing, ...rest }: PricingProps) {
   const [group, setGroup] = useState(() => {
     // find current pricing item
     const currentItem = section.items?.find(
@@ -72,7 +70,7 @@ export function Pricing({
         ];
 
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('py-24 md:py-36', section.className, className)}
     >

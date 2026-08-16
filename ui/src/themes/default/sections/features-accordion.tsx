@@ -11,7 +11,7 @@ import type { FeaturesAccordionProps } from '../../../contracts/sections/feature
  * Default (shadcn) features-accordion — simple controlled accordion with a
  * preview image. Kept lightweight; the pixel theme's is the richer retro one.
  */
-export function FeaturesAccordion({ section, className }: FeaturesAccordionProps) {
+export function FeaturesAccordion({ section, className, ...rest }: FeaturesAccordionProps) {
   const [activeIdx, setActiveIdx] = useState(0);
   const items = (section.items || []) as Array<{
     title?: string;
@@ -22,7 +22,7 @@ export function FeaturesAccordion({ section, className }: FeaturesAccordionProps
   const active = items[activeIdx];
 
   return (
-    <section
+    <section {...rest}
       className={cn('bg-background py-16 md:py-24', section.className, className)}
     >
       <div className="container space-y-8 md:space-y-16">

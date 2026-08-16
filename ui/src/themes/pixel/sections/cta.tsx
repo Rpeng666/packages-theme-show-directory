@@ -12,12 +12,12 @@ import type { CtaLink, CtaProps } from '../../../contracts/sections/cta'
  * buttons. Link is injected (LinkComponent) so the package has no Next
  * dependency; it falls back to a native <a> when omitted.
  */
-export function Cta({ section, className, LinkComponent }: CtaProps) {
+export function Cta({ section, className, LinkComponent, ...rest }: CtaProps) {
   const Link = LinkComponent ?? defaultLink
   const buttons = section.buttons ?? []
 
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('py-10 md:py-14', section.className, className)}
     >

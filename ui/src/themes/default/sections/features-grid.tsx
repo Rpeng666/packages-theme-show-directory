@@ -8,9 +8,9 @@ import type { FeaturesGridProps } from '../../../contracts/sections/features-gri
  * Responsive grid of icon + title + description cards.
  * Used by the homepage "why-choose" section (block: features-grid).
  */
-export function FeaturesGrid({ section, className }: FeaturesGridProps) {
+export function FeaturesGrid({ section, className, ...rest }: FeaturesGridProps) {
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('py-16 md:py-24', section.className, className)}
     >

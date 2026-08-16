@@ -55,3 +55,40 @@ export type CleanerT = (
   values?: Record<string, string | number | Date>
 ) => string
 
+/** Diff part shape the output view renders. */
+export interface CleanerDiffPart {
+  value: string
+  added?: boolean
+  removed?: boolean
+}
+
+/**
+ * Props for the standalone CleanerOutput display component (the "cleaned
+ * result" panel). Kept in the types module so the component, its consumers,
+ * and the registry can share the same shape.
+ */
+export interface CleanerOutputProps {
+  outputView: CleanerOutputView
+  outputCount: number
+  output: string
+  activeDiffParts: CleanerDiffPart[]
+  activeHasChanges: boolean
+  analyzeResult: CleanerAnalyzeResult | null
+  isRewriting: boolean
+  showAiHint?: boolean
+  compact?: boolean
+  fullscreen?: boolean
+  typeLabels: Record<string, string>
+  severityLabels: Record<string, string>
+  onAnalyze: () => void
+  onFixWithAi?: (focusIssues?: string[]) => void
+  onExportMarkdown?: () => void
+  onExportPdf?: () => void
+  onShareLink?: () => void
+  shareCopied: boolean
+  contextMode: ContextModeValue
+  detectedContextMode: string
+  onContextModeChange: (value: ContextModeValue) => void
+  t: CleanerT
+}
+

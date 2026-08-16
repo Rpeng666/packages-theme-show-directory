@@ -20,12 +20,12 @@ const badgeStyles: Record<string, string> = {
     'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-900',
 };
 
-export function FeaturesCompare({ section, className }: FeaturesCompareProps) {
+export function FeaturesCompare({ section, className, ...rest }: FeaturesCompareProps) {
   const before = (section.before ?? {}) as CompareCardData;
   const after = (section.after ?? {}) as CompareCardData;
 
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('py-16 md:py-24', section.className, className)}
     >

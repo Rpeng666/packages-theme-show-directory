@@ -11,6 +11,7 @@
  * Section-level components (Hero, Pricing, …) are app-side concerns (they bind
  * payment/i18n business deps) and live in the app.
  */
+import { createElement } from 'react'
 import type { ComponentType, ReactNode } from 'react'
 
 import type { ButtonProps } from './contracts/button'
@@ -28,6 +29,13 @@ import type { BoxProps } from './contracts/box'
 import type { LabelProps } from './contracts/label'
 import type { AvatarProps } from './contracts/avatar'
 import type { DialogProps } from './contracts/dialog'
+import type { PromoModalProps } from './contracts/promo-modal'
+import type { ToolFooterProps } from './contracts/tool-footer'
+import type { ToolHeaderProps } from './contracts/tool-header'
+import type { UploadZoneProps } from './contracts/upload-zone'
+import type { ToolSettingsProps } from './contracts/tool-settings'
+import type { HintBannerProps } from './contracts/hint-banner'
+import type { DualCtaProps } from './contracts/dual-cta'
 import type { DropdownProps } from './contracts/dropdown'
 import type { StackProps, ClusterProps, GridProps, DividerProps } from './contracts/layout'
 import type { SelectProps, ToggleProps, ToggleGroupProps, BareTextareaProps } from './contracts/form'
@@ -36,17 +44,21 @@ import type { HeroProps } from './contracts/sections/hero'
 import type { FaqProps } from './contracts/sections/faq'
 import type { CtaProps } from './contracts/sections/cta'
 import type { FeaturesGridProps } from './contracts/sections/features-grid'
+import type { FeaturesStepProps } from './contracts/sections/features-step'
 import type { FeaturesProps } from './contracts/sections/features'
 import type { FeaturesAccordionProps } from './contracts/sections/features-accordion'
 import type { FeaturesCompareProps } from './contracts/sections/features-compare'
 import type { ToolsGridProps } from './contracts/sections/tools-grid'
 import type { ShowcasesProps } from './contracts/sections/showcases'
+import type { ShowcasesFlowProps } from './contracts/sections/showcases-flow'
 import type { TestimonialsProps } from './contracts/sections/testimonials'
 import type { PricingProps } from './contracts/sections/pricing'
 import type { FeaturesFlowProps, FeaturesListProps } from './contracts/sections/features-media'
 import type { BlogProps } from './contracts/sections/blog'
 import type { BlogDetailProps } from './contracts/sections/blog-detail'
 import type { RelatedPostsProps, BlogToolCtaProps } from './contracts/sections/blog-cta'
+import type { CleanerWorkbenchProps } from './contracts/sections/cleaner-workbench'
+import type { CleanerOutputProps } from './themes/pixel/sections/cleaner'
 
 import { Button as DefaultButton } from './themes/default/button'
 import { Badge as DefaultBadge } from './themes/default/badge'
@@ -63,6 +75,13 @@ import { Box as DefaultBox } from './themes/default/box'
 import { Label as DefaultLabel } from './themes/default/label'
 import { Avatar as DefaultAvatar } from './themes/default/avatar'
 import { Dialog as DefaultDialog } from './themes/default/dialog'
+import { PromoModal as DefaultPromoModal } from './themes/default/promo-modal'
+import { ToolFooter as DefaultToolFooter } from './themes/default/tool-footer'
+import { ToolHeader as DefaultToolHeader } from './themes/default/tool-header'
+import { UploadZone as DefaultUploadZone } from './themes/default/upload-zone'
+import { ToolSettings as DefaultToolSettings } from './themes/default/tool-settings'
+import { HintBanner as DefaultHintBanner } from './themes/default/hint-banner'
+import { DualCta as DefaultDualCta } from './themes/default/dual-cta'
 import { Dropdown as DefaultDropdown } from './themes/default/dropdown'
 import {
   Stack as DefaultStack,
@@ -97,6 +116,13 @@ import { Box as PixelBox } from './themes/pixel/box'
 import { Label as PixelLabel } from './themes/pixel/label'
 import { Avatar as PixelAvatar } from './themes/pixel/avatar'
 import { Dialog as PixelDialog } from './themes/pixel/dialog'
+import { PromoModal as PixelPromoModal } from './themes/pixel/promo-modal'
+import { ToolFooter as PixelToolFooter } from './themes/pixel/tool-footer'
+import { ToolHeader as PixelToolHeader } from './themes/pixel/tool-header'
+import { UploadZone as PixelUploadZone } from './themes/pixel/upload-zone'
+import { ToolSettings as PixelToolSettings } from './themes/pixel/tool-settings'
+import { HintBanner as PixelHintBanner } from './themes/pixel/hint-banner'
+import { DualCta as PixelDualCta } from './themes/pixel/dual-cta'
 import { Dropdown as PixelDropdown } from './themes/pixel/dropdown'
 import {
   Stack as PixelStack,
@@ -110,11 +136,13 @@ import { Hero as PixelHero } from './themes/pixel/sections/hero'
 import { Faq as PixelFaq } from './themes/pixel/sections/faq'
 import { Cta as PixelCta } from './themes/pixel/sections/cta'
 import { FeaturesGrid as PixelFeaturesGrid } from './themes/pixel/sections/features/features-grid'
+import { FeaturesStep as PixelFeaturesStep } from './themes/pixel/sections/features/features-step'
 import { Features as PixelFeatures } from './themes/pixel/sections/features/features'
 import { FeaturesAccordion as PixelFeaturesAccordion } from './themes/pixel/sections/features/features-accordion'
 import { FeaturesCompare as PixelFeaturesCompare } from './themes/pixel/sections/features/features-compare'
 import { ToolsGrid as PixelToolsGrid } from './themes/pixel/sections/tools-grid'
 import { Showcases as PixelShowcases } from './themes/pixel/sections/showcases'
+import { ShowcasesFlow as PixelShowcasesFlow } from './themes/pixel/sections/showcases-flow'
 import { Testimonials as PixelTestimonials } from './themes/pixel/sections/testimonials'
 import { Pricing as PixelPricing } from './themes/pixel/sections/pricing'
 import { FeaturesFlow as PixelFeaturesFlow } from './themes/pixel/sections/features/features-flow'
@@ -124,6 +152,105 @@ import { BlogDetail as PixelBlogDetail } from './themes/pixel/sections/blog/blog
 import { RelatedPosts as PixelRelatedPosts } from './themes/pixel/sections/blog/related-posts'
 import { BlogToolCta as PixelBlogToolCta } from './themes/pixel/sections/blog/blog-tool-cta'
 import { PixelAmbientProvider } from './themes/pixel/ambient'
+
+// Perler-beads (pixel-only workbench) — single-theme; registered so app-side
+// bridges resolve through the registry instead of deep-importing the pixel
+// subpath. `default` intentionally has no perler entries (feature is pixel-only).
+import { ToolBar as PixelPerlerToolBar } from './themes/pixel/sections/perler-beads'
+import { ColorPalette as PixelPerlerColorPalette } from './themes/pixel/sections/perler-beads'
+import { GridTooltip as PixelPerlerGridTooltip } from './themes/pixel/sections/perler-beads'
+import { FloatingToolbar as PixelPerlerFloatingToolbar } from './themes/pixel/sections/perler-beads'
+import { DownloadSettingsModal as PixelPerlerDownloadSettingsModal } from './themes/pixel/sections/perler-beads'
+import { ColorStatusBar as PixelPerlerColorStatusBar } from './themes/pixel/sections/perler-beads'
+import { ProgressBar as PixelPerlerProgressBar } from './themes/pixel/sections/perler-beads'
+import { ColorPanel as PixelPerlerColorPanel } from './themes/pixel/sections/perler-beads'
+import { SettingsPanel as PixelPerlerSettingsPanel } from './themes/pixel/sections/perler-beads'
+import { CelebrationAnimation as PixelPerlerCelebrationAnimation } from './themes/pixel/sections/perler-beads'
+import { MagnifierSelectionOverlay as PixelPerlerMagnifierSelectionOverlay } from './themes/pixel/sections/perler-beads'
+import { FocusCanvas as PixelPerlerFocusCanvas } from './themes/pixel/sections/perler-beads'
+import { FocusHeader as PixelPerlerFocusHeader } from './themes/pixel/sections/perler-beads'
+import { PixelatedPreviewCanvas as PixelPerlerPixelatedPreviewCanvas } from './themes/pixel/sections/perler-beads'
+import { CompletionCard as PixelPerlerCompletionCard } from './themes/pixel/sections/perler-beads'
+import { DonationModal as PixelPerlerDonationModal } from './themes/pixel/sections/perler-beads'
+import { MagnifierTool as PixelPerlerMagnifierTool } from './themes/pixel/sections/perler-beads'
+import { InstallPWA as PixelPerlerInstallPWA } from './themes/pixel/sections/perler-beads'
+import { FocusModePreDownloadModal as PixelPerlerFocusModePreDownloadModal } from './themes/pixel/sections/perler-beads'
+import { CustomPaletteEditor as PixelPerlerCustomPaletteEditor } from './themes/pixel/sections/perler-beads'
+import { FloatingColorPalette as PixelPerlerFloatingColorPalette } from './themes/pixel/sections/perler-beads'
+import { ColorStatsPanel as PixelPerlerColorStatsPanel } from './themes/pixel/sections/perler-beads'
+import { ImageCompareModal as PixelPerlerImageCompareModal } from './themes/pixel/sections/perler-beads'
+import { ShareModal as PixelPerlerShareModal } from './themes/pixel/sections/perler-beads'
+import { PerlerGalleryCard as PixelPerlerGalleryCard } from './themes/pixel/sections/perler-beads'
+import { PerlerGalleryFeed as PixelPerlerGalleryFeed } from './themes/pixel/sections/perler-beads'
+import { PerlerCommunityFeed as PixelPerlerCommunityFeed } from './themes/pixel/sections/perler-beads'
+import { PerlerCommunityCard as PixelPerlerCommunityCard } from './themes/pixel/sections/perler-beads'
+import { PerlerAppLanding as PixelPerlerAppLanding } from './themes/pixel/sections/perler-beads'
+import { PerlerToolRail as PixelPerlerToolRail } from './themes/pixel/sections/perler-beads'
+import { PerlerWorkBar as PixelPerlerWorkBar } from './themes/pixel/sections/perler-beads'
+import { PerlerSelectionOverlay as PixelPerlerSelectionOverlay } from './themes/pixel/sections/perler-beads'
+import { ColorSwatches as PixelPerlerColorSwatches } from './themes/pixel/sections/perler-beads'
+import { SampleGallery as PixelPerlerSampleGallery } from './themes/pixel/sections/perler-beads'
+import { LightToolDemo as PixelLightToolDemo } from './themes/pixel/light-tool-demo'
+import { ParamGeneratorDemo as PixelParamGeneratorDemo } from './themes/pixel/light-tool-demo'
+import { BackgroundGeneratorDemo as PixelBackgroundGeneratorDemo } from './themes/pixel/light-tool-demo'
+import { GameIconGeneratorDemo as PixelGameIconGeneratorDemo } from './themes/pixel/light-tool-demo'
+import { PaletteExtractorDemo as PixelPaletteExtractorDemo } from './themes/pixel/light-tool-demo'
+import { ArtifactHero as PixelArtifactHero } from './themes/pixel/light-tool-demo'
+import { CraftEntryNav as PixelCraftEntryNav } from './themes/pixel/light-tool-demo'
+import { DitherSettingsPanel as PixelDitherSettingsPanel } from './themes/pixel/sections/dither'
+import { DitherPreview as PixelDitherPreview } from './themes/pixel/sections/dither'
+import { EditorShell as PixelEditorShell } from './themes/pixel/editor'
+import { CleanerWorkbench as PixelCleanerWorkbench, CleanerOutput as PixelCleanerOutput } from './themes/pixel/sections/cleaner'
+import { EditorToolbar as PixelEditorToolbar } from './themes/pixel/editor'
+import { EditorSidebar as PixelEditorSidebar } from './themes/pixel/editor'
+import { EditorCanvas as PixelEditorCanvas } from './themes/pixel/editor'
+
+import type {
+  PerlerToolBarProps,
+  PerlerColorPaletteProps,
+  PerlerGridTooltipProps,
+  PerlerFloatingToolbarProps,
+  PerlerDownloadSettingsModalProps,
+  PerlerColorStatusBarProps,
+  PerlerProgressBarProps,
+  PerlerColorPanelProps,
+  PerlerSettingsPanelProps,
+  PerlerCelebrationAnimationProps,
+  PerlerMagnifierSelectionOverlayProps,
+  PerlerFocusCanvasProps,
+  PerlerFocusHeaderProps,
+  PerlerPixelatedPreviewCanvasProps,
+  PerlerCompletionCardProps,
+  PerlerDonationModalProps,
+  PerlerMagnifierToolProps,
+  PerlerInstallPwaProps,
+  PerlerFocusModePreDownloadModalProps,
+  PerlerCustomPaletteEditorProps,
+  PerlerFloatingColorPaletteProps,
+  PerlerColorStatsPanelProps,
+  PerlerImageCompareModalProps,
+  PerlerShareModalProps,
+  PerlerGalleryCardProps,
+  PerlerGalleryFeedProps,
+  PerlerCommunityFeedProps,
+  PerlerCommunityCardProps,
+  PerlerAppLandingProps,
+  PerlerToolRailProps,
+  PerlerWorkBarProps,
+  PerlerSelectionOverlayProps,
+  PerlerColorSwatchesProps,
+  PerlerSampleGalleryProps,
+} from './themes/pixel/sections/perler-beads'
+import type { LightToolDemoProps } from './themes/pixel/light-tool-demo'
+import type { ParamGeneratorDemoProps } from './themes/pixel/light-tool-demo'
+import type { ArtifactHeroProps } from './themes/pixel/light-tool-demo'
+import type { CraftEntryNavProps } from './themes/pixel/light-tool-demo'
+import type { DitherSettingsPanelProps } from './themes/pixel/sections/dither'
+import type { DitherPreviewProps } from './themes/pixel/sections/dither'
+import type { EditorShellProps } from './themes/pixel/editor'
+import type { EditorToolbarProps } from './themes/pixel/editor'
+import type { EditorSidebarProps } from './themes/pixel/editor'
+import type { EditorCanvasProps } from './themes/pixel/editor'
 
 export type ThemeName = string
 
@@ -143,6 +270,13 @@ export interface ThemeComponents {
   Label: ComponentType<LabelProps>
   Avatar: ComponentType<AvatarProps>
   Dialog: ComponentType<DialogProps>
+  PromoModal: ComponentType<PromoModalProps>
+  ToolFooter: ComponentType<ToolFooterProps>
+  ToolHeader: ComponentType<ToolHeaderProps>
+  UploadZone: ComponentType<UploadZoneProps>
+  ToolSettings: ComponentType<ToolSettingsProps>
+  HintBanner: ComponentType<HintBannerProps>
+  DualCta: ComponentType<DualCtaProps>
   Dropdown: ComponentType<DropdownProps>
   Stack: ComponentType<StackProps>
   Cluster: ComponentType<ClusterProps>
@@ -166,11 +300,13 @@ export interface SectionComponents {
   Faq: ComponentType<FaqProps>
   Cta: ComponentType<CtaProps>
   FeaturesGrid: ComponentType<FeaturesGridProps>
+  FeaturesStep: ComponentType<FeaturesStepProps>
   Features: ComponentType<FeaturesProps>
   FeaturesAccordion: ComponentType<FeaturesAccordionProps>
   FeaturesCompare: ComponentType<FeaturesCompareProps>
   ToolsGrid: ComponentType<ToolsGridProps>
   Showcases: ComponentType<ShowcasesProps>
+  ShowcasesFlow: ComponentType<ShowcasesFlowProps>
   FeaturesFlow: ComponentType<FeaturesFlowProps>
   FeaturesList: ComponentType<FeaturesListProps>
   Blog: ComponentType<BlogProps>
@@ -182,6 +318,104 @@ export interface SectionComponents {
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>
+
+/**
+ * Perler-beads workbench components — pixel-only feature (no default-theme
+ * counterpart), registered so the app's bridges resolve them via
+ * `resolvePerler` instead of deep-importing the pixel subpath.
+ */
+export interface PerlerBeadsComponents {
+  ToolBar: ComponentType<PerlerToolBarProps>
+  ColorPalette: ComponentType<PerlerColorPaletteProps>
+  GridTooltip: ComponentType<PerlerGridTooltipProps>
+  FloatingToolbar: ComponentType<PerlerFloatingToolbarProps>
+  DownloadSettingsModal: ComponentType<PerlerDownloadSettingsModalProps>
+  ColorStatusBar: ComponentType<PerlerColorStatusBarProps>
+  ProgressBar: ComponentType<PerlerProgressBarProps>
+  ColorPanel: ComponentType<PerlerColorPanelProps>
+  SettingsPanel: ComponentType<PerlerSettingsPanelProps>
+  CelebrationAnimation: ComponentType<PerlerCelebrationAnimationProps>
+  MagnifierSelectionOverlay: ComponentType<PerlerMagnifierSelectionOverlayProps>
+  FocusCanvas: ComponentType<PerlerFocusCanvasProps>
+  FocusHeader: ComponentType<PerlerFocusHeaderProps>
+  PixelatedPreviewCanvas: ComponentType<PerlerPixelatedPreviewCanvasProps>
+  CompletionCard: ComponentType<PerlerCompletionCardProps>
+  DonationModal: ComponentType<PerlerDonationModalProps>
+  MagnifierTool: ComponentType<PerlerMagnifierToolProps>
+  InstallPWA: ComponentType<PerlerInstallPwaProps>
+  FocusModePreDownloadModal: ComponentType<PerlerFocusModePreDownloadModalProps>
+  CustomPaletteEditor: ComponentType<PerlerCustomPaletteEditorProps>
+  FloatingColorPalette: ComponentType<PerlerFloatingColorPaletteProps>
+  ColorStatsPanel: ComponentType<PerlerColorStatsPanelProps>
+  ImageCompareModal: ComponentType<PerlerImageCompareModalProps>
+  ShareModal: ComponentType<PerlerShareModalProps>
+  GalleryCard: ComponentType<PerlerGalleryCardProps>
+  GalleryFeed: ComponentType<PerlerGalleryFeedProps>
+  CommunityFeed: ComponentType<PerlerCommunityFeedProps>
+  CommunityCard: ComponentType<PerlerCommunityCardProps>
+  AppLanding: ComponentType<PerlerAppLandingProps>
+  ToolRail: ComponentType<PerlerToolRailProps>
+  WorkBar: ComponentType<PerlerWorkBarProps>
+  SelectionOverlay: ComponentType<PerlerSelectionOverlayProps>
+  ColorSwatches: ComponentType<PerlerColorSwatchesProps>
+  SampleGallery: ComponentType<PerlerSampleGalleryProps>
+}
+
+export type PartialPerlerBeadsComponents = Partial<PerlerBeadsComponents>
+
+/**
+ * Dither workbench components — pixel-only feature (no default-theme
+ * counterpart), registered so the app's bridges resolve them via
+ * `resolveDither` instead of deep-importing the pixel subpath.
+ */
+export interface DitherComponents {
+  SettingsPanel: ComponentType<DitherSettingsPanelProps>
+  Preview: ComponentType<DitherPreviewProps>
+}
+
+export type PartialDitherComponents = Partial<DitherComponents>
+
+/**
+ * Generic image-editor shell components — pixel-only reusable asset for the
+ * image-design workbenches. Resolved via `resolveEditor` (never falls back to
+ * the default theme).
+ */
+export interface EditorComponents {
+  Shell: ComponentType<EditorShellProps>
+  Toolbar: ComponentType<EditorToolbarProps>
+  Sidebar: ComponentType<EditorSidebarProps>
+  Canvas: ComponentType<EditorCanvasProps>
+}
+
+export type PartialEditorComponents = Partial<EditorComponents>
+
+/**
+ * Cleaner workbench display components — pixel-only feature (no default-theme
+ * counterpart), registered so the app's bridges resolve them via `resolveCleaner`
+ * instead of deep-importing the pixel subpath.
+ */
+export interface CleanerComponents {
+  Workbench: ComponentType<CleanerWorkbenchProps>
+  Output: ComponentType<CleanerOutputProps>
+}
+
+export type PartialCleanerComponents = Partial<CleanerComponents>
+
+/**
+ * Light-tool demo components — reusable upload→process→download demo for the
+ * SEO tool detail pages. Pixel-only asset, resolved via `resolveLightDemo`.
+ */
+export interface LightDemoComponents {
+  Demo: ComponentType<LightToolDemoProps>
+  ParamGenerator: ComponentType<ParamGeneratorDemoProps>
+  BackgroundGenerator: ComponentType<Record<string, never>>
+  GameIconGenerator: ComponentType<Record<string, never>>
+  PaletteExtractor: ComponentType<Record<string, never>>
+  ArtifactHero: ComponentType<ArtifactHeroProps>
+  CraftEntryNav: ComponentType<CraftEntryNavProps>
+}
+
+export type PartialLightDemoComponents = Partial<LightDemoComponents>
 
 export interface SectionManifest {
   name: ThemeName
@@ -197,6 +431,16 @@ export interface ThemeManifest {
   components: PartialThemeComponents
   /** 该主题的 landing section 组件（Hero/Faq/Cta/…） */
   sections?: PartialSectionComponents
+  /** 该主题的 perler-beads 工作台组件（当前仅 pixel 注册） */
+  perler?: PartialPerlerBeadsComponents
+  /** 该主题的 dither 工作台组件（当前仅 pixel 注册） */
+  dither?: PartialDitherComponents
+  /** 该主题的通用图像编辑器壳组件（当前仅 pixel 注册） */
+  editor?: PartialEditorComponents
+  /** 该主题的 cleaner 工作台显示组件（当前仅 pixel 注册） */
+  cleaner?: PartialCleanerComponents
+  /** 该主题的轻量工具 demo 组件（当前仅 pixel 注册） */
+  lightDemo?: PartialLightDemoComponents
 }
 
 export const defaultThemeName = 'default'
@@ -229,6 +473,13 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Label: DefaultLabel,
       Avatar: DefaultAvatar,
       Dialog: DefaultDialog,
+      PromoModal: DefaultPromoModal,
+      ToolFooter: DefaultToolFooter,
+      ToolHeader: DefaultToolHeader,
+      UploadZone: DefaultUploadZone,
+      ToolSettings: DefaultToolSettings,
+      HintBanner: DefaultHintBanner,
+      DualCta: DefaultDualCta,
       Dropdown: DefaultDropdown,
       Stack: DefaultStack,
       Cluster: DefaultCluster,
@@ -271,6 +522,13 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Label: PixelLabel,
       Avatar: PixelAvatar,
       Dialog: PixelDialog,
+      PromoModal: PixelPromoModal,
+      ToolFooter: PixelToolFooter,
+      ToolHeader: PixelToolHeader,
+      UploadZone: PixelUploadZone,
+      ToolSettings: PixelToolSettings,
+      HintBanner: PixelHintBanner,
+      DualCta: PixelDualCta,
       Dropdown: PixelDropdown,
       Stack: PixelStack,
       Cluster: PixelCluster,
@@ -287,11 +545,13 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Faq: PixelFaq,
       Cta: PixelCta,
       FeaturesGrid: PixelFeaturesGrid,
+      FeaturesStep: PixelFeaturesStep,
       Features: PixelFeatures,
       FeaturesAccordion: PixelFeaturesAccordion,
       FeaturesCompare: PixelFeaturesCompare,
       ToolsGrid: PixelToolsGrid,
       Showcases: PixelShowcases,
+      ShowcasesFlow: PixelShowcasesFlow,
       FeaturesFlow: PixelFeaturesFlow,
       FeaturesList: PixelFeaturesList,
       Blog: PixelBlog,
@@ -300,6 +560,65 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       BlogToolCta: PixelBlogToolCta,
       Testimonials: PixelTestimonials,
       Pricing: PixelPricing,
+    },
+    perler: {
+      ToolBar: PixelPerlerToolBar,
+      ColorPalette: PixelPerlerColorPalette,
+      GridTooltip: PixelPerlerGridTooltip,
+      FloatingToolbar: PixelPerlerFloatingToolbar,
+      DownloadSettingsModal: PixelPerlerDownloadSettingsModal,
+      ColorStatusBar: PixelPerlerColorStatusBar,
+      ProgressBar: PixelPerlerProgressBar,
+      ColorPanel: PixelPerlerColorPanel,
+      SettingsPanel: PixelPerlerSettingsPanel,
+      CelebrationAnimation: PixelPerlerCelebrationAnimation,
+      MagnifierSelectionOverlay: PixelPerlerMagnifierSelectionOverlay,
+      FocusCanvas: PixelPerlerFocusCanvas,
+      FocusHeader: PixelPerlerFocusHeader,
+      PixelatedPreviewCanvas: PixelPerlerPixelatedPreviewCanvas,
+      CompletionCard: PixelPerlerCompletionCard,
+      DonationModal: PixelPerlerDonationModal,
+      MagnifierTool: PixelPerlerMagnifierTool,
+      InstallPWA: PixelPerlerInstallPWA,
+      FocusModePreDownloadModal: PixelPerlerFocusModePreDownloadModal,
+      CustomPaletteEditor: PixelPerlerCustomPaletteEditor,
+      FloatingColorPalette: PixelPerlerFloatingColorPalette,
+      ColorStatsPanel: PixelPerlerColorStatsPanel,
+      ImageCompareModal: PixelPerlerImageCompareModal,
+      ShareModal: PixelPerlerShareModal,
+      GalleryCard: PixelPerlerGalleryCard,
+      GalleryFeed: PixelPerlerGalleryFeed,
+      CommunityFeed: PixelPerlerCommunityFeed,
+      CommunityCard: PixelPerlerCommunityCard,
+      AppLanding: PixelPerlerAppLanding,
+      ToolRail: PixelPerlerToolRail,
+      WorkBar: PixelPerlerWorkBar,
+      SelectionOverlay: PixelPerlerSelectionOverlay,
+      ColorSwatches: PixelPerlerColorSwatches,
+      SampleGallery: PixelPerlerSampleGallery,
+    },
+    dither: {
+      SettingsPanel: PixelDitherSettingsPanel,
+      Preview: PixelDitherPreview,
+    },
+    editor: {
+      Shell: PixelEditorShell,
+      Toolbar: PixelEditorToolbar,
+      Sidebar: PixelEditorSidebar,
+      Canvas: PixelEditorCanvas,
+    },
+    cleaner: {
+      Workbench: PixelCleanerWorkbench,
+      Output: PixelCleanerOutput,
+    },
+    lightDemo: {
+      Demo: PixelLightToolDemo,
+      ParamGenerator: PixelParamGeneratorDemo,
+      BackgroundGenerator: PixelBackgroundGeneratorDemo,
+      GameIconGenerator: PixelGameIconGeneratorDemo,
+      PaletteExtractor: PixelPaletteExtractorDemo,
+      ArtifactHero: PixelArtifactHero,
+      CraftEntryNav: PixelCraftEntryNav,
     },
   },
 }
@@ -314,6 +633,37 @@ export function getThemeManifest(name?: ThemeName): ThemeManifest {
  * the app's getThemeBlock fallback-to-default semantics).
  */
 /**
+ * Registry identity tag — every component resolved through the registry gets
+ * `data-registry="{theme}:{key}"` on its DOM root so it can be identified in
+ * the DOM / devtools without guessing which implementation backs it. A
+ * consumer-supplied `data-registry` prop wins (spread AFTER the default).
+ *
+ * Wrappers are memoized by `{theme}:{key}` so the resolved component keeps a
+ * stable identity across renders (otherwise React remounts the subtree on
+ * every render).
+ */
+const registryTagCache = new Map<string, ComponentType<any>>()
+
+function withRegistryTag(
+  key: string,
+  theme: ThemeName,
+  Comp: ComponentType<any>,
+): ComponentType<any> {
+  const cacheKey = `${theme}:${key}`
+  const cached = registryTagCache.get(cacheKey)
+  if (cached) return cached as ComponentType<any>
+
+  const wrapped = ((props: any) =>
+    createElement(Comp, {
+      'data-registry': cacheKey,
+      ...props,
+    } as any)) as ComponentType<any>
+
+  registryTagCache.set(cacheKey, wrapped)
+  return wrapped
+}
+
+/**
  * Resolve a contract key to its implementation. `theme` is optional — when
  * omitted, resolves against the active theme (NEXT_PUBLIC_THEME), falling back
  * to the default theme when the theme hasn't registered that component.
@@ -325,10 +675,12 @@ export function resolveComponent<K extends keyof ThemeComponents>(
   theme?: ThemeName,
 ): ThemeComponents[K] {
   const t = theme ?? getActiveTheme()
-  return (
-    getThemeManifest(t).components[key] ??
-    getThemeManifest(defaultThemeName).components[key]!
-  ) as ThemeComponents[K]
+  const themed = getThemeManifest(t).components[key]
+  // Tag prefix = the theme that actually supplied the implementation (so a
+  // fallback to default shows `default:Key`, not a misleading `pixel:Key`).
+  const source = themed ? t : defaultThemeName
+  const Comp = themed ?? getThemeManifest(defaultThemeName).components[key]!
+  return withRegistryTag(key, source, Comp) as ThemeComponents[K]
 }
 
 /**
@@ -342,8 +694,98 @@ export function resolveSection<K extends keyof SectionComponents>(
   theme?: ThemeName,
 ): SectionComponents[K] {
   const t = theme ?? getActiveTheme()
-  return (
-    getThemeManifest(t).sections?.[key] ??
-    getThemeManifest(defaultThemeName).sections?.[key]!
-  ) as SectionComponents[K]
+  const themed = getThemeManifest(t).sections?.[key]
+  const source = themed ? t : defaultThemeName
+  const Comp = themed ?? getThemeManifest(defaultThemeName).sections?.[key]!
+  return withRegistryTag(key, source, Comp) as SectionComponents[K]
+}
+
+/**
+ * Resolve a perler-beads workbench component. The feature is pixel-only, so
+ * the implementation always resolves against `pixel` (never falls back to the
+ * default theme, which has no perler entries) — but the active theme is still
+ * used for the registry identity tag, mirroring the other resolvers.
+ *
+ * Usage: resolvePerler('ColorPalette')  /  resolvePerler('InstallPWA')
+ */
+export function resolvePerler<K extends keyof PerlerBeadsComponents>(
+  key: K,
+  theme?: ThemeName,
+): PerlerBeadsComponents[K] {
+  const t = theme ?? getActiveTheme()
+  const themed = getThemeManifest(t).perler?.[key]
+  const source = themed ? t : 'pixel'
+  const Comp = themed ?? getThemeManifest('pixel').perler?.[key]!
+  return withRegistryTag(`Perler${key}`, source, Comp) as PerlerBeadsComponents[K]
+}
+
+/**
+ * Resolve a dither workbench component. The feature is pixel-only, so the
+ * implementation always resolves against `pixel` (never falls back to the
+ * default theme) — mirroring `resolvePerler`.
+ *
+ * Usage: resolveDither('SettingsPanel')  /  resolveDither('Preview')
+ */
+export function resolveDither<K extends keyof DitherComponents>(
+  key: K,
+  theme?: ThemeName,
+): DitherComponents[K] {
+  const t = theme ?? getActiveTheme()
+  const themed = getThemeManifest(t).dither?.[key]
+  const source = themed ? t : 'pixel'
+  const Comp = themed ?? getThemeManifest('pixel').dither?.[key]!
+  return withRegistryTag(`Dither${key}`, source, Comp) as DitherComponents[K]
+}
+
+/**
+ * Resolve a generic image-editor shell component. The asset is pixel-only, so
+ * the implementation always resolves against `pixel` (never falls back to the
+ * default theme) — mirroring `resolvePerler`/`resolveDither`.
+ *
+ * Usage: resolveEditor('Shell')  /  resolveEditor('Sidebar')
+ */
+export function resolveEditor<K extends keyof EditorComponents>(
+  key: K,
+  theme?: ThemeName,
+): EditorComponents[K] {
+  const t = theme ?? getActiveTheme()
+  const themed = getThemeManifest(t).editor?.[key]
+  const source = themed ? t : 'pixel'
+  const Comp = themed ?? getThemeManifest('pixel').editor?.[key]!
+  return withRegistryTag(`Editor${key}`, source, Comp) as EditorComponents[K]
+}
+
+/**
+ * Resolve a cleaner workbench display component. The feature is pixel-only, so
+ * the implementation always resolves against `pixel` (never the default theme)
+ * — mirroring `resolveEditor`/`resolveDither`.
+ *
+ * Usage: resolveCleaner('Workbench')  /  resolveCleaner('Output')
+ */
+export function resolveCleaner<K extends keyof CleanerComponents>(
+  key: K,
+  theme?: ThemeName,
+): CleanerComponents[K] {
+  const t = theme ?? getActiveTheme()
+  const themed = getThemeManifest(t).cleaner?.[key]
+  const source = themed ? t : 'pixel'
+  const Comp = themed ?? getThemeManifest('pixel').cleaner?.[key]!
+  return withRegistryTag(`Cleaner${key}`, source, Comp) as CleanerComponents[K]
+}
+
+/**
+ * Resolve a light-tool demo component. The asset is pixel-only, so the
+ * implementation always resolves against `pixel` (never the default theme).
+ *
+ * Usage: resolveLightDemo('Demo')
+ */
+export function resolveLightDemo<K extends keyof LightDemoComponents>(
+  key: K,
+  theme?: ThemeName,
+): LightDemoComponents[K] {
+  const t = theme ?? getActiveTheme()
+  const themed = getThemeManifest(t).lightDemo?.[key]
+  const source = themed ? t : 'pixel'
+  const Comp = themed ?? getThemeManifest('pixel').lightDemo?.[key]!
+  return withRegistryTag(`LightDemo${key}`, source, Comp) as LightDemoComponents[K]
 }

@@ -13,9 +13,9 @@ import type { FeaturesProps } from '../../../../contracts/sections/features';
  * as features-grid but without the cited-sources footer (kept minimal for the
  * plain features block).
  */
-export function Features({ section, className }: FeaturesProps) {
+export function Features({ section, className, ...rest }: FeaturesProps) {
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('bg-background py-16 md:py-24', section.className, className)}
     >

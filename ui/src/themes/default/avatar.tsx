@@ -12,10 +12,10 @@ const sizeMap = {
   lg: 'size-12 text-base',
 } as const
 
-export function Avatar({ name, src, size = 'md', shape, className }: AvatarProps) {
+export function Avatar({ name, src, size = 'md', shape, className, ...rest }: AvatarProps) {
   const round = shape === 'rounded' ? 'rounded-lg' : 'rounded-full'
   return (
-    <span
+    <span {...rest}
       className={cn(
         'bg-muted relative inline-flex shrink-0 items-center justify-center overflow-hidden align-middle',
         sizeMap[size],

@@ -18,9 +18,9 @@ import type { FeaturesGridProps } from '../../../../contracts/sections/features-
  * heights. The pixel surface is injected once at the root by the registry's
  * AmbientProvider — no per-block PxlKitSurfaceProvider here.
  */
-export function FeaturesGrid({ section, className }: FeaturesGridProps) {
+export function FeaturesGrid({ section, className, ...rest }: FeaturesGridProps) {
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('relative bg-background py-16 md:py-24', section.className, className)}
     >

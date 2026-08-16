@@ -27,7 +27,7 @@ interface ShowcaseGroup {
  * lightweight; the pixel theme's is the richer retro rendering. Link/Image
  * are injected by the app.
  */
-export function Showcases({ section, className, LinkComponent, ImageComponent }: ShowcasesProps) {
+export function Showcases({ section, className, LinkComponent, ImageComponent, ...rest }: ShowcasesProps) {
   const groups = (section.groups as ShowcaseGroup[]) || [];
   const items = (section.items as ShowcaseItem[]) || [];
   const [selectedGroup, setSelectedGroup] = useState<string>(
@@ -44,7 +44,7 @@ export function Showcases({ section, className, LinkComponent, ImageComponent }:
   const Image = (ImageComponent ?? defaultImage) as ShowcaseImage;
 
   return (
-    <section
+    <section {...rest}
       id={section.id || section.name}
       className={cn('py-24 md:py-36', section.className, className)}
     >

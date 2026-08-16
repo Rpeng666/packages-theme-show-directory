@@ -14,7 +14,7 @@ import type { FeaturesAccordionProps } from '../../../../contracts/sections/feat
  * preview image swap. Uses registered primitives (ScrollAnimation, SmartIcon);
  * the image renders via a plain <img> (the package has no Next dependency).
  */
-export function FeaturesAccordion({ section, className }: FeaturesAccordionProps) {
+export function FeaturesAccordion({ section, className, ...rest }: FeaturesAccordionProps) {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const items = (section.items || []) as Array<{
@@ -27,7 +27,7 @@ export function FeaturesAccordion({ section, className }: FeaturesAccordionProps
   const active = items[activeIdx];
 
   return (
-    <section
+    <section {...rest}
       className={cn(
         'overflow-x-hidden bg-background py-16 md:py-24',
         section.className,

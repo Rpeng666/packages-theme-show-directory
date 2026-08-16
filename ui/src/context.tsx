@@ -26,7 +26,11 @@ interface ThemeRegistryValue {
 }
 
 const ThemeRegistryContext = React.createContext<ThemeRegistryValue>({
-  theme: defaultThemeName,
+  // Literal, not `defaultThemeName`: the registry module (via the cleaner
+  // workbench components) imports this module, creating a registry↔context
+  // cycle. Accessing the registry's `defaultThemeName` const here would hit the
+  // TDZ (registry's body hasn't run yet while this module body evaluates).
+  theme: 'default',
   setTheme: () => {},
 })
 

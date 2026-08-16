@@ -28,6 +28,7 @@ export type {
   SectionLink,
   SectionImage,
   FeaturesGridProps,
+  FeaturesStepProps,
   FeaturesProps,
   FeaturesAccordionProps,
   FeaturesCompareProps,
@@ -36,6 +37,7 @@ export type {
   ShowcasesProps,
   ShowcaseLink,
   ShowcaseImage,
+  ShowcasesFlowProps,
   TestimonialsProps,
   PricingProps,
   FaqProps,
@@ -54,6 +56,13 @@ export type { BoxProps, BoxTone, BoxVariant, BoxPadding, BoxRadius, BoxAs } from
 export type { LabelProps } from './contracts/label'
 export type { AvatarProps } from './contracts/avatar'
 export type { DialogProps } from './contracts/dialog'
+export type { PromoModalProps } from './contracts/promo-modal'
+export type { ToolFooterProps } from './contracts/tool-footer'
+export type { ToolHeaderProps, ToolHeaderLink } from './contracts/tool-header'
+export type { UploadZoneProps } from './contracts/upload-zone'
+export type { ToolSettingsProps, ColorSystemOption, PixelationMode, TranslationFn } from './contracts/tool-settings'
+export type { HintBannerProps } from './contracts/hint-banner'
+export type { DualCtaProps } from './contracts/dual-cta'
 export type { DropdownProps, DropdownItem } from './contracts/dropdown'
 export type { StackProps, ClusterProps, GridProps, DividerProps } from './contracts/layout'
 export type {
@@ -95,6 +104,11 @@ export {
   getThemeManifest,
   resolveComponent,
   resolveSection,
+  resolvePerler,
+  resolveDither,
+  resolveEditor,
+  resolveCleaner,
+  resolveLightDemo,
   defaultThemeName,
 } from './registry'
 export type {
@@ -104,7 +118,138 @@ export type {
   PartialThemeComponents,
   SectionComponents,
   PartialSectionComponents,
+  PerlerBeadsComponents,
+  PartialPerlerBeadsComponents,
+  DitherComponents,
+  PartialDitherComponents,
+  EditorComponents,
+  PartialEditorComponents,
+  CleanerComponents,
+  PartialCleanerComponents,
+  LightDemoComponents,
+  PartialLightDemoComponents,
 } from './registry'
+
+// Perler-beads workbench types — component prop contracts (pixel sections) +
+// shared data types (contracts/perler-beads).
+export type {
+  PerlerToolBarProps,
+  PerlerColorPaletteProps,
+  PerlerColorData,
+  PerlerGridTooltipProps,
+  PerlerTooltipData,
+  PerlerFloatingToolbarProps,
+  PerlerDownloadSettingsModalProps,
+  PerlerColorStatusBarProps,
+  PerlerProgressBarProps,
+  PerlerColorPanelProps,
+  PerlerColorInfo,
+  PerlerSettingsPanelProps,
+  PerlerCelebrationAnimationProps,
+  PerlerMagnifierSelectionOverlayProps,
+  PerlerFocusCanvasProps,
+  PerlerFocusHeaderProps,
+  PerlerPixelatedPreviewCanvasProps,
+  PerlerCompletionCardProps,
+  PerlerDonationModalProps,
+  PerlerMagnifierToolProps,
+  PerlerInstallPwaProps,
+  PerlerFocusModePreDownloadModalProps,
+  PerlerColorSystem,
+  PerlerCustomPaletteEditorProps,
+  PerlerFloatingColorPaletteProps,
+  PerlerSwatch,
+  PerlerColorStatsPanelProps,
+  PerlerColorStatsPanelRef,
+  PerlerImageCompareModalProps,
+  PerlerShareModalProps,
+  PerlerShareStats,
+  PerlerGalleryCardProps,
+  PerlerGalleryFeedProps,
+  PerlerGalleryItem,
+  PerlerGalleryTopic,
+  PerlerCommunityFeedProps,
+  PerlerCommunityItem,
+  PerlerCommunityTopic,
+  PerlerCommunityCategory,
+  PerlerCommunityTopicTile,
+  PerlerCommunityCardProps,
+  PerlerAppLandingProps,
+  PerlerAppLandingRow,
+  PerlerAppLandingFeatureTab,
+  PerlerAppStoreLinks,
+  PerlerAppTone,
+  PerlerToolRailProps,
+  PerlerToolId,
+  PerlerWorkBarProps,
+  PerlerSelectionOverlayProps,
+  PerlerSelectionArea,
+  PerlerColorSwatchesProps,
+  PerlerColorSwatchItem,
+  PerlerSampleGalleryProps,
+  PerlerSampleItem,
+} from './themes/pixel/sections/perler-beads'
+export type {
+  PerlerMappedPixel,
+  PerlerPaletteColor,
+  PerlerColorReplaceState,
+  PerlerPaletteSelections,
+  GridDownloadOptions,
+} from './contracts/perler-beads'
+export { gridLineColorOptions } from './themes/pixel/sections/perler-beads'
+
+// Dither workbench — component prop contracts (pixel sections) + shared types.
+export type {
+  DitherSettingsPanelProps,
+  DitherPreviewProps,
+  DitherExportScale,
+  DitherT,
+} from './themes/pixel/sections/dither'
+export type {
+  DitherMethod,
+  DitherMode,
+  DitherOptions,
+} from './contracts/dither/types'
+export { DEFAULT_DITHER_OPTIONS } from './contracts/dither/types'
+
+// Cleaner workbench — display component prop contracts (pixel sections).
+// Components are consumed via `resolveCleaner`; the props types are exported
+// so app blocks can type their thin forwarders.
+export type { CleanerWorkbenchProps } from './contracts/sections/cleaner-workbench'
+export type { CleanerOutputProps, CleanerDiffPart } from './themes/pixel/sections/cleaner'
+
+// Light-tool demo — reusable upload→process→download asset for the SEO tool pages.
+export { ArtifactHero, drawArtifactChart } from './themes/pixel/light-tool-demo'
+export type { ArtifactHeroProps, ArtifactRenderStyle } from './themes/pixel/light-tool-demo'
+export { CraftEntryNav } from './themes/pixel/light-tool-demo'
+export type { CraftEntryNavProps, CraftEntryKind } from './themes/pixel/light-tool-demo'
+export { PIXEL_PATTERNS, getPixelPattern, patternsForCraft, patternStats } from './themes/pixel/light-tool-demo'
+export type {
+  PixelCraft,
+  PatternCategory,
+  PixelPattern,
+  PatternStats,
+} from './themes/pixel/light-tool-demo'
+export { genNum, genStr } from './themes/pixel/light-tool-demo'
+export { setToolHandoff, stageWorkbenchHandoff, consumeWorkbenchHandoff } from './themes/pixel/light-tool-demo'
+export type { WorkbenchHandoff } from './themes/pixel/light-tool-demo'
+export type { LightToolDemoProps, LightToolDemoProcessor, LightToolDemoResult, GenParam, GenValues, GenTool, GenListRow, ParamGeneratorDemoProps, LightToolParamSpec } from './themes/pixel/light-tool-demo'
+
+// Generic image-editor shell — reusable asset for the image-design workbenches.
+export { EditorPanel, PresetGrid, ToolButton, AdjustmentRow } from './themes/pixel/editor'
+export type {
+  EditorShellProps,
+  EditorToolbarProps,
+  EditorSidebarProps,
+  EditorSidebarItem,
+  EditorCanvasProps,
+  EditorPanelProps,
+  PresetGridProps,
+  PresetItem,
+  ToolButtonProps,
+  AdjustmentRowProps,
+  EditorT,
+} from './themes/pixel/editor'
 
 export { cn } from './lib/utils'
 export { stripTemplateTokens } from './lib/strip-tokens'

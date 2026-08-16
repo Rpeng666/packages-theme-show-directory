@@ -31,8 +31,7 @@ import type { PricingItem } from '../../../types/pricing';
  * The pixel surface is injected once at the root by the registry's
  * AmbientProvider — no per-block PxlKitSurfaceProvider here.
  */
-export function Pricing({
-  section,
+export function Pricing({ section,
   className,
   currentProductId,
   isLoading,
@@ -42,8 +41,7 @@ export function Pricing({
   onPayment,
   paymentModal,
   tCurrentPlan,
-  tProcessing,
-}: PricingProps) {
+  tProcessing, ...rest }: PricingProps) {
   const [group, setGroup] = useState(() => {
     // find current pricing item
     const currentItem = section.items?.find(
@@ -122,7 +120,7 @@ export function Pricing({
   }, [groupItems]);
 
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('bg-background py-24 md:py-36', section.className, className)}
     >

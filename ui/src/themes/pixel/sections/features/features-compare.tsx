@@ -20,12 +20,12 @@ interface CompareCardData {
   text: string;
 }
 
-export function FeaturesCompare({ section, className }: FeaturesCompareProps) {
+export function FeaturesCompare({ section, className, ...rest }: FeaturesCompareProps) {
   const before = (section.before ?? {}) as CompareCardData;
   const after = (section.after ?? {}) as CompareCardData;
 
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('bg-background py-16 md:py-24', section.className, className)}
     >

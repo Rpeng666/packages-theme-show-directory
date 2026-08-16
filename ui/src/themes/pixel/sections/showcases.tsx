@@ -29,7 +29,7 @@ interface ShowcaseGroup {
  * (Link, Image) are injected by the app so the package has no Next/next-intl
  * dependency. Motion + registered primitives only — no hand-rolled markup.
  */
-export function Showcases({ section, className, LinkComponent, ImageComponent }: ShowcasesProps) {
+export function Showcases({ section, className, LinkComponent, ImageComponent, ...rest }: ShowcasesProps) {
   const groups = (section.groups as ShowcaseGroup[]) || [];
   const items = (section.items as ShowcaseItem[]) || [];
 
@@ -49,7 +49,7 @@ export function Showcases({ section, className, LinkComponent, ImageComponent }:
   const Button = useThemeComponent('Button');
 
   return (
-    <section
+    <section {...rest}
       id={section.id || section.name}
       className={cn('bg-background py-24 md:py-36', section.className, className)}
     >

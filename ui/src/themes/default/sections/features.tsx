@@ -9,9 +9,9 @@ import type { FeaturesProps } from '../../../contracts/sections/features';
  * Default (shadcn) features — simple bordered feature grid. Kept lightweight;
  * the pixel theme's Features is the richer retro rendering.
  */
-export function Features({ section, className }: FeaturesProps) {
+export function Features({ section, className, ...rest }: FeaturesProps) {
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('bg-background py-16 md:py-24', section.className, className)}
     >

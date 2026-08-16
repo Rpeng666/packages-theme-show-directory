@@ -18,9 +18,9 @@ import type { TestimonialsProps } from '../../../contracts/sections/testimonials
  * The pixel surface is injected once at the root by the registry's
  * AmbientProvider — no per-block PxlKitSurfaceProvider here.
  */
-export function Testimonials({ section, className }: TestimonialsProps) {
+export function Testimonials({ section, className, ...rest }: TestimonialsProps) {
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn(
         'bg-background py-16 md:py-24',

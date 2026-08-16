@@ -17,18 +17,16 @@ import type { BlogProps } from '../../../../contracts/sections/blog'
  * DB layer. Link is injected (LinkComponent) so the package has no Next
  * dependency.
  */
-export function Blog({
-  section,
+export function Blog({ section,
   className,
   categories,
   currentCategory,
   posts,
-  LinkComponent,
-}: BlogProps) {
+  LinkComponent, ...rest }: BlogProps) {
   const Link = LinkComponent ?? defaultLink
 
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn(
         'relative bg-background py-24 md:py-36',

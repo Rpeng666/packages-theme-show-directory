@@ -1,5 +1,7 @@
 'use client';
 
+import * as React from 'react';
+
 import { PixelCard } from '@pxlkit/ui-kit';
 import { cn } from '../../../lib/utils';
 import { PixelIcon } from '../../../components/pixel-icon';
@@ -8,6 +10,8 @@ import type { SectionItem } from '../../../types/landing';
 
 export interface ToolItem extends SectionItem {
   url: string;
+  /** Catalog category key (generation/palette/sprite/image/craft) - drives the filter chips. */
+  category?: string;
 }
 
 /*
@@ -17,11 +21,42 @@ export interface ToolItem extends SectionItem {
  * lift come from PixelCard's `interactive` + `href` (keyboard accessible,
  * focus ring included) instead of hand-rolled markup.
  */
-export function ToolsGrid({ section, className, LinkComponent }: ToolsGridProps) {
+export function ToolsGrid({ section, className, LinkComponent, ...rest }: ToolsGridProps) {
   const items = (section.items || []) as ToolItem[];
+  // Search + category filter (client-side) - with 39+ tools a flat grid is a
+  // wall of links; users need to find a tool by task, not by scrolling.
+  // Optional section data injected from locale by the app:
+  //   search_placeholder / all_label / category_labels ({category -> label}).
+  const [query, setQuery] = React.useState('');
+  const [activeCategory, setActiveCategory] = React.useState<string | null>(null);
+
+  const categoryLabels = (section as { category_labels?: Record<string, string> }).category_labels ?? {};
+  const searchPlaceholder = (section as { search_placeholder?: string }).search_placeholder ?? 'Search tools…';
+  const allLabel = (section as { all_label?: string }).all_label ?? 'All';
+
+  const categories = React.useMemo(() => {
+    const seen: string[] = [];
+    for (const item of items) {
+      if (item.category && !seen.includes(item.category)) seen.push(item.category);
+    }
+    return seen;
+  }, [items]);
+
+  const filtered = React.useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return items.filter((item) => {
+      if (activeCategory && item.category !== activeCategory) return false;
+      if (!q) return true;
+      return (
+        item.title?.toLowerCase().includes(q) ||
+        item.description?.toLowerCase().includes(q) ||
+        item.url.toLowerCase().includes(q)
+      );
+    });
+  }, [items, query, activeCategory]);
 
   return (
-    <section
+    <section {...rest}
       id={section.id || 'tools'}
       className={cn('bg-background py-12 md:py-20', section.className, className)}
     >
@@ -49,9 +84,55 @@ export function ToolsGrid({ section, className, LinkComponent }: ToolsGridProps)
           ) : null}
         </div>
 
+        {/* Search + category filter */}
+        {items.length > 6 && (
+          <div className="mb-6 flex flex-col items-center gap-3">
+            <div className="relative w-full max-w-md">
+              <PixelIcon name="search" size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={searchPlaceholder}
+                aria-label={searchPlaceholder}
+                className="w-full border-2 border-foreground/15 bg-retro-surface/30 py-2 pl-9 pr-3 font-mono text-sm text-foreground outline-none focus:border-retro-cyan/50 pxl-corner-sm"
+              />
+            </div>
+            <div className="flex flex-wrap justify-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setActiveCategory(null)}
+                className={cn(
+                  'border-2 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-wider transition-colors pxl-corner-sm',
+                  activeCategory === null
+                    ? 'border-retro-cyan/60 bg-retro-cyan/10 text-retro-cyan'
+                    : 'border-foreground/15 bg-retro-surface/30 text-muted-foreground hover:text-foreground',
+                )}
+              >
+                {allLabel}
+              </button>
+              {categories.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setActiveCategory(activeCategory === c ? null : c)}
+                  className={cn(
+                    'border-2 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-wider transition-colors pxl-corner-sm',
+                    activeCategory === c
+                      ? 'border-retro-cyan/60 bg-retro-cyan/10 text-retro-cyan'
+                      : 'border-foreground/15 bg-retro-surface/30 text-muted-foreground hover:text-foreground',
+                  )}
+                >
+                  {categoryLabels[c] ?? c}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item, idx) => (
-            <ToolCard key={idx} item={item} LinkComponent={LinkComponent} />
+          {filtered.map((item, idx) => (
+            <ToolCard key={item.url || idx} item={item} LinkComponent={LinkComponent} />
           ))}
         </div>
       </div>

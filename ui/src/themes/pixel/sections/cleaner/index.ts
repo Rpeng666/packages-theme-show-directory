@@ -7,9 +7,11 @@ export { countWords } from './lib/count-words'
 export type {
   CleanerAnalyzeResult,
   CleanerIssue,
+  CleanerOutputProps,
   CleanerOutputView,
   CleanerSeverity,
   ContextMode,
   ContextModeValue,
 } from './types'
+export type { CleanerDiffPart } from './types'
 export type { CleanerWorkbenchProps } from '../../../../contracts/sections/cleaner-workbench'

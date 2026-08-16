@@ -14,19 +14,17 @@ import type { NavItem } from '../../types/common'
  * - brand / external-link badges / locale+theme are injected slots (they bind
  *   app business: BrandLogo, BadgeBar-from-db, LocaleSelector/ThemeToggler)
  */
-export function Footer({
-  footer,
+export function Footer({ footer,
   brandSlot,
   badgesSlot,
   localeThemeSlot,
   LinkComponent,
-  className,
-}: FooterProps) {
+  className, ...rest }: FooterProps) {
   const navColumns = footer.nav?.items ?? []
   const Link = LinkComponent ?? defaultLink
 
   return (
-    <footer
+    <footer {...rest}
       id={footer.id}
       className={`mt-auto border-t-2 border-retro-border/50 bg-retro-surface/30 ${footer.className || ''} ${className || ''} overflow-x-hidden`}
     >
@@ -44,7 +42,7 @@ export function Footer({
           </div>
 
           {/* Nav columns */}
-          <div className="col-span-3 grid min-w-0 grid-cols-2 gap-8 sm:grid-cols-3">
+          <div className="col-span-3 grid min-w-0 grid-cols-2 gap-8 sm:grid-cols-4">
             {navColumns.map((item, idx) => (
               <div key={idx} className="min-w-0 space-y-4 break-words">
                 {item.url ? (

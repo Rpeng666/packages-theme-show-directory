@@ -15,6 +15,8 @@ import { AnalyzePanel } from './analyze-panel'
 import { countWords } from './lib/count-words'
 import type {
   CleanerAnalyzeResult,
+  CleanerDiffPart,
+  CleanerOutputProps,
   CleanerOutputView,
   CleanerT,
   ContextModeValue,
@@ -46,30 +48,7 @@ export function CleanerOutput({
   detectedContextMode,
   onContextModeChange,
   t,
-}: {
-  outputView: CleanerOutputView
-  outputCount: number
-  output: string
-  activeDiffParts: Array<{ value: string; added?: boolean; removed?: boolean }>
-  activeHasChanges: boolean
-  analyzeResult: CleanerAnalyzeResult | null
-  isRewriting: boolean
-  showAiHint?: boolean
-  compact?: boolean
-  fullscreen?: boolean
-  typeLabels: Record<string, string>
-  severityLabels: Record<string, string>
-  onAnalyze: () => void
-  onFixWithAi?: (focusIssues?: string[]) => void
-  onExportMarkdown?: () => void
-  onExportPdf?: () => void
-  onShareLink?: () => void
-  shareCopied: boolean
-  contextMode: ContextModeValue
-  detectedContextMode: string
-  onContextModeChange: (value: ContextModeValue) => void
-  t: CleanerT
-}) {
+}: CleanerOutputProps) {
   const renderDiff = (
     parts: Array<{ value: string; added?: boolean; removed?: boolean }>
   ) => (

@@ -13,17 +13,15 @@ import type { RelatedPostsProps } from '../../../../contracts/sections/blog-cta'
  * mounted gates. Posts are injected from the app's DB layer; Link is injected
  * (LinkComponent) so the package has no Next dependency.
  */
-export function RelatedPosts({
-  posts,
+export function RelatedPosts({ posts,
   LinkComponent,
-  className,
-}: RelatedPostsProps) {
+  className, ...rest }: RelatedPostsProps) {
   const Link = LinkComponent ?? defaultLink
 
   if (posts.length === 0) return null
 
   return (
-    <div className={cn('not-prose mx-auto my-16 w-full max-w-7xl space-y-4 px-6 md:px-8', className)}>
+    <div {...rest} className={cn('not-prose mx-auto my-16 w-full max-w-7xl space-y-4 px-6 md:px-8', className)}>
       <h3 className="font-display text-retro-text text-sm font-normal uppercase tracking-wider">
         Related Guides
       </h3>

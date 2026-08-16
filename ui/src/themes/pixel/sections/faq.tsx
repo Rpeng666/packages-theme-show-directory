@@ -12,7 +12,7 @@ import type { FaqProps } from '../../../contracts/sections/faq'
  * the pxlkit chamfered accordion chrome instead of the hand-rolled shadcn
  * accordion. The pixel surface is injected by the registry's AmbientProvider.
  */
-export function Faq({ section, className }: FaqProps) {
+export function Faq({ section, className, ...rest }: FaqProps) {
   const items =
     section.items?.map((item, idx) => ({
       id: String(idx),
@@ -25,7 +25,7 @@ export function Faq({ section, className }: FaqProps) {
     })) ?? []
 
   return (
-    <section
+    <section {...rest}
       id={section.id}
       className={cn('bg-background py-16 md:py-24', section.className, className)}
     >
