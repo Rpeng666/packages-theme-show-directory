@@ -51,7 +51,9 @@ export function ToolHeader({ brand,
   slogan,
   sourceHint,
   links = [],
+  headingLevel: Heading = 'h1',
   className, ...rest }: ToolHeaderProps) {
+  const TitleTag = Heading === 'h1' ? 'h2' : 'h3';
   return (
     <header {...rest} className={cn('mt-6 mb-8 w-full text-center sm:mt-8 sm:mb-10', className)}>
       <div className="mb-4 inline-flex items-center gap-3">
@@ -68,15 +70,15 @@ export function ToolHeader({ brand,
         </div>
       </div>
 
-      <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">{brand}</h1>
-      <h2 className="mt-1 text-xl font-semibold tracking-tight text-primary sm:text-3xl">
+      <Heading className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl">{brand}</Heading>
+      <TitleTag className="mt-1 text-xl font-semibold tracking-tight text-primary sm:text-3xl">
         {title}
         {titleBadge && (
           <span className="ml-2 align-middle rounded-full border border-border bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
             {titleBadge}
           </span>
         )}
-      </h2>
+      </TitleTag>
 
       {slogan && (
         <p className="mt-3 text-sm tracking-wide text-muted-foreground sm:text-base">{slogan}</p>

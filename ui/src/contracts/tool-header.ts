@@ -26,5 +26,11 @@ export interface ToolHeaderProps {
   sourceHint?: string
   /** 链接行（专业工作台/小红书/GitHub 等） */
   links?: ToolHeaderLink[]
+  /**
+   * Heading level for the brand title. Defaults to `h1` (standalone workbench
+   * pages). When a page already renders a page-level H1 above the tool header
+   * (e.g. the homepage hero), pass `h2` to keep the heading hierarchy sane.
+   */
+  headingLevel?: 'h1' | 'h2'
   className?: string
 }
