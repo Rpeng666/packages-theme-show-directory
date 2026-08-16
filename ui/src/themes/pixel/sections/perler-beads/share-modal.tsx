@@ -69,7 +69,7 @@ export function ShareModal({
     if (!imageSrc) return;
     const link = document.createElement('a');
     link.href = imageSrc;
-    link.download = `pixelbean-pattern-${Date.now()}.png`;
+    link.download = `PixelMaster-pattern-${Date.now()}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

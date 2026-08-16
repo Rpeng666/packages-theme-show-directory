@@ -133,7 +133,7 @@ export function PerlerDeviceMockup() {
       <PixelSlideIn from="up" distance={24}>
         {/* 桌面显示器 */}
         <div className="pxl-corner-md relative border-2 border-retro-border bg-retro-surface p-2 shadow-lg sm:p-3">
-          <MiniScreen pattern={HEART_PATTERN} label="PixelBean — perler" />
+          <MiniScreen pattern={HEART_PATTERN} label="PixelMaster — perler" />
           {/* 显示器底座 */}
           <div className="mx-auto mt-2 h-2 w-24 border-2 border-t-0 border-retro-border bg-retro-surface/60" />
           <div className="mx-auto h-2 w-36 border-2 border-retro-border bg-retro-card" />
@@ -146,7 +146,7 @@ export function PerlerDeviceMockup() {
               {/* 刘海 */}
               <div className="mx-auto mt-1 h-1 w-8 rounded-full bg-retro-text/70" />
               <div className="mt-1.5 overflow-hidden rounded-sm border-2 border-retro-border/60">
-                <MiniScreen pattern={APPLE_PATTERN} label="PixelBean" compact />
+                <MiniScreen pattern={APPLE_PATTERN} label="PixelMaster" compact />
               </div>
               <div className="mx-auto mt-1 h-0.5 w-10 rounded-full bg-retro-border/60" />
             </div>
