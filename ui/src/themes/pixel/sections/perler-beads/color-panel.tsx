@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '../../../../lib/utils';
+import { defaultPerlerT, type PerlerT } from './i18n';
 
 export interface PerlerColorInfo {
   color: string;
@@ -16,13 +17,15 @@ export interface PerlerColorPanelProps {
   currentColor: string;
   onColorSelect: (color: string) => void;
   onClose: () => void;
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
 }
 
 /**
  * Perler-beads color panel — pixel retro chrome. Owns only search/sort UI
  * state; the app injects color data + selection callback.
  */
-export function ColorPanel({ colors, currentColor, onColorSelect, onClose }: PerlerColorPanelProps) {
+export function ColorPanel({ colors, currentColor, onColorSelect, onClose, t = defaultPerlerT }: PerlerColorPanelProps) {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [sortBy, setSortBy] = React.useState<'progress' | 'name' | 'total'>('progress');
 
@@ -59,7 +62,7 @@ export function ColorPanel({ colors, currentColor, onColorSelect, onClose }: Per
           <div className="relative">
             <input
               type="text"
-              placeholder="搜索颜色..."
+              placeholder={t('cpSearch')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full border-2 border-foreground/20 bg-background py-2 pl-10 pr-4 font-mono text-sm text-foreground outline-none focus:border-retro-cyan pxl-corner-sm placeholder:text-muted-foreground/50"
@@ -82,9 +85,9 @@ export function ColorPanel({ colors, currentColor, onColorSelect, onClose }: Per
             onChange={(e) => setSortBy(e.target.value as 'progress' | 'name' | 'total')}
             className="w-full border-2 border-foreground/20 bg-background p-2 font-mono text-sm text-foreground outline-none focus:border-retro-cyan pxl-corner-sm"
           >
-            <option value="progress">按进度排序</option>
-            <option value="name">按名称排序</option>
-            <option value="total">按数量排序</option>
+            <option value="progress">{t('cpSortProgress')}</option>
+            <option value="name">{t('cpSortName')}</option>
+            <option value="total">{t('cpSortCount')}</option>
           </select>
         </div>
 
@@ -120,13 +123,13 @@ export function ColorPanel({ colors, currentColor, onColorSelect, onClose }: Per
                       </div>
                     </div>
                   </div>
-                  {isCompleted && <span className="font-mono text-xs text-retro-green">✓ 完成</span>}
+                  {isCompleted && <span className="font-mono text-xs text-retro-green">{t('done')}</span>}
                 </div>
               </button>
             );
           })}
           {filteredAndSortedColors.length === 0 && (
-            <div className="py-4 text-center font-mono text-xs text-muted-foreground">无匹配颜色</div>
+            <div className="py-4 text-center font-mono text-xs text-muted-foreground">{t('cpNoMatch')}</div>
           )}
         </div>
 
@@ -136,7 +139,7 @@ export function ColorPanel({ colors, currentColor, onColorSelect, onClose }: Per
             onClick={onClose}
             className="w-full border-2 border-foreground/20 bg-retro-surface/30 py-2 font-mono text-sm text-foreground pxl-corner-sm transition-all hover:bg-retro-surface/50"
           >
-            关闭
+            {t('close')}
           </button>
         </div>
       </div>

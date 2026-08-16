@@ -3,6 +3,7 @@ import { cn } from '../../../../lib/utils';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { PerlerMappedPixel } from '../../../../contracts/perler-beads/types';
+import { defaultPerlerT, type PerlerT } from './i18n';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type MappedPixel = PerlerMappedPixel;
 export type PerlerColorSystem = 'MARD' | 'COCO' | '漫漫' | '盼盼' | '咪小窝';
@@ -23,6 +24,8 @@ export interface PerlerMagnifierToolProps {
   isFloatingActive: boolean;
   onActivateFloating: () => void;
   highlightColorKey?: string | null;
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
 }
 
 interface SelectionArea {
@@ -44,7 +47,8 @@ const MagnifierTool: React.FC<PerlerMagnifierToolProps> = ({
   onClearSelection,
   isFloatingActive,
   onActivateFloating,
-  highlightColorKey
+  highlightColorKey,
+  t = defaultPerlerT,
 }) => {
   // 计算初始位置，确保在屏幕中央
   const getInitialPosition = () => ({
@@ -297,7 +301,7 @@ const MagnifierTool: React.FC<PerlerMagnifierToolProps> = ({
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <span>在画布上拖拽选择要放大的区域</span>
+            <span>{t('fmDragToMagnify')}</span>
           </div>
         </div>
       )}
@@ -325,7 +329,7 @@ const MagnifierTool: React.FC<PerlerMagnifierToolProps> = ({
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              <span className="text-sm font-medium">放大镜 ({getSelectionDimensions().width}×{getSelectionDimensions().height})</span>
+              <span className="text-sm font-medium">{t('fmMagnify', { w: getSelectionDimensions().width, h: getSelectionDimensions().height })}</span>
             </div>
             
             <div className="flex items-center gap-2">
@@ -333,7 +337,7 @@ const MagnifierTool: React.FC<PerlerMagnifierToolProps> = ({
               <button
                 onClick={onClearSelection}
                 className="p-1 hover:bg-white/20 rounded transition-colors"
-                title="重新选择区域"
+                title={t('fmReSelect')}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -344,7 +348,7 @@ const MagnifierTool: React.FC<PerlerMagnifierToolProps> = ({
               <button
                 onClick={onToggle}
                 className="p-1 hover:bg-white/20 rounded transition-colors"
-                title="关闭放大镜"
+                title={t('fmCloseMagnify')}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -372,7 +376,7 @@ const MagnifierTool: React.FC<PerlerMagnifierToolProps> = ({
                     style={{ backgroundColor: selectedColor.color }}
                   ></div>
                   <span className="text-muted-foreground">
-                    当前: {(displayColorKey ?? ((c) => c))(selectedColor.color)}
+                    {t('cpCurrent', { key: (displayColorKey ?? ((c) => c))(selectedColor.color) })}
                   </span>
                 </div>
               </div>

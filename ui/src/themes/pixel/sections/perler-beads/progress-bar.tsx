@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '../../../../lib/utils';
+import { defaultPerlerT, type PerlerT } from './i18n';
 
 export interface PerlerProgressBarProps {
   progressPercentage: number;
@@ -13,12 +14,14 @@ export interface PerlerProgressBarProps {
     total: number;
     completed: number;
   };
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
 }
 
 /**
  * Perler-beads progress bar — pixel retro chrome. Pure presentation.
  */
-export function ProgressBar({ progressPercentage, recommendedCell }: PerlerProgressBarProps) {
+export function ProgressBar({ progressPercentage, recommendedCell, t = defaultPerlerT }: PerlerProgressBarProps) {
   const progressDots = Array.from({ length: 7 }, (_, index) => {
     const threshold = (index + 1) * (100 / 7);
     const isFilled = progressPercentage >= threshold;
@@ -41,9 +44,9 @@ export function ProgressBar({ progressPercentage, recommendedCell }: PerlerProgr
       </div>
       <div className="font-mono text-xs text-muted-foreground">
         {recommendedCell ? (
-          <span>下一块 → {recommendedCell.row + 1},{recommendedCell.col + 1}</span>
+          <span>{t('fmNextCell', { row: recommendedCell.row + 1, col: recommendedCell.col + 1 })}</span>
         ) : (
-          <span>已完成当前颜色</span>
+          <span>{t('fmColorDone')}</span>
         )}
       </div>
     </div>

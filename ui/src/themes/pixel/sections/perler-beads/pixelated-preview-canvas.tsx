@@ -2,7 +2,6 @@
 
 import React, { useRef, useEffect, TouchEvent, MouseEvent, useState } from 'react';
 import type { PerlerMappedPixel } from '../../../../contracts/perler-beads/types';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type MappedPixel = PerlerMappedPixel;
 
 export interface PerlerPixelatedPreviewCanvasProps {
@@ -16,7 +15,8 @@ export interface PerlerPixelatedPreviewCanvasProps {
     pageX: number,
     pageY: number,
     isClick: boolean,
-    isTouchEnd?: boolean
+    isTouchEnd?: boolean,
+    dragState?: 'start' | 'move' | 'end'
   ) => void;
   highlightColorKey?: string | null;
   onHighlightComplete?: () => void;
@@ -160,14 +160,6 @@ const PixelatedPreviewCanvas: React.FC<PerlerPixelatedPreviewCanvasProps> = ({
   }, [highlightColorKey, mappedPixelData, gridDimensions, onHighlightComplete]);
 
   // --- 鼠标事件处理 ---
-  
-  // 鼠标移动时显示提示
-  const handleMouseMove = (event: MouseEvent<HTMLCanvasElement>) => {
-    // 只有在非手动模式下才通过mousemove显示tooltip，避免干扰手动上色
-    if (!isManualColoringMode) {
-        onInteraction(event.clientX, event.clientY, event.pageX, event.pageY, false);
-    }
-  };
 
   // 鼠标离开时隐藏提示
   const handleMouseLeave = () => {
@@ -175,12 +167,36 @@ const PixelatedPreviewCanvas: React.FC<PerlerPixelatedPreviewCanvasProps> = ({
     onInteraction(0, 0, 0, 0, false, true);
   };
 
-  // 鼠标点击处理（用于手动上色模式）
+  // 鼠标点击处理 — always report isClick=true; the editor's activeTool decides
+  // what a click means (paint / fill / eyedropper / tooltip toggle).
   const handleClick = (event: MouseEvent<HTMLCanvasElement>) => {
-    // 鼠标点击行为保持不变：
-    // 手动模式下：上色
-    // 非手动模式下：切换tooltip
-    onInteraction(event.clientX, event.clientY, event.pageX, event.pageY, isManualColoringMode);
+    onInteraction(event.clientX, event.clientY, event.pageX, event.pageY, true);
+  };
+
+  // --- 拖拽绘制（画笔/橡皮/直线/矩形/选区 需要 dragState） ---
+  const draggingRef = useRef(false);
+
+  const handleMouseDown = (event: MouseEvent<HTMLCanvasElement>) => {
+    draggingRef.current = true;
+    onInteraction(event.clientX, event.clientY, event.pageX, event.pageY, isManualColoringMode, false, 'start');
+  };
+
+  const handleMouseMoveDrag = (event: MouseEvent<HTMLCanvasElement>) => {
+    if (draggingRef.current) {
+      onInteraction(event.clientX, event.clientY, event.pageX, event.pageY, true, false, 'move');
+    } else {
+      // 非拖拽时保留原 tooltip 行为（仅非手动模式）
+      if (!isManualColoringMode) {
+        onInteraction(event.clientX, event.clientY, event.pageX, event.pageY, false);
+      }
+    }
+  };
+
+  const handleMouseUp = (event: MouseEvent<HTMLCanvasElement>) => {
+    if (draggingRef.current) {
+      draggingRef.current = false;
+      onInteraction(event.clientX, event.clientY, event.pageX, event.pageY, true, false, 'end');
+    }
   };
 
   // --- 触摸事件处理 ---
@@ -224,14 +240,11 @@ const PixelatedPreviewCanvas: React.FC<PerlerPixelatedPreviewCanvasProps> = ({
   
   // 触摸结束时不再自动隐藏提示框
   const handleTouchEnd = () => {
-    // 检查是否是手动模式，并且触摸没有移动（判定为点击）
-    if (isManualColoringMode && !touchMovedRef.current && touchStartPosRef.current) {
-      // 使用触摸开始时的坐标来执行上色操作
+    // 未移动（判定为点击）→ 上报 isClick=true，由编辑器的 activeTool 决定行为
+    if (!touchMovedRef.current && touchStartPosRef.current) {
       const { x, y, pageX, pageY } = touchStartPosRef.current;
-      onInteraction(x, y, pageX, pageY, true); // isClick: true 表示执行上色
+      onInteraction(x, y, pageX, pageY, true);
     }
-    // 如果是非手动模式下的点击 (isManualColoringMode=false, touchMovedRef=false)
-    // Tooltip 的显示/隐藏切换已在 touchstart 处理，touchend 时无需额外操作
 
     // 重置触摸状态
     touchStartPosRef.current = null;
@@ -241,8 +254,10 @@ const PixelatedPreviewCanvas: React.FC<PerlerPixelatedPreviewCanvasProps> = ({
   return (
     <canvas
       ref={canvasRef}
-      onMouseMove={handleMouseMove}
+      onMouseMove={handleMouseMoveDrag}
       onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
       onClick={handleClick}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}

@@ -37,6 +37,12 @@ export { LockOpen } from './icons/lock-open';
 export { Lock } from './icons/lock';
 export { CloudSync } from './icons/cloud-sync';
 
+// Pixel-editing tool icons
+export { Hand } from './icons/hand';
+export { Line } from './icons/line';
+export { Rectangle } from './icons/rectangle';
+export { Selection } from './icons/selection';
+
 // New animated icons
 export { LoadingSpinner } from './icons/loading-spinner';
 export { PulsingDot } from './icons/pulsing-dot';
@@ -81,6 +87,10 @@ import { Clock } from './icons/clock';
 import { LockOpen } from './icons/lock-open';
 import { Lock } from './icons/lock';
 import { CloudSync } from './icons/cloud-sync';
+import { Hand } from './icons/hand';
+import { Line } from './icons/line';
+import { Rectangle } from './icons/rectangle';
+import { Selection } from './icons/selection';
 import { LoadingSpinner } from './icons/loading-spinner';
 import { PulsingDot } from './icons/pulsing-dot';
 import { BouncingArrow } from './icons/bouncing-arrow';
@@ -104,6 +114,7 @@ export const UiPack: IconPack = {
     Home, Search, Settings, Gear, Menu, DotsMenu, Grid, List,
     Trash, Edit, Copy, ChainLink, ExternalLink, Download, Upload,
     History, Calendar, Clock, LockOpen, Lock, CloudSync,
+    Hand, Line, Rectangle, Selection,
     // New animated
     LoadingSpinner, PulsingDot, BouncingArrow, ShakingBell, SpinningGear,
   ],

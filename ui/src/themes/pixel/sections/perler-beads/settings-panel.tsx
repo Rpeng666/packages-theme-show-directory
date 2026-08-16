@@ -2,6 +2,7 @@
 import { cn } from '../../../../lib/utils';
 
 import React from 'react';
+import { defaultPerlerT, type PerlerT } from './i18n';
 
 export interface PerlerSettingsPanelProps {
   guidanceMode: 'nearest' | 'largest' | 'edge-first';
@@ -15,6 +16,8 @@ export interface PerlerSettingsPanelProps {
   enableCelebration: boolean;
   onEnableCelebrationChange: (enable: boolean) => void;
   onClose: () => void;
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
 }
 
 const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
@@ -28,23 +31,24 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
   onSectionLineColorChange,
   enableCelebration,
   onEnableCelebrationChange,
-  onClose
+  onClose,
+  t = defaultPerlerT
 }) => {
   // 分割线颜色选项
   const sectionLineColors = [
-    { color: '#007acc', name: '蓝色' },
-    { color: '#28a745', name: '绿色' },
-    { color: '#dc3545', name: '红色' },
-    { color: '#6f42c1', name: '紫色' },
-    { color: '#fd7e14', name: '橙色' },
-    { color: '#6c757d', name: '灰色' }
+    { color: '#007acc', name: t('cnBlue') },
+    { color: '#28a745', name: t('cnGreen') },
+    { color: '#dc3545', name: t('cnRed') },
+    { color: '#6f42c1', name: t('cnPurple') },
+    { color: '#fd7e14', name: t('cnOrange') },
+    { color: '#6c757d', name: t('cnGray') }
   ];
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-end">
       <div className="w-80 max-w-[90vw] h-full bg-background shadow-md border-2 border-foreground/15 flex flex-col">
         {/* 头部 */}
         <div className="flex items-center justify-between p-4 border-b border-foreground/15">
-          <h2 className="text-lg font-medium text-foreground">设置</h2>
+          <h2 className="text-lg font-medium text-foreground">{t('settings')}</h2>
           <button
             onClick={onClose}
             className="text-muted-foreground hover:text-foreground"
@@ -59,7 +63,7 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
         <div className="flex-1 overflow-y-auto p-4 space-y-6">
           {/* 引导设置 */}
           <div>
-            <h3 className="text-base font-medium text-foreground mb-3">智能引导</h3>
+            <h3 className="text-base font-medium text-foreground mb-3">{t('fmSmartGuide')}</h3>
             <div className="space-y-3">
               <label className="flex items-center">
                 <input
@@ -71,8 +75,8 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
                   className="mr-3 text-retro-cyan"
                 />
                 <div>
-                  <div className="text-sm font-medium text-foreground">最近优先</div>
-                  <div className="text-xs text-muted-foreground">推荐距离最近的格子</div>
+                  <div className="text-sm font-medium text-foreground">{t('fmNearestFirst')}</div>
+                  <div className="text-xs text-muted-foreground">{t('fmNearest')}</div>
                 </div>
               </label>
 
@@ -86,8 +90,8 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
                   className="mr-3 text-retro-cyan"
                 />
                 <div>
-                  <div className="text-sm font-medium text-foreground">大块优先</div>
-                  <div className="text-xs text-muted-foreground">优先推荐大色块区域</div>
+                  <div className="text-sm font-medium text-foreground">{t('fmBigFirst')}</div>
+                  <div className="text-xs text-muted-foreground">{t('fmBigFirstDesc')}</div>
                 </div>
               </label>
 
@@ -101,8 +105,8 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
                   className="mr-3 text-retro-cyan"
                 />
                 <div>
-                  <div className="text-sm font-medium text-foreground">边缘优先</div>
-                  <div className="text-xs text-muted-foreground">先完成边缘，再填充内部</div>
+                  <div className="text-sm font-medium text-foreground">{t('fmEdgeFirst')}</div>
+                  <div className="text-xs text-muted-foreground">{t('fmEdgeFirstDesc')}</div>
                 </div>
               </label>
             </div>
@@ -110,13 +114,13 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
 
           {/* 显示设置 */}
           <div>
-            <h3 className="text-base font-medium text-foreground mb-3">显示设置</h3>
+            <h3 className="text-base font-medium text-foreground mb-3">{t('stDisplay')}</h3>
             <div className="space-y-4">
               {/* 分割线开关 */}
               <label className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium text-foreground">显示分割线</div>
-                  <div className="text-xs text-muted-foreground">将画布分割成区块帮助定位</div>
+                  <div className="text-sm font-medium text-foreground">{t('dsShowDivider')}</div>
+                  <div className="text-xs text-muted-foreground">{t('fmChunkGuide')}</div>
                 </div>
                 <input
                   type="checkbox"
@@ -132,7 +136,7 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
                   {/* 分割线间隔 */}
                   <div>
                     <label className="text-sm font-medium text-foreground block mb-2">
-                      分割间隔
+                      {t('stSectionInterval')}
                     </label>
                     <div className="flex items-center space-x-3">
                       <input
@@ -144,7 +148,7 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
                         className="flex-1 h-2 bg-gray-200 pxl-corner-sm appearance-none cursor-pointer"
                       />
                       <span className="text-sm font-medium text-foreground min-w-[3rem]">
-                        {gridSectionInterval} 格
+                        {t('stGrid', { n: gridSectionInterval })}
                       </span>
                     </div>
                   </div>
@@ -152,7 +156,7 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
                   {/* 分割线颜色 */}
                   <div>
                     <label className="text-sm font-medium text-foreground block mb-2">
-                      分割线颜色
+                      {t('dsGridColor')}
                     </label>
                     <div className="flex gap-2 flex-wrap">
                       {sectionLineColors.map((colorOption) => (
@@ -176,8 +180,8 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
               {/* 庆祝动画开关 */}
               <label className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium text-foreground">庆祝动画</div>
-                  <div className="text-xs text-muted-foreground">完成颜色时显示撒花效果</div>
+                  <div className="text-sm font-medium text-foreground">{t('fmCelebrate')}</div>
+                  <div className="text-xs text-muted-foreground">{t('fmCelebrateDesc')}</div>
                 </div>
                 <input
                   type="checkbox"
@@ -193,27 +197,27 @@ const SettingsPanel: React.FC<PerlerSettingsPanelProps> = ({
 
           {/* 进度重置 */}
           <div>
-            <h3 className="text-base font-medium text-foreground mb-3">数据管理</h3>
+            <h3 className="text-base font-medium text-foreground mb-3">{t('data')}</h3>
             <div className="space-y-3">
               <button className="w-full py-2 px-4 bg-orange-100 text-orange-700 pxl-corner-sm hover:bg-orange-200 transition-colors text-sm">
-                导出进度数据
+                {t('fmDownloadProgress')}
               </button>
               
               <button className="w-full py-2 px-4 bg-red-100 text-red-700 pxl-corner-sm hover:bg-red-200 transition-colors text-sm">
-                重置所有进度
+                {t('fmResetProgress')}
               </button>
             </div>
           </div>
 
           {/* 关于信息 */}
           <div>
-            <h3 className="text-base font-medium text-foreground mb-3">关于</h3>
+            <h3 className="text-base font-medium text-foreground mb-3">{t('about')}</h3>
             <div className="text-sm text-muted-foreground space-y-2">
-              <p>专心拼豆模式 v1.0</p>
-              <p>专为手机设计的拼豆助手</p>
+              <p>{t('fmV1')}</p>
+              <p>{t('fmMobileDesc')}</p>
               <div className="pt-2 text-xs text-muted-foreground">
-                <p>💡 提示：长按格子可以快速标记</p>
-                <p>💡 提示：双指缩放可以查看细节</p>
+                <p>{t('ccLongPressHint')}</p>
+                <p>{t('ccPinchHint')}</p>
               </div>
             </div>
           </div>

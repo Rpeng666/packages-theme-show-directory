@@ -3,7 +3,8 @@
 import * as React from 'react';
 
 import { cn } from '../../../../lib/utils';
-import { useThemeComponent } from '../../../../context';
+import { resolveComponent } from '../../../../registry';
+import { defaultPerlerT, type PerlerT } from './i18n';
 
 export interface PerlerToolBarProps {
   onColorSelect: () => void;
@@ -11,6 +12,8 @@ export interface PerlerToolBarProps {
   onPause: () => void;
   isPaused: boolean;
   elapsedTime: string;
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
 }
 
 /**
@@ -23,10 +26,11 @@ export function ToolBar({
   onPause,
   isPaused,
   elapsedTime,
+  t = defaultPerlerT,
 }: PerlerToolBarProps) {
-  const Stack = useThemeComponent('Stack');
-  const Cluster = useThemeComponent('Cluster');
-  const Button = useThemeComponent('Button');
+  const Stack = resolveComponent('Stack');
+  const Cluster = resolveComponent('Cluster');
+  const Button = resolveComponent('Button');
 
   return (
     <Stack
@@ -47,7 +51,7 @@ export function ToolBar({
         <svg className="size-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
           <path fillRule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clipRule="evenodd" />
         </svg>
-        <span className="font-mono text-[10px] uppercase tracking-widest">颜色</span>
+        <span className="font-mono text-[10px] uppercase tracking-widest">{t('fmColor')}</span>
       </Button>
 
       <Button
@@ -62,7 +66,7 @@ export function ToolBar({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
-        <span className="font-mono text-[10px] uppercase tracking-widest">定位</span>
+        <span className="font-mono text-[10px] uppercase tracking-widest">{t('fmLocate')}</span>
       </Button>
 
       <Button

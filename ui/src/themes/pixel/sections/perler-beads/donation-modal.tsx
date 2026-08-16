@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 
+import { defaultPerlerT, type PerlerT } from './i18n';
+
 export interface PerlerDonationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -12,13 +14,15 @@ export interface PerlerDonationModalProps {
     fill?: boolean;
     className?: string;
   }>;
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
 }
 
 /**
  * Perler-beads donation modal — pixel retro chrome. Pure presentation; the
  * app injects the image renderer (next/image).
  */
-export function DonationModal({ isOpen, onClose, ImageComponent }: PerlerDonationModalProps) {
+export function DonationModal({ isOpen, onClose, ImageComponent, t = defaultPerlerT }: PerlerDonationModalProps) {
   if (!isOpen) return null;
 
   const Img = (ImageComponent ?? defaultImage) as React.ComponentType<{
@@ -40,13 +44,13 @@ export function DonationModal({ isOpen, onClose, ImageComponent }: PerlerDonatio
                 <path d="M6 8V7a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v1" fill="#f472b6" />
                 <path d="M12 16v-4" stroke="#7d2a5a" />
               </svg>
-              Buy Me A Milk Tea
+              {t('dnTitle')}
             </h3>
             <button
               type="button"
               onClick={onClose}
               className="text-muted-foreground/70 transition-colors duration-200 hover:text-foreground"
-              aria-label="关闭"
+              aria-label={t('close')}
             >
               <svg className="size-5 sm:size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -55,18 +59,18 @@ export function DonationModal({ isOpen, onClose, ImageComponent }: PerlerDonatio
           </div>
           <div className="text-center">
             <p className="mb-3 text-sm text-muted-foreground sm:text-base">
-              开源项目是把作者和用户紧紧联系在一起的社群，如果您希望这个项目继续发展，可以请作者喝一杯奶茶。
+              {t('dnDesc1')}
             </p>
             <p className="mb-4 text-sm text-muted-foreground sm:mb-6 sm:text-base">
-              您的支持是作者把项目继续下去的动力。
+              {t('dnDesc2')}
             </p>
             <div className="mb-4 flex justify-center sm:mb-5">
               <div className="relative size-40 p-1 bg-retro-surface/40 pxl-corner-sm shadow-md sm:size-48 md:size-56 sm:p-2">
-                <Img src="/donation-qr.jpg" alt="赞赏码" fill className="object-contain p-1 sm:p-2" />
+                <Img src="/donation-qr.jpg" alt={t('dnQrAlt')} fill className="object-contain p-1 sm:p-2" />
               </div>
             </div>
             <p className="inline-block rounded-full bg-retro-surface/30 px-3 py-1.5 text-xs text-muted-foreground shadow-sm sm:px-4 sm:py-2 sm:text-sm">
-              微信扫描上方赞赏码，请作者喝一杯奶茶。
+              {t('dnScan')}
             </p>
           </div>
         </div>

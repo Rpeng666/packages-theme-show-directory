@@ -173,10 +173,10 @@ const CelebrationAnimation: React.FC<PerlerCelebrationAnimationProps> = ({
           animationFillMode: 'both'
         }}
       >
-        <div className="text-4xl font-bold text-yellow-400 drop-shadow-md border-2 border-foreground/10 border-2 border-foreground/15 animate-pulse">
+        <div className="animate-pulse border-2 border-retro-gold/40 bg-retro-gold/10 px-6 py-3 pxl-corner-md shadow-lg font-display text-3xl sm:text-4xl font-normal uppercase tracking-wider text-retro-gold">
           🎉完成🎉
         </div>
-        <div className="text-lg text-white drop-shadow-md border-2 border-foreground/10 mt-2">
+        <div className="mt-2 border-2 border-foreground/15 bg-retro-surface/30 px-4 py-2 pxl-corner-sm font-mono text-sm sm:text-lg text-retro-cyan">
           这个颜色拼完了！
         </div>
       </div>

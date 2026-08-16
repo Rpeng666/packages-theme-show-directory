@@ -1,7 +1,7 @@
 'use client';
 import { cn } from '../../../../lib/utils';
 
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect, useCallback, useState, useMemo } from 'react';
 import type { PerlerMappedPixel } from '../../../../contracts/perler-beads/types';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type MappedPixel = PerlerMappedPixel;
@@ -18,6 +18,8 @@ export interface PerlerFocusCanvasProps {
   gridSectionInterval: number;
   showSectionLines: boolean;
   sectionLineColor: string;
+  /** 格子大小（px）——由页面按容器实测传入，桌面端自适应放大、移动端保持触控尺寸；缺省用 300px 基准公式 */
+  cellSize?: number;
   onCellClick: (row: number, col: number) => void;
   onScaleChange: (scale: number) => void;
   onOffsetChange: (offset: { x: number; y: number }) => void;
@@ -35,6 +37,7 @@ const FocusCanvas: React.FC<PerlerFocusCanvasProps> = ({
   gridSectionInterval,
   showSectionLines,
   sectionLineColor,
+  cellSize: providedCellSize,
   onCellClick,
   onScaleChange,
   onOffsetChange
@@ -45,8 +48,11 @@ const FocusCanvas: React.FC<PerlerFocusCanvasProps> = ({
   const [lastPanPoint, setLastPanPoint] = useState<{ x: number; y: number } | null>(null);
   const [lastPinchDistance, setLastPinchDistance] = useState<number | null>(null);
 
-  // 计算格子大小
-  const cellSize = Math.max(15, Math.min(40, 300 / Math.max(gridDimensions.N, gridDimensions.M)));
+  // 计算格子大小：页面传入自适应值（桌面放大）时用之；缺省退回 300px 基准公式
+  const cellSize = useMemo(
+    () => providedCellSize ?? Math.max(15, Math.min(40, 300 / Math.max(gridDimensions.N, gridDimensions.M))),
+    [providedCellSize, gridDimensions.N, gridDimensions.M]
+  );
 
   // 渲染画布
   const renderCanvas = useCallback(() => {
@@ -336,7 +342,7 @@ const FocusCanvas: React.FC<PerlerFocusCanvasProps> = ({
   return (
     <div 
       ref={containerRef}
-      className="w-full h-full flex items-center justify-center overflow-hidden bg-gray-100"
+      className="w-full h-full flex items-center justify-center overflow-hidden bg-retro-surface/30 pxl-corner-md"
       style={{ touchAction: 'none' }}
     >
       <div
@@ -347,7 +353,7 @@ const FocusCanvas: React.FC<PerlerFocusCanvasProps> = ({
       >
         <canvas
           ref={canvasRef}
-          className="cursor-crosshair border border-gray-300"
+          className="cursor-crosshair border-2 border-foreground/15"
           onClick={handleClick}
           onWheel={handleWheel}
           onTouchStart={handleTouchStart}

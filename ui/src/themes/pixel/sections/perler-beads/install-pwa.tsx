@@ -2,12 +2,19 @@
 
 import { useEffect, useState } from 'react';
 
+import { defaultPerlerT, type PerlerT } from './i18n';
+
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
-export function InstallPWA() {
+export interface PerlerInstallPwaProps {
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
+}
+
+export function InstallPWA({ t = defaultPerlerT }: PerlerInstallPwaProps) {
   const [supportsPWA, setSupportsPWA] = useState(false);
   const [promptInstall, setPromptInstall] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
@@ -55,12 +62,12 @@ export function InstallPWA() {
     <button
       className="fixed bottom-6 right-6 bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center gap-2 z-50"
       onClick={onClick}
-      aria-label="安装应用"
+      aria-label={t('install')}
     >
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m0 0l-4-4m4 4l4-4M5 12h14" />
       </svg>
-      安装应用
+      {t('install')}
     </button>
   );
 }

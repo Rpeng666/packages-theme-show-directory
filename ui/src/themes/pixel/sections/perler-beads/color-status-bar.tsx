@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { cn } from '../../../../lib/utils';
+import { defaultPerlerT, type PerlerT } from './i18n';
 
 export interface PerlerColorStatusBarProps {
   currentColor: string;
@@ -13,16 +14,18 @@ export interface PerlerColorStatusBarProps {
     completed: number;
   };
   progressPercentage: number;
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
 }
 
 /**
  * Perler-beads color status bar — pixel retro chrome. Pure presentation.
  */
-export function ColorStatusBar({ currentColor, colorInfo, progressPercentage }: PerlerColorStatusBarProps) {
+export function ColorStatusBar({ currentColor, colorInfo, progressPercentage, t = defaultPerlerT }: PerlerColorStatusBarProps) {
   if (!colorInfo) {
     return (
       <div className="flex h-12 items-center border-b-2 border-foreground/10 bg-retro-surface/30 px-4 py-2">
-        <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">请选择颜色</div>
+        <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{t('cpSelectFirst')}</div>
       </div>
     );
   }
@@ -41,7 +44,7 @@ export function ColorStatusBar({ currentColor, colorInfo, progressPercentage }: 
           <div className="font-mono text-sm font-medium text-foreground">
             {colorInfo.completed}/{colorInfo.total}
           </div>
-          <div className="text-xs text-muted-foreground">预计还需 {estimatedTime}分钟</div>
+          <div className="text-xs text-muted-foreground">{t('fmEstimated', { minutes: estimatedTime })}</div>
         </div>
       </div>
       <div className="text-right">

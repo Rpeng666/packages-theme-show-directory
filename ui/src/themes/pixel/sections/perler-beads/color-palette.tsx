@@ -3,7 +3,8 @@
 import * as React from 'react';
 
 import { cn } from '../../../../lib/utils';
-import { useThemeComponent } from '../../../../context';
+import { resolveComponent } from '../../../../registry';
+import { defaultPerlerT, type PerlerT } from './i18n';
 
 export interface PerlerColorData {
   key: string;
@@ -32,6 +33,8 @@ export interface PerlerColorPaletteProps {
   onColorReplace?: (source: PerlerColorData, target: PerlerColorData) => void;
   /** 色号显示函数（app 注入：把 hex 转成色号 key） */
   displayColorKey?: (color: string) => string;
+  /** 文案翻译（app 用 useTranslations 注入；缺省为中文） */
+  t?: PerlerT;
 }
 
 /**
@@ -54,16 +57,17 @@ export function ColorPalette({
   onColorReplaceToggle,
   onColorReplace,
   displayColorKey,
+  t = defaultPerlerT,
 }: PerlerColorPaletteProps) {
-  const Stack = useThemeComponent('Stack');
-  const Cluster = useThemeComponent('Cluster');
-  const Button = useThemeComponent('Button');
-  const Badge = useThemeComponent('Badge');
+  const Stack = resolveComponent('Stack');
+  const Cluster = resolveComponent('Cluster');
+  const Button = resolveComponent('Button');
+  const Badge = resolveComponent('Badge');
 
   if (!colors || colors.length === 0) {
     return (
       <p className="text-center text-xs text-muted-foreground py-2">
-        当前图纸无可用颜色。
+        {t('cpNoAvailable')}
       </p>
     );
   }
@@ -97,7 +101,7 @@ export function ColorPalette({
             size="sm"
             onClick={onToggleFullPalette}
           >
-            {showFullPalette ? '只显示图中颜色' : `展开完整色板 (${fullPaletteColors.length} 色)`}
+            {showFullPalette ? t('cpShowOnlyInImage') : t('cpExpandFull', { count: fullPaletteColors.length })}
           </Button>
         </div>
       )}
@@ -107,16 +111,16 @@ export function ColorPalette({
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-retro-gold">
-                颜色替换模式
+                {t('cpReplaceTitle')}
               </span>
             </div>
             {colorReplaceState.step === 'select-source' ? (
               <p className="text-xs text-muted-foreground">
-                步骤 1/2：点击图中要被替换的颜色
+                {t('cpReplaceStep1')}
               </p>
             ) : (
               <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                <span>被替换：</span>
+                <span>{t('cpReplaced')}</span>
                 <span
                   className="inline-block size-4 border-2 border-foreground/30"
                   style={{ backgroundColor: colorReplaceState.sourceColor?.color }}
@@ -135,10 +139,10 @@ export function ColorPalette({
         <div className="p-3 border-b-2 border-foreground/10 bg-retro-red/10">
           <div className="text-center">
             <span className="font-mono text-xs font-semibold uppercase tracking-widest text-retro-red">
-              背景擦除模式
+              {t('cpEraseModeTitle')}
             </span>
             <p className="text-xs text-muted-foreground mt-1">
-              点击图中任意颜色，删除整个颜色块（洪水填充）
+              {t('cpEraseModeDesc')}
             </p>
           </div>
         </div>
@@ -149,8 +153,8 @@ export function ColorPalette({
           <button
             type="button"
             onClick={onEraseToggle}
-            title={isEraseMode ? '退出一键擦除模式' : '一键擦除 (洪水填充删除相同颜色)'}
-            aria-label={isEraseMode ? '退出一键擦除模式' : '开启一键擦除模式'}
+            title={isEraseMode ? t('cpEraseExit') : t('cpEraseFlood')}
+            aria-label={isEraseMode ? t('cpEraseExit') : t('cpEraseTitle')}
             className={cn(
               'flex size-12 shrink-0 items-center justify-center border-2 pxl-corner-sm transition-all',
               isEraseMode
@@ -168,16 +172,16 @@ export function ColorPalette({
           <button
             type="button"
             onClick={onColorReplaceToggle}
-            title={colorReplaceState?.isActive ? '退出颜色替换模式' : '颜色替换 (将图中A颜色全部替换为B颜色)'}
-            aria-label={colorReplaceState?.isActive ? '退出颜色替换模式' : '开启颜色替换模式'}
+            title={colorReplaceState?.isActive ? t('cpReplaceExit') : t('cpReplaceDesc')}
+            aria-label={colorReplaceState?.isActive ? t('cpReplaceExit') : t('cpReplaceOn')}
             className={cn(
               'flex size-12 shrink-0 items-center justify-center border-2 pxl-corner-sm transition-all',
               colorReplaceState?.isActive
-                ? 'border-retro-purple bg-retro-purple/20 shadow-md'
-                : 'border-retro-purple/40 bg-retro-purple/10 hover:border-retro-purple'
+                ? 'border-retro-cyan bg-retro-cyan/20 shadow-md'
+                : 'border-retro-cyan/40 bg-retro-cyan/10 hover:border-retro-cyan'
             )}
           >
-            <svg className="size-5 text-retro-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
+            <svg className="size-5 text-retro-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
             </svg>
           </button>
@@ -210,8 +214,8 @@ export function ColorPalette({
                   onHighlightColor(colorData.color);
                 }
               }}
-              title={isTransparent ? '橡皮擦' : `${displayKey} ${colorData.color}`}
-              aria-label={isTransparent ? '橡皮擦' : `${displayKey}`}
+              title={isTransparent ? t('cpErase') : `${displayKey} ${colorData.color}`}
+              aria-label={isTransparent ? t('cpErase') : `${displayKey}`}
               className={cn(
                 'relative flex size-12 shrink-0 items-center justify-center border-2 pxl-corner-sm transition-all',
                 isSelected
