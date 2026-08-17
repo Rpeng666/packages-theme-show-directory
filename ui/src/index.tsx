@@ -46,6 +46,7 @@ export type {
   FeaturesListProps,
   BlogProps,
   BlogDetailProps,
+  HeroCleanerProps,
   RelatedPostsProps,
   BlogToolCtaProps,
 } from './contracts/sections'
@@ -81,6 +82,12 @@ export { PageShell } from './themes/pixel/pageshell'
 // Shared presentational components (no app deps).
 export { SmartIcon } from './components/smart-icon'
 export { ScrollAnimation } from './components/scroll-animation'
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from './components/accordion'
 export { PixelIcon } from './components/pixel-icon'
 export type { PixelIconProps } from './components/pixel-icon'
 
@@ -212,11 +219,21 @@ export type {
 } from './contracts/dither/types'
 export { DEFAULT_DITHER_OPTIONS } from './contracts/dither/types'
 
-// Cleaner workbench — display component prop contracts (pixel sections).
-// Components are consumed via `resolveCleaner`; the props types are exported
-// so app blocks can type their thin forwarders.
+// Cleaner workbench — display component prop contracts. Components are consumed
+// via `resolveCleaner`; the props types are exported so app blocks can type
+// their thin forwarders. Display types are shared (default + pixel).
 export type { CleanerWorkbenchProps } from './contracts/sections/cleaner-workbench'
-export type { CleanerOutputProps, CleanerDiffPart } from './themes/pixel/sections/cleaner'
+export type {
+  CleanerOutputProps,
+  CleanerDiffPart,
+  CleanerAnalyzeResult,
+  CleanerIssue,
+  CleanerSeverity,
+  CleanerOutputView,
+  CleanerT,
+  ContextMode,
+  ContextModeValue,
+} from './contracts/sections/cleaner-types'
 
 // Light-tool demo — reusable upload→process→download asset for the SEO tool pages.
 export { ArtifactHero, drawArtifactChart } from './themes/pixel/light-tool-demo'

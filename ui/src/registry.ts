@@ -56,6 +56,7 @@ import type { PricingProps } from './contracts/sections/pricing'
 import type { FeaturesFlowProps, FeaturesListProps } from './contracts/sections/features-media'
 import type { BlogProps } from './contracts/sections/blog'
 import type { BlogDetailProps } from './contracts/sections/blog-detail'
+import type { HeroCleanerProps } from './contracts/sections/hero-cleaner'
 import type { RelatedPostsProps, BlogToolCtaProps } from './contracts/sections/blog-cta'
 import type { CleanerWorkbenchProps } from './contracts/sections/cleaner-workbench'
 import type { CleanerOutputProps } from './themes/pixel/sections/cleaner'
@@ -100,6 +101,13 @@ import { ToolsGrid as DefaultToolsGrid } from './themes/default/sections/tools-g
 import { Showcases as DefaultShowcases } from './themes/default/sections/showcases'
 import { Testimonials as DefaultTestimonials } from './themes/default/sections/testimonials'
 import { Pricing as DefaultPricing } from './themes/default/sections/pricing'
+import { Faq as DefaultFaq } from './themes/default/sections/faq'
+import { Cta as DefaultCta } from './themes/default/sections/cta'
+import { FeaturesStep as DefaultFeaturesStep } from './themes/default/sections/features-step'
+import { HeroCleaner as DefaultHeroCleaner } from './themes/default/sections/hero-cleaner'
+import { Blog as DefaultBlog } from './themes/default/sections/blog'
+import { BlogDetail as DefaultBlogDetail } from './themes/default/sections/blog-detail'
+import { CleanerWorkbench as DefaultCleanerWorkbench, CleanerOutput as DefaultCleanerOutput } from './themes/default/sections/cleaner'
 
 import { Button as PixelButton } from './themes/pixel/button'
 import { Badge as PixelBadge } from './themes/pixel/badge'
@@ -311,6 +319,7 @@ export interface SectionComponents {
   FeaturesList: ComponentType<FeaturesListProps>
   Blog: ComponentType<BlogProps>
   BlogDetail: ComponentType<BlogDetailProps>
+  HeroCleaner: ComponentType<HeroCleanerProps>
   RelatedPosts: ComponentType<RelatedPostsProps>
   BlogToolCta: ComponentType<BlogToolCtaProps>
   Testimonials: ComponentType<TestimonialsProps>
@@ -437,7 +446,7 @@ export interface ThemeManifest {
   dither?: PartialDitherComponents
   /** 该主题的通用图像编辑器壳组件（当前仅 pixel 注册） */
   editor?: PartialEditorComponents
-  /** 该主题的 cleaner 工作台显示组件（当前仅 pixel 注册） */
+  /** 该主题的 cleaner 工作台显示组件（default + pixel 已注册） */
   cleaner?: PartialCleanerComponents
   /** 该主题的轻量工具 demo 组件（当前仅 pixel 注册） */
   lightDemo?: PartialLightDemoComponents
@@ -501,6 +510,16 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Showcases: DefaultShowcases,
       Testimonials: DefaultTestimonials,
       Pricing: DefaultPricing,
+      Faq: DefaultFaq,
+      Cta: DefaultCta,
+      FeaturesStep: DefaultFeaturesStep,
+      HeroCleaner: DefaultHeroCleaner,
+      Blog: DefaultBlog,
+      BlogDetail: DefaultBlogDetail,
+    },
+    cleaner: {
+      Workbench: DefaultCleanerWorkbench,
+      Output: DefaultCleanerOutput,
     },
   },
   pixel: {
@@ -756,9 +775,9 @@ export function resolveEditor<K extends keyof EditorComponents>(
 }
 
 /**
- * Resolve a cleaner workbench display component. The feature is pixel-only, so
- * the implementation always resolves against `pixel` (never the default theme)
- * — mirroring `resolveEditor`/`resolveDither`.
+ * Resolve a cleaner workbench display component. Falls back to the `pixel`
+ * implementation when the active theme has no cleaner entry (mirroring
+ * `resolveEditor`/`resolveDither`) — pixel is the historical reference.
  *
  * Usage: resolveCleaner('Workbench')  /  resolveCleaner('Output')
  */

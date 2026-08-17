@@ -23,6 +23,14 @@ export interface BlogCategory {
   url?: string
 }
 
+/** 注入的 Link 组件，替代 next-intl Link（package 不依赖 Next） */
+export type BlogLink = ComponentType<{
+  href: string
+  target?: string
+  children: ReactNode
+  className?: string
+}>
+
 export interface BlogProps {
   section: Section
   className?: string
@@ -33,10 +41,7 @@ export interface BlogProps {
   /** 业务数据：文章列表 */
   posts?: BlogPost[]
   /** 可选注入：链接渲染。不提供时 fallback 到原生 <a> */
-  LinkComponent?: ComponentType<{
-    href: string
-    target?: string
-    children: ReactNode
-    className?: string
-  }>
+  LinkComponent?: BlogLink
+  /** 可选注入：空态文案（app 翻译注入，package 不硬编码文案） */
+  emptyText?: string
 }
