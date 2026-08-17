@@ -571,3 +571,57 @@ export type {
   PresetType as AnimatedGroupPresetType,
   AnimatedGroupProps,
 } from './components/animated-group'
+
+// Console feature contracts (schema-driven form/table types).
+// Aliased where the bare name would clash with a component export
+// (Button / Form / Table / Pagination).
+export type {
+  Image as NavImage,
+  Brand,
+  NavItem as ConsoleNavItem,
+  Nav,
+  Crumb,
+  Tab,
+  FilterOption,
+  Filter,
+  Search,
+  Button as NavButton,
+  SocialNav,
+  AgreementNav,
+  UserNav,
+  Pagination as PaginationInfo,
+} from './contracts/features/common'
+export type {
+  FormField as ConsoleFormField,
+  FormSubmit,
+  Form as FormConfig,
+} from './contracts/features/form'
+export type {
+  TableColumn,
+  Table as TableConfig,
+} from './contracts/features/table'
+
+// Console bridge (i18n navigation injection seam) + schema-driven console
+// stack. Component names aliased where the bare name clashes with a
+// primitive (Form / Table / Tabs / Pagination).
+export {
+  ConsoleBridgeProvider,
+  useConsoleBridge,
+  ConsoleLink,
+} from './components/console/bridge'
+export type { ConsoleBridgeValue } from './components/console/bridge'
+export { Form as ConsoleForm } from './components/console/form'
+export { FormCard } from './components/console/form/form-card'
+export {
+  Table as ConsoleTable,
+} from './components/console/table'
+export { TableCard } from './components/console/table/table-card'
+export { PanelCard } from './components/console/panel-card'
+export { ConsoleLayout } from './components/console/console-layout'
+// Generic common components (used by the console stack; theme-agnostic).
+export { Tabs as NavTabs } from './components/common/tabs'
+export { Pagination as NavPagination } from './components/common/pagination'
+export { LazyImage } from './components/common/lazy-image'
+export { MarkdownEditor } from './components/common/markdown-editor'
+export { ImageUploader } from './components/common/image-uploader'
+export type { ImageUploaderValue } from './components/common/image-uploader'
