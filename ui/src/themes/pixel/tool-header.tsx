@@ -53,7 +53,9 @@ export function ToolHeader({ brand,
   slogan,
   sourceHint,
   links = [],
+  headingLevel: Heading = 'h1',
   className, ...rest }: ToolHeaderProps) {
+  const TitleTag = Heading === 'h1' ? 'h2' : 'h3';
   return (
     <header {...rest}
       className={cn(
@@ -88,17 +90,17 @@ export function ToolHeader({ brand,
 
         {/* 品牌 + 工具名 */}
         <div className="flex flex-col items-center gap-3">
-          <h1 className="font-display text-4xl font-normal uppercase tracking-wider text-foreground sm:text-6xl">
+          <Heading className="font-display text-4xl font-normal uppercase tracking-wider text-foreground sm:text-6xl">
             {brand}
-          </h1>
-          <h2 className="font-display text-xl font-normal uppercase tracking-widest text-retro-cyan sm:text-3xl">
+          </Heading>
+          <TitleTag className="font-display text-xl font-normal uppercase tracking-widest text-retro-cyan sm:text-3xl">
             {title}
             {titleBadge && (
               <span className="ml-1 align-middle text-xs font-mono text-muted-foreground">
                 {titleBadge}
               </span>
             )}
-          </h2>
+          </TitleTag>
         </div>
 
         {slogan && (

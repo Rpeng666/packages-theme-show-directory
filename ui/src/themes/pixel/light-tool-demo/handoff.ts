@@ -17,7 +17,7 @@ export interface WorkbenchHandoff {
   params?: Record<string, string | number | boolean>;
 }
 
-const HANDOFF_STORAGE_KEY = 'pixelbean:workbench-handoff';
+const HANDOFF_STORAGE_KEY = 'PixelMaster:workbench-handoff';
 
 /** Latest handoff per tool slug (client-only, lives with the page). */
 const latest = new Map<string, WorkbenchHandoff>();

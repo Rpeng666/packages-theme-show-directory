@@ -30,6 +30,16 @@ function TooltipTrigger({
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 }
 
+function Tooltip({
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
+  return (
+    <TooltipProvider>
+      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+    </TooltipProvider>
+  );
+}
+
 function TooltipContent({
   className,
   sideOffset = 0,
@@ -54,4 +64,4 @@ function TooltipContent({
   );
 }
 
-export { TooltipProvider, TooltipTrigger, TooltipContent };
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

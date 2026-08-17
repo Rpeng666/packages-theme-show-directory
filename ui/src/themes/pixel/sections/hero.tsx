@@ -87,9 +87,11 @@ export function Hero({ section, className, LinkComponent, ImageComponent }: Hero
             <div className="bg-foreground/15 h-2 w-5/6" />
             <div className="bg-foreground/15 h-2 w-4/6" />
           </div>
-          <div className="pxl-corner-sm border-2 border-foreground/20 bg-primary text-primary-foreground absolute top-6 right-6 px-3 py-1 font-display text-[10px] font-normal uppercase tracking-wider shadow-sm">
-            AI Cleaned
-          </div>
+          {typeof section.badge === 'string' && section.badge && (
+            <div className="pxl-corner-sm border-2 border-foreground/20 bg-primary text-primary-foreground absolute top-6 right-6 px-3 py-1 font-display text-[10px] font-normal uppercase tracking-wider shadow-sm">
+              {section.badge}
+            </div>
+          )}
         </div>
       </div>
 

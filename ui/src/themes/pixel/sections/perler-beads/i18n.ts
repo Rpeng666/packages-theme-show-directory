@@ -189,7 +189,7 @@ const ZH: Record<string, string> = {
   shCompareAfter: '图纸',
   shCompareTitle: '拖动滑块对比原图与图纸效果',
   shShareTitle: '导出图纸快照与分享文案',
-  shBuildText: '🎨 我拼了一幅 {width}×{height} 的拼豆图纸（{system} 色号），共 {colorCount} 色、{totalBeads} 颗豆！\n在 PixelBean 里用它来打发时光吧～',
+  shBuildText: '🎨 我拼了一幅 {width}×{height} 的拼豆图纸（{system} 色号），共 {colorCount} 色、{totalBeads} 颗豆！\n在 PixelMaster 里用它来打发时光吧～',
   // header
   hdTitle: '拼豆底稿生成器',
   hdTitleBadge: '竖屏版',
