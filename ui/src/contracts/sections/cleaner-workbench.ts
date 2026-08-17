@@ -1,4 +1,5 @@
 import type { Section } from '../../types/landing'
+import type { CleanerAnalyzeResult, ContextModeValue } from './cleaner-types'
 
 export type CleanerMode =
   | 'humanize'
@@ -59,12 +60,12 @@ export interface CleanerWorkbenchProps {
   // --- Derived (app computes; package renders) ---
   activeDiffParts: Array<{ value: string; added?: boolean; removed?: boolean }>
   activeHasChanges: boolean
-  analyzeResult: unknown
+  analyzeResult: CleanerAnalyzeResult | null
   isRewriting: boolean
   fallbackNotice: boolean
   showAdvancedOptions: boolean
   onToggleAdvancedOptions: () => void
-  contextMode: string
+  contextMode: ContextModeValue
   detectedContextMode: string
   /** 类型/严重度标签映射（app 的 locale 注入） */
   typeLabels: Record<string, string>
