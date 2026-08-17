@@ -1,0 +1,7 @@
+export { Hero } from './hero'
+export { Features } from './features'
+export { FeaturesAccordion } from './features-accordion'
+export { Faq } from './faq'
+export { Cta } from './cta'
+export { Testimonials } from './testimonials'
+export { Pricing } from './pricing'

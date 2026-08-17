@@ -1,0 +1,25 @@
+{
+  "name": "@template/semi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Semi Design (@douyinfe/semi-ui) theme package - primitives + landing sections implementing the @template/ui contracts. Registered as the 'semi' theme.",
+  "main": "./src/index.tsx",
+  "module": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "types": "./src/index.tsx",
+      "import": "./src/index.tsx",
+      "default": "./src/index.tsx"
+    },
+    "./theme.css": "./theme.css"
+  },
+  "dependencies": {
+    "@douyinfe/semi-ui": "^2.102.0",
+    "@douyinfe/semi-icons": "^2.102.0",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
+    "@template/ui": "workspace:*"
+  }
+}

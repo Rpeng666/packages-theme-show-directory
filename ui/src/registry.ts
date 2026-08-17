@@ -39,6 +39,16 @@ import type { DualCtaProps } from './contracts/dual-cta'
 import type { DropdownProps } from './contracts/dropdown'
 import type { StackProps, ClusterProps, GridProps, DividerProps } from './contracts/layout'
 import type { SelectProps, ToggleProps, ToggleGroupProps, BareTextareaProps } from './contracts/form'
+import type { InputNumberProps } from './contracts/input-number'
+import type { SliderProps } from './contracts/slider'
+import type { TagProps } from './contracts/tag'
+import type { TabsProps } from './contracts/tabs'
+import type { EmptyProps } from './contracts/empty'
+import type { SpinProps } from './contracts/spin'
+import type { StepsProps } from './contracts/steps'
+import type { TableProps } from './contracts/table'
+import type { DescriptionsProps } from './contracts/descriptions'
+import type { BannerProps } from './contracts/banner'
 import type { IconFrameProps } from './contracts/iconframe'
 import type { HeroProps } from './contracts/sections/hero'
 import type { FaqProps } from './contracts/sections/faq'
@@ -92,6 +102,16 @@ import {
 } from './themes/default/layout'
 import { Select as DefaultSelect, Toggle as DefaultToggle, ToggleGroup as DefaultToggleGroup, BareTextarea as DefaultBareTextarea } from './themes/default/form'
 import { IconFrame as DefaultIconFrame } from './themes/default/iconframe'
+import { InputNumber as DefaultInputNumber } from './themes/default/input-number'
+import { Slider as DefaultSlider } from './themes/default/slider'
+import { Tag as DefaultTag } from './themes/default/tag'
+import { Tabs as DefaultTabs } from './themes/default/tabs'
+import { Empty as DefaultEmpty } from './themes/default/empty'
+import { Spin as DefaultSpin } from './themes/default/spin'
+import { Steps as DefaultSteps } from './themes/default/steps'
+import { Table as DefaultTable } from './themes/default/table'
+import { Descriptions as DefaultDescriptions } from './themes/default/descriptions'
+import { Banner as DefaultBanner } from './themes/default/banner'
 import { Hero as DefaultHero } from './themes/default/sections/hero'
 import { FeaturesGrid as DefaultFeaturesGrid } from './themes/default/sections/features-grid'
 import { Features as DefaultFeatures } from './themes/default/sections/features'
@@ -213,6 +233,59 @@ import { EditorToolbar as PixelEditorToolbar } from './themes/pixel/editor'
 import { EditorSidebar as PixelEditorSidebar } from './themes/pixel/editor'
 import { EditorCanvas as PixelEditorCanvas } from './themes/pixel/editor'
 
+// Semi theme (@douyinfe/semi-ui) — separate workspace package (@template/semi).
+// It implements the shared contracts; missing keys (ToolHeader/ToolFooter/
+// ToolSettings/DualCta) fall back to the default theme.
+import {
+  Button as SemiButton,
+  Badge as SemiBadge,
+  Card as SemiCard,
+  Input as SemiInput,
+  Textarea as SemiTextarea,
+  Switch as SemiSwitch,
+  Progress as SemiProgress,
+  Tooltip as SemiTooltip,
+  Skeleton as SemiSkeleton,
+  Select as SemiSelect,
+  Toggle as SemiToggle,
+  ToggleGroup as SemiToggleGroup,
+  BareTextarea as SemiBareTextarea,
+  Dropdown as SemiDropdown,
+  Dialog as SemiDialog,
+  PromoModal as SemiPromoModal,
+  HintBanner as SemiHintBanner,
+  Stack as SemiStack,
+  Cluster as SemiCluster,
+  Grid as SemiGrid,
+  Divider as SemiDivider,
+  Label as SemiLabel,
+  Avatar as SemiAvatar,
+  Box as SemiBox,
+  IconFrame as SemiIconFrame,
+  InputNumber as SemiInputNumber,
+  Slider as SemiSlider,
+  Tag as SemiTag,
+  Tabs as SemiTabs,
+  Empty as SemiEmpty,
+  Spin as SemiSpin,
+  Steps as SemiSteps,
+  Table as SemiTable,
+  Descriptions as SemiDescriptions,
+  UploadZone as SemiUploadZone,
+  Banner as SemiBanner,
+  Header as SemiHeader,
+  Footer as SemiFooter,
+} from '@template/semi'
+import {
+  Hero as SemiHero,
+  Features as SemiFeatures,
+  FeaturesAccordion as SemiFeaturesAccordion,
+  Faq as SemiFaq,
+  Cta as SemiCta,
+  Testimonials as SemiTestimonials,
+  Pricing as SemiPricing,
+} from '@template/semi'
+
 import type {
   PerlerToolBarProps,
   PerlerColorPaletteProps,
@@ -295,6 +368,16 @@ export interface ThemeComponents {
   ToggleGroup: ComponentType<ToggleGroupProps>
   BareTextarea: ComponentType<BareTextareaProps>
   IconFrame: ComponentType<IconFrameProps>
+  InputNumber: ComponentType<InputNumberProps>
+  Slider: ComponentType<SliderProps>
+  Tag: ComponentType<TagProps>
+  Tabs: ComponentType<TabsProps>
+  Empty: ComponentType<EmptyProps>
+  Spin: ComponentType<SpinProps>
+  Steps: ComponentType<StepsProps>
+  Table: ComponentType<TableProps>
+  Descriptions: ComponentType<DescriptionsProps>
+  Banner: ComponentType<BannerProps>
 }
 
 /**
@@ -499,6 +582,16 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ToggleGroup: DefaultToggleGroup,
       BareTextarea: DefaultBareTextarea,
       IconFrame: DefaultIconFrame,
+      InputNumber: DefaultInputNumber,
+      Slider: DefaultSlider,
+      Tag: DefaultTag,
+      Tabs: DefaultTabs,
+      Empty: DefaultEmpty,
+      Spin: DefaultSpin,
+      Steps: DefaultSteps,
+      Table: DefaultTable,
+      Descriptions: DefaultDescriptions,
+      Banner: DefaultBanner,
     },
     sections: {
       Hero: DefaultHero,
@@ -638,6 +731,58 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       PaletteExtractor: PixelPaletteExtractorDemo,
       ArtifactHero: PixelArtifactHero,
       CraftEntryNav: PixelCraftEntryNav,
+    },
+  },
+  semi: {
+    name: 'semi',
+    components: {
+      Button: SemiButton,
+      Badge: SemiBadge,
+      Card: SemiCard,
+      Input: SemiInput,
+      Textarea: SemiTextarea,
+      Switch: SemiSwitch,
+      Progress: SemiProgress,
+      Tooltip: SemiTooltip,
+      Skeleton: SemiSkeleton,
+      Header: SemiHeader,
+      Footer: SemiFooter,
+      Box: SemiBox,
+      Label: SemiLabel,
+      Avatar: SemiAvatar,
+      Dialog: SemiDialog,
+      PromoModal: SemiPromoModal,
+      HintBanner: SemiHintBanner,
+      Dropdown: SemiDropdown,
+      Stack: SemiStack,
+      Cluster: SemiCluster,
+      Grid: SemiGrid,
+      Divider: SemiDivider,
+      Select: SemiSelect,
+      Toggle: SemiToggle,
+      ToggleGroup: SemiToggleGroup,
+      BareTextarea: SemiBareTextarea,
+      IconFrame: SemiIconFrame,
+      InputNumber: SemiInputNumber,
+      Slider: SemiSlider,
+      Tag: SemiTag,
+      Tabs: SemiTabs,
+      Empty: SemiEmpty,
+      Spin: SemiSpin,
+      Steps: SemiSteps,
+      Table: SemiTable,
+      Descriptions: SemiDescriptions,
+      UploadZone: SemiUploadZone,
+      Banner: SemiBanner,
+    },
+    sections: {
+      Hero: SemiHero,
+      Features: SemiFeatures,
+      FeaturesAccordion: SemiFeaturesAccordion,
+      Faq: SemiFaq,
+      Cta: SemiCta,
+      Testimonials: SemiTestimonials,
+      Pricing: SemiPricing,
     },
   },
 }
