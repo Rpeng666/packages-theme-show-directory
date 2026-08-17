@@ -90,6 +90,28 @@ export {
 } from './components/accordion'
 export { PixelIcon } from './components/pixel-icon'
 export type { PixelIconProps } from './components/pixel-icon'
+// Vendored magicui effects (generic motion primitives).
+export { Particles } from './components/magicui/particles'
+export { BorderBeam } from './components/magicui/border-beam'
+export { RetroGrid } from './components/magicui/retro-grid'
+export { Meteors } from './components/magicui/meteors'
+export { Ripple } from './components/magicui/ripple'
+export { AvatarCircles } from './components/magicui/avatar-circles'
+export { TextShimmer } from './components/magicui/text-shimmer'
+// Raw shadcn/radix composites (generic primitives, theme-agnostic).
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/tabs'
+export {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from './components/select'
 
 // Theme-aware thin Tooltip (contract) — distinct from the composite
 // default tooltip sub-components below.
@@ -287,7 +309,265 @@ export {
 // Tooltip composite sub-components (default shadcn, for app-side composable
 // call sites that don't need theme switching).
 export {
+  Tooltip as TooltipComposite,
   TooltipProvider,
   TooltipTrigger,
   TooltipContent,
 } from './themes/default/tooltip-composite'
+
+// Vendored shadcn/radix primitives (generic, theme-agnostic).
+export {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+} from './components/avatar'
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from './components/breadcrumb'
+export {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+  buttonGroupVariants,
+} from './components/button-group'
+export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from './components/carousel'
+export type {
+  CarouselApi,
+} from './components/carousel'
+export {
+  Checkbox,
+} from './components/checkbox'
+export {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from './components/collapsible'
+export {
+  Command,
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandShortcut,
+  CommandSeparator,
+} from './components/command'
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from './components/dialog'
+export {
+  Drawer,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+} from './components/drawer'
+export {
+  DropdownMenu,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from './components/dropdown-menu'
+export {
+  useFormField,
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  FormField,
+} from './components/form'
+export {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from './components/hover-card'
+export {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupText,
+  InputGroupInput,
+  InputGroupTextarea,
+} from './components/input-group'
+export {
+  Label,
+} from './components/label'
+export {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuIndicator,
+  NavigationMenuViewport,
+  navigationMenuTriggerStyle,
+} from './components/navigation-menu'
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from './components/pagination'
+export {
+  RadioGroup,
+  RadioGroupItem,
+} from './components/radio-group'
+export {
+  ScrollArea,
+  ScrollBar,
+} from './components/scroll-area'
+export {
+  Separator,
+} from './components/separator'
+export {
+  Sheet,
+  SheetTrigger,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+} from './components/sheet'
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInput,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+  useSidebar,
+} from './components/sidebar'
+export {
+  Toaster,
+} from './components/sonner'
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from './components/table'
+export {
+  Toggle,
+  toggleVariants,
+} from './components/toggle'
+export {
+  ToggleGroup,
+  ToggleGroupItem,
+} from './components/toggle-group'
+export {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle,
+} from './components/chart'
+export type {
+  ChartConfig,
+} from './components/chart'
+export {
+  Highlighter,
+} from './components/highlighter'
+export {
+  InfiniteSlider,
+} from './components/infinite-slider'
+export type {
+  InfiniteSliderProps,
+} from './components/infinite-slider'
+export {
+  Marquee,
+} from './components/marquee'
+export {
+  GRADIENT_ANGLES,
+  ProgressiveBlur,
+} from './components/progressive-blur'
+export type {
+  ProgressiveBlurProps,
+} from './components/progressive-blur'
+export {
+  TextEffect,
+} from './components/text-effect'
+export type {
+  PresetType,
+  PerType,
+  TextEffectProps,
+} from './components/text-effect'
+export {
+  AnimatedGridPattern,
+} from './components/animated-grid-pattern'
+export type {
+  AnimatedGridPatternProps,
+} from './components/animated-grid-pattern'
+export {
+  AnimatedGroup,
+} from './components/animated-group'
+export type {
+  PresetType as AnimatedGroupPresetType,
+  AnimatedGroupProps,
+} from './components/animated-group'
