@@ -15,7 +15,8 @@ import type { ReactNode } from "react";
 export type DesignerStage = "source" | "templates" | "design" | "export";
 export type DesignerImageFit = "cover" | "contain";
 export type DesignerTextAlign = "left" | "center";
-export type DesignerTemplateCategory = "gaming" | "tech" | "finance" | "minimal";
+export type DesignerTemplateCategory =
+  "gaming" | "tech" | "finance" | "minimal";
 
 export interface DesignerEffects {
   /** -100..100 */
@@ -215,4 +216,3 @@ export interface DesignerStudioProps {
   /** ---- shared ---- */
   footerHint?: ReactNode;
 }
-

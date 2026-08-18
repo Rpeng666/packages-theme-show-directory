@@ -69,8 +69,12 @@ function Hero({
             <SmartIcon name="Sparkles" size={13} />
             {eyebrow}
           </span>
-          <h2 className="mt-4 text-3xl font-black leading-tight sm:text-4xl">{title}</h2>
-          <p className="mt-3 max-w-xl text-sm text-white/85 sm:text-base">{description}</p>
+          <h2 className="mt-4 text-3xl font-black leading-tight sm:text-4xl">
+            {title}
+          </h2>
+          <p className="mt-3 max-w-xl text-sm text-white/85 sm:text-base">
+            {description}
+          </p>
           {badges && badges.length > 0 ? (
             <div className="mt-5 flex flex-wrap gap-2">
               {badges.map((b, i) => (
@@ -83,7 +87,10 @@ function Hero({
                       : "bg-white/15 text-white backdrop-blur",
                   )}
                 >
-                  <SmartIcon name={b.tone === "pro" ? "Crown" : "Check"} size={12} />
+                  <SmartIcon
+                    name={b.tone === "pro" ? "Crown" : "Check"}
+                    size={12}
+                  />
                   {b.label}
                 </span>
               ))}
@@ -121,7 +128,9 @@ function Hero({
                   {heroCanvas.title}
                 </span>
                 {heroCanvas.subtitle ? (
-                  <span className="mt-1 text-[10px] opacity-80">{heroCanvas.subtitle}</span>
+                  <span className="mt-1 text-[10px] opacity-80">
+                    {heroCanvas.subtitle}
+                  </span>
                 ) : null}
               </div>
               <span className="absolute inset-0 m-auto h-12 w-12 rounded-full bg-white/25 backdrop-blur">
@@ -163,7 +172,10 @@ function StageRail({
   stageTotalLabel?: ReactNode;
 }) {
   const list = stages ?? [];
-  const activeIndex = Math.max(0, list.findIndex((s) => s.key === stage));
+  const activeIndex = Math.max(
+    0,
+    list.findIndex((s) => s.key === stage),
+  );
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div className="flex flex-wrap items-center gap-1.5">
@@ -288,7 +300,9 @@ function SourceStage({
           <SmartIcon name="ImageIcon" size={26} />
         </span>
         <span className="mt-2 text-base font-bold">{sourceHint}</span>
-        <span className="text-xs text-muted-foreground">{sourceFormatHint}</span>
+        <span className="text-xs text-muted-foreground">
+          {sourceFormatHint}
+        </span>
       </div>
 
       <div className="mx-auto flex max-w-xl flex-col items-center gap-3 sm:flex-row">
@@ -356,7 +370,13 @@ function SourceStage({
   );
 }
 
-function TemplatePreview({ template, large }: { template: DesignerTemplate; large?: boolean }) {
+function TemplatePreview({
+  template,
+  large,
+}: {
+  template: DesignerTemplate;
+  large?: boolean;
+}) {
   const d = template.design;
   return (
     <div
@@ -373,11 +393,21 @@ function TemplatePreview({ template, large }: { template: DesignerTemplate; larg
         style={{ background: template.accent }}
       />
       <div style={{ color: d.titleColor }}>
-        <span className={cn("block font-black uppercase leading-tight", large ? "text-2xl" : "text-sm")}>
+        <span
+          className={cn(
+            "block font-black uppercase leading-tight",
+            large ? "text-2xl" : "text-sm",
+          )}
+        >
           {d.title || "TITLE"}
         </span>
         {d.subtitle ? (
-          <span className={cn("mt-0.5 block opacity-80", large ? "text-[11px]" : "text-[8px]")}>
+          <span
+            className={cn(
+              "mt-0.5 block opacity-80",
+              large ? "text-[11px]" : "text-[8px]",
+            )}
+          >
             {d.subtitle}
           </span>
         ) : null}
@@ -415,10 +445,13 @@ function TemplatesStage({
   onApplyTemplate?: (t: DesignerTemplate) => void;
   onSkipTemplates?: () => void;
 }) {
-  const [category, setCategory] = useState<DesignerTemplateCategory | "all">("all");
+  const [category, setCategory] = useState<DesignerTemplateCategory | "all">(
+    "all",
+  );
   const all = templates ?? [];
   const featured = all.slice(0, 3);
-  const visible = category === "all" ? all : all.filter((t) => t.category === category);
+  const visible =
+    category === "all" ? all : all.filter((t) => t.category === category);
   const cats = [
     { key: "all" as const, label: templatesEyebrow },
     ...(templateCategories ?? []),
@@ -452,7 +485,10 @@ function TemplatesStage({
                 <TemplatePreview template={t} large />
                 <div className="flex items-center justify-between px-3 py-2">
                   <span className="text-sm font-bold">{t.name}</span>
-                  <span className="text-xs font-bold" style={{ color: t.accent }}>
+                  <span
+                    className="text-xs font-bold"
+                    style={{ color: t.accent }}
+                  >
                     {t.category}
                   </span>
                 </div>
@@ -481,7 +517,9 @@ function TemplatesStage({
       </div>
 
       {visible.length === 0 ? (
-        <p className="py-10 text-center text-sm text-muted-foreground">{emptyLabel}</p>
+        <p className="py-10 text-center text-sm text-muted-foreground">
+          {emptyLabel}
+        </p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {visible.map((t) => {
@@ -503,7 +541,9 @@ function TemplatesStage({
                       </span>
                     ) : null}
                   </div>
-                  <p className="line-clamp-2 text-xs text-muted-foreground">{t.description}</p>
+                  <p className="line-clamp-2 text-xs text-muted-foreground">
+                    {t.description}
+                  </p>
                   <span
                     className={cn(
                       "block rounded-lg py-1.5 text-center text-xs font-bold",
@@ -537,7 +577,9 @@ function TemplatesStage({
 // ── Design stage ─────────────────────────────────────────────────────────────
 
 function SettingLabel({ children }: { children: ReactNode }) {
-  return <span className="text-xs font-bold text-muted-foreground">{children}</span>;
+  return (
+    <span className="text-xs font-bold text-muted-foreground">{children}</span>
+  );
 }
 
 function TextRow({
@@ -656,7 +698,9 @@ function ColorRow({
           onChange={(e) => onChange(e.target.value)}
           className="h-6 w-8 cursor-pointer border-0 bg-transparent p-0"
         />
-        <span className="text-xs font-semibold tabular-nums text-muted-foreground">{value}</span>
+        <span className="text-xs font-semibold tabular-nums text-muted-foreground">
+          {value}
+        </span>
       </label>
     </div>
   );
@@ -860,7 +904,8 @@ function DesignStage({
           />
         </div>
       ),
-    },    {
+    },
+    {
       key: "text",
       icon: "Type",
       title: textGroupLabel,
@@ -908,7 +953,9 @@ function DesignStage({
                   { value: "left", label: alignLeftLabel },
                   { value: "center", label: alignCenterLabel },
                 ]}
-                onChange={(v) => update?.({ titleAlign: v as DesignerTextAlign })}
+                onChange={(v) =>
+                  update?.({ titleAlign: v as DesignerTextAlign })
+                }
               />
             </div>
           </div>
@@ -994,7 +1041,10 @@ function DesignStage({
 
         <div className="space-y-5">
           {groups.map((g) => (
-            <div key={g.key} className="overflow-hidden rounded-2xl border bg-card">
+            <div
+              key={g.key}
+              className="overflow-hidden rounded-2xl border bg-card"
+            >
               <div className="flex items-center gap-2 border-b bg-muted/40 px-4 py-2.5 text-sm font-extrabold">
                 <SmartIcon name={g.icon} size={15} className="text-rose-600" />
                 {g.title}
@@ -1088,7 +1138,9 @@ function ExportStage({
   const embed = React.useMemo(() => {
     const hd = items.find((i) => i.width === 1280);
     return hd?.dataUrl
-      ? '<img src="' + hd.dataUrl + '" width="1280" height="720" alt="YouTube thumbnail" />'
+      ? '<img src="' +
+          hd.dataUrl +
+          '" width="1280" height="720" alt="YouTube thumbnail" />'
       : "";
   }, [items]);
 
@@ -1105,8 +1157,14 @@ function ExportStage({
 
       {exporting ? (
         <div className="flex flex-col items-center gap-3 rounded-2xl border bg-card py-16 text-center">
-          <SmartIcon name="Loader2" size={28} className="animate-spin text-rose-600" />
-          <p className="text-sm font-semibold text-muted-foreground">{exportAllTip}</p>
+          <SmartIcon
+            name="Loader2"
+            size={28}
+            className="animate-spin text-rose-600"
+          />
+          <p className="text-sm font-semibold text-muted-foreground">
+            {exportAllTip}
+          </p>
         </div>
       ) : ready ? (
         <>
@@ -1114,7 +1172,9 @@ function ExportStage({
             <span className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/30">
               <SmartIcon name="CheckCircle2" size={30} />
             </span>
-            <h4 className="text-xl font-extrabold text-emerald-800">{successTitle}</h4>
+            <h4 className="text-xl font-extrabold text-emerald-800">
+              {successTitle}
+            </h4>
             <p className="text-sm text-emerald-700/80">{successDesc}</p>
           </div>
 
@@ -1127,7 +1187,11 @@ function ExportStage({
                   className="flex items-center justify-between gap-3 rounded-xl bg-muted/40 px-4 py-2.5"
                 >
                   <span className="inline-flex items-center gap-2 text-sm font-semibold">
-                    <SmartIcon name="Check" size={14} className="text-emerald-500" />
+                    <SmartIcon
+                      name="Check"
+                      size={14}
+                      className="text-emerald-500"
+                    />
                     {item.label}
                   </span>
                   <span className="text-xs font-semibold tabular-nums text-muted-foreground">
@@ -1164,7 +1228,9 @@ function ExportStage({
                   <tr className="border-b text-xs uppercase tracking-wide text-muted-foreground">
                     <th className="py-2 pr-3 font-bold">{formatLabel}</th>
                     <th className="py-2 pr-3 font-bold">{dimensionsLabel}</th>
-                    <th className="py-2 text-right font-bold">{downloadLabel}</th>
+                    <th className="py-2 text-right font-bold">
+                      {downloadLabel}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1221,7 +1287,8 @@ function ExportStage({
               </div>
               <p className="mb-3 text-xs text-muted-foreground">{embedHint}</p>
               <code className="block overflow-x-auto whitespace-pre rounded-xl bg-slate-950 px-4 py-3 text-xs text-emerald-300">
-                &lt;img src=&quot;data:image/png;base64,&hellip;&quot;&hellip;&gt;
+                &lt;img
+                src=&quot;data:image/png;base64,&hellip;&quot;&hellip;&gt;
               </code>
             </div>
           ) : null}
@@ -1231,7 +1298,9 @@ function ExportStage({
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
             <SmartIcon name="RefreshCw" size={26} />
           </span>
-          <p className="max-w-md text-sm text-muted-foreground">{exportAllTip}</p>
+          <p className="max-w-md text-sm text-muted-foreground">
+            {exportAllTip}
+          </p>
           {!exportError ? (
             <button
               type="button"
@@ -1381,7 +1450,10 @@ export function DesignerStudio({
 
   return (
     <div
-      className={cn("mx-auto max-w-6xl space-y-10 px-4 py-10 sm:px-6", className)}
+      className={cn(
+        "mx-auto max-w-6xl space-y-10 px-4 py-10 sm:px-6",
+        className,
+      )}
       data-registry={dataRegistry}
     >
       <Hero

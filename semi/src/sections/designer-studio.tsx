@@ -98,7 +98,10 @@ function Hero({
                     b.tone === "pro" && "designstudio-badge-pro",
                   )}
                 >
-                  <SmartIcon name={b.tone === "pro" ? "Crown" : "Check"} size={12} />
+                  <SmartIcon
+                    name={b.tone === "pro" ? "Crown" : "Check"}
+                    size={12}
+                  />
                   {b.label}
                 </span>
               ))}
@@ -129,9 +132,13 @@ function Hero({
                 style={{ background: heroCanvas.accent }}
               />
               <div className="designstudio-hero-canvas-text">
-                <span className="designstudio-hero-canvas-title">{heroCanvas.title}</span>
+                <span className="designstudio-hero-canvas-title">
+                  {heroCanvas.title}
+                </span>
                 {heroCanvas.subtitle ? (
-                  <span className="designstudio-hero-canvas-sub">{heroCanvas.subtitle}</span>
+                  <span className="designstudio-hero-canvas-sub">
+                    {heroCanvas.subtitle}
+                  </span>
                 ) : null}
               </div>
               <span className="designstudio-hero-canvas-play" />
@@ -172,7 +179,10 @@ function StageRail({
   stageTotalLabel?: ReactNode;
 }) {
   const list = stages ?? [];
-  const activeIndex = Math.max(0, list.findIndex((s) => s.key === stage));
+  const activeIndex = Math.max(
+    0,
+    list.findIndex((s) => s.key === stage),
+  );
   return (
     <div className="designstudio-rail">
       <div className="designstudio-rail-steps">
@@ -271,7 +281,10 @@ function SourceStage({
       </div>
 
       <div
-        className={cn("designstudio-drop", dragOver && "designstudio-drop-over")}
+        className={cn(
+          "designstudio-drop",
+          dragOver && "designstudio-drop-over",
+        )}
         onClick={pick}
         onDragOver={(e) => {
           e.preventDefault();
@@ -330,7 +343,11 @@ function SourceStage({
         <div className="designstudio-source-preview">
           <span className="designstudio-source-thumb-wrap">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={sourcePreview} alt="" className="designstudio-source-thumb" />
+            <img
+              src={sourcePreview}
+              alt=""
+              className="designstudio-source-thumb"
+            />
           </span>
           <div className="designstudio-source-preview-copy">
             <span className="designstudio-source-ready">
@@ -369,15 +386,23 @@ function TemplatePreview({
   const d = template.design;
   return (
     <div
-      className={cn("designstudio-tpl-preview", large && "designstudio-tpl-preview-lg")}
+      className={cn(
+        "designstudio-tpl-preview",
+        large && "designstudio-tpl-preview-lg",
+      )}
       style={{
         background: `linear-gradient(135deg, ${template.swatch[0]}, ${template.swatch[1]})`,
       }}
     >
-      <span className="designstudio-tpl-accent" style={{ background: template.accent }} />
+      <span
+        className="designstudio-tpl-accent"
+        style={{ background: template.accent }}
+      />
       <div className="designstudio-tpl-text" style={{ color: d.titleColor }}>
         <span className="designstudio-tpl-title">{d.title || "TITLE"}</span>
-        {d.subtitle ? <span className="designstudio-tpl-sub">{d.subtitle}</span> : null}
+        {d.subtitle ? (
+          <span className="designstudio-tpl-sub">{d.subtitle}</span>
+        ) : null}
       </div>
       <span className="designstudio-tpl-play" />
     </div>
@@ -461,7 +486,9 @@ function TemplatesStage({
   onApplyTemplate?: (t: DesignerTemplate) => void;
   onSkipTemplates?: () => void;
 }) {
-  const [category, setCategory] = useState<DesignerTemplateCategory | "all">("all");
+  const [category, setCategory] = useState<DesignerTemplateCategory | "all">(
+    "all",
+  );
   const all = templates ?? [];
   const featured = all.slice(0, 3);
   const visible =
@@ -503,7 +530,10 @@ function TemplatesStage({
                 <TemplatePreview template={t} large />
                 <div className="designstudio-featured-meta">
                   <span className="designstudio-featured-name">{t.name}</span>
-                  <span className="designstudio-featured-cat" style={{ color: t.accent }}>
+                  <span
+                    className="designstudio-featured-cat"
+                    style={{ color: t.accent }}
+                  >
                     {t.category}
                   </span>
                 </div>
@@ -519,7 +549,9 @@ function TemplatesStage({
           size="small"
           items={tabs}
           activeKey={category}
-          onChange={(key) => setCategory(key as DesignerTemplateCategory | "all")}
+          onChange={(key) =>
+            setCategory(key as DesignerTemplateCategory | "all")
+          }
           className="designstudio-tpl-tabs-inner"
         />
       </div>
@@ -542,7 +574,12 @@ function TemplatesStage({
       )}
 
       <div className="designstudio-tpl-skip">
-        <Button type="button" variant="ghost" size="sm" onClick={onSkipTemplates}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={onSkipTemplates}
+        >
           {skipLabel}
         </Button>
       </div>
@@ -582,7 +619,13 @@ function SliderRow({
           {unit ?? ""}
         </span>
       </div>
-      <Slider min={min} max={max} step={step} value={value} onChange={onChange} />
+      <Slider
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 }
@@ -636,7 +679,10 @@ function Segmented({
         <button
           key={o.value}
           type="button"
-          className={cn("designstudio-seg-btn", value === o.value && "designstudio-seg-btn-active")}
+          className={cn(
+            "designstudio-seg-btn",
+            value === o.value && "designstudio-seg-btn-active",
+          )}
           onClick={() => onChange(o.value)}
         >
           {o.label}
@@ -912,11 +958,21 @@ function DesignStage({
           <Tag color="pink" size="small" className="designstudio-design-tag">
             {previewTag}
           </Tag>
-          <Button type="button" size="sm" variant="outline" onClick={onOpenTemplates}>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={onOpenTemplates}
+          >
             <SmartIcon name="LayoutTemplate" size={14} />
             {templatesButtonLabel}
           </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={onResetDesign}>
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            onClick={onResetDesign}
+          >
             <SmartIcon name="RefreshCcw" size={14} />
             {resetLabel}
           </Button>
@@ -928,7 +984,11 @@ function DesignStage({
           <div className="designstudio-canvas-stage">
             {previewUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={previewUrl} alt="" className="designstudio-canvas-img" />
+              <img
+                src={previewUrl}
+                alt=""
+                className="designstudio-canvas-img"
+              />
             ) : (
               <span className="designstudio-canvas-empty">
                 <SmartIcon name="Loader2" size={20} />
@@ -943,7 +1003,11 @@ function DesignStage({
         </div>
 
         <div className="designstudio-settings-panel">
-          <Collapse accordion={false} defaultActiveKeys={["canvas", "image", "text"]} items={canvasItems} />
+          <Collapse
+            accordion={false}
+            defaultActiveKeys={["canvas", "image", "text"]}
+            items={canvasItems}
+          />
           <p className="designstudio-design-tip">
             <SmartIcon name="Bolt" size={13} />
             {designTip}
@@ -952,11 +1016,20 @@ function DesignStage({
       </div>
 
       <div className="designstudio-design-footer">
-        <Button type="button" variant="ghost" size="sm" onClick={() => onStageChange?.("templates")}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={() => onStageChange?.("templates")}
+        >
           <SmartIcon name="ArrowLeft" size={14} />
           {backToTemplatesLabel}
         </Button>
-        <Button type="button" size="lg" onClick={() => onStageChange?.("export")}>
+        <Button
+          type="button"
+          size="lg"
+          onClick={() => onStageChange?.("export")}
+        >
           <SmartIcon name="Download" size={15} />
           {continueExportLabel}
         </Button>
@@ -1036,7 +1109,11 @@ function ExportStage({
         const item = record as DesignerExportItem;
         return item.dataUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={item.dataUrl} alt={item.label} className="designstudio-export-thumb" />
+          <img
+            src={item.dataUrl}
+            alt={item.label}
+            className="designstudio-export-thumb"
+          />
         ) : null;
       },
     },
@@ -1099,7 +1176,9 @@ function ExportStage({
             <span className="designstudio-export-success-ic">
               <SmartIcon name="CheckCircle2" size={30} />
             </span>
-            <h4 className="designstudio-export-success-title">{successTitle}</h4>
+            <h4 className="designstudio-export-success-title">
+              {successTitle}
+            </h4>
             <p className="designstudio-export-success-desc">{successDesc}</p>
           </div>
         ) : (
@@ -1163,7 +1242,8 @@ function ExportStage({
                   <h4 className="designstudio-export-sub">{embedTitle}</h4>
                   <CopyText text={embed} copyable>
                     <code className="designstudio-export-code">
-                      &lt;img src=&quot;data:image/png;base64,&hellip;&quot;&hellip;&gt;
+                      &lt;img
+                      src=&quot;data:image/png;base64,&hellip;&quot;&hellip;&gt;
                     </code>
                   </CopyText>
                 </div>
@@ -1175,7 +1255,12 @@ function ExportStage({
       </Spin>
 
       <div className="designstudio-export-footer">
-        <Button type="button" variant="ghost" size="sm" onClick={onBackToDesign}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={onBackToDesign}
+        >
           <SmartIcon name="ArrowLeft" size={14} />
           {backToDesignLabel}
         </Button>
@@ -1430,7 +1515,9 @@ export function DesignerStudio({
           />
         ) : null}
 
-        {footerHint ? <p className="designstudio-footer-hint">{footerHint}</p> : null}
+        {footerHint ? (
+          <p className="designstudio-footer-hint">{footerHint}</p>
+        ) : null}
       </div>
     </div>
   );
