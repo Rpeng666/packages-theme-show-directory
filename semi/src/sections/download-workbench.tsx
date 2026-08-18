@@ -301,7 +301,7 @@ function QualityCard({
           <SmartIcon name="Download" size={14} />
           <span>
             {downloading
-              ? downloadingLabel ?? downloadLabel
+              ? (downloadingLabel ?? downloadLabel)
               : available
                 ? downloadLabel
                 : unavailableLabel}

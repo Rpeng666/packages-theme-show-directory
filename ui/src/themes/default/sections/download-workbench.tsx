@@ -103,7 +103,11 @@ export function DownloadWorkbench({
                   key={item.text}
                   className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground"
                 >
-                  <SmartIcon name={item.icon} size={14} className="text-orange-600" />
+                  <SmartIcon
+                    name={item.icon}
+                    size={14}
+                    className="text-orange-600"
+                  />
                   {item.text}
                 </span>
               ))}
@@ -126,7 +130,9 @@ export function DownloadWorkbench({
               <SmartIcon name="Link" size={16} />
             </span>
             <input
-              aria-label={typeof inputLabel === "string" ? inputLabel : "YouTube URL"}
+              aria-label={
+                typeof inputLabel === "string" ? inputLabel : "YouTube URL"
+              }
               type="text"
               placeholder={
                 typeof inputPlaceholder === "string"
@@ -199,7 +205,11 @@ export function DownloadWorkbench({
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed bg-muted/40 py-14 text-center">
-              <SmartIcon name="ImageIcon" size={26} className="text-orange-500" />
+              <SmartIcon
+                name="ImageIcon"
+                size={26}
+                className="text-orange-500"
+              />
               {noResultsTitle ? (
                 <span className="text-sm font-bold">{noResultsTitle}</span>
               ) : null}
@@ -310,7 +320,7 @@ function QualityCard({
         >
           <SmartIcon name="Download" size={13} />
           {downloading
-            ? downloadingLabel ?? downloadLabel
+            ? (downloadingLabel ?? downloadLabel)
             : available
               ? downloadLabel
               : unavailableLabel}
