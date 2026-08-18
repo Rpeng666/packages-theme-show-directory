@@ -28,3 +28,4 @@ export { ResizeWorkbench } from "./resize-workbench";
 export { CompressWorkbench } from "./compress-workbench";
 export { ExtractWorkbench } from "./extract-workbench";
 export { DownloadWorkbench } from "./download-workbench";
+export { PreviewWorkbench } from "./preview-workbench";

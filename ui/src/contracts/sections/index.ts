@@ -132,3 +132,10 @@ export type {
   DownloadWorkbenchQuality,
   DownloadWorkbenchTip,
 } from "./download-workbench";
+
+export type {
+  PreviewSceneDef,
+  PreviewSceneId,
+  PreviewWorkbenchProps,
+  PreviewWorkbenchTip,
+} from "./preview-workbench";

@@ -111,6 +111,7 @@ import type { ResizeWorkbenchProps } from "./contracts/sections/resize-workbench
 import type { CompressWorkbenchProps } from "./contracts/sections/compress-workbench";
 import type { ExtractWorkbenchProps } from "./contracts/sections/extract-workbench";
 import type { DownloadWorkbenchProps } from "./contracts/sections/download-workbench";
+import type { PreviewWorkbenchProps } from "./contracts/sections/preview-workbench";
 import type {
   FeaturesFlowProps,
   FeaturesListProps,
@@ -194,6 +195,7 @@ import { ResizeWorkbench as DefaultResizeWorkbench } from "./themes/default/sect
 import { CompressWorkbench as DefaultCompressWorkbench } from "./themes/default/sections/compress-workbench";
 import { ExtractWorkbench as DefaultExtractWorkbench } from "./themes/default/sections/extract-workbench";
 import { DownloadWorkbench as DefaultDownloadWorkbench } from "./themes/default/sections/download-workbench";
+import { PreviewWorkbench as DefaultPreviewWorkbench } from "./themes/default/sections/preview-workbench";
 import { FeaturesGrid as DefaultFeaturesGrid } from "./themes/default/sections/features-grid";
 import { Features as DefaultFeatures } from "./themes/default/sections/features";
 import { FeaturesAccordion as DefaultFeaturesAccordion } from "./themes/default/sections/features-accordion";
@@ -408,6 +410,7 @@ import {
   CompressWorkbench as SemiCompressWorkbench,
   ExtractWorkbench as SemiExtractWorkbench,
   DownloadWorkbench as SemiDownloadWorkbench,
+  PreviewWorkbench as SemiPreviewWorkbench,
 } from "@template/semi";
 
 import type {
@@ -556,6 +559,7 @@ export interface SectionComponents {
   CompressWorkbench: ComponentType<CompressWorkbenchProps>;
   ExtractWorkbench: ComponentType<ExtractWorkbenchProps>;
   DownloadWorkbench: ComponentType<DownloadWorkbenchProps>;
+  PreviewWorkbench: ComponentType<PreviewWorkbenchProps>;
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>;
@@ -782,6 +786,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       CompressWorkbench: DefaultCompressWorkbench,
       ExtractWorkbench: DefaultExtractWorkbench,
       DownloadWorkbench: DefaultDownloadWorkbench,
+      PreviewWorkbench: DefaultPreviewWorkbench,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -991,6 +996,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       CompressWorkbench: SemiCompressWorkbench,
       ExtractWorkbench: SemiExtractWorkbench,
       DownloadWorkbench: SemiDownloadWorkbench,
+      PreviewWorkbench: SemiPreviewWorkbench,
     },
   },
 };
