@@ -107,6 +107,7 @@ import type { ChatHistoryProps } from "./contracts/sections/chat-history";
 import type { MusicGeneratorStudioProps } from "./contracts/sections/music-generator-studio";
 import type { ImageGeneratorStudioProps } from "./contracts/sections/image-generator-studio";
 import type { VideoGeneratorStudioProps } from "./contracts/sections/video-generator-studio";
+import type { ResizeWorkbenchProps } from "./contracts/sections/resize-workbench";
 import type {
   FeaturesFlowProps,
   FeaturesListProps,
@@ -186,6 +187,7 @@ import { ChatHistory as DefaultChatHistory } from "./themes/default/sections/cha
 import { MusicGeneratorStudio as DefaultMusicGeneratorStudio } from "./themes/default/sections/music-generator-studio";
 import { ImageGeneratorStudio as DefaultImageGeneratorStudio } from "./themes/default/sections/image-generator-studio";
 import { VideoGeneratorStudio as DefaultVideoGeneratorStudio } from "./themes/default/sections/video-generator-studio";
+import { ResizeWorkbench as DefaultResizeWorkbench } from "./themes/default/sections/resize-workbench";
 import { FeaturesGrid as DefaultFeaturesGrid } from "./themes/default/sections/features-grid";
 import { Features as DefaultFeatures } from "./themes/default/sections/features";
 import { FeaturesAccordion as DefaultFeaturesAccordion } from "./themes/default/sections/features-accordion";
@@ -396,6 +398,7 @@ import {
   MusicGeneratorStudio as SemiMusicGeneratorStudio,
   ImageGeneratorStudio as SemiImageGeneratorStudio,
   VideoGeneratorStudio as SemiVideoGeneratorStudio,
+  ResizeWorkbench as SemiResizeWorkbench,
 } from "@template/semi";
 
 import type {
@@ -540,6 +543,7 @@ export interface SectionComponents {
   MusicGeneratorStudio: ComponentType<MusicGeneratorStudioProps>;
   ImageGeneratorStudio: ComponentType<ImageGeneratorStudioProps>;
   VideoGeneratorStudio: ComponentType<VideoGeneratorStudioProps>;
+  ResizeWorkbench: ComponentType<ResizeWorkbenchProps>;
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>;
@@ -762,6 +766,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       MusicGeneratorStudio: DefaultMusicGeneratorStudio,
       ImageGeneratorStudio: DefaultImageGeneratorStudio,
       VideoGeneratorStudio: DefaultVideoGeneratorStudio,
+      ResizeWorkbench: DefaultResizeWorkbench,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -967,6 +972,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       MusicGeneratorStudio: SemiMusicGeneratorStudio,
       ImageGeneratorStudio: SemiImageGeneratorStudio,
       VideoGeneratorStudio: SemiVideoGeneratorStudio,
+      ResizeWorkbench: SemiResizeWorkbench,
     },
   },
 };

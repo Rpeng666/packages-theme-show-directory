@@ -19,7 +19,7 @@
  * RiGithubFill / RiGoogleFill are NOT here: sign/payment blocks import them
  * directly from 'react-icons/ri' and tree-shake fine.
  */
-import { ComponentType } from 'react';
+import { ComponentType } from "react";
 import {
   RiAddLine,
   RiArticleLine,
@@ -55,9 +55,10 @@ import {
   RiTaskLine,
   RiTimeLine,
   RiTwitterXFill,
+  RiYoutubeLine,
   RiUserSmileLine,
   RiVoiceprintLine,
-} from 'react-icons/ri';
+} from "react-icons/ri";
 
 /** Static (tree-shaken) registry of all Ri icons the app renders. */
 export const riIconWhitelist: Record<string, ComponentType<any>> = {

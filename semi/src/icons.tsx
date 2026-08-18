@@ -41,6 +41,7 @@ import {
   IconLayers,
   IconLink,
   IconMusic,
+  IconUnlock,
   IconLock,
   IconPlay,
   IconPlus,
@@ -142,6 +143,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   LoaderCircle: <IconLoading />,
   Spin: <IconSpin />,
   Music: <IconMusic />,
+  Unlock: <IconUnlock />,
   Crop: <IconCrop />,
   Scan: <IconScan />,
   Delete: <IconDelete />,
@@ -180,11 +182,13 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   RiDownload2Line: <IconDownload />,
   RiCropLine: <IconCrop />,
   RiLayoutGridLine: <IconGridSquare />,
+  GridSquare: <IconGridSquare />,
   RiGridLine: <IconGridSquare />,
   RiStackLine: <IconLayers />,
   RiShieldCheckLine: <IconShield />,
   RiMagicLine: <IconAIWandLevel1 />,
   RiEyeLine: <IconEyeOpened />,
+  EyeOpened: <IconEyeOpened />,
   RiGlobalLine: <IconGlobe />,
   RiCompressLine: <IconShrink />,
   RiExpandLine: <IconExpand />,
@@ -229,6 +233,5 @@ export function SmartIcon({
         : null}
     </span>
   )
-}
-
-
+}
+

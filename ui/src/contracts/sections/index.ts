@@ -106,3 +106,12 @@ export type {
   VideoGeneratorStudioTabItem,
   VideoGeneratorStudioTab,
 } from "./video-generator-studio";
+
+export type {
+  ResizeWorkbenchFormat,
+  ResizeWorkbenchFormatOption,
+  ResizeWorkbenchPlatform,
+  ResizeWorkbenchPreset,
+  ResizeWorkbenchProps,
+  ResizeWorkbenchQualityCheck,
+} from "./resize-workbench";

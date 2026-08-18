@@ -16,7 +16,7 @@
  * - The runtime names SmartIcon receives via `name="..."` that don't start with
  *   "Ri" (ArrowLeft / Menu / Search — resolved to HelpCircle when unknown)
  */
-import { ComponentType } from 'react';
+import { ComponentType } from "react";
 import {
   AlertTriangleIcon,
   ArrowLeft,
@@ -25,6 +25,7 @@ import {
   BrainCircuitIcon,
   Calendar,
   CalendarIcon,
+  Camera,
   Check,
   CheckCircle2,
   CheckCircleIcon,
@@ -49,6 +50,14 @@ import {
   HelpCircle,
   ImageIcon,
   InfoIcon,
+  LayoutGrid,
+  Link,
+  Lock,
+  ListChecks,
+  Edit,
+  Shield,
+  Unlock,
+  Upload,
   Languages,
   LayoutDashboard,
   LeafIcon,
@@ -93,7 +102,7 @@ import {
   Zap,
   ZoomIn,
   ZoomOut,
-} from 'lucide-react';
+} from "lucide-react";
 
 /** Static (tree-shaken) registry of all Lucide icons the app renders. */
 export const lucideIconWhitelist: Record<string, ComponentType<any>> = {
@@ -104,6 +113,7 @@ export const lucideIconWhitelist: Record<string, ComponentType<any>> = {
   BrainCircuitIcon,
   Calendar,
   CalendarIcon,
+  Camera,
   Check,
   CheckCircle2,
   CheckCircleIcon,
@@ -130,6 +140,14 @@ export const lucideIconWhitelist: Record<string, ComponentType<any>> = {
   InfoIcon,
   Languages,
   LayoutDashboard,
+  LayoutGrid,
+  Link,
+  Lock,
+  ListChecks,
+  Edit,
+  Shield,
+  Unlock,
+  Upload,
   LeafIcon,
   LightbulbIcon,
   ListIcon,
