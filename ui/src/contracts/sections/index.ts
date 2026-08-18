@@ -79,6 +79,13 @@ export type {
   ChatHistoryStatTone,
 } from './chat-history'
 export type {
+  MusicGeneratorStudioMode,
+  MusicGeneratorStudioModeItem,
+  MusicGeneratorStudioOption,
+  MusicGeneratorStudioSong,
+  MusicGeneratorStudioProps,
+} from './music-generator-studio'
+export type {
   ImageGeneratorStudioProps,
   ImageGeneratorStudioImage,
   ImageGeneratorStudioOption,
