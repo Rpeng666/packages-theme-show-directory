@@ -103,7 +103,9 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Download: <IconDownload />,
   Upload: <IconUpload />,
   Save: <IconSave />,
-  Refresh: <IconRefresh />,
+  Refresh: <IconRefresh />,
+
+  RefreshCw: <IconRefresh />,
   Sync: <IconSync />,
   Disc: <IconDisc />,
   Volume: <IconVolume1 />,
@@ -190,7 +192,9 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   RiEyeLine: <IconEyeOpened />,
   EyeOpened: <IconEyeOpened />,
   RiGlobalLine: <IconGlobe />,
-  RiCompressLine: <IconShrink />,
+  RiCompressLine: <IconShrink />,
+
+  Shrink: <IconShrink />,
   RiExpandLine: <IconExpand />,
   RiScissorsLine: <IconScissors />,
   RiTemplateLine: <IconTemplate />,

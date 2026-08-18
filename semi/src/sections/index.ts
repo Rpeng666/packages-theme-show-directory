@@ -25,3 +25,4 @@ export { ImageGeneratorStudio } from "./image-generator-studio";
 export { MusicGeneratorStudio } from "./music-generator-studio";
 export { VideoGeneratorStudio } from "./video-generator-studio";
 export { ResizeWorkbench } from "./resize-workbench";
+export { CompressWorkbench } from "./compress-workbench";

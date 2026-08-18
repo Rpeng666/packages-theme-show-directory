@@ -115,3 +115,9 @@ export type {
   ResizeWorkbenchProps,
   ResizeWorkbenchQualityCheck,
 } from "./resize-workbench";
+
+export type {
+  CompressWorkbenchFormat,
+  CompressWorkbenchFormatOption,
+  CompressWorkbenchProps,
+} from "./compress-workbench";

@@ -108,6 +108,7 @@ import type { MusicGeneratorStudioProps } from "./contracts/sections/music-gener
 import type { ImageGeneratorStudioProps } from "./contracts/sections/image-generator-studio";
 import type { VideoGeneratorStudioProps } from "./contracts/sections/video-generator-studio";
 import type { ResizeWorkbenchProps } from "./contracts/sections/resize-workbench";
+import type { CompressWorkbenchProps } from "./contracts/sections/compress-workbench";
 import type {
   FeaturesFlowProps,
   FeaturesListProps,
@@ -188,6 +189,7 @@ import { MusicGeneratorStudio as DefaultMusicGeneratorStudio } from "./themes/de
 import { ImageGeneratorStudio as DefaultImageGeneratorStudio } from "./themes/default/sections/image-generator-studio";
 import { VideoGeneratorStudio as DefaultVideoGeneratorStudio } from "./themes/default/sections/video-generator-studio";
 import { ResizeWorkbench as DefaultResizeWorkbench } from "./themes/default/sections/resize-workbench";
+import { CompressWorkbench as DefaultCompressWorkbench } from "./themes/default/sections/compress-workbench";
 import { FeaturesGrid as DefaultFeaturesGrid } from "./themes/default/sections/features-grid";
 import { Features as DefaultFeatures } from "./themes/default/sections/features";
 import { FeaturesAccordion as DefaultFeaturesAccordion } from "./themes/default/sections/features-accordion";
@@ -399,6 +401,7 @@ import {
   ImageGeneratorStudio as SemiImageGeneratorStudio,
   VideoGeneratorStudio as SemiVideoGeneratorStudio,
   ResizeWorkbench as SemiResizeWorkbench,
+  CompressWorkbench as SemiCompressWorkbench,
 } from "@template/semi";
 
 import type {
@@ -544,6 +547,7 @@ export interface SectionComponents {
   ImageGeneratorStudio: ComponentType<ImageGeneratorStudioProps>;
   VideoGeneratorStudio: ComponentType<VideoGeneratorStudioProps>;
   ResizeWorkbench: ComponentType<ResizeWorkbenchProps>;
+  CompressWorkbench: ComponentType<CompressWorkbenchProps>;
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>;
@@ -767,6 +771,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ImageGeneratorStudio: DefaultImageGeneratorStudio,
       VideoGeneratorStudio: DefaultVideoGeneratorStudio,
       ResizeWorkbench: DefaultResizeWorkbench,
+      CompressWorkbench: DefaultCompressWorkbench,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -973,6 +978,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ImageGeneratorStudio: SemiImageGeneratorStudio,
       VideoGeneratorStudio: SemiVideoGeneratorStudio,
       ResizeWorkbench: SemiResizeWorkbench,
+      CompressWorkbench: SemiCompressWorkbench,
     },
   },
 };
