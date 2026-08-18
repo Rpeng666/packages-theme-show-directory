@@ -71,3 +71,10 @@ export type {
   ChatWorkbenchProps,
   ChatSuggestionChip,
 } from './chat-workbench'
+export type {
+  ChatHistoryProps,
+  ChatHistoryItem,
+  ChatHistoryGroup,
+  ChatHistoryStat,
+  ChatHistoryStatTone,
+} from './chat-history'
