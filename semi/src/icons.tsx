@@ -35,6 +35,12 @@ import {
   IconColorPalette,
   IconText,
   IconFlag,
+  IconArrowLeft,
+  IconCheckCircleStroked,
+  IconRestart,
+  IconRotate,
+  IconFullScreenStroked,
+  IconFontColor,
   IconFolder,
   IconGift,
   IconGlobe,
@@ -103,9 +109,13 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 
   ArrowRight: <IconArrowRight />,
 
+  ArrowLeft: <IconArrowLeft />,
+
   Arrow: <IconArrowRight />,
 
   Check: <IconTick />,
+
+  CheckCircle2: <IconCheckCircleStroked />,
 
   CheckCircle: <IconTick />,
 
@@ -134,6 +144,12 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Refresh: <IconRefresh />,
 
   RefreshCw: <IconRefresh />,
+
+  RefreshCcw: <IconRefresh />,
+
+  RotateCcw: <IconRotate />,
+
+  Restart: <IconRestart />,
 
   Sync: <IconSync />,
 
@@ -180,6 +196,8 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Language: <IconLanguage />,
 
   Link: <IconLink />,
+
+  Link2: <IconLink />,
 
   File: <IconFile />,
 
@@ -324,6 +342,18 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 
   RiTextLine: <IconText />,
   Text: <IconText />,
+
+  Palette: <IconColorPalette />,
+
+  Template: <IconTemplate />,
+
+  LayoutTemplate: <IconTemplate />,
+
+  Wand2: <IconAIWandLevel1 />,
+
+  FontColor: <IconFontColor />,
+
+  Maximize2: <IconFullScreenStroked />,
 };
 
 /**
@@ -385,3 +415,4 @@ export function SmartIcon({
     </span>
   );
 }
+

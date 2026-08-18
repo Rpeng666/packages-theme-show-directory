@@ -112,6 +112,7 @@ import type { CompressWorkbenchProps } from "./contracts/sections/compress-workb
 import type { ExtractWorkbenchProps } from "./contracts/sections/extract-workbench";
 import type { DownloadWorkbenchProps } from "./contracts/sections/download-workbench";
 import type { PreviewWorkbenchProps } from "./contracts/sections/preview-workbench";
+import type { DesignerStudioProps } from "./contracts/sections/designer-studio";
 import type {
   FeaturesFlowProps,
   FeaturesListProps,
@@ -196,6 +197,7 @@ import { CompressWorkbench as DefaultCompressWorkbench } from "./themes/default/
 import { ExtractWorkbench as DefaultExtractWorkbench } from "./themes/default/sections/extract-workbench";
 import { DownloadWorkbench as DefaultDownloadWorkbench } from "./themes/default/sections/download-workbench";
 import { PreviewWorkbench as DefaultPreviewWorkbench } from "./themes/default/sections/preview-workbench";
+import { DesignerStudio as DefaultDesignerStudio } from "./themes/default/sections/designer-studio";
 import { FeaturesGrid as DefaultFeaturesGrid } from "./themes/default/sections/features-grid";
 import { Features as DefaultFeatures } from "./themes/default/sections/features";
 import { FeaturesAccordion as DefaultFeaturesAccordion } from "./themes/default/sections/features-accordion";
@@ -411,6 +413,7 @@ import {
   ExtractWorkbench as SemiExtractWorkbench,
   DownloadWorkbench as SemiDownloadWorkbench,
   PreviewWorkbench as SemiPreviewWorkbench,
+  DesignerStudio as SemiDesignerStudio,
 } from "@template/semi";
 
 import type {
@@ -560,6 +563,7 @@ export interface SectionComponents {
   ExtractWorkbench: ComponentType<ExtractWorkbenchProps>;
   DownloadWorkbench: ComponentType<DownloadWorkbenchProps>;
   PreviewWorkbench: ComponentType<PreviewWorkbenchProps>;
+  DesignerStudio: ComponentType<DesignerStudioProps>;
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>;
@@ -787,6 +791,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ExtractWorkbench: DefaultExtractWorkbench,
       DownloadWorkbench: DefaultDownloadWorkbench,
       PreviewWorkbench: DefaultPreviewWorkbench,
+      DesignerStudio: DefaultDesignerStudio,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -997,6 +1002,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ExtractWorkbench: SemiExtractWorkbench,
       DownloadWorkbench: SemiDownloadWorkbench,
       PreviewWorkbench: SemiPreviewWorkbench,
+      DesignerStudio: SemiDesignerStudio,
     },
   },
 };

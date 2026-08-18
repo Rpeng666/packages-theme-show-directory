@@ -139,3 +139,17 @@ export type {
   PreviewWorkbenchProps,
   PreviewWorkbenchTip,
 } from "./preview-workbench";
+export type {
+  DesignerDesign,
+  DesignerDesignPatch,
+  DesignerEffects,
+  DesignerExportItem,
+  DesignerImageFit,
+  DesignerStage,
+  DesignerStudioCategoryDef,
+  DesignerStudioProps,
+  DesignerStudioStageDef,
+  DesignerTemplate,
+  DesignerTemplateCategory,
+  DesignerTextAlign,
+} from "./designer-studio";
