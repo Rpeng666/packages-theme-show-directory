@@ -78,3 +78,10 @@ export type {
   ChatHistoryStat,
   ChatHistoryStatTone,
 } from './chat-history'
+export type {
+  ImageGeneratorStudioProps,
+  ImageGeneratorStudioImage,
+  ImageGeneratorStudioOption,
+  ImageGeneratorStudioTabItem,
+  ImageGeneratorStudioTab,
+} from './image-generator-studio'

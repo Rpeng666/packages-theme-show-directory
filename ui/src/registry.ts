@@ -94,6 +94,7 @@ import type {
 } from './contracts/sections/activity-overview'
 import type { ChatWorkbenchProps } from './contracts/sections/chat-workbench'
 import type { ChatHistoryProps } from './contracts/sections/chat-history'
+import type { ImageGeneratorStudioProps } from './contracts/sections/image-generator-studio'
 import type { FeaturesFlowProps, FeaturesListProps } from './contracts/sections/features-media'
 import type { BlogProps } from './contracts/sections/blog'
 import type { BlogDetailProps } from './contracts/sections/blog-detail'
@@ -159,6 +160,7 @@ import { SettingsOverview as DefaultSettingsOverview } from './themes/default/se
 import { ActivityOverview as DefaultActivityOverview } from './themes/default/sections/activity-overview'
 import { ChatWorkbench as DefaultChatWorkbench } from './themes/default/sections/chat-workbench'
 import { ChatHistory as DefaultChatHistory } from './themes/default/sections/chat-history'
+import { ImageGeneratorStudio as DefaultImageGeneratorStudio } from './themes/default/sections/image-generator-studio'
 import { FeaturesGrid as DefaultFeaturesGrid } from './themes/default/sections/features-grid'
 import { Features as DefaultFeatures } from './themes/default/sections/features'
 import { FeaturesAccordion as DefaultFeaturesAccordion } from './themes/default/sections/features-accordion'
@@ -355,6 +357,7 @@ import {
   ActivityOverview as SemiActivityOverview,
   ChatWorkbench as SemiChatWorkbench,
   ChatHistory as SemiChatHistory,
+  ImageGeneratorStudio as SemiImageGeneratorStudio,
 } from '@template/semi'
 
 import type {
@@ -496,6 +499,7 @@ export interface SectionComponents {
   ActivityOverview: ComponentType<ActivityOverviewProps>
   ChatWorkbench: ComponentType<ChatWorkbenchProps>
   ChatHistory: ComponentType<ChatHistoryProps>
+  ImageGeneratorStudio: ComponentType<ImageGeneratorStudioProps>
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>
@@ -715,6 +719,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ActivityOverview: DefaultActivityOverview,
       ChatWorkbench: DefaultChatWorkbench,
       ChatHistory: DefaultChatHistory,
+      ImageGeneratorStudio: DefaultImageGeneratorStudio,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -917,6 +922,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ActivityOverview: SemiActivityOverview,
       ChatWorkbench: SemiChatWorkbench,
       ChatHistory: SemiChatHistory,
+      ImageGeneratorStudio: SemiImageGeneratorStudio,
     },
   },
 }
