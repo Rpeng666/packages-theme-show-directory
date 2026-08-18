@@ -2,18 +2,17 @@
 
 import * as React from 'react'
 import { useState } from 'react'
-import { RadioGroup, Radio, Card, Select, Tag, Button as SemiButton, Spin, Typography } from '@douyinfe/semi-ui'
+import { RadioGroup, Radio, Select, Button as SemiButton, Tag } from '@douyinfe/semi-ui'
 import { IconTick } from '@douyinfe/semi-icons'
 import { SmartIcon } from '../icons'
 import type { PricingProps } from '@template/ui'
 import type { PricingItem } from '@template/ui'
-
-const { Title, Paragraph } = Typography
+import { CardSurface, SectionHeader, SectionShell } from './shell'
 
 /**
  * Semi Pricing — pure presentational layer. Business logic (payment, auth,
  * i18n, currency persistence) lives in the app's usePricing hook; this
- * component receives the results as props and renders Semi Cards in a grid.
+ * component receives the results as props and renders plan cards in a grid.
  * Group selection uses a Semi RadioGroup button, currency uses a Semi Select.
  */
 export function Pricing({
@@ -50,84 +49,111 @@ export function Pricing({
   const visibleItems = section.items?.filter((item) => !item.group || item.group === group) ?? []
 
   return (
-    <section
-      id={section.id}
-      className={className}
-      style={{ padding: '64px 0', background: 'var(--semi-color-bg-0)' }}
-    >
-      <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 24px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          {section.sr_only_title ? <h1 className="sr-only">{section.sr_only_title}</h1> : null}
-          <Title heading={2} style={{ marginBottom: 12 }}>
-            {section.title}
-          </Title>
-          {section.description ? (
-            <Paragraph type="tertiary" style={{ fontSize: 15, lineHeight: 1.7 }}>
-              {section.description}
-            </Paragraph>
-          ) : null}
+    <SectionShell id={section.id} className={className} padding="md">
+      <SectionHeader
+        label={section.label}
+        title={section.sr_only_title ? undefined : section.title}
+        description={section.description}
+      />
+      {section.sr_only_title ? <h1 className="sr-only">{section.sr_only_title}</h1> : null}
+
+      {section.groups && section.groups.length > 0 ? (
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 44 }}>
+          <RadioGroup
+            type="button"
+            buttonSize="large"
+            value={group}
+            onChange={(e) => setGroup(e.target.value)}
+          >
+            {section.groups.map((item, i) => (
+              <Radio key={i} value={item.name || ''}>
+                {item.title}
+                {item.label ? (
+                  <Tag size="small" color="violet" style={{ marginLeft: 8 }}>
+                    {item.label}
+                  </Tag>
+                ) : null}
+              </Radio>
+            ))}
+          </RadioGroup>
         </div>
+      ) : null}
 
-        {section.groups && section.groups.length > 0 ? (
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 40 }}>
-            <RadioGroup
-              type="button"
-              buttonSize="large"
-              value={group}
-              onChange={(e) => setGroup(e.target.value)}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${Math.min(visibleItems.length, 3)}, minmax(0, 1fr))`,
+          gap: 24,
+          alignItems: 'stretch',
+        }}
+      >
+        {visibleItems.map((item: PricingItem, idx) => {
+          const isCurrentPlan = currentProductId === item.product_id
+          const currencyState = itemCurrencies[item.product_id]
+          const displayedItem = currencyState?.displayedItem || item
+          const selectedCurrency = currencyState?.selectedCurrency || item.currency
+          const currencies = getCurrencies(item)
+
+          return (
+            <CardSurface
+              key={idx}
+              tone={item.is_featured ? 'featured' : 'interactive'}
+              style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 0,
+                padding: 0,
+                overflow: 'hidden',
+              }}
             >
-              {section.groups.map((item, i) => (
-                <Radio key={i} value={item.name || ''}>
-                  {item.title}
-                  {item.label ? (
-                    <Tag size="small" color="blue" style={{ marginLeft: 8 }}>
-                      {item.label}
-                    </Tag>
-                  ) : null}
-                </Radio>
-              ))}
-            </RadioGroup>
-          </div>
-        ) : null}
+              {item.is_featured ? (
+                <div
+                  style={{
+                    height: 4,
+                    background: 'var(--app-brand-grad)',
+                  }}
+                />
+              ) : null}
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${Math.min(visibleItems.length, 3)}, minmax(0, 1fr))`,
-            gap: 24,
-            alignItems: 'stretch',
-          }}
-        >
-          {visibleItems.map((item: PricingItem, idx) => {
-            const isCurrentPlan = currentProductId === item.product_id
-            const currencyState = itemCurrencies[item.product_id]
-            const displayedItem = currencyState?.displayedItem || item
-            const selectedCurrency = currencyState?.selectedCurrency || item.currency
-            const currencies = getCurrencies(item)
-
-            return (
-              <Card
-                key={idx}
-                className={item.is_featured ? 'semi-pricing-featured' : ''}
-                style={{
-                  height: '100%',
-                  borderColor: item.is_featured ? 'var(--semi-color-primary)' : undefined,
-                }}
-                bodyStyle={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 12 }}
-                shadows="hover"
-              >
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14, padding: 26, flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>{item.title}</h3>
-                  {item.label ? <Tag color="violet">{item.label}</Tag> : null}
+                  <h3 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: 'var(--semi-color-text-0)' }}>
+                    {item.title}
+                  </h3>
+                  {item.label ? (
+                    <span
+                      style={{
+                        padding: '3px 10px',
+                        borderRadius: 999,
+                        fontSize: 11,
+                        fontWeight: 700,
+                        letterSpacing: '0.04em',
+                        background: 'var(--app-brand-grad)',
+                        color: '#fff',
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                  ) : null}
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
                   {displayedItem.original_price ? (
-                    <span style={{ fontSize: 14, color: 'var(--semi-color-text-2)', textDecoration: 'line-through' }}>
+                    <span style={{ fontSize: 14, color: 'var(--semi-color-text-3)', textDecoration: 'line-through' }}>
                       {displayedItem.original_price}
                     </span>
                   ) : null}
-                  <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--semi-color-primary)' }}>
+                  <span
+                    className={item.is_featured ? 'app-text-gradient' : undefined}
+                    style={{
+                      fontSize: 34,
+                      fontWeight: 800,
+                      letterSpacing: '-0.02em',
+                      color: item.is_featured ? undefined : 'var(--semi-color-text-0)',
+                      lineHeight: 1.1,
+                    }}
+                  >
                     {displayedItem.price}
                   </span>
                   {displayedItem.unit ? (
@@ -145,12 +171,12 @@ export function Pricing({
                 </div>
 
                 {item.description ? (
-                  <Paragraph type="tertiary" style={{ margin: 0, fontSize: 14, lineHeight: 1.6 }}>
+                  <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: 'var(--semi-color-text-2)' }}>
                     {item.description}
-                  </Paragraph>
+                  </p>
                 ) : null}
                 {item.tip ? (
-                  <span style={{ fontSize: 13, color: 'var(--semi-color-text-2)' }}>{item.tip}</span>
+                  <span style={{ fontSize: 12.5, color: 'var(--semi-color-text-3)' }}>{item.tip}</span>
                 ) : null}
 
                 {isCurrentPlan ? (
@@ -177,25 +203,40 @@ export function Pricing({
                 )}
 
                 {item.features_title ? (
-                  <p style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>{item.features_title}</p>
+                  <p style={{ margin: '8px 0 0', fontSize: 13, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--semi-color-text-2)' }}>
+                    {item.features_title}
+                  </p>
                 ) : null}
                 <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
                   {item.features?.map((feat, index) => (
-                    <li key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 14, color: 'var(--semi-color-text-1)' }}>
-                      <span style={{ color: 'var(--semi-color-success)', display: 'inline-flex', marginTop: 2 }}>
-                        <IconTick size="small" />
+                    <li key={index} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: 'var(--semi-color-text-1)' }}>
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          width: 20,
+                          height: 20,
+                          flexShrink: 0,
+                          marginTop: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: 999,
+                          background: 'var(--semi-color-primary-light-default)',
+                          color: 'var(--semi-color-primary)',
+                        }}
+                      >
+                        <IconTick size="extra-small" />
                       </span>
                       {feat}
                     </li>
                   ))}
                 </ul>
-              </Card>
-            )
-          })}
-        </div>
+              </div>
+            </CardSurface>
+          )
+        })}
       </div>
 
       {paymentModal}
-    </section>
+    </SectionShell>
   )
 }

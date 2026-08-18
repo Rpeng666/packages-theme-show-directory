@@ -1,80 +1,72 @@
 'use client'
 
 import * as React from 'react'
-import { Card, Typography } from '@douyinfe/semi-ui'
-import { SmartIcon } from '../icons'
+import type { CSSProperties } from 'react'
 import type { FeaturesProps } from '@template/ui'
+import { SmartIcon } from '../icons'
+import { CardSurface, IconChip, SectionHeader, SectionShell } from './shell'
 
-const { Title, Paragraph } = Typography
+const ACCENT: Record<string, CSSProperties> = {
+  brand: { background: 'var(--semi-color-primary-light-default)', color: 'var(--semi-color-primary)' },
+  green: { background: 'rgba(var(--semi-green-0), 0.8)', color: 'rgba(var(--semi-green-6), 1)' },
+  amber: { background: 'rgba(var(--semi-amber-0), 0.8)', color: 'rgba(var(--semi-amber-6), 1)' },
+  blue: { background: 'rgba(var(--semi-blue-0), 0.8)', color: 'rgba(var(--semi-blue-6), 1)' },
+  violet: { background: 'rgba(var(--semi-violet-0), 0.8)', color: 'rgba(var(--semi-violet-6), 1)' },
+  teal: { background: 'rgba(var(--semi-teal-0), 0.8)', color: 'rgba(var(--semi-teal-6), 1)' },
+}
+
+const TONE_ORDER = ['brand', 'green', 'amber', 'blue', 'violet', 'teal'] as const
 
 /**
- * Semi Features — responsive feature grid of Semi Cards with an icon chip.
- * Shared `Section.items` carry icon *names*, rendered via the SmartIcon map.
+ * Semi Features — responsive grid of hover-lift cards with an icon chip,
+ * title and description. Icons use the SmartIcon vocabulary from section
+ * data; accent tones rotate when the data doesn't specify one.
  */
 export function Features({ section, className = '' }: FeaturesProps) {
   return (
-    <section
-      id={section.id}
-      className={className}
-      style={{ padding: '64px 0', background: 'var(--semi-color-bg-0)' }}
-    >
-      <div style={{ maxWidth: 1120, margin: '0 auto', padding: '0 24px' }}>
-        <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center', marginBottom: 40 }}>
-          <Title heading={2} style={{ marginBottom: 12 }}>
-            {section.title}
-          </Title>
-          {section.description ? (
-            <Paragraph type="tertiary" style={{ fontSize: 15, lineHeight: 1.7 }}>
-              {section.description}
-            </Paragraph>
-          ) : null}
-        </div>
+    <SectionShell id={section.id} className={className} padding="md">
+      <SectionHeader label={section.label} title={section.title} description={section.description} />
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 24,
-          }}
-        >
-          {section.items?.map((item, idx) => (
-            <Card
-              key={idx}
-              bodyStyle={{ padding: 24 }}
-              style={{ height: '100%' }}
-              shadows="hover"
-            >
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gap: 20,
+        }}
+      >
+        {section.items?.map((item, idx) => {
+          const tone = (item.tone || TONE_ORDER[idx % TONE_ORDER.length]) as keyof typeof ACCENT
+          const chip = ACCENT[tone] ?? ACCENT.brand
+          return (
+            <CardSurface key={idx} tone="interactive" style={{ padding: 24, height: '100%' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
                 {item.icon ? (
-                  <span
-                    style={{
-                      display: 'inline-flex',
-                      width: 40,
-                      height: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 10,
-                      background: 'var(--semi-color-primary-light-default)',
-                      color: 'var(--semi-color-primary)',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <SmartIcon name={item.icon as string} size={20} />
-                  </span>
+                  <IconChip size={46} radius={12} style={chip}>
+                    <SmartIcon name={item.icon as string} size={22} />
+                  </IconChip>
                 ) : null}
                 <div style={{ minWidth: 0 }}>
-                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>{item.title}</h3>
+                  <h3 style={{ margin: 0, fontSize: 17, fontWeight: 650, color: 'var(--semi-color-text-0)' }}>
+                    {item.title}
+                  </h3>
                   {item.description ? (
-                    <Paragraph type="tertiary" style={{ marginTop: 8, fontSize: 14, lineHeight: 1.7 }}>
+                    <p
+                      style={{
+                        margin: '8px 0 0',
+                        fontSize: 14,
+                        lineHeight: 1.7,
+                        color: 'var(--semi-color-text-2)',
+                      }}
+                    >
                       {item.description}
-                    </Paragraph>
+                    </p>
                   ) : null}
                 </div>
               </div>
-            </Card>
-          ))}
-        </div>
+            </CardSurface>
+          )
+        })}
       </div>
-    </section>
+    </SectionShell>
   )
 }

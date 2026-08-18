@@ -18,6 +18,8 @@ export type {
   ShowcasesFlowImage,
 } from './showcases-flow'
 export type { TestimonialsProps } from './testimonials'
+export type { StatsProps } from './stats'
+export type { LogosProps } from './logos'
 export type { PricingProps } from './pricing'
 export type { FaqProps } from './faq'
 export type { CtaProps, CtaLink } from './cta'
@@ -42,3 +44,5 @@ export type {
   ContextModeValue,
 } from './cleaner-types'
 export type { CleanerWorkbenchProps } from './cleaner-workbench'
+
+export type { ToolHeroProps, ToolHeroBadge, ToolHeroMeta, ToolHeroLink } from './tool-hero'

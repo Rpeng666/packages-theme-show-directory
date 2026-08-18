@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from 'react'
+import type { ComponentType, CSSProperties, ReactNode } from 'react'
 import type { Section } from '../../types/landing'
 
 /** 注入的 Link 组件（next-intl locale-aware） */
@@ -16,6 +16,7 @@ export type ShowcaseImage = ComponentType<{
   className?: string
   fill?: boolean
   sizes?: string
+  style?: CSSProperties
 }>
 
 export interface ShowcasesProps {

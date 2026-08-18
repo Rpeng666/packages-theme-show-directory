@@ -34,3 +34,10 @@ export type { ListGrid, ListProps } from './list'
 export type { CarouselProps } from './carousel'
 export type { TimelineItem, TimelineProps } from './timeline'
 export type { CopyTextProps } from './copy-text'
+export type {
+  ConsoleLayoutProps,
+  ConsoleLayoutBrand,
+  ConsoleLayoutNavGroup,
+  ConsoleLayoutNavItem,
+} from './pages'
+

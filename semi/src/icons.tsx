@@ -20,6 +20,16 @@ import {
   IconEdit,
   IconFile,
   IconFilter,
+  IconGridSquare,
+  IconShield,
+  IconEyeOpened,
+  IconAIWandLevel1,
+  IconScissors,
+  IconShrink,
+  IconExpand,
+  IconTemplate,
+  IconColorPalette,
+  IconText,
   IconFlag,
   IconFolder,
   IconGift,
@@ -30,6 +40,7 @@ import {
   IconLanguage,
   IconLayers,
   IconLink,
+  IconMusic,
   IconLock,
   IconPlay,
   IconPlus,
@@ -100,6 +111,9 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Code: <IconCode />,
   Terminal: <IconTerminal />,
   Gift: <IconGift />,
+  Sparkles: <IconAIWandLevel1 />,
+  Magic: <IconAIWandLevel1 />,
+  Music: <IconMusic />,
   Crop: <IconCrop />,
   Scan: <IconScan />,
   Delete: <IconDelete />,
@@ -111,6 +125,30 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   CheckList: <IconCheckList />,
   Inbox: <IconInbox />,
   AppCenter: <IconAppCenter />,
+  // Ri* (remix) names used by landing content data
+  RiYoutubeLine: <IconVideo />,
+  RiVideoLine: <IconVideo />,
+  RiImageEditLine: <IconEdit />,
+  RiImageLine: <IconImage />,
+  RiFileImageLine: <IconFile />,
+  RiFileImage2Line: <IconFile />,
+  RiUploadCloud2Line: <IconUpload />,
+  RiUpload2Line: <IconUpload />,
+  RiDownload2Line: <IconDownload />,
+  RiCropLine: <IconCrop />,
+  RiLayoutGridLine: <IconGridSquare />,
+  RiGridLine: <IconGridSquare />,
+  RiStackLine: <IconLayers />,
+  RiShieldCheckLine: <IconShield />,
+  RiMagicLine: <IconAIWandLevel1 />,
+  RiEyeLine: <IconEyeOpened />,
+  RiGlobalLine: <IconGlobe />,
+  RiCompressLine: <IconShrink />,
+  RiExpandLine: <IconExpand />,
+  RiScissorsLine: <IconScissors />,
+  RiTemplateLine: <IconTemplate />,
+  RiPaletteLine: <IconColorPalette />,
+  RiTextLine: <IconText />,
 }
 
 /**
@@ -130,12 +168,24 @@ export function SmartIcon({
   return (
     <span
       className={className}
-      style={{ display: 'inline-flex', width: size, height: size, flexShrink: 0 }}
+      style={{
+        display: 'inline-flex',
+        width: size,
+        height: size,
+        flexShrink: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
       aria-hidden
     >
       {el
-        ? React.cloneElement(el as React.ReactElement<{ size?: number }>, { size })
+        ? React.cloneElement(el as React.ReactElement<{ size?: unknown; style?: React.CSSProperties }>, {
+            size: 'inherit',
+            style: { fontSize: size, display: 'inline-flex' },
+          })
         : null}
     </span>
   )
 }
+
+

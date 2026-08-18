@@ -39,3 +39,6 @@ export { Timeline } from './components/timeline'
 export { CopyText } from './components/copy-text'
 
 export * from './sections'
+export { ToolPage } from './pages/tool-page'
+export type { ToolPageProps, ToolWorkspaceData } from './pages/tool-page'
+export { ConsoleLayout } from './pages/console-layout'

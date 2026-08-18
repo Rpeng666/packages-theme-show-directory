@@ -1,5 +1,5 @@
-/**
- * Component registry — theme name → component implementations.
+﻿/**
+ * Component registry 鈥?theme name 鈫?component implementations.
  *
  * This is the piece that makes the contracts reusable across themes: a theme
  * declares which implementations back each contract key, and consumers always
@@ -8,7 +8,7 @@
  *
  * Scope note: this package registers 9 primitives (Button/Badge/Card/Skeleton
  * + Input/Textarea/Switch/Progress/Tooltip) + each theme's AmbientProvider.
- * Section-level components (Hero, Pricing, …) are app-side concerns (they bind
+ * Section-level components (Hero, Pricing, 鈥? are app-side concerns (they bind
  * payment/i18n business deps) and live in the app.
  */
 import { createElement } from 'react'
@@ -71,7 +71,10 @@ import type { ToolsGridProps } from './contracts/sections/tools-grid'
 import type { ShowcasesProps } from './contracts/sections/showcases'
 import type { ShowcasesFlowProps } from './contracts/sections/showcases-flow'
 import type { TestimonialsProps } from './contracts/sections/testimonials'
+import type { StatsProps } from './contracts/sections/stats'
+import type { LogosProps } from './contracts/sections/logos'
 import type { PricingProps } from './contracts/sections/pricing'
+import type { ToolHeroProps } from './contracts/sections/tool-hero'
 import type { FeaturesFlowProps, FeaturesListProps } from './contracts/sections/features-media'
 import type { BlogProps } from './contracts/sections/blog'
 import type { BlogDetailProps } from './contracts/sections/blog-detail'
@@ -199,7 +202,7 @@ import { RelatedPosts as PixelRelatedPosts } from './themes/pixel/sections/blog/
 import { BlogToolCta as PixelBlogToolCta } from './themes/pixel/sections/blog/blog-tool-cta'
 import { PixelAmbientProvider } from './themes/pixel/ambient'
 
-// Perler-beads (pixel-only workbench) — single-theme; registered so app-side
+// Perler-beads (pixel-only workbench) 鈥?single-theme; registered so app-side
 // bridges resolve through the registry instead of deep-importing the pixel
 // subpath. `default` intentionally has no perler entries (feature is pixel-only).
 import { ToolBar as PixelPerlerToolBar } from './themes/pixel/sections/perler-beads'
@@ -251,7 +254,7 @@ import { EditorToolbar as PixelEditorToolbar } from './themes/pixel/editor'
 import { EditorSidebar as PixelEditorSidebar } from './themes/pixel/editor'
 import { EditorCanvas as PixelEditorCanvas } from './themes/pixel/editor'
 
-// Semi theme (@douyinfe/semi-ui) — separate workspace package (@template/semi).
+// Semi theme (@douyinfe/semi-ui) 鈥?separate workspace package (@template/semi).
 // It implements the shared contracts; missing keys (ToolHeader/ToolFooter/
 // ToolSettings/DualCta) fall back to the default theme.
 import {
@@ -306,11 +309,21 @@ import {
 import {
   Hero as SemiHero,
   Features as SemiFeatures,
+  FeaturesGrid as SemiFeaturesGrid,
+  FeaturesStep as SemiFeaturesStep,
   FeaturesAccordion as SemiFeaturesAccordion,
+  FeaturesCompare as SemiFeaturesCompare,
+  FeaturesFlow as SemiFeaturesFlow,
+  FeaturesList as SemiFeaturesList,
+  ToolsGrid as SemiToolsGrid,
+  Showcases as SemiShowcases,
+  Stats as SemiStats,
+  Logos as SemiLogos,
+  Testimonials as SemiTestimonials,
   Faq as SemiFaq,
   Cta as SemiCta,
-  Testimonials as SemiTestimonials,
   Pricing as SemiPricing,
+  ToolHero as SemiToolHero,
 } from '@template/semi'
 
 import type {
@@ -417,7 +430,7 @@ export interface ThemeComponents {
 }
 
 /**
- * Section components — the landing page blocks (Hero, Faq, Cta, …). Their
+ * Section components 鈥?the landing page blocks (Hero, Faq, Cta, 鈥?. Their
  * props differ per section (each has its own *Props contract), so they're
  * registered under a separate key and resolved via `resolveSection` (not the
  * single-typed `resolveComponent`).
@@ -442,13 +455,16 @@ export interface SectionComponents {
   RelatedPosts: ComponentType<RelatedPostsProps>
   BlogToolCta: ComponentType<BlogToolCtaProps>
   Testimonials: ComponentType<TestimonialsProps>
+  Stats: ComponentType<StatsProps>
+  Logos: ComponentType<LogosProps>
   Pricing: ComponentType<PricingProps>
+  ToolHero: ComponentType<ToolHeroProps>
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>
 
 /**
- * Perler-beads workbench components — pixel-only feature (no default-theme
+ * Perler-beads workbench components 鈥?pixel-only feature (no default-theme
  * counterpart), registered so the app's bridges resolve them via
  * `resolvePerler` instead of deep-importing the pixel subpath.
  */
@@ -492,7 +508,7 @@ export interface PerlerBeadsComponents {
 export type PartialPerlerBeadsComponents = Partial<PerlerBeadsComponents>
 
 /**
- * Dither workbench components — pixel-only feature (no default-theme
+ * Dither workbench components 鈥?pixel-only feature (no default-theme
  * counterpart), registered so the app's bridges resolve them via
  * `resolveDither` instead of deep-importing the pixel subpath.
  */
@@ -504,7 +520,7 @@ export interface DitherComponents {
 export type PartialDitherComponents = Partial<DitherComponents>
 
 /**
- * Generic image-editor shell components — pixel-only reusable asset for the
+ * Generic image-editor shell components 鈥?pixel-only reusable asset for the
  * image-design workbenches. Resolved via `resolveEditor` (never falls back to
  * the default theme).
  */
@@ -518,7 +534,7 @@ export interface EditorComponents {
 export type PartialEditorComponents = Partial<EditorComponents>
 
 /**
- * Cleaner workbench display components — pixel-only feature (no default-theme
+ * Cleaner workbench display components 鈥?pixel-only feature (no default-theme
  * counterpart), registered so the app's bridges resolve them via `resolveCleaner`
  * instead of deep-importing the pixel subpath.
  */
@@ -530,7 +546,7 @@ export interface CleanerComponents {
 export type PartialCleanerComponents = Partial<CleanerComponents>
 
 /**
- * Light-tool demo components — reusable upload→process→download demo for the
+ * Light-tool demo components 鈥?reusable upload鈫抪rocess鈫抎ownload demo for the
  * SEO tool detail pages. Pixel-only asset, resolved via `resolveLightDemo`.
  */
 export interface LightDemoComponents {
@@ -554,20 +570,20 @@ export type PartialThemeComponents = Partial<ThemeComponents>
 
 export interface ThemeManifest {
   name: ThemeName
-  /** 该主题的「环境 Provider」（如 pixel → PixelAmbientProvider），由注册表统一注入 */
+  /** 璇ヤ富棰樼殑銆岀幆澧?Provider銆嶏紙濡?pixel 鈫?PixelAmbientProvider锛夛紝鐢辨敞鍐岃〃缁熶竴娉ㄥ叆 */
   AmbientProvider?: ComponentType<{ children: ReactNode }>
   components: PartialThemeComponents
-  /** 该主题的 landing section 组件（Hero/Faq/Cta/…） */
+  /** 璇ヤ富棰樼殑 landing section 缁勪欢锛圚ero/Faq/Cta/鈥︼級 */
   sections?: PartialSectionComponents
-  /** 该主题的 perler-beads 工作台组件（当前仅 pixel 注册） */
+  /** 璇ヤ富棰樼殑 perler-beads 宸ヤ綔鍙扮粍浠讹紙褰撳墠浠?pixel 娉ㄥ唽锛?*/
   perler?: PartialPerlerBeadsComponents
-  /** 该主题的 dither 工作台组件（当前仅 pixel 注册） */
+  /** 璇ヤ富棰樼殑 dither 宸ヤ綔鍙扮粍浠讹紙褰撳墠浠?pixel 娉ㄥ唽锛?*/
   dither?: PartialDitherComponents
-  /** 该主题的通用图像编辑器壳组件（当前仅 pixel 注册） */
+  /** 璇ヤ富棰樼殑閫氱敤鍥惧儚缂栬緫鍣ㄥ３缁勪欢锛堝綋鍓嶄粎 pixel 娉ㄥ唽锛?*/
   editor?: PartialEditorComponents
-  /** 该主题的 cleaner 工作台显示组件（default + pixel 已注册） */
+  /** 璇ヤ富棰樼殑 cleaner 宸ヤ綔鍙版樉绀虹粍浠讹紙default + pixel 宸叉敞鍐岋級 */
   cleaner?: PartialCleanerComponents
-  /** 该主题的轻量工具 demo 组件（当前仅 pixel 注册） */
+  /** 璇ヤ富棰樼殑杞婚噺宸ュ叿 demo 缁勪欢锛堝綋鍓嶄粎 pixel 娉ㄥ唽锛?*/
   lightDemo?: PartialLightDemoComponents
 }
 
@@ -651,6 +667,11 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Faq: DefaultFaq,
       Cta: DefaultCta,
       FeaturesStep: DefaultFeaturesStep,
+      FeaturesFlow: SemiFeaturesFlow,
+      FeaturesList: SemiFeaturesList,
+      Stats: SemiStats,
+      Logos: SemiLogos,
+      ToolHero: SemiToolHero,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -832,11 +853,21 @@ export const registry: Record<ThemeName, ThemeManifest> = {
     sections: {
       Hero: SemiHero,
       Features: SemiFeatures,
+      FeaturesGrid: SemiFeaturesGrid,
+      FeaturesStep: SemiFeaturesStep,
       FeaturesAccordion: SemiFeaturesAccordion,
+      FeaturesCompare: SemiFeaturesCompare,
+      FeaturesFlow: SemiFeaturesFlow,
+      FeaturesList: SemiFeaturesList,
+      ToolsGrid: SemiToolsGrid,
+      Showcases: SemiShowcases,
+      Stats: SemiStats,
+      Logos: SemiLogos,
+      Testimonials: SemiTestimonials,
       Faq: SemiFaq,
       Cta: SemiCta,
-      Testimonials: SemiTestimonials,
       Pricing: SemiPricing,
+      ToolHero: SemiToolHero,
     },
   },
 }
@@ -851,7 +882,7 @@ export function getThemeManifest(name?: ThemeName): ThemeManifest {
  * the app's getThemeBlock fallback-to-default semantics).
  */
 /**
- * Registry identity tag — every component resolved through the registry gets
+ * Registry identity tag 鈥?every component resolved through the registry gets
  * `data-registry="{theme}:{key}"` on its DOM root so it can be identified in
  * the DOM / devtools without guessing which implementation backs it. A
  * consumer-supplied `data-registry` prop wins (spread AFTER the default).
@@ -882,7 +913,7 @@ function withRegistryTag(
 }
 
 /**
- * Resolve a contract key to its implementation. `theme` is optional — when
+ * Resolve a contract key to its implementation. `theme` is optional 鈥?when
  * omitted, resolves against the active theme (NEXT_PUBLIC_THEME), falling back
  * to the default theme when the theme hasn't registered that component.
  *
@@ -902,7 +933,7 @@ export function resolveComponent<K extends keyof ThemeComponents>(
 }
 
 /**
- * Resolve a section (Hero/Faq/Cta/…). `theme` is optional — when omitted,
+ * Resolve a section (Hero/Faq/Cta/鈥?. `theme` is optional 鈥?when omitted,
  * resolves against the active theme, falling back to the default theme.
  *
  * Usage: resolveSection('Faq')  /  resolveSection('Hero', 'default')
@@ -921,7 +952,7 @@ export function resolveSection<K extends keyof SectionComponents>(
 /**
  * Resolve a perler-beads workbench component. The feature is pixel-only, so
  * the implementation always resolves against `pixel` (never falls back to the
- * default theme, which has no perler entries) — but the active theme is still
+ * default theme, which has no perler entries) 鈥?but the active theme is still
  * used for the registry identity tag, mirroring the other resolvers.
  *
  * Usage: resolvePerler('ColorPalette')  /  resolvePerler('InstallPWA')
@@ -940,7 +971,7 @@ export function resolvePerler<K extends keyof PerlerBeadsComponents>(
 /**
  * Resolve a dither workbench component. The feature is pixel-only, so the
  * implementation always resolves against `pixel` (never falls back to the
- * default theme) — mirroring `resolvePerler`.
+ * default theme) 鈥?mirroring `resolvePerler`.
  *
  * Usage: resolveDither('SettingsPanel')  /  resolveDither('Preview')
  */
@@ -958,7 +989,7 @@ export function resolveDither<K extends keyof DitherComponents>(
 /**
  * Resolve a generic image-editor shell component. The asset is pixel-only, so
  * the implementation always resolves against `pixel` (never falls back to the
- * default theme) — mirroring `resolvePerler`/`resolveDither`.
+ * default theme) 鈥?mirroring `resolvePerler`/`resolveDither`.
  *
  * Usage: resolveEditor('Shell')  /  resolveEditor('Sidebar')
  */
@@ -976,7 +1007,7 @@ export function resolveEditor<K extends keyof EditorComponents>(
 /**
  * Resolve a cleaner workbench display component. Falls back to the `pixel`
  * implementation when the active theme has no cleaner entry (mirroring
- * `resolveEditor`/`resolveDither`) — pixel is the historical reference.
+ * `resolveEditor`/`resolveDither`) 鈥?pixel is the historical reference.
  *
  * Usage: resolveCleaner('Workbench')  /  resolveCleaner('Output')
  */
@@ -1007,3 +1038,7 @@ export function resolveLightDemo<K extends keyof LightDemoComponents>(
   const Comp = themed ?? getThemeManifest('pixel').lightDemo?.[key]!
   return withRegistryTag(`LightDemo${key}`, source, Comp) as LightDemoComponents[K]
 }
+
+
+
+

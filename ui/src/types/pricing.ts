@@ -52,8 +52,10 @@ export interface Pricing {
   name?: string;
   title?: string;
   description?: string;
+  label?: string;
   items?: PricingItem[];
   groups?: PricingGroup[];
   className?: string;
   sr_only_title?: string;
 }
+

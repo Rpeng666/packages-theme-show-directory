@@ -49,6 +49,10 @@ export type {
   TimelineItem,
   TimelineProps,
   CopyTextProps,
+  ConsoleLayoutProps,
+  ConsoleLayoutBrand,
+  ConsoleLayoutNavGroup,
+  ConsoleLayoutNavItem,
 } from './contracts'
 
 export type {
@@ -73,6 +77,12 @@ export type {
   CtaLink,
   FeaturesFlowProps,
   FeaturesListProps,
+  StatsProps,
+  LogosProps,
+  ToolHeroProps,
+  ToolHeroBadge,
+  ToolHeroMeta,
+  ToolHeroLink,
   BlogProps,
   BlogDetailProps,
   HeroCleanerProps,
