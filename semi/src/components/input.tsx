@@ -33,9 +33,19 @@ export function Input({
   const adaptedOnChange = onChange
     ? (_value: string, e: React.ChangeEvent<HTMLInputElement>) => onChange(e)
     : undefined
+
+  // The shared contract uses the native `type` attribute (text/password/
+  // email/…). Semi has no `type` prop — it uses `mode` for the password
+  // variant (with the reveal toggle), so translate `type="password"` here and
+  // strip it from the passthrough props.
+  const { type: _nativeType, ...restProps } = (props as any) || {}
+  const mode =
+    _nativeType === 'password' ? 'password' : undefined
+
   const input = (
     <SemiInput
-      {...(props as any)}
+      {...(restProps as any)}
+      mode={mode}
       size={SIZE[size as keyof typeof SIZE] ?? 'default'}
       prefix={prefix ?? icon}
       suffix={loading ? <Spin size="small" /> : suffix}

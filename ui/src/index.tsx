@@ -88,6 +88,20 @@ export type {
   HeroCleanerProps,
   RelatedPostsProps,
   BlogToolCtaProps,
+  PageHeaderProps,
+  DashboardOverviewProps,
+  DashboardStat,
+  DashboardActivityItem,
+  DashboardActivities,
+  DashboardQuickAction,
+  DashboardQuickActions,
+  SettingsOverviewProps,
+  SettingsOverviewItem,
+  ActivityOverviewProps,
+  ActivityStat,
+  ActivityTaskItem,
+  ActivityQuickAction,
+  ActivityTone,
 } from './contracts/sections'
 
 export type { HeaderProps } from './contracts/header'

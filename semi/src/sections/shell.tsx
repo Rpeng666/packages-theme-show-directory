@@ -47,11 +47,13 @@ export function SectionShell({
   background = 'default',
   maxWidth = 1120,
   style,
-}: SectionShellProps) {
+  ...rest
+}: SectionShellProps & Record<string, unknown>) {
   return (
     <section
       id={id}
       className={className}
+      {...(rest as any)}
       style={{
         position: 'relative',
         overflow: 'hidden',

@@ -75,6 +75,23 @@ import type { StatsProps } from './contracts/sections/stats'
 import type { LogosProps } from './contracts/sections/logos'
 import type { PricingProps } from './contracts/sections/pricing'
 import type { ToolHeroProps } from './contracts/sections/tool-hero'
+import type { PageHeaderProps } from './contracts/sections/page-header'
+import type {
+  DashboardOverviewProps,
+  DashboardStat,
+  DashboardActivityItem,
+  DashboardActivities,
+  DashboardQuickAction,
+  DashboardQuickActions,
+} from './contracts/sections/dashboard-overview'
+import type { SettingsOverviewProps } from './contracts/sections/settings-overview'
+import type {
+  ActivityOverviewProps,
+  ActivityStat,
+  ActivityTaskItem,
+  ActivityQuickAction,
+  ActivityTone,
+} from './contracts/sections/activity-overview'
 import type { FeaturesFlowProps, FeaturesListProps } from './contracts/sections/features-media'
 import type { BlogProps } from './contracts/sections/blog'
 import type { BlogDetailProps } from './contracts/sections/blog-detail'
@@ -134,6 +151,10 @@ import { Carousel as DefaultCarousel } from './themes/default/carousel'
 import { Timeline as DefaultTimeline } from './themes/default/timeline'
 import { CopyText as DefaultCopyText } from './themes/default/copy-text'
 import { Hero as DefaultHero } from './themes/default/sections/hero'
+import { PageHeader as DefaultPageHeader } from './themes/default/sections/page-header'
+import { DashboardOverview as DefaultDashboardOverview } from './themes/default/sections/dashboard-overview'
+import { SettingsOverview as DefaultSettingsOverview } from './themes/default/sections/settings-overview'
+import { ActivityOverview as DefaultActivityOverview } from './themes/default/sections/activity-overview'
 import { FeaturesGrid as DefaultFeaturesGrid } from './themes/default/sections/features-grid'
 import { Features as DefaultFeatures } from './themes/default/sections/features'
 import { FeaturesAccordion as DefaultFeaturesAccordion } from './themes/default/sections/features-accordion'
@@ -324,6 +345,10 @@ import {
   Cta as SemiCta,
   Pricing as SemiPricing,
   ToolHero as SemiToolHero,
+  PageHeader as SemiPageHeader,
+  DashboardOverview as SemiDashboardOverview,
+  SettingsOverview as SemiSettingsOverview,
+  ActivityOverview as SemiActivityOverview,
 } from '@template/semi'
 
 import type {
@@ -459,6 +484,10 @@ export interface SectionComponents {
   Logos: ComponentType<LogosProps>
   Pricing: ComponentType<PricingProps>
   ToolHero: ComponentType<ToolHeroProps>
+  PageHeader: ComponentType<PageHeaderProps>
+  DashboardOverview: ComponentType<DashboardOverviewProps>
+  SettingsOverview: ComponentType<SettingsOverviewProps>
+  ActivityOverview: ComponentType<ActivityOverviewProps>
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>
@@ -672,6 +701,10 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Stats: SemiStats,
       Logos: SemiLogos,
       ToolHero: SemiToolHero,
+      PageHeader: DefaultPageHeader,
+      DashboardOverview: DefaultDashboardOverview,
+      SettingsOverview: DefaultSettingsOverview,
+      ActivityOverview: DefaultActivityOverview,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -868,6 +901,10 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Cta: SemiCta,
       Pricing: SemiPricing,
       ToolHero: SemiToolHero,
+      PageHeader: SemiPageHeader,
+      DashboardOverview: SemiDashboardOverview,
+      SettingsOverview: SemiSettingsOverview,
+      ActivityOverview: SemiActivityOverview,
     },
   },
 }

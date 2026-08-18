@@ -3,13 +3,7 @@
 import * as React from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 
-import {
-  Select as SelectComponent,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../../../components/select';
+import { useThemeComponent } from '../../../context';
 import { FormField } from '../../../contracts/features/form';
 
 export function Select({
@@ -21,23 +15,20 @@ export function Select({
   formField: ControllerRenderProps<Record<string, unknown>, string>;
   data?: any;
 }) {
+  // Resolve the active theme's Select (Semi under the semi theme, shadcn
+  // under default) so schema-driven forms render the theme-native control.
+  const SelectComponent = useThemeComponent('Select');
+
   return (
     <SelectComponent
       value={formField.value as string}
-      onValueChange={formField.onChange}
-      defaultValue={field.value}
-      {...field.attributes}
-    >
-      <SelectTrigger className="bg-background w-full rounded-md">
-        <SelectValue placeholder={field.placeholder} />
-      </SelectTrigger>
-      <SelectContent className="bg-background rounded-md">
-        {field.options?.map((option: any) => (
-          <SelectItem key={option.value} value={option.value}>
-            {option.title}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </SelectComponent>
+      onChange={formField.onChange}
+      options={(field.options || []).map((option) => ({
+        value: option.value,
+        label: option.title,
+      }))}
+      placeholder={field.placeholder}
+      disabled={field.attributes?.disabled}
+    />
   );
 }

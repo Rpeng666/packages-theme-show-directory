@@ -46,3 +46,23 @@ export type {
 export type { CleanerWorkbenchProps } from './cleaner-workbench'
 
 export type { ToolHeroProps, ToolHeroBadge, ToolHeroMeta, ToolHeroLink } from './tool-hero'
+export type { PageHeaderProps } from './page-header'
+export type {
+  DashboardOverviewProps,
+  DashboardStat,
+  DashboardActivityItem,
+  DashboardActivities,
+  DashboardQuickAction,
+  DashboardQuickActions,
+} from './dashboard-overview'
+export type {
+  SettingsOverviewProps,
+  SettingsOverviewItem,
+} from './settings-overview'
+export type {
+  ActivityOverviewProps,
+  ActivityStat,
+  ActivityTaskItem,
+  ActivityQuickAction,
+  ActivityTone,
+} from './activity-overview'

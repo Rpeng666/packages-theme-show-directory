@@ -11,7 +11,7 @@ import { z } from 'zod';
 
 
 import { SmartIcon } from '../../smart-icon';
-import { Button } from '../../../themes/default/button';
+import { useThemeComponent } from '../../../context';
 import {
   Form as FormComponent,
   FormControl,
@@ -22,7 +22,6 @@ import {
   FormMessage,
 } from '../../../components/form';
 import { Label } from '../../../components/label';
-import { Textarea } from '../../../themes/default/textarea';
 import {
   FormField as FormFieldType,
   FormSubmit,
@@ -204,6 +203,11 @@ export function Form({
   }
 
   const [loading, setLoading] = useState(false);
+
+  // Resolve the active theme's Button/Textarea (Semi under the semi theme,
+  // shadcn under default) so schema-driven forms render theme-native controls.
+  const Button = useThemeComponent('Button');
+  const Textarea = useThemeComponent('Textarea');
 
   const router = useRouter();
   const { routerPush } = useConsoleBridge();

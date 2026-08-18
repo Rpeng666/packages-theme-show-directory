@@ -23,6 +23,13 @@ export function Button({
   type: _nativeType,
   ...props
 }: ButtonProps) {
+  // Map the native HTML `type` (submit/reset/button) onto Semi's `htmlType`;
+  // Semi's own `type` prop means the color scheme and is set below.
+  const htmlType =
+    _nativeType === 'submit' || _nativeType === 'reset'
+      ? _nativeType
+      : undefined
+
   const destructive = variant === 'destructive'
   const theme: 'solid' | 'light' | 'borderless'
     = variant === 'ghost' || variant === 'link' ? 'borderless'
@@ -39,6 +46,7 @@ export function Button({
       size={semiSize}
       loading={loading}
       block={_fullWidth}
+      htmlType={htmlType}
       className={className}
       icon={loading ? <Spin size="small" /> : undefined}
     >
