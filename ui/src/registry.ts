@@ -110,6 +110,7 @@ import type { VideoGeneratorStudioProps } from "./contracts/sections/video-gener
 import type { ResizeWorkbenchProps } from "./contracts/sections/resize-workbench";
 import type { CompressWorkbenchProps } from "./contracts/sections/compress-workbench";
 import type { ExtractWorkbenchProps } from "./contracts/sections/extract-workbench";
+import type { DownloadWorkbenchProps } from "./contracts/sections/download-workbench";
 import type {
   FeaturesFlowProps,
   FeaturesListProps,
@@ -192,6 +193,7 @@ import { VideoGeneratorStudio as DefaultVideoGeneratorStudio } from "./themes/de
 import { ResizeWorkbench as DefaultResizeWorkbench } from "./themes/default/sections/resize-workbench";
 import { CompressWorkbench as DefaultCompressWorkbench } from "./themes/default/sections/compress-workbench";
 import { ExtractWorkbench as DefaultExtractWorkbench } from "./themes/default/sections/extract-workbench";
+import { DownloadWorkbench as DefaultDownloadWorkbench } from "./themes/default/sections/download-workbench";
 import { FeaturesGrid as DefaultFeaturesGrid } from "./themes/default/sections/features-grid";
 import { Features as DefaultFeatures } from "./themes/default/sections/features";
 import { FeaturesAccordion as DefaultFeaturesAccordion } from "./themes/default/sections/features-accordion";
@@ -405,6 +407,7 @@ import {
   ResizeWorkbench as SemiResizeWorkbench,
   CompressWorkbench as SemiCompressWorkbench,
   ExtractWorkbench as SemiExtractWorkbench,
+  DownloadWorkbench as SemiDownloadWorkbench,
 } from "@template/semi";
 
 import type {
@@ -552,6 +555,7 @@ export interface SectionComponents {
   ResizeWorkbench: ComponentType<ResizeWorkbenchProps>;
   CompressWorkbench: ComponentType<CompressWorkbenchProps>;
   ExtractWorkbench: ComponentType<ExtractWorkbenchProps>;
+  DownloadWorkbench: ComponentType<DownloadWorkbenchProps>;
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>;
@@ -777,6 +781,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ResizeWorkbench: DefaultResizeWorkbench,
       CompressWorkbench: DefaultCompressWorkbench,
       ExtractWorkbench: DefaultExtractWorkbench,
+      DownloadWorkbench: DefaultDownloadWorkbench,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -985,6 +990,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       ResizeWorkbench: SemiResizeWorkbench,
       CompressWorkbench: SemiCompressWorkbench,
       ExtractWorkbench: SemiExtractWorkbench,
+      DownloadWorkbench: SemiDownloadWorkbench,
     },
   },
 };

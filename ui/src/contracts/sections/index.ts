@@ -126,3 +126,9 @@ export type {
   ExtractWorkbenchProps,
   ExtractWorkbenchTip,
 } from "./extract-workbench";
+
+export type {
+  DownloadWorkbenchProps,
+  DownloadWorkbenchQuality,
+  DownloadWorkbenchTip,
+} from "./download-workbench";
