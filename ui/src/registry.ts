@@ -49,6 +49,15 @@ import type { StepsProps } from './contracts/steps'
 import type { TableProps } from './contracts/table'
 import type { DescriptionsProps } from './contracts/descriptions'
 import type { BannerProps } from './contracts/banner'
+import type { LayoutShellProps } from './contracts/layout-shell'
+import type { NavigationProps } from './contracts/navigation'
+import type { ImageProps } from './contracts/image'
+import type { ColorPickerProps } from './contracts/color-picker'
+import type { CollapseProps } from './contracts/collapse'
+import type { ListProps } from './contracts/list'
+import type { CarouselProps } from './contracts/carousel'
+import type { TimelineProps } from './contracts/timeline'
+import type { CopyTextProps } from './contracts/copy-text'
 import type { IconFrameProps } from './contracts/iconframe'
 import type { HeroProps } from './contracts/sections/hero'
 import type { FaqProps } from './contracts/sections/faq'
@@ -112,6 +121,15 @@ import { Steps as DefaultSteps } from './themes/default/steps'
 import { Table as DefaultTable } from './themes/default/table'
 import { Descriptions as DefaultDescriptions } from './themes/default/descriptions'
 import { Banner as DefaultBanner } from './themes/default/banner'
+import { LayoutShell as DefaultLayoutShell } from './themes/default/layout-shell'
+import { Navigation as DefaultNavigation } from './themes/default/navigation'
+import { Image as DefaultImage } from './themes/default/image'
+import { ColorPicker as DefaultColorPicker } from './themes/default/color-picker'
+import { Collapse as DefaultCollapse } from './themes/default/collapse'
+import { List as DefaultList } from './themes/default/list'
+import { Carousel as DefaultCarousel } from './themes/default/carousel'
+import { Timeline as DefaultTimeline } from './themes/default/timeline'
+import { CopyText as DefaultCopyText } from './themes/default/copy-text'
 import { Hero as DefaultHero } from './themes/default/sections/hero'
 import { FeaturesGrid as DefaultFeaturesGrid } from './themes/default/sections/features-grid'
 import { Features as DefaultFeatures } from './themes/default/sections/features'
@@ -275,6 +293,15 @@ import {
   Banner as SemiBanner,
   Header as SemiHeader,
   Footer as SemiFooter,
+  LayoutShell as SemiLayoutShell,
+  Navigation as SemiNavigation,
+  Image as SemiImage,
+  ColorPicker as SemiColorPicker,
+  Collapse as SemiCollapse,
+  List as SemiList,
+  Carousel as SemiCarousel,
+  Timeline as SemiTimeline,
+  CopyText as SemiCopyText,
 } from '@template/semi'
 import {
   Hero as SemiHero,
@@ -378,6 +405,15 @@ export interface ThemeComponents {
   Table: ComponentType<TableProps>
   Descriptions: ComponentType<DescriptionsProps>
   Banner: ComponentType<BannerProps>
+  Layout: ComponentType<LayoutShellProps>
+  Navigation: ComponentType<NavigationProps>
+  Image: ComponentType<ImageProps>
+  ColorPicker: ComponentType<ColorPickerProps>
+  Collapse: ComponentType<CollapseProps>
+  List: ComponentType<ListProps>
+  Carousel: ComponentType<CarouselProps>
+  Timeline: ComponentType<TimelineProps>
+  CopyText: ComponentType<CopyTextProps>
 }
 
 /**
@@ -592,6 +628,15 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Table: DefaultTable,
       Descriptions: DefaultDescriptions,
       Banner: DefaultBanner,
+      Layout: DefaultLayoutShell,
+      Navigation: DefaultNavigation,
+      Image: DefaultImage,
+      ColorPicker: DefaultColorPicker,
+      Collapse: DefaultCollapse,
+      List: DefaultList,
+      Carousel: DefaultCarousel,
+      Timeline: DefaultTimeline,
+      CopyText: DefaultCopyText,
     },
     sections: {
       Hero: DefaultHero,
@@ -774,6 +819,15 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Descriptions: SemiDescriptions,
       UploadZone: SemiUploadZone,
       Banner: SemiBanner,
+      Layout: SemiLayoutShell,
+      Navigation: SemiNavigation,
+      Image: SemiImage,
+      ColorPicker: SemiColorPicker,
+      Collapse: SemiCollapse,
+      List: SemiList,
+      Carousel: SemiCarousel,
+      Timeline: SemiTimeline,
+      CopyText: SemiCopyText,
     },
     sections: {
       Hero: SemiHero,
