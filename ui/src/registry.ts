@@ -92,6 +92,7 @@ import type {
   ActivityQuickAction,
   ActivityTone,
 } from './contracts/sections/activity-overview'
+import type { ChatWorkbenchProps } from './contracts/sections/chat-workbench'
 import type { FeaturesFlowProps, FeaturesListProps } from './contracts/sections/features-media'
 import type { BlogProps } from './contracts/sections/blog'
 import type { BlogDetailProps } from './contracts/sections/blog-detail'
@@ -155,6 +156,7 @@ import { PageHeader as DefaultPageHeader } from './themes/default/sections/page-
 import { DashboardOverview as DefaultDashboardOverview } from './themes/default/sections/dashboard-overview'
 import { SettingsOverview as DefaultSettingsOverview } from './themes/default/sections/settings-overview'
 import { ActivityOverview as DefaultActivityOverview } from './themes/default/sections/activity-overview'
+import { ChatWorkbench as DefaultChatWorkbench } from './themes/default/sections/chat-workbench'
 import { FeaturesGrid as DefaultFeaturesGrid } from './themes/default/sections/features-grid'
 import { Features as DefaultFeatures } from './themes/default/sections/features'
 import { FeaturesAccordion as DefaultFeaturesAccordion } from './themes/default/sections/features-accordion'
@@ -349,6 +351,7 @@ import {
   DashboardOverview as SemiDashboardOverview,
   SettingsOverview as SemiSettingsOverview,
   ActivityOverview as SemiActivityOverview,
+  ChatWorkbench as SemiChatWorkbench,
 } from '@template/semi'
 
 import type {
@@ -488,6 +491,7 @@ export interface SectionComponents {
   DashboardOverview: ComponentType<DashboardOverviewProps>
   SettingsOverview: ComponentType<SettingsOverviewProps>
   ActivityOverview: ComponentType<ActivityOverviewProps>
+  ChatWorkbench: ComponentType<ChatWorkbenchProps>
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>
@@ -705,6 +709,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       DashboardOverview: DefaultDashboardOverview,
       SettingsOverview: DefaultSettingsOverview,
       ActivityOverview: DefaultActivityOverview,
+      ChatWorkbench: DefaultChatWorkbench,
       HeroCleaner: DefaultHeroCleaner,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
@@ -905,6 +910,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       DashboardOverview: SemiDashboardOverview,
       SettingsOverview: SemiSettingsOverview,
       ActivityOverview: SemiActivityOverview,
+      ChatWorkbench: SemiChatWorkbench,
     },
   },
 }

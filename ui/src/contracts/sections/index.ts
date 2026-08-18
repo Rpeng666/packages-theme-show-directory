@@ -66,3 +66,8 @@ export type {
   ActivityQuickAction,
   ActivityTone,
 } from './activity-overview'
+
+export type {
+  ChatWorkbenchProps,
+  ChatSuggestionChip,
+} from './chat-workbench'

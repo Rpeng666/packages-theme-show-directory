@@ -97,6 +97,8 @@ export type {
   DashboardQuickActions,
   SettingsOverviewProps,
   SettingsOverviewItem,
+  ChatWorkbenchProps,
+  ChatSuggestionChip,
   ActivityOverviewProps,
   ActivityStat,
   ActivityTaskItem,
