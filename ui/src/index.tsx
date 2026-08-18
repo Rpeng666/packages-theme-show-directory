@@ -128,6 +128,8 @@ export type {
   CompressWorkbenchFormat,
   CompressWorkbenchFormatOption,
   CompressWorkbenchProps,
+  ExtractWorkbenchProps,
+  ExtractWorkbenchTip,
   ActivityOverviewProps,
   ActivityStat,
   ActivityTaskItem,

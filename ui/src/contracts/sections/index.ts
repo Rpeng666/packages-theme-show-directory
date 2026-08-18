@@ -121,3 +121,8 @@ export type {
   CompressWorkbenchFormatOption,
   CompressWorkbenchProps,
 } from "./compress-workbench";
+
+export type {
+  ExtractWorkbenchProps,
+  ExtractWorkbenchTip,
+} from "./extract-workbench";
