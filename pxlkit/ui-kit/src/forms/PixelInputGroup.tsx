@@ -34,7 +34,7 @@ export const PixelInputGroup = forwardRef<HTMLDivElement, PixelInputGroupProps>(
     const childCount = React.Children.count(children);
 
     if (process.env.NODE_ENV !== 'production' && childCount > 1 && !hasName) {
-      // eslint-disable-next-line no-console
+       
       console.warn(
         '[PixelInputGroup] missing aria-label / aria-labelledby. A group of joined ' +
           'controls is unintelligible to SR users without an accessible name.',

@@ -13,7 +13,7 @@ import {
 import { FormSubmit } from './form';
 
 export interface SectionItem extends NavItem {
-  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  [key: string]: any;  
 }
 
 export interface SectionSource {
@@ -39,7 +39,7 @@ export interface Section {
   text_align?: 'left' | 'center' | 'right';
   className?: string;
   component?: ReactNode;
-  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  [key: string]: any;  
 }
 
 // header props for header component

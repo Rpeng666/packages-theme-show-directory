@@ -68,6 +68,8 @@ export function ExtractWorkbench({
   downloadLabel,
   downloadHint,
   onDownload,
+  openInWorkbenchLabel,
+  onOpenInWorkbench,
   tipsTitle,
   tips,
   footerHint,
@@ -320,6 +322,19 @@ export function ExtractWorkbench({
                   <SmartIcon name="Download" size={17} />
                   <span>{downloadLabel}</span>
                 </Button>
+                {onOpenInWorkbench ? (
+                  <Button
+                    type="button"
+                    size="lg"
+                    variant="secondary"
+                    className="xstudio-download"
+                    onClick={onOpenInWorkbench}
+                    disabled={!frameUrl}
+                  >
+                    <SmartIcon name="Edit" size={17} />
+                    <span>{openInWorkbenchLabel}</span>
+                  </Button>
+                ) : null}
                 {downloadHint ? (
                   <p className="xstudio-download-hint">{downloadHint}</p>
                 ) : null}

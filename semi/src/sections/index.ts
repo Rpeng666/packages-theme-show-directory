@@ -30,3 +30,4 @@ export { ExtractWorkbench } from "./extract-workbench";
 export { DownloadWorkbench } from "./download-workbench";
 export { PreviewWorkbench } from "./preview-workbench";
 export { DesignerStudio } from "./designer-studio";
+export { HeroLive } from "./hero-live";

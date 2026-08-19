@@ -69,6 +69,8 @@ export function CompressWorkbench({
   qualityLabel,
   qualityValue,
   onQualityChange,
+  autoFitLabel,
+  onAutoFit2MB,
   smallerLabel,
   betterLabel,
   resultsCardTitle,
@@ -310,6 +312,16 @@ export function CompressWorkbench({
                     typeof qualityLabel === "string" ? qualityLabel : "quality"
                   }
                 />
+                {onAutoFit2MB ? (
+                  <button
+                    type="button"
+                    onClick={onAutoFit2MB}
+                    className="cstudio-otf"
+                  >
+                    <span className="cstudio-otf-magic">✦</span>
+                    <span>{autoFitLabel}</span>
+                  </button>
+                ) : null}
                 <div className="cstudio-quality-endpoints">
                   <span>{smallerLabel}</span>
                   <span>{betterLabel}</span>

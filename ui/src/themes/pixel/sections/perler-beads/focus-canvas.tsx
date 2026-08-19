@@ -3,7 +3,7 @@ import { cn } from '../../../../lib/utils';
 
 import React, { useRef, useEffect, useCallback, useState, useMemo } from 'react';
 import type { PerlerMappedPixel } from '../../../../contracts/perler-beads/types';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 type MappedPixel = PerlerMappedPixel;
 
 export interface PerlerFocusCanvasProps {

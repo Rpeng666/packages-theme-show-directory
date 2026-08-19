@@ -120,6 +120,7 @@ import type {
 import type { BlogProps } from "./contracts/sections/blog";
 import type { BlogDetailProps } from "./contracts/sections/blog-detail";
 import type { HeroCleanerProps } from "./contracts/sections/hero-cleaner";
+import type { HeroLiveProps } from "./contracts/sections/hero-live";
 import type {
   RelatedPostsProps,
   BlogToolCtaProps,
@@ -210,6 +211,7 @@ import { Faq as DefaultFaq } from "./themes/default/sections/faq";
 import { Cta as DefaultCta } from "./themes/default/sections/cta";
 import { FeaturesStep as DefaultFeaturesStep } from "./themes/default/sections/features-step";
 import { HeroCleaner as DefaultHeroCleaner } from "./themes/default/sections/hero-cleaner";
+import { HeroLive as DefaultHeroLive } from "./themes/default/sections/hero-live";
 import { Blog as DefaultBlog } from "./themes/default/sections/blog";
 import { BlogDetail as DefaultBlogDetail } from "./themes/default/sections/blog-detail";
 import {
@@ -380,6 +382,8 @@ import {
   Carousel as SemiCarousel,
   Timeline as SemiTimeline,
   CopyText as SemiCopyText,
+  ToolPage as SemiToolPage,
+  ConsoleLayout as SemiConsoleLayout,
 } from "@template/semi";
 import {
   Hero as SemiHero,
@@ -414,7 +418,11 @@ import {
   DownloadWorkbench as SemiDownloadWorkbench,
   PreviewWorkbench as SemiPreviewWorkbench,
   DesignerStudio as SemiDesignerStudio,
+  HeroLive as SemiHeroLive,
 } from "@template/semi";
+
+import type { ToolPageProps } from "@template/semi";
+import type { ConsoleLayoutProps } from "./contracts";
 
 import type {
   PerlerToolBarProps,
@@ -517,6 +525,8 @@ export interface ThemeComponents {
   Carousel: ComponentType<CarouselProps>;
   Timeline: ComponentType<TimelineProps>;
   CopyText: ComponentType<CopyTextProps>;
+  ToolPage: ComponentType<ToolPageProps>;
+  ConsoleLayout: ComponentType<ConsoleLayoutProps>;
 }
 
 /**
@@ -564,6 +574,7 @@ export interface SectionComponents {
   DownloadWorkbench: ComponentType<DownloadWorkbenchProps>;
   PreviewWorkbench: ComponentType<PreviewWorkbenchProps>;
   DesignerStudio: ComponentType<DesignerStudioProps>;
+  HeroLive: ComponentType<HeroLiveProps>;
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>;
@@ -793,6 +804,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       PreviewWorkbench: DefaultPreviewWorkbench,
       DesignerStudio: DefaultDesignerStudio,
       HeroCleaner: DefaultHeroCleaner,
+      HeroLive: DefaultHeroLive,
       Blog: DefaultBlog,
       BlogDetail: DefaultBlogDetail,
     },
@@ -969,6 +981,8 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       Carousel: SemiCarousel,
       Timeline: SemiTimeline,
       CopyText: SemiCopyText,
+      ToolPage: SemiToolPage,
+      ConsoleLayout: SemiConsoleLayout,
     },
     sections: {
       Hero: SemiHero,
@@ -1003,6 +1017,7 @@ export const registry: Record<ThemeName, ThemeManifest> = {
       DownloadWorkbench: SemiDownloadWorkbench,
       PreviewWorkbench: SemiPreviewWorkbench,
       DesignerStudio: SemiDesignerStudio,
+      HeroLive: SemiHeroLive,
     },
   },
 };

@@ -106,7 +106,7 @@ export const PixelBox = forwardRef<HTMLDivElement, PixelBoxProps>(function Pixel
     if (!as || !LANDMARK_TAGS.has(as)) return;
     const r = rest as Record<string, unknown>;
     if (r['aria-label'] || r['aria-labelledby'] || r['title']) return;
-    // eslint-disable-next-line no-console
+     
     console.warn(
       `[pxlkit] PixelBox as="${as}" is a landmark/sectioning element but has no accessible name. ` +
         `Add aria-label, aria-labelledby, or title.`,

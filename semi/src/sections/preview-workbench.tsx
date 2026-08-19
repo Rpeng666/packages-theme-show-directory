@@ -531,6 +531,14 @@ export function PreviewWorkbench({
   onToggleDark,
   darkLabel,
   lightLabel,
+  foldLine = false,
+  onToggleFoldLine,
+  foldLineLabel,
+  foldLineHideLabel,
+  colorBlind = false,
+  onToggleColorBlind,
+  colorBlindLabel,
+  colorBlindOffLabel,
   sceneLabel,
   scenes = [],
   scene = "feed",
@@ -636,6 +644,30 @@ export function PreviewWorkbench({
               <SmartIcon name={dark ? "Sun" : "Moon"} size={14} />
               <span>{dark ? lightLabel : darkLabel}</span>
             </Button>
+            {onToggleFoldLine ? (
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                className="pstudio-dark-toggle"
+                onClick={onToggleFoldLine}
+              >
+                <span className="pstudio-fold-glyph">⌁</span>
+                <span>{foldLine ? foldLineHideLabel : foldLineLabel}</span>
+              </Button>
+            ) : null}
+            {onToggleColorBlind ? (
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                className="pstudio-dark-toggle"
+                onClick={onToggleColorBlind}
+              >
+                <SmartIcon name="Eye" size={14} />
+                <span>{colorBlind ? colorBlindOffLabel : colorBlindLabel}</span>
+              </Button>
+            ) : null}
           </div>
 
           {mode === "ab" && abHint ? (
@@ -731,7 +763,13 @@ export function PreviewWorkbench({
         </div>
 
         {/* ── Stage: mock YouTube chrome + scene ── */}
-        <div className={cn("pstudio-stage", dark && "pstudio-dark")}>
+        <div
+          className={cn(
+            "pstudio-stage",
+            dark && "pstudio-dark",
+            colorBlind && "pstudio-cvd",
+          )}
+        >
           <div className="pstudio-browser">
             <div className="pstudio-traffic">
               <span className="pstudio-dot pstudio-dot-red" />
@@ -755,6 +793,11 @@ export function PreviewWorkbench({
             {scene === "search" ? <SearchScene {...sceneProps} /> : null}
             {scene === "mobile" ? <MobileScene {...sceneProps} /> : null}
             {scene === "sidebar" ? <SidebarScene {...sceneProps} /> : null}
+            {foldLine ? (
+              <div className="pstudio-foldline" aria-hidden>
+                <span className="pstudio-foldline-tag">{foldLineLabel}</span>
+              </div>
+            ) : null}
           </div>
         </div>
 

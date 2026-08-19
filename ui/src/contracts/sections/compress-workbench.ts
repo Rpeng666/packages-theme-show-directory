@@ -55,6 +55,9 @@ export interface CompressWorkbenchProps {
   onFormatChange: (value: CompressWorkbenchFormat) => void;
   qualityLabel?: ReactNode;
   qualityValue: number;
+  /** magic one-tap: auto-find the highest quality that fits YouTube's 2MB */
+  autoFitLabel?: ReactNode;
+  onAutoFit2MB?: () => void;
   onQualityChange: (value: number) => void;
   smallerLabel?: ReactNode;
   betterLabel?: ReactNode;

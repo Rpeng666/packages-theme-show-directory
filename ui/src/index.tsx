@@ -86,6 +86,8 @@ export type {
   BlogProps,
   BlogDetailProps,
   HeroCleanerProps,
+  HeroLiveProps,
+  HeroLivePreset,
   RelatedPostsProps,
   BlogToolCtaProps,
   PageHeaderProps,
@@ -200,6 +202,8 @@ export { Footer } from "./themes/pixel/footer";
 export { PixelThemeToggler } from "./themes/pixel/theme-toggler";
 export type { PageShellProps } from "./contracts/pageshell";
 export { PageShell } from "./themes/pixel/pageshell";
+// Page-level shells resolved via the registry (semi implements ToolPage).
+export type { ToolPageProps, ToolWorkspaceData } from "@template/semi";
 
 // Shared presentational components (no app deps).
 export { SmartIcon } from "./components/smart-icon";

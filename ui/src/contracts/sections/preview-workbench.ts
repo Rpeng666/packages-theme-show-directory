@@ -68,6 +68,16 @@ export interface PreviewWorkbenchProps {
   onToggleDark?: () => void;
   darkLabel?: ReactNode;
   lightLabel?: ReactNode;
+  /** above-the-fold analysis line */
+  foldLine?: boolean;
+  onToggleFoldLine?: () => void;
+  foldLineLabel?: ReactNode;
+  foldLineHideLabel?: ReactNode;
+  /** color-vision-deficiency simulation */
+  colorBlind?: boolean;
+  onToggleColorBlind?: () => void;
+  colorBlindLabel?: ReactNode;
+  colorBlindOffLabel?: ReactNode;
   /** scenes */
   sceneLabel?: ReactNode;
   scenes?: PreviewSceneDef[];

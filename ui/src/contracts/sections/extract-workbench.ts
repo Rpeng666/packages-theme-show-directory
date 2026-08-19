@@ -64,6 +64,9 @@ export interface ExtractWorkbenchProps {
   downloadLabel?: ReactNode;
   downloadHint?: ReactNode;
   onDownload?: () => void;
+  /** send the captured frame into the workbench editor (cross-tool handoff) */
+  openInWorkbenchLabel?: ReactNode;
+  onOpenInWorkbench?: () => void;
   /** improve tips */
   tipsTitle?: ReactNode;
   tips?: ExtractWorkbenchTip[];

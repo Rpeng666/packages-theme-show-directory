@@ -24,6 +24,7 @@ export type { PricingProps } from "./pricing";
 export type { FaqProps } from "./faq";
 export type { CtaProps, CtaLink } from "./cta";
 export type { HeroCleanerProps } from "./hero-cleaner";
+export type { HeroLiveProps, HeroLivePreset } from "./hero-live";
 export type { FeaturesFlowProps, FeaturesListProps } from "./features-media";
 export type { BlogProps, BlogPost, BlogCategory, BlogLink } from "./blog";
 export type {

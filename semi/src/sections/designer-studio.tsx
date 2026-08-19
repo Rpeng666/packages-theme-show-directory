@@ -18,19 +18,24 @@ import type {
 import { Button } from "../components/button";
 import { Card } from "../components/card";
 import { Collapse } from "../components/collapse";
-import { ColorPicker } from "../components/color-picker";
 import { CopyText } from "../components/copy-text";
 import { Empty } from "../components/empty";
 import { Input } from "../components/input";
 import { InputNumber } from "../components/input-number";
-import { Slider } from "../components/slider";
 import { Spin } from "../components/spin";
-import { Switch } from "../components/switch";
 import { Table } from "../components/table";
 import { Tabs } from "../components/tabs";
 import { Tag } from "../components/tag";
 import { Timeline } from "../components/timeline";
 import { SmartIcon } from "../icons";
+import {
+  cn,
+  ColorRow,
+  Segmented,
+  SettingLabel,
+  SliderRow,
+  SwitchRow,
+} from "./designer-studio-controls";
 
 /**
  * Semi DesignerStudio - the flagship thumbnail design atelier.
@@ -42,10 +47,6 @@ import { SmartIcon } from "../icons";
  * and an export hub (rendered-sizes timeline + downloads table + HTML embed).
  * All data + callbacks come from the app; this section only renders.
  */
-
-function cn(...parts: Array<string | false | null | undefined>) {
-  return parts.filter(Boolean).join(" ");
-}
 
 function downloadItem(item: DesignerExportItem) {
   if (!item.dataUrl) return;
@@ -588,109 +589,6 @@ function TemplatesStage({
 }
 
 // ── Design stage ─────────────────────────────────────────────────────────────
-
-function SettingLabel({ children }: { children: ReactNode }) {
-  return <span className="designstudio-setting-label">{children}</span>;
-}
-
-function SliderRow({
-  label,
-  value,
-  min,
-  max,
-  step,
-  unit,
-  onChange,
-}: {
-  label: ReactNode;
-  value: number;
-  min: number;
-  max: number;
-  step?: number;
-  unit?: string;
-  onChange: (v: number) => void;
-}) {
-  return (
-    <div className="designstudio-setting-row">
-      <div className="designstudio-setting-row-head">
-        <SettingLabel>{label}</SettingLabel>
-        <span className="designstudio-setting-value">
-          {value}
-          {unit ?? ""}
-        </span>
-      </div>
-      <Slider
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
-  );
-}
-
-function SwitchRow({
-  label,
-  checked,
-  onChange,
-}: {
-  label: ReactNode;
-  checked: boolean;
-  onChange: (v: boolean) => void;
-}) {
-  return (
-    <div className="designstudio-setting-row designstudio-setting-row-switch">
-      <SettingLabel>{label}</SettingLabel>
-      <Switch checked={checked} onCheckedChange={onChange} />
-    </div>
-  );
-}
-
-function ColorRow({
-  label,
-  value,
-  onChange,
-}: {
-  label: ReactNode;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div className="designstudio-setting-row">
-      <SettingLabel>{label}</SettingLabel>
-      <ColorPicker value={value} onChange={onChange} />
-    </div>
-  );
-}
-
-function Segmented({
-  value,
-  options,
-  onChange,
-}: {
-  value: string;
-  options: Array<{ value: string; label: ReactNode }>;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div className="designstudio-seg">
-      {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          className={cn(
-            "designstudio-seg-btn",
-            value === o.value && "designstudio-seg-btn-active",
-          )}
-          onClick={() => onChange(o.value)}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 function DesignStage({
   designEyebrow,
