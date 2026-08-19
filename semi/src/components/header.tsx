@@ -13,10 +13,12 @@ import type { HeaderProps, DropdownItem } from '@template/ui'
  * injected as children. Dropdown submenus use Semi Dropdown.Menu. The desktop
  * nav collapses below 768px via the scoped style block.
  *
- * Styling follows the Hero: translucent sticky bar with backdrop blur (page
- * content glows through on scroll), brand-red hover accents on nav links, and
- * CTA actions built in the hero's button language (40px, radius 12, brand
- * gradient + red glow) instead of Semi's default 6px-radius buttons.
+ * Styling follows the Hero: a borderless translucent sticky bar with backdrop
+ * blur (page content and the hero glow bleed through as you scroll), dark
+ * nav links with brand-red hover, and CTA actions built in the hero's button
+ * language (40px, radius 12, brand gradient + red glow) instead of Semi's
+ * default 6px-radius buttons. No bottom border — the bar sits flush on the
+ * same plain canvas as the hero, like the hero's own borderless language.
  */
 export function Header({ nav, brandSlot, actions, business, className = '' }: HeaderProps) {
   const navItems = nav ?? []
@@ -25,7 +27,7 @@ export function Header({ nav, brandSlot, actions, business, className = '' }: He
     <>
       <style>{`
         @media (max-width: 767px){ .semi-hdr-nav{display:none!important} }
-        .semi-hdr-link{ color: var(--semi-color-text-2); }
+        .semi-hdr-link{ color: var(--semi-color-text-1); }
         .semi-hdr-link:hover{ color: var(--semi-color-primary); }
       `}</style>
       <header
@@ -34,10 +36,9 @@ export function Header({ nav, brandSlot, actions, business, className = '' }: He
           position: 'sticky',
           top: 0,
           zIndex: 50,
-          background: 'color-mix(in srgb, var(--semi-color-bg-1) 82%, transparent)',
+          background: 'color-mix(in srgb, var(--semi-color-bg-1) 64%, transparent)',
           backdropFilter: 'blur(12px) saturate(1.4)',
           WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
-          borderBottom: '1px solid var(--semi-color-border)',
         }}
       >
         <div
