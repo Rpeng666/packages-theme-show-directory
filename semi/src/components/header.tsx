@@ -2,30 +2,41 @@
 
 import * as React from 'react'
 import { IconChevronDown } from '@douyinfe/semi-icons'
-import { Button } from './button'
 import { Dropdown } from './dropdown'
 import type { HeaderProps, DropdownItem } from '@template/ui'
 
 /**
- * Semi Header — sticky chrome using Semi chrome tokens + Button + Dropdown.
+ * Semi Header — sticky glass chrome matching the Semi Hero's visual language.
  *
  * Nav is data-driven native <a href> (SEO friendly, no function props — a
  * server layout can render it). `brandSlot` (left) and `business` (right) are
  * injected as children. Dropdown submenus use Semi Dropdown.Menu. The desktop
  * nav collapses below 768px via the scoped style block.
+ *
+ * Styling follows the Hero: translucent sticky bar with backdrop blur (page
+ * content glows through on scroll), brand-red hover accents on nav links, and
+ * CTA actions built in the hero's button language (40px, radius 12, brand
+ * gradient + red glow) instead of Semi's default 6px-radius buttons.
  */
 export function Header({ nav, brandSlot, actions, business, className = '' }: HeaderProps) {
   const navItems = nav ?? []
 
   return (
     <>
-      <style>{'@media (max-width: 767px){ .semi-hdr-nav{display:none!important} }'}</style>
+      <style>{`
+        @media (max-width: 767px){ .semi-hdr-nav{display:none!important} }
+        .semi-hdr-link{ color: var(--semi-color-text-2); }
+        .semi-hdr-link:hover{ color: var(--semi-color-primary); }
+      `}</style>
       <header
         className={className}
         style={{
-          position: 'relative',
+          position: 'sticky',
+          top: 0,
           zIndex: 50,
-          background: 'var(--semi-color-bg-1)',
+          background: 'color-mix(in srgb, var(--semi-color-bg-1) 82%, transparent)',
+          backdropFilter: 'blur(12px) saturate(1.4)',
+          WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
           borderBottom: '1px solid var(--semi-color-border)',
         }}
       >
@@ -54,11 +65,11 @@ export function Header({ nav, brandSlot, actions, business, className = '' }: He
                 gap: 4,
                 padding: '0 16px',
                 height: 40,
-                borderRadius: 6,
+                borderRadius: 8,
                 fontSize: 14,
-                color: 'var(--semi-color-text-2)',
-                fontWeight: 500,
+                fontWeight: 600,
                 textDecoration: 'none',
+                transition: 'color 0.2s ease',
               }
               if (hasDropdown) {
                 const items: DropdownItem[] = (item.children ?? []).map((sub, iidx) => ({
@@ -81,7 +92,7 @@ export function Header({ nav, brandSlot, actions, business, className = '' }: He
                     key={idx}
                     align="center"
                     trigger={
-                      <a href={item.url || '#'} style={linkStyle}>
+                      <a href={item.url || '#'} className="semi-hdr-link" style={linkStyle}>
                         {item.title}
                         <IconChevronDown style={{ width: 14, height: 14 }} />
                       </a>
@@ -95,6 +106,7 @@ export function Header({ nav, brandSlot, actions, business, className = '' }: He
                   key={idx}
                   href={item.url || ''}
                   target={item.target || '_self'}
+                  className="semi-hdr-link"
                   style={linkStyle}
                 >
                   {item.title}
@@ -106,21 +118,41 @@ export function Header({ nav, brandSlot, actions, business, className = '' }: He
           {/* Right: business slots + CTA actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             {business}
-            {actions?.map((action, idx) => (
-              <Button
-                key={idx}
-                variant={action.variant === 'outline' ? 'outline' : 'default'}
-                size="sm"
-              >
+            {actions?.map((action, idx) => {
+              const v = action.variant as string
+              const isPrimary = !v || v === 'default' || v === 'primary'
+              return (
                 <a
+                  key={idx}
                   href={action.url || ''}
                   target={action.target || '_self'}
-                  style={{ color: 'inherit', textDecoration: 'none' }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    height: 40,
+                    padding: '0 20px',
+                    borderRadius: 12,
+                    fontSize: 14,
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    ...(isPrimary
+                      ? {
+                          background: 'var(--app-brand-grad)',
+                          color: '#fff',
+                          boxShadow: '0 8px 20px -8px rgba(var(--semi-red-5), 0.7)',
+                        }
+                      : {
+                          background: 'var(--semi-color-bg-1)',
+                          color: 'var(--semi-color-text-0)',
+                          border: '1px solid var(--semi-color-border)',
+                        }),
+                  }}
                 >
                   {action.title}
                 </a>
-              </Button>
-            ))}
+              )
+            })}
           </div>
         </div>
       </header>
