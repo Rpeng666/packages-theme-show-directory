@@ -75,19 +75,18 @@ export function HeroLive({
   const hasSource = Boolean(sourceUrl);
 
   return (
-    <>
+    <SectionShell
+      className={cn(className)}
+      data-registry={dataRegistry}
+      padding="lg"
+      style={{ overflow: "hidden" }}
+    >
       <style>{`
         .semi-hlive-input .semi-input-wrapper {
           height: 46px;
           border-radius: 12px;
         }
       `}</style>
-      <SectionShell
-        className={cn(className)}
-        data-registry={dataRegistry}
-        padding="lg"
-        style={{ overflow: "hidden" }}
-      >
       {/* decorative layers — same as the Hero */}
       <div className="app-hero-glow" aria-hidden />
       <div className="app-grid-pattern" aria-hidden />
@@ -449,7 +448,6 @@ export function HeroLive({
           </div>
         </div>
       </div>
-      </SectionShell>
-    </>
+    </SectionShell>
   );
 }
