@@ -37,7 +37,7 @@ export function Showcases({ section, className = '', LinkComponent, ImageCompone
   const items = section.items ?? []
 
   return (
-    <SectionShell id={section.id} className={className} padding="md" background="muted">
+    <SectionShell id={section.id} className={className} padding="md">
       <SectionHeader label={section.label} title={section.title} description={section.description} />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>

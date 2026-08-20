@@ -15,7 +15,7 @@ export function Faq({ section, className = '' }: FaqProps) {
   const [openIdx, setOpenIdx] = useState<number | null>(items.length ? 0 : null)
 
   return (
-    <SectionShell id={section.id} className={className} padding="md" background="muted">
+    <SectionShell id={section.id} className={className} padding="md">
       <SectionHeader label={section.label} title={section.title} description={section.description} maxWidth={680} />
 
       <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
