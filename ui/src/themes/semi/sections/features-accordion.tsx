@@ -18,7 +18,7 @@ export function FeaturesAccordion({ section, className = '' }: FeaturesAccordion
   const active = items[activeIdx]
 
   return (
-    <SectionShell id={section.id} className={className} padding="md" background="muted">
+    <SectionShell id={section.id} className={className} padding="md">
       <SectionHeader label={section.label} title={section.title} description={section.description} />
 
       <div
