@@ -9,6 +9,8 @@ import type { Pricing, PricingItem } from '../../types/pricing'
 export interface PricingProps {
   section: Pricing
   className?: string
+  /** 当前订阅（app 注入，section.data.currentSubscription）——窄型，只用 productId 高亮/初始化 */
+  currentSubscription?: { productId?: string } | null
   /** 当前订阅的 productId（窄型，只用于高亮 + 初始化分组） */
   currentProductId?: string
   /** checkout 按钮加载态 */

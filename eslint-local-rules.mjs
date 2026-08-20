@@ -82,19 +82,19 @@ export const rules = {
   /**
    * block-forwarder-props
    *
-   * Theme block forwarders (src/themes/<theme>/blocks/*) must be typed with the
-   * registered section's contract, never hand-rolled `any`:
+   * Theme block forwarders (src/themes/<theme>/blocks/*) must be typed with
+   * the registered section's contract — never hand-rolled:
    *
    *  - For every `resolveSection('X')` in the file, `XProps` must be imported
    *    from `@template/ui` (`import type { XProps } from '@template/ui';`).
    *    Every registry section key has a matching contract (Logos → LogosProps,
    *    Pricing → PricingProps, ...), so the norm is unambiguous.
    *
-   *  - A block component that destructures `section` must not type it (or the
-   *    whole props param) as `any`/`unknown`. Use the section's `XProps`
-   *    contract when it carries the `section` field (LogosProps, PricingProps,
-   *    ...), or the landing `Section` type when the contract is flattened and
-   *    the block maps `section.*` into the props itself (HeroLiveProps).
+   *  - `XProps` must also be USED as the block component's props type
+   *    annotation — `function X({ section, ... }: XProps)`. A hand-rolled
+   *    inline type (`{ section: Section; className?: string }`), a separate
+   *    local type, or `any` all fail the check. This is what keeps the block's
+   *    contract identical to the packaged section's.
    *
    * Scoped to src/themes/.../blocks in eslint.config.mjs. Shared feature
    * adapters (src/shared/features/*) legitimately use
@@ -110,14 +110,16 @@ export const rules = {
       messages: {
         missingPropsImport:
           "resolveSection('{{key}}') requires the matching contract type — add `import type { {{props}} } from '@template/ui';` (every registry section key has one).",
-        anySection:
-          "Block component props must not type `section` as `any`/`unknown`. Use the section contract `{{props}}` (when it carries `section`) or type `section` as the landing `Section` type and map its fields into the section's props.",
+        notTypedWithProps:
+          "The block component for resolveSection('{{key}}') must be typed with `{{props}}` from '@template/ui' — `function {{component}}({ section, ... }: {{props}})`. Do not hand-roll an inline or separate props type.",
       },
       schema: [],
     },
     create(context) {
       /** Identifiers named `*Props` imported from @template/ui (value or type). */
       const importedPropsTypes = new Set();
+      /** Identifiers used as a function parameter's type annotation (e.g. `: LogosProps`). */
+      const usedParamTypes = new Set();
       /** { key, node } for each string-literal resolveSection('X') call. */
       const sectionCalls = [];
 
@@ -134,36 +136,20 @@ export const rules = {
         }
       }
 
-      /** Find the `section` param inside a destructured object param, if typed any/unknown. */
-      function findAnySectionParam(params) {
+      /** Record any `XProps` identifiers used as a param type annotation. */
+      function collectParamTypes(params) {
         for (const param of params) {
-          if (param.type !== 'ObjectPattern') continue;
-          const hasSection = param.properties.some(
-            (p) => p.type === 'Property' && !p.computed && p.key.type === 'Identifier' && p.key.name === 'section',
-          );
-          if (!hasSection) continue;
           const ta = param.typeAnnotation && param.typeAnnotation.typeAnnotation;
-          if (!ta) continue;
-          // Whole-param `: any` / `: unknown`.
-          if (ta.type === 'TSAnyKeyword' || ta.type === 'TSUnknownKeyword') return param;
-          // Inline `{ section: any; ... }` literal — report the `section` member's type.
-          if (ta.type === 'TSTypeLiteral') {
-            for (const member of ta.members) {
-              if (
-                member.type === 'TSPropertySignature' &&
-                member.key.type === 'Identifier' &&
-                member.key.name === 'section' &&
-                member.typeAnnotation &&
-                member.typeAnnotation.typeAnnotation &&
-                (member.typeAnnotation.typeAnnotation.type === 'TSAnyKeyword' ||
-                  member.typeAnnotation.typeAnnotation.type === 'TSUnknownKeyword')
-              ) {
-                return member;
-              }
-            }
+          if (
+            ta &&
+            ta.type === 'TSTypeReference' &&
+            ta.typeName &&
+            ta.typeName.type === 'Identifier' &&
+            /Props$/.test(ta.typeName.name)
+          ) {
+            usedParamTypes.add(ta.typeName.name);
           }
         }
-        return null;
       }
 
       return {
@@ -182,28 +168,14 @@ export const rules = {
           }
         },
         FunctionDeclaration(node) {
-          const hit = findAnySectionParam(node.params);
-          if (hit) {
-            context.report({
-              node: hit,
-              messageId: 'anySection',
-              data: { props: node.id && node.id.name ? `${node.id.name}Props` : '' },
-            });
-          }
+          collectParamTypes(node.params);
         },
         VariableDeclarator(node) {
           if (
             node.init &&
             (node.init.type === 'ArrowFunctionExpression' || node.init.type === 'FunctionExpression')
           ) {
-            const hit = findAnySectionParam(node.init.params);
-            if (hit) {
-              context.report({
-                node: hit,
-                messageId: 'anySection',
-                data: { props: node.id && node.id.type === 'Identifier' ? `${node.id.name}Props` : '' },
-              });
-            }
+            collectParamTypes(node.init.params);
           }
         },
         'Program:exit'() {
@@ -211,6 +183,12 @@ export const rules = {
             const props = `${key}Props`;
             if (!importedPropsTypes.has(props)) {
               context.report({ node, messageId: 'missingPropsImport', data: { key, props } });
+            } else if (!usedParamTypes.has(props)) {
+              context.report({
+                node,
+                messageId: 'notTypedWithProps',
+                data: { key, props, component: key },
+              });
             }
           }
         },

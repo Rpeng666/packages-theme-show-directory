@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { Section } from "../../types/landing";
 
 /**
  * HeroLive — interactive first-viewport thumbnail demo.
@@ -19,6 +20,8 @@ export interface HeroLivePreset {
 
 export interface HeroLiveProps {
   className?: string;
+  /** the landing data section the block adapter maps into the props below */
+  section?: Section;
   /** forwarded to the DOM root by the registry wrapper */
   "data-registry"?: string;
   /** section copy */
