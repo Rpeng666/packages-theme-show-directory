@@ -20,8 +20,8 @@ export interface HeroLivePreset {
 
 export interface HeroLiveProps {
   className?: string;
-  /** the landing data section the block adapter maps into the props below */
-  section?: Section;
+  /** the landing data section this config-driven block renders from (required) */
+  section: Section;
   /** forwarded to the DOM root by the registry wrapper */
   "data-registry"?: string;
   /** section copy */
