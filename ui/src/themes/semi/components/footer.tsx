@@ -28,7 +28,6 @@ export function Footer({
       id={footer.id}
       className={`${footer.className || ''} ${className}`}
       style={{
-        background: 'var(--semi-color-bg-1)',
         borderTop: '1px solid var(--semi-color-border)',
         padding: '40px 0',
         overflowX: 'hidden',
