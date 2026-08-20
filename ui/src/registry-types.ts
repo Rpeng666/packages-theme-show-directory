@@ -69,6 +69,7 @@ import type { IconFrameProps } from "./contracts/iconframe";
 import type { HeroProps } from "./contracts/sections/hero";
 import type { FaqProps } from "./contracts/sections/faq";
 import type { CtaProps } from "./contracts/sections/cta";
+import type { SubscribeProps } from "./contracts/sections/subscribe";
 import type { FeaturesGridProps } from "./contracts/sections/features-grid";
 import type { FeaturesStepProps } from "./contracts/sections/features-step";
 import type { FeaturesProps } from "./contracts/sections/features";
@@ -229,6 +230,7 @@ export interface SectionComponents {
   Hero: ComponentType<HeroProps>;
   Faq: ComponentType<FaqProps>;
   Cta: ComponentType<CtaProps>;
+  Subscribe: ComponentType<SubscribeProps>;
   FeaturesGrid: ComponentType<FeaturesGridProps>;
   FeaturesStep: ComponentType<FeaturesStepProps>;
   Features: ComponentType<FeaturesProps>;

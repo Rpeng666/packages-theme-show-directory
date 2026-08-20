@@ -75,6 +75,8 @@ export type {
   FaqProps,
   CtaProps,
   CtaLink,
+  SubscribeProps,
+  SubscribeToast,
   FeaturesFlowProps,
   FeaturesListProps,
   StatsProps,

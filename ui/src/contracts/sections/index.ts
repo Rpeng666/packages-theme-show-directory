@@ -23,6 +23,7 @@ export type { LogosProps } from "./logos";
 export type { PricingProps } from "./pricing";
 export type { FaqProps } from "./faq";
 export type { CtaProps, CtaLink } from "./cta";
+export type { SubscribeProps, SubscribeToast } from "./subscribe";
 export type { HeroCleanerProps } from "./hero-cleaner";
 export type { HeroLiveProps, HeroLivePreset } from "./hero-live";
 export type { FeaturesFlowProps, FeaturesListProps } from "./features-media";

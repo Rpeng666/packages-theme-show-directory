@@ -92,6 +92,7 @@ import { Testimonials as DefaultTestimonials } from "./sections/testimonials";
 import { Pricing as DefaultPricing } from "./sections/pricing";
 import { Faq as DefaultFaq } from "./sections/faq";
 import { Cta as DefaultCta } from "./sections/cta";
+import { Subscribe as DefaultSubscribe } from "./sections/subscribe";
 import { FeaturesStep as DefaultFeaturesStep } from "./sections/features-step";
 import { HeroCleaner as DefaultHeroCleaner } from "./sections/hero-cleaner";
 import { HeroLive as DefaultHeroLive } from "./sections/hero-live";
@@ -179,6 +180,7 @@ export const defaultManifest: ThemeManifest = {
     Pricing: DefaultPricing,
     Faq: DefaultFaq,
     Cta: DefaultCta,
+    Subscribe: DefaultSubscribe,
     FeaturesStep: DefaultFeaturesStep,
     // No default implementation for these — reuse the semi theme's.
     FeaturesFlow: SemiFeaturesFlow,

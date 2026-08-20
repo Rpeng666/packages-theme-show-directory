@@ -13,6 +13,7 @@ export { Logos } from "./logos";
 export { Testimonials } from "./testimonials";
 export { Faq } from "./faq";
 export { Cta } from "./cta";
+export { Subscribe } from "./subscribe";
 export { Pricing } from "./pricing";
 export { ToolHero } from "./tool-hero";
 export { ToolWorkspace } from "./tool-workspace";
