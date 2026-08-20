@@ -224,7 +224,7 @@ export { PixelThemeToggler } from "./themes/pixel/theme-toggler";
 export type { PageShellProps } from "./contracts/pageshell";
 export { PageShell } from "./themes/pixel/pageshell";
 // Page-level shells resolved via the registry (semi implements ToolPage).
-export type { ToolPageProps, ToolWorkspaceData } from "@template/semi";
+export type { ToolPageProps, ToolWorkspaceData } from "./themes/semi/pages/tool-page";
 
 // Shared presentational components (no app deps).
 export { SmartIcon } from "./components/smart-icon";

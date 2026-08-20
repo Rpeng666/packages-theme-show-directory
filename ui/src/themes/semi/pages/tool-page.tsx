@@ -24,7 +24,7 @@ export interface ToolWorkspaceData {
  *   ToolHero → ToolWorkspace(children) → FeaturesStep → FeaturesGrid →
  *   ToolsGrid → Faq → Cta
  *
- * Every visual is a @template/semi section; the app only supplies content data
+ * Every visual is a Semi-theme section; the app only supplies content data
  * and injects its locale-aware Link. This is the "page" counterpart of the
  * section registry — new tool pages (Resize, Compress, Extract, Preview,
  * Download) are one data object + one interactive child away.

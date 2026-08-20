@@ -1,4 +1,4 @@
-// @template/semi barrel — the semi theme's contract implementations.
+// Semi theme barrel — the semi theme's contract implementations.
 // Each entry maps a @template/ui contract key onto an @douyinfe/semi-ui component.
 export { Button } from './components/button'
 export { Badge } from './components/badge'

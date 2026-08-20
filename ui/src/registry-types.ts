@@ -112,7 +112,7 @@ import type {
 } from "./contracts/sections/blog-cta";
 import type { CleanerWorkbenchProps } from "./contracts/sections/cleaner-workbench";
 import type { CleanerOutputProps } from "./themes/pixel/sections/cleaner";
-import type { ToolPageProps } from "@template/semi";
+import type { ToolPageProps } from "./themes/semi/pages/tool-page";
 import type { ConsoleLayoutProps } from "./contracts";
 import type {
   PerlerToolBarProps,

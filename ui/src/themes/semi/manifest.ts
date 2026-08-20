@@ -2,9 +2,10 @@
  * Semi theme manifest — which implementations back each contract key for the
  * `semi` theme (@douyinfe/semi-ui).
  *
- * The semi components themselves live in the separate workspace package
- * `@template/semi`; this file only wires them into the registry (the registry
- * aggregator, `../../registry.ts`, assembles this into the `registry` map).
+ * The semi implementations (components/sections/pages, see `./index.tsx`)
+ * live in this directory; this file wires them into the registry (the
+ * registry aggregator, `../../registry.ts`, assembles this into the
+ * `registry` map).
  *
  * Missing keys (ToolHeader/ToolFooter/ToolSettings/DualCta) are not registered
  * here and fall back to the default theme via the resolvers.
@@ -59,7 +60,7 @@ import {
   CopyText as SemiCopyText,
   ToolPage as SemiToolPage,
   ConsoleLayout as SemiConsoleLayout,
-} from "@template/semi";
+} from "./index";
 import {
   Hero as SemiHero,
   Features as SemiFeatures,
@@ -95,7 +96,7 @@ import {
   DesignerStudio as SemiDesignerStudio,
   HeroLive as SemiHeroLive,
   Workbench as SemiWorkbench,
-} from "@template/semi";
+} from "./index";
 
 import type { ThemeManifest } from "../../registry-types";
 

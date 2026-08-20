@@ -8,7 +8,8 @@
  *
  * A few landing sections have no default implementation and reuse the semi
  * theme's (FeaturesFlow/FeaturesList/Stats/Logos/ToolHero) — imported from
- * @template/semi, matching the previous single-file registry.
+ * the merged semi theme directory (`../semi/index`), matching the previous
+ * single-file registry.
  */
 import { Button as DefaultButton } from "./button";
 import { Badge as DefaultBadge } from "./badge";
@@ -107,7 +108,7 @@ import {
   Stats as SemiStats,
   Logos as SemiLogos,
   ToolHero as SemiToolHero,
-} from "@template/semi";
+} from "../semi/index";
 
 import type { ThemeManifest } from "../../registry-types";
 
