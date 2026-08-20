@@ -23,6 +23,7 @@ function cn(...parts: Array<string | false | null | undefined>) {
  * the app. Interaction (drag/drop, input, presets) is unchanged.
  */
 export function HeroLive({
+  section,
   className,
   "data-registry": dataRegistry,
   eyebrow,
@@ -76,6 +77,7 @@ export function HeroLive({
 
   return (
     <SectionShell
+      id={section.id}
       className={cn(className)}
       data-registry={dataRegistry}
       padding="lg"

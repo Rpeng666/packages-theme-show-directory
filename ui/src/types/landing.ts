@@ -22,7 +22,8 @@ export interface SectionSource {
 }
 
 export interface Section {
-  id?: string;
+  /** Every landing section carries a stable anchor id (DOM <section id=...> target). Required. */
+  id: string;
   block?: string;
   label?: string;
   sr_only_title?: string;
@@ -44,7 +45,6 @@ export interface Section {
 
 // header props for header component
 export interface Header extends Section {
-  id?: string;
   brand?: Brand;
   nav?: Nav;
   buttons?: Button[];
@@ -57,7 +57,6 @@ export interface Header extends Section {
 
 // footer props for footer component
 export interface Footer extends Section {
-  id?: string;
   brand?: Brand;
   nav?: Nav;
   copyright?: string;
@@ -71,7 +70,6 @@ export interface Footer extends Section {
 
 // hero props for hero component
 export interface Hero extends Section {
-  id?: string;
   announcement?: Button;
   show_avatars?: boolean;
   avatars_tip?: string;

@@ -386,6 +386,11 @@ export const rules = {
    * <style> sibling, so the DOM root is the fragment, not the scaffold's
    * <section>.
    *
+   * SectionShell also requires its `id` prop (the scaffold's <section id=...>
+   * is the section's DOM anchor — anchor navigation and scroll-margin hang off
+   * it). A config-driven section's <SectionShell> must therefore carry an
+   * explicit `id` attribute (conventionally `id={section.id}`).
+   *
    * Scoped to packages/ui/src/themes/semi/sections in eslint.config.mjs
    * (SectionShell only exists in the semi theme today).
    */
@@ -394,11 +399,13 @@ export const rules = {
       type: 'problem',
       docs: {
         description:
-          'Config-driven section components must render <SectionShell> as the root of every JSX return.',
+          'Config-driven section components must render <SectionShell> as the root of every JSX return, and pass it the section id.',
       },
       messages: {
         notSectionShell:
           "Config-driven section `{{name}}` must root its JSX in <SectionShell> — the shared section scaffold that keeps section vertical rhythm / container width / background consistent. This return is rooted in {{root}} (line {{line}}); wrapping <SectionShell> in a fragment or another element skips the scaffold. Make <SectionShell> the outermost element of every JSX return.",
+        missingId:
+          "Config-driven section `{{name}}` must pass `id` to <SectionShell> (line {{line}}) — the scaffold's <section id=...> is the section's DOM anchor (anchor navigation, scroll-margin). Pass `id={section.id}` from the section config.",
       },
       schema: [],
     },
@@ -491,16 +498,34 @@ export const rules = {
           const arg = ret.argument;
           if (!arg) continue; // `return;`
           if (arg.type !== 'JSXElement' && arg.type !== 'JSXFragment') continue; // null / variable / call — can't verify statically
-          if (isSectionShellJsx(arg)) continue;
-          context.report({
-            node: arg,
-            messageId: 'notSectionShell',
-            data: {
-              name,
-              root: jsxRootLabel(arg),
-              line: String(arg.loc.start.line),
-            },
-          });
+          if (!isSectionShellJsx(arg)) {
+            context.report({
+              node: arg,
+              messageId: 'notSectionShell',
+              data: {
+                name,
+                root: jsxRootLabel(arg),
+                line: String(arg.loc.start.line),
+              },
+            });
+            continue;
+          }
+          // Root IS SectionShell — it must still carry the section's DOM-anchor id.
+          const attrs = arg.openingElement.attributes || [];
+          const hasId = attrs.some(
+            (a) =>
+              a.type === 'JSXAttribute' &&
+              a.name &&
+              a.name.type === 'JSXIdentifier' &&
+              a.name.name === 'id',
+          );
+          if (!hasId) {
+            context.report({
+              node: arg,
+              messageId: 'missingId',
+              data: { name, line: String(arg.loc.start.line) },
+            });
+          }
         }
       }
 

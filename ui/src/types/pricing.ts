@@ -47,7 +47,8 @@ export interface PricingItem {
 }
 
 export interface Pricing {
-  id?: string;
+  /** DOM anchor id (same contract as Section.id) — required. */
+  id: string;
   disabled?: boolean;
   name?: string;
   title?: string;
