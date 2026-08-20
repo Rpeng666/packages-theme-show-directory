@@ -105,6 +105,7 @@ import type { BlogProps } from "./contracts/sections/blog";
 import type { BlogDetailProps } from "./contracts/sections/blog-detail";
 import type { HeroCleanerProps } from "./contracts/sections/hero-cleaner";
 import type { HeroLiveProps } from "./contracts/sections/hero-live";
+import type { WorkbenchProps } from "./contracts/sections/workbench";
 import type {
   RelatedPostsProps,
   BlogToolCtaProps,
@@ -264,6 +265,7 @@ export interface SectionComponents {
   PreviewWorkbench: ComponentType<PreviewWorkbenchProps>;
   DesignerStudio: ComponentType<DesignerStudioProps>;
   HeroLive: ComponentType<HeroLiveProps>;
+  Workbench: ComponentType<WorkbenchProps>;
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>;

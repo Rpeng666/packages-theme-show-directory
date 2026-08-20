@@ -94,6 +94,7 @@ import {
   PreviewWorkbench as SemiPreviewWorkbench,
   DesignerStudio as SemiDesignerStudio,
   HeroLive as SemiHeroLive,
+  Workbench as SemiWorkbench,
 } from "@template/semi";
 
 import type { ThemeManifest } from "../../registry-types";
@@ -185,5 +186,6 @@ export const semiManifest: ThemeManifest = {
     PreviewWorkbench: SemiPreviewWorkbench,
     DesignerStudio: SemiDesignerStudio,
     HeroLive: SemiHeroLive,
+    Workbench: SemiWorkbench,
   },
 };
