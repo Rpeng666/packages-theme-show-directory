@@ -9,7 +9,70 @@
  * CSS entry" rule can't be expressed as a pattern list.
  */
 
+import ts from 'typescript';
+import { readdirSync, readFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 const THEME_ALIAS = '@/themes';
+
+/**
+ * Contract source lookup for `section-in-props`.
+ *
+ * The registry section contracts live in packages/ui/src/contracts/sections.
+ * `section-in-props` needs to know whether a block's XProps declares a
+ * REQUIRED `section` field; contracts are found by interface name (not
+ * filename) so a section key can't drift from its file (e.g.
+ * FeaturesListProps lives in features-media.ts, not features-list.ts).
+ */
+const CONTRACTS_DIR = resolve(
+  dirname(fileURLToPath(import.meta.url)),
+  'ui/src/contracts/sections',
+);
+
+/** propsName -> { present, optional } for its `section` member; null = not found. */
+const sectionFieldCache = new Map();
+let contractFiles = null;
+
+function getSectionFieldInfo(propsName) {
+  if (sectionFieldCache.has(propsName)) return sectionFieldCache.get(propsName);
+  let info = null;
+  try {
+    if (contractFiles === null) {
+      contractFiles = readdirSync(CONTRACTS_DIR).filter((f) => f.endsWith('.ts'));
+    }
+    for (const file of contractFiles) {
+      const source = readFileSync(join(CONTRACTS_DIR, file), 'utf8');
+      const sf = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+      let found = false;
+      for (const stmt of sf.statements) {
+        if (!ts.isInterfaceDeclaration(stmt) || !stmt.name || stmt.name.text !== propsName) continue;
+        let present = false;
+        let optional = false;
+        for (const member of stmt.members) {
+          if (
+            ts.isPropertySignature(member) &&
+            member.name &&
+            ts.isIdentifier(member.name) &&
+            member.name.text === 'section'
+          ) {
+            present = true;
+            optional = !!member.questionToken;
+            break;
+          }
+        }
+        info = { present, optional };
+        found = true;
+        break;
+      }
+      if (found) break;
+    }
+  } catch {
+    info = null; // contracts dir unreadable — skip the check rather than false-positive
+  }
+  sectionFieldCache.set(propsName, info);
+  return info;
+}
 
 /**
  * no-direct-theme-import
@@ -189,6 +252,112 @@ export const rules = {
                 messageId: 'notTypedWithProps',
                 data: { key, props, component: key },
               });
+            }
+          }
+        },
+      };
+    },
+  },
+  /**
+   * section-in-props
+   *
+   * Config-driven blocks must declare a REQUIRED `section` on their contract.
+   *
+   * A theme block is config-driven when it destructures `section` from its
+   * XProps (it renders from the landing section's config). The registry
+   * renderer always passes `section` to every block, so a config-driven
+   * block's contract (packages/ui/src/contracts/sections, resolved by
+   * interface name via getSectionFieldInfo) must accept it — and per codebase
+   * convention REQUIRED (`section: Type`), never optional (`section?: Type`).
+   * HeroLive is the canonical case: it maps section config (eyebrow/title/
+   * presets) into flat render props, so HeroLiveProps must carry a required
+   * section.
+   *
+   * Scoped to src/themes/<theme>/blocks in eslint.config.mjs, same as
+   * block-forwarder-props.
+   */
+  'section-in-props': {
+    meta: {
+      type: 'problem',
+      docs: {
+        description:
+          'Config-driven theme blocks (they destructure `section`) must have a REQUIRED `section` field on their XProps contract.',
+      },
+      messages: {
+        missingSection:
+          "resolveSection('{{key}}') is config-driven — its block reads `section` — so the contract `{{props}}` must declare a `section` field (add `section: <SectionType>` to {{props}}).",
+        optionalSection:
+          "resolveSection('{{key}}') is config-driven — its block reads `section` — so `{{props}}` must declare `section` as REQUIRED (`section: <SectionType>`), not optional (`section?: T`).",
+      },
+      schema: [],
+    },
+    create(context) {
+      /** { key, node } per string-literal resolveSection('X') call. */
+      const sectionCalls = [];
+      /** XProps names used as a block param type that destructures `section` (config-driven). */
+      const configDrivenProps = new Set();
+
+      function collectParams(params) {
+        for (const param of params) {
+          const ta = param.typeAnnotation && param.typeAnnotation.typeAnnotation;
+          if (
+            !ta ||
+            ta.type !== 'TSTypeReference' ||
+            !ta.typeName ||
+            ta.typeName.type !== 'Identifier' ||
+            !/Props$/.test(ta.typeName.name)
+          ) {
+            continue;
+          }
+          if (
+            param.type === 'ObjectPattern' &&
+            param.properties.some(
+              (p) =>
+                (p.type === 'Property' || p.type === 'ObjectProperty') &&
+                !p.computed &&
+                p.key &&
+                p.key.type === 'Identifier' &&
+                p.key.name === 'section',
+            )
+          ) {
+            configDrivenProps.add(ta.typeName.name);
+          }
+        }
+      }
+
+      return {
+        CallExpression(node) {
+          if (
+            node.callee.type === 'Identifier' &&
+            node.callee.name === 'resolveSection' &&
+            node.arguments[0] &&
+            node.arguments[0].type === 'Literal' &&
+            typeof node.arguments[0].value === 'string'
+          ) {
+            sectionCalls.push({ key: node.arguments[0].value, node: node.arguments[0] });
+          }
+        },
+        FunctionDeclaration(node) {
+          collectParams(node.params);
+        },
+        VariableDeclarator(node) {
+          if (
+            node.init &&
+            (node.init.type === 'ArrowFunctionExpression' || node.init.type === 'FunctionExpression')
+          ) {
+            collectParams(node.init.params);
+          }
+        },
+        'Program:exit'() {
+          for (const { key, node } of sectionCalls) {
+            const props = `${key}Props`;
+            if (!configDrivenProps.has(props)) continue;
+            const info = getSectionFieldInfo(props);
+            if (info === null) continue; // contract not found — don't false-positive
+            if (!info.present) {
+              context.report({ node, messageId: 'missingSection', data: { key, props } });
+            } else if (info.optional) {
+              context.report({ node, messageId: 'optionalSection', data: { key, props } });
             }
           }
         },
