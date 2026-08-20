@@ -364,6 +364,171 @@ export const rules = {
       };
     },
   },
+  /**
+   * section-shell
+   *
+   * Config-driven section components must render through SectionShell: every
+   * JSX return must be rooted in <SectionShell> — the shared section scaffold
+   * (sections/shell.tsx) that keeps vertical rhythm / container width /
+   * background vocabulary consistent across the theme's sections.
+   *
+   * "Config-driven" is resolved from the props CONTRACT, not from what the
+   * component destructures: a landing section's contract declares a `section`
+   * member (HeroLiveProps carries `section` even though the packaged component
+   * only destructures the flattened copy props the block injects). Tool
+   * sections (workbenches, studios, page-header, dashboards) take business
+   * data — their contracts declare no `section` member — so they are exempt
+   * without an exception list.
+   *
+   * A section that returns JSX through any other root — a <div>, a Fragment
+   * (<>...</>) or a custom wrapper — skips the scaffold. HeroLive is the
+   * canonical violation: it renders <SectionShell> inside a fragment with a
+   * <style> sibling, so the DOM root is the fragment, not the scaffold's
+   * <section>.
+   *
+   * Scoped to packages/ui/src/themes/semi/sections in eslint.config.mjs
+   * (SectionShell only exists in the semi theme today).
+   */
+  'section-shell': {
+    meta: {
+      type: 'problem',
+      docs: {
+        description:
+          'Config-driven section components must render <SectionShell> as the root of every JSX return.',
+      },
+      messages: {
+        notSectionShell:
+          "Config-driven section `{{name}}` must root its JSX in <SectionShell> — the shared section scaffold that keeps section vertical rhythm / container width / background consistent. This return is rooted in {{root}} (line {{line}}); wrapping <SectionShell> in a fragment or another element skips the scaffold. Make <SectionShell> the outermost element of every JSX return.",
+      },
+      schema: [],
+    },
+    create(context) {
+      /** True when the component is config-driven: its props type is a *Props
+       *  contract that declares a REQUIRED-or-optional `section` member. */
+      function isConfigDrivenParams(params) {
+        for (const param of params) {
+          const ta = param.typeAnnotation && param.typeAnnotation.typeAnnotation;
+          if (!ta) continue;
+          const names = [];
+          if (ta.type === 'TSTypeReference' && ta.typeName && ta.typeName.type === 'Identifier') {
+            names.push(ta.typeName.name);
+          } else if (ta.type === 'TSIntersectionType') {
+            // `LogosProps & { ImageComponent?: any }` — the contract ref is a member.
+            for (const member of ta.types) {
+              if (
+                member.type === 'TSTypeReference' &&
+                member.typeName &&
+                member.typeName.type === 'Identifier'
+              ) {
+                names.push(member.typeName.name);
+              }
+            }
+          }
+          for (const n of names) {
+            const info = getSectionFieldInfo(n);
+            if (info !== null && info.present) return true;
+          }
+        }
+        return false;
+      }
+
+      function isSectionShellJsx(node) {
+        return (
+          node.type === 'JSXElement' &&
+          node.openingElement &&
+          node.openingElement.name &&
+          node.openingElement.name.type === 'JSXIdentifier' &&
+          node.openingElement.name.name === 'SectionShell'
+        );
+      }
+
+      function jsxRootLabel(node) {
+        if (node.type === 'JSXFragment') return '<Fragment>';
+        const n = node.openingElement && node.openingElement.name;
+        if (!n) return node.type;
+        if (n.type === 'JSXIdentifier') return `<${n.name}>`;
+        if (n.type === 'JSXMemberExpression') return `<${n.object.name}.${n.property.name}>`;
+        if (n.type === 'JSXNamespacedName') return `<${n.namespace.name}:${n.name.name}>`;
+        return node.type;
+      }
+
+      /** ReturnStatements inside `root`, not descending into nested functions
+       *  (map callbacks, helper components — their returns belong to them). */
+      function collectReturns(root) {
+        const out = [];
+        (function walk(node) {
+          if (!node || typeof node.type !== 'string') return;
+          if (
+            node !== root &&
+            (node.type === 'FunctionDeclaration' ||
+              node.type === 'FunctionExpression' ||
+              node.type === 'ArrowFunctionExpression')
+          ) {
+            return;
+          }
+          if (node.type === 'ReturnStatement') {
+            out.push(node);
+            return;
+          }
+          for (const key of Object.keys(node)) {
+            if (key === 'parent') continue;
+            const child = node[key];
+            if (Array.isArray(child)) {
+              for (const c of child) {
+                if (c && typeof c.type === 'string') walk(c);
+              }
+            } else if (child && typeof child.type === 'string') {
+              walk(child);
+            }
+          }
+        })(root);
+        return out;
+      }
+
+      function checkComponent(name, fnNode) {
+        if (!isConfigDrivenParams(fnNode.params || [])) return;
+        for (const ret of collectReturns(fnNode.body)) {
+          const arg = ret.argument;
+          if (!arg) continue; // `return;`
+          if (arg.type !== 'JSXElement' && arg.type !== 'JSXFragment') continue; // null / variable / call — can't verify statically
+          if (isSectionShellJsx(arg)) continue;
+          context.report({
+            node: arg,
+            messageId: 'notSectionShell',
+            data: {
+              name,
+              root: jsxRootLabel(arg),
+              line: String(arg.loc.start.line),
+            },
+          });
+        }
+      }
+
+      return {
+        ExportNamedDeclaration(node) {
+          const d = node.declaration;
+          if (!d) return;
+          if (d.type === 'FunctionDeclaration') {
+            checkComponent(d.id && d.id.name, d);
+          } else if (d.type === 'VariableDeclaration') {
+            for (const decl of d.declarations) {
+              const init = decl.init;
+              if (
+                init &&
+                (init.type === 'ArrowFunctionExpression' || init.type === 'FunctionExpression')
+              ) {
+                checkComponent(decl.id && decl.id.name, init);
+              }
+            }
+          }
+        },
+        ExportDefaultDeclaration(node) {
+          const d = node.declaration;
+          if (d.type === 'FunctionDeclaration') checkComponent(d.id && d.id.name, d);
+        },
+      };
+    },
+  },
 };
 
 export default { rules };
