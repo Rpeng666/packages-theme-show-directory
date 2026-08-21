@@ -95,6 +95,8 @@ export function ImageGeneratorStudio({
   downloadLabel,
   downloadingId,
   onDownload,
+  openInEditorLabel,
+  onOpenInEditor,
   footerHint,
 }: ImageGeneratorStudioProps) {
   const busy = isGenerating;
@@ -379,6 +381,17 @@ export function ImageGeneratorStudio({
                           <SmartIcon name="Download" size={16} />
                         )}
                       </button>
+                      {onOpenInEditor && openInEditorLabel ? (
+                        <button
+                          type="button"
+                          className="imgstudio-card-edit"
+                          onClick={() => onOpenInEditor(image)}
+                          aria-label={openInEditorLabel}
+                          title={openInEditorLabel}
+                        >
+                          <SmartIcon name="PenLine" size={16} />
+                        </button>
+                      ) : null}
                     </div>
                     <figcaption className="imgstudio-card-caption">
                       {image.prompt ? (

@@ -106,6 +106,9 @@ export interface ImageGeneratorStudioProps {
   downloadLabel?: string;
   downloadingId?: string | null;
   onDownload?: (image: ImageGeneratorStudioImage) => void;
+  /** open the generated image in the workbench editor (cross-tool loop) */
+  openInEditorLabel?: string;
+  onOpenInEditor?: (image: ImageGeneratorStudioImage) => void;
   /** footer */
   footerHint?: ReactNode;
 }
