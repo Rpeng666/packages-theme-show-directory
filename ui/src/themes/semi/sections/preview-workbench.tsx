@@ -3,7 +3,12 @@
 import * as React from "react";
 import { useRef } from "react";
 import type { ReactNode } from "react";
-import type { PreviewSceneId, PreviewWorkbenchProps } from "@template/ui";
+import type {
+  PreviewSceneDef,
+  PreviewSceneId,
+  PreviewWorkbenchProps,
+  PreviewWorkbenchTip,
+} from "@template/ui";
 
 import { Button } from "../components/button";
 import { Input } from "../components/input";
@@ -18,6 +23,10 @@ import { SmartIcon } from "../icons";
  * places viewers meet a thumbnail (desktop feed / search results / mobile
  * feed / watch sidebar) plus a "what to check" tips rail. All data +
  * callbacks come from the app; this section only renders.
+ *
+ * Layout is a two-column studio: the preview + tips rail on the left (4/5),
+ * the console as a narrow control rail on the right (1/5). It collapses to a
+ * single column on narrow screens with the preview first, console below.
  */
 
 function cn(...parts: Array<string | false | null | undefined>) {
@@ -496,6 +505,428 @@ function UploadSlot({
   );
 }
 
+// ── Studio sub-components ─────────────────────────────────────────────────────
+// Split out of the monolithic section for reuse: a sky hero, the control
+// console (mode / toggles / uploads / inputs / scenes), the YouTube-context
+// stage and the "what to check" tips rail each have a narrow, self-contained
+// prop contract. Co-located here until a second workbench shares the pattern,
+// then lift the console / stage / tips blocks to ../components/.
+
+function PreviewStudioHero({
+  eyebrow,
+  title,
+  description,
+  badges,
+  meta,
+}: {
+  eyebrow?: ReactNode;
+  title?: ReactNode;
+  description?: ReactNode;
+  badges?: Array<{ label: string; tone?: "free" | "pro" | "neutral" }>;
+  meta?: Array<{ icon: string; text: string }>;
+}) {
+  return (
+    <header className="pstudio-hero">
+      <div className="pstudio-hero-mesh" />
+      <div className="pstudio-hero-glow" />
+      <div className="pstudio-hero-inner">
+        {eyebrow ? (
+          <span className="pstudio-eyebrow">
+            <span className="pstudio-eyebrow-dot" />
+            {eyebrow}
+          </span>
+        ) : null}
+        {title ? <h1 className="pstudio-title">{title}</h1> : null}
+        {description ? <p className="pstudio-desc">{description}</p> : null}
+        {badges && badges.length > 0 ? (
+          <div className="pstudio-hero-badges">
+            {badges.map((badge) => (
+              <span
+                key={badge.label}
+                className={cn(
+                  "pstudio-badge",
+                  badge.tone === "pro"
+                    ? "pstudio-badge-pro"
+                    : badge.tone === "neutral"
+                      ? "pstudio-badge-neutral"
+                      : "pstudio-badge-free",
+                )}
+              >
+                {badge.label}
+              </span>
+            ))}
+          </div>
+        ) : null}
+        {meta && meta.length > 0 ? (
+          <div className="pstudio-hero-meta">
+            {meta.map((item) => (
+              <span key={item.text} className="pstudio-meta-chip">
+                <SmartIcon name={item.icon} size={14} />
+                {item.text}
+              </span>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </header>
+  );
+}
+
+function PreviewConsole({
+  mode,
+  onModeChange,
+  singleLabel,
+  abLabel,
+  abHint,
+  uploadTitle,
+  uploadHint,
+  uploadFormatHint,
+  replaceLabel,
+  uploadA,
+  uploadB,
+  onUploadA,
+  onUploadB,
+  titleLabel,
+  titleValue,
+  titlePlaceholder,
+  onTitleChange,
+  channelLabel,
+  channelValue,
+  channelPlaceholder,
+  onChannelChange,
+  dark,
+  onToggleDark,
+  darkLabel,
+  lightLabel,
+  foldLine,
+  onToggleFoldLine,
+  foldLineLabel,
+  foldLineHideLabel,
+  colorBlind,
+  onToggleColorBlind,
+  colorBlindLabel,
+  colorBlindOffLabel,
+  sceneLabel,
+  scenes = [],
+  scene,
+  onSceneChange,
+  aLabel,
+  bLabel,
+}: {
+  mode: "single" | "ab";
+  onModeChange?: (mode: "single" | "ab") => void;
+  singleLabel?: ReactNode;
+  abLabel?: ReactNode;
+  abHint?: ReactNode;
+  uploadTitle?: ReactNode;
+  uploadHint?: ReactNode;
+  uploadFormatHint?: ReactNode;
+  replaceLabel?: ReactNode;
+  uploadA?: string | null;
+  uploadB?: string | null;
+  onUploadA?: (dataUrl: string) => void;
+  onUploadB?: (dataUrl: string) => void;
+  titleLabel?: ReactNode;
+  titleValue?: string;
+  titlePlaceholder?: ReactNode;
+  onTitleChange?: (value: string) => void;
+  channelLabel?: ReactNode;
+  channelValue?: string;
+  channelPlaceholder?: ReactNode;
+  onChannelChange?: (value: string) => void;
+  dark?: boolean;
+  onToggleDark?: () => void;
+  darkLabel?: ReactNode;
+  lightLabel?: ReactNode;
+  foldLine?: boolean;
+  onToggleFoldLine?: () => void;
+  foldLineLabel?: ReactNode;
+  foldLineHideLabel?: ReactNode;
+  colorBlind?: boolean;
+  onToggleColorBlind?: () => void;
+  colorBlindLabel?: ReactNode;
+  colorBlindOffLabel?: ReactNode;
+  sceneLabel?: ReactNode;
+  scenes?: PreviewSceneDef[];
+  scene?: PreviewSceneId;
+  onSceneChange?: (scene: PreviewSceneId) => void;
+  aLabel?: ReactNode;
+  bLabel?: ReactNode;
+}) {
+  return (
+    <aside className="pstudio-console">
+      <div className="pstudio-toolbar">
+        <div className="pstudio-mode">
+          <button
+            type="button"
+            className={cn(
+              "pstudio-mode-btn",
+              mode === "single" && "is-active",
+            )}
+            onClick={() => onModeChange?.("single")}
+          >
+            <SmartIcon name="Desktop" size={15} />
+            <span>{singleLabel}</span>
+          </button>
+          <button
+            type="button"
+            className={cn("pstudio-mode-btn", mode === "ab" && "is-active")}
+            onClick={() => onModeChange?.("ab")}
+          >
+            <SmartIcon name="CheckList" size={15} />
+            <span>{abLabel}</span>
+          </button>
+        </div>
+        <Button
+          type="button"
+          variant="secondary"
+          size="sm"
+          className="pstudio-dark-toggle"
+          onClick={onToggleDark}
+        >
+          <SmartIcon name={dark ? "Sun" : "Moon"} size={14} />
+          <span>{dark ? lightLabel : darkLabel}</span>
+        </Button>
+        {onToggleFoldLine ? (
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="pstudio-dark-toggle"
+            onClick={onToggleFoldLine}
+          >
+            <span className="pstudio-fold-glyph">⌁</span>
+            <span>{foldLine ? foldLineHideLabel : foldLineLabel}</span>
+          </Button>
+        ) : null}
+        {onToggleColorBlind ? (
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="pstudio-dark-toggle"
+            onClick={onToggleColorBlind}
+          >
+            <SmartIcon name="Eye" size={14} />
+            <span>{colorBlind ? colorBlindOffLabel : colorBlindLabel}</span>
+          </Button>
+        ) : null}
+      </div>
+
+      {mode === "ab" && abHint ? (
+        <p className="pstudio-ab-hint">
+          <SmartIcon name="Sparkles" size={14} />
+          <span>{abHint}</span>
+        </p>
+      ) : null}
+
+      <div
+        className={cn(
+          "pstudio-slots",
+          mode === "ab" && "pstudio-slots-duo",
+        )}
+      >
+        <UploadSlot
+          label={aLabel}
+          src={uploadA}
+          onUpload={onUploadA}
+          uploadTitle={uploadTitle}
+          uploadHint={uploadHint}
+          uploadFormatHint={uploadFormatHint}
+          replaceLabel={replaceLabel}
+        />
+        {mode === "ab" ? (
+          <UploadSlot
+            label={bLabel}
+            src={uploadB}
+            onUpload={onUploadB}
+            uploadTitle={uploadTitle}
+            uploadHint={uploadHint}
+            uploadFormatHint={uploadFormatHint}
+            replaceLabel={replaceLabel}
+          />
+        ) : (
+          <div className="pstudio-slot-fill" />
+        )}
+      </div>
+
+      <div className="pstudio-fields">
+        <label className="pstudio-field">
+          <span className="pstudio-field-label">{titleLabel}</span>
+          <Input
+            prefix={<SmartIcon name="Text" size={15} />}
+            placeholder={
+              typeof titlePlaceholder === "string"
+                ? titlePlaceholder
+                : "Your video title here…"
+            }
+            value={titleValue ?? ""}
+            onChange={(event) => onTitleChange?.(event.target.value)}
+          />
+        </label>
+        <label className="pstudio-field">
+          <span className="pstudio-field-label">{channelLabel}</span>
+          <Input
+            prefix={<SmartIcon name="User" size={15} />}
+            placeholder={
+              typeof channelPlaceholder === "string"
+                ? channelPlaceholder
+                : "Your Channel"
+            }
+            value={channelValue ?? ""}
+            onChange={(event) => onChannelChange?.(event.target.value)}
+          />
+        </label>
+      </div>
+
+      {scenes.length > 0 ? (
+        <div className="pstudio-scenes">
+          {sceneLabel ? (
+            <span className="pstudio-scenes-label">{sceneLabel}</span>
+          ) : null}
+          <div className="pstudio-scene-tabs">
+            {scenes.map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                className={cn(
+                  "pstudio-scene-tab",
+                  s.id === scene && "is-active",
+                )}
+                onClick={() => onSceneChange?.(s.id)}
+              >
+                <SmartIcon name={s.icon} size={15} />
+                <span className="pstudio-scene-tab-label">{s.label}</span>
+                <span className="pstudio-scene-tab-size">{s.size}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </aside>
+  );
+}
+
+function PreviewStage({
+  dark,
+  colorBlind,
+  mode,
+  singleLabel,
+  abLabel,
+  activeScene,
+  scene,
+  sceneProps,
+  foldLine,
+  foldLineLabel,
+}: {
+  dark?: boolean;
+  colorBlind?: boolean;
+  mode: "single" | "ab";
+  singleLabel?: ReactNode;
+  abLabel?: ReactNode;
+  activeScene?: PreviewSceneDef;
+  scene?: PreviewSceneId;
+  sceneProps: {
+    a?: string | null;
+    b?: string | null;
+    title?: string;
+    channel?: string;
+    aLabel?: ReactNode;
+    bLabel?: ReactNode;
+    yourVideoLabel?: ReactNode;
+  };
+  foldLine?: boolean;
+  foldLineLabel?: ReactNode;
+}) {
+  return (
+    <div
+      className={cn(
+        "pstudio-stage",
+        dark ? "pstudio-dark" : "pstudio-light",
+        colorBlind && "pstudio-cvd",
+      )}
+    >
+      <div className="pstudio-browser">
+        <div className="pstudio-traffic">
+          <span className="pstudio-dot pstudio-dot-red" />
+          <span className="pstudio-dot pstudio-dot-yellow" />
+          <span className="pstudio-dot pstudio-dot-green" />
+        </div>
+        <div className="pstudio-url">
+          <SmartIcon name="Shield" size={11} />
+          <span>youtube.com</span>
+          <span className="pstudio-url-path">
+            {activeScene?.label ?? scene}
+          </span>
+        </div>
+        <span className="pstudio-stage-chip">
+          {mode === "ab" ? abLabel : singleLabel}
+          <b>{activeScene?.size}</b>
+        </span>
+      </div>
+      <div className="pstudio-stage-body">
+        {scene === "feed" ? <FeedScene {...sceneProps} /> : null}
+        {scene === "search" ? <SearchScene {...sceneProps} /> : null}
+        {scene === "mobile" ? <MobileScene {...sceneProps} /> : null}
+        {scene === "sidebar" ? <SidebarScene {...sceneProps} /> : null}
+        {foldLine ? (
+          <div className="pstudio-foldline" aria-hidden>
+            <span className="pstudio-foldline-tag">{foldLineLabel}</span>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+function PreviewTips({
+  tipsTitle,
+  tips,
+  scene,
+  onSceneChange,
+}: {
+  tipsTitle?: ReactNode;
+  tips?: PreviewWorkbenchTip[];
+  scene?: PreviewSceneId;
+  onSceneChange?: (scene: PreviewSceneId) => void;
+}) {
+  return (
+    <section className="pstudio-tips-card">
+      <div className="pstudio-tips-head">
+        <span className="pstudio-tips-icon">
+          <SmartIcon name="Sparkles" size={15} />
+        </span>
+        <h2 className="pstudio-tips-title">{tipsTitle}</h2>
+      </div>
+      <div className="pstudio-tips">
+        {tips?.map((tip) =>
+          tip.scene ? (
+            <button
+              key={tip.scene}
+              type="button"
+              className={cn(
+                "pstudio-tip",
+                tip.scene === scene && "is-active",
+              )}
+              onClick={() => onSceneChange?.(tip.scene as PreviewSceneId)}
+            >
+              <span className="pstudio-tip-icon">
+                <SmartIcon name="EyeOpened" size={13} />
+              </span>
+              <span>{tip.label}</span>
+            </button>
+          ) : (
+            <a key={tip.href} className="pstudio-tip" href={tip.href}>
+              <SmartIcon name="ArrowRight" size={13} />
+              <span>{tip.label}</span>
+            </a>
+          ),
+        )}
+      </div>
+    </section>
+  );
+}
+
 // ── Main section ──────────────────────────────────────────────────────────────
 
 export function PreviewWorkbench({
@@ -565,278 +996,80 @@ export function PreviewWorkbench({
   return (
     <section className={cn("pstudio", className)} data-registry={dataRegistry}>
       <div className="pstudio-shell">
-        {/* ── Hero: sky inspect strip ── */}
-        <header className="pstudio-hero">
-          <div className="pstudio-hero-mesh" />
-          <div className="pstudio-hero-glow" />
-          <div className="pstudio-hero-inner">
-            {eyebrow ? (
-              <span className="pstudio-eyebrow">
-                <span className="pstudio-eyebrow-dot" />
-                {eyebrow}
-              </span>
-            ) : null}
-            {title ? <h1 className="pstudio-title">{title}</h1> : null}
-            {description ? <p className="pstudio-desc">{description}</p> : null}
-            {badges && badges.length > 0 ? (
-              <div className="pstudio-hero-badges">
-                {badges.map((badge) => (
-                  <span
-                    key={badge.label}
-                    className={cn(
-                      "pstudio-badge",
-                      badge.tone === "pro"
-                        ? "pstudio-badge-pro"
-                        : badge.tone === "neutral"
-                          ? "pstudio-badge-neutral"
-                          : "pstudio-badge-free",
-                    )}
-                  >
-                    {badge.label}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-            {meta && meta.length > 0 ? (
-              <div className="pstudio-hero-meta">
-                {meta.map((item) => (
-                  <span key={item.text} className="pstudio-meta-chip">
-                    <SmartIcon name={item.icon} size={14} />
-                    {item.text}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        </header>
+        <PreviewStudioHero
+          eyebrow={eyebrow}
+          title={title}
+          description={description}
+          badges={badges}
+          meta={meta}
+        />
 
-        {/* ── Console: mode + upload + inputs + scenes ── */}
-        <div className="pstudio-console">
-          <div className="pstudio-toolbar">
-            <div className="pstudio-mode">
-              <button
-                type="button"
-                className={cn(
-                  "pstudio-mode-btn",
-                  mode === "single" && "is-active",
-                )}
-                onClick={() => onModeChange?.("single")}
-              >
-                <SmartIcon name="Desktop" size={15} />
-                <span>{singleLabel}</span>
-              </button>
-              <button
-                type="button"
-                className={cn("pstudio-mode-btn", mode === "ab" && "is-active")}
-                onClick={() => onModeChange?.("ab")}
-              >
-                <SmartIcon name="CheckList" size={15} />
-                <span>{abLabel}</span>
-              </button>
-            </div>
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              className="pstudio-dark-toggle"
-              onClick={onToggleDark}
-            >
-              <SmartIcon name={dark ? "Sun" : "Moon"} size={14} />
-              <span>{dark ? lightLabel : darkLabel}</span>
-            </Button>
-            {onToggleFoldLine ? (
-              <Button
-                type="button"
-                variant="secondary"
-                size="sm"
-                className="pstudio-dark-toggle"
-                onClick={onToggleFoldLine}
-              >
-                <span className="pstudio-fold-glyph">⌁</span>
-                <span>{foldLine ? foldLineHideLabel : foldLineLabel}</span>
-              </Button>
-            ) : null}
-            {onToggleColorBlind ? (
-              <Button
-                type="button"
-                variant="secondary"
-                size="sm"
-                className="pstudio-dark-toggle"
-                onClick={onToggleColorBlind}
-              >
-                <SmartIcon name="Eye" size={14} />
-                <span>{colorBlind ? colorBlindOffLabel : colorBlindLabel}</span>
-              </Button>
-            ) : null}
-          </div>
-
-          {mode === "ab" && abHint ? (
-            <p className="pstudio-ab-hint">
-              <SmartIcon name="Sparkles" size={14} />
-              <span>{abHint}</span>
-            </p>
-          ) : null}
-
-          <div
-            className={cn(
-              "pstudio-slots",
-              mode === "ab" && "pstudio-slots-duo",
-            )}
-          >
-            <UploadSlot
-              label={aLabel}
-              src={uploadA}
-              onUpload={onUploadA}
-              uploadTitle={uploadTitle}
-              uploadHint={uploadHint}
-              uploadFormatHint={uploadFormatHint}
-              replaceLabel={replaceLabel}
+        <div className="pstudio-layout">
+          <div className="pstudio-main">
+            <PreviewStage
+              dark={dark}
+              colorBlind={colorBlind}
+              mode={mode}
+              singleLabel={singleLabel}
+              abLabel={abLabel}
+              activeScene={activeScene}
+              scene={scene}
+              sceneProps={sceneProps}
+              foldLine={foldLine}
+              foldLineLabel={foldLineLabel}
             />
-            {mode === "ab" ? (
-              <UploadSlot
-                label={bLabel}
-                src={uploadB}
-                onUpload={onUploadB}
-                uploadTitle={uploadTitle}
-                uploadHint={uploadHint}
-                uploadFormatHint={uploadFormatHint}
-                replaceLabel={replaceLabel}
+            {tips && tips.length > 0 ? (
+              <PreviewTips
+                tipsTitle={tipsTitle}
+                tips={tips}
+                scene={scene}
+                onSceneChange={onSceneChange}
               />
-            ) : (
-              <div className="pstudio-slot-fill" />
-            )}
-          </div>
-
-          <div className="pstudio-fields">
-            <label className="pstudio-field">
-              <span className="pstudio-field-label">{titleLabel}</span>
-              <Input
-                prefix={<SmartIcon name="Text" size={15} />}
-                placeholder={
-                  typeof titlePlaceholder === "string"
-                    ? titlePlaceholder
-                    : "Your video title here…"
-                }
-                value={titleValue ?? ""}
-                onChange={(event) => onTitleChange?.(event.target.value)}
-              />
-            </label>
-            <label className="pstudio-field">
-              <span className="pstudio-field-label">{channelLabel}</span>
-              <Input
-                prefix={<SmartIcon name="User" size={15} />}
-                placeholder={
-                  typeof channelPlaceholder === "string"
-                    ? channelPlaceholder
-                    : "Your Channel"
-                }
-                value={channelValue ?? ""}
-                onChange={(event) => onChannelChange?.(event.target.value)}
-              />
-            </label>
-          </div>
-
-          {scenes.length > 0 ? (
-            <div className="pstudio-scenes">
-              {sceneLabel ? (
-                <span className="pstudio-scenes-label">{sceneLabel}</span>
-              ) : null}
-              <div className="pstudio-scene-tabs">
-                {scenes.map((s) => (
-                  <button
-                    key={s.id}
-                    type="button"
-                    className={cn(
-                      "pstudio-scene-tab",
-                      s.id === scene && "is-active",
-                    )}
-                    onClick={() => onSceneChange?.(s.id)}
-                  >
-                    <SmartIcon name={s.icon} size={15} />
-                    <span className="pstudio-scene-tab-label">{s.label}</span>
-                    <span className="pstudio-scene-tab-size">{s.size}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
-
-        {/* ── Stage: mock YouTube chrome + scene ── */}
-        <div
-          className={cn(
-            "pstudio-stage",
-            dark ? "pstudio-dark" : "pstudio-light",
-            colorBlind && "pstudio-cvd",
-          )}
-        >
-          <div className="pstudio-browser">
-            <div className="pstudio-traffic">
-              <span className="pstudio-dot pstudio-dot-red" />
-              <span className="pstudio-dot pstudio-dot-yellow" />
-              <span className="pstudio-dot pstudio-dot-green" />
-            </div>
-            <div className="pstudio-url">
-              <SmartIcon name="Shield" size={11} />
-              <span>youtube.com</span>
-              <span className="pstudio-url-path">
-                {activeScene?.label ?? scene}
-              </span>
-            </div>
-            <span className="pstudio-stage-chip">
-              {mode === "ab" ? abLabel : singleLabel}
-              <b>{activeScene?.size}</b>
-            </span>
-          </div>
-          <div className="pstudio-stage-body">
-            {scene === "feed" ? <FeedScene {...sceneProps} /> : null}
-            {scene === "search" ? <SearchScene {...sceneProps} /> : null}
-            {scene === "mobile" ? <MobileScene {...sceneProps} /> : null}
-            {scene === "sidebar" ? <SidebarScene {...sceneProps} /> : null}
-            {foldLine ? (
-              <div className="pstudio-foldline" aria-hidden>
-                <span className="pstudio-foldline-tag">{foldLineLabel}</span>
-              </div>
             ) : null}
           </div>
-        </div>
 
-        {/* ── What to check tips ── */}
-        {tips && tips.length > 0 ? (
-          <section className="pstudio-tips-card">
-            <div className="pstudio-tips-head">
-              <span className="pstudio-tips-icon">
-                <SmartIcon name="Sparkles" size={15} />
-              </span>
-              <h2 className="pstudio-tips-title">{tipsTitle}</h2>
-            </div>
-            <div className="pstudio-tips">
-              {tips.map((tip) =>
-                tip.scene ? (
-                  <button
-                    key={tip.scene}
-                    type="button"
-                    className={cn(
-                      "pstudio-tip",
-                      tip.scene === scene && "is-active",
-                    )}
-                    onClick={() => onSceneChange?.(tip.scene as PreviewSceneId)}
-                  >
-                    <span className="pstudio-tip-icon">
-                      <SmartIcon name="EyeOpened" size={13} />
-                    </span>
-                    <span>{tip.label}</span>
-                  </button>
-                ) : (
-                  <a key={tip.href} className="pstudio-tip" href={tip.href}>
-                    <SmartIcon name="ArrowRight" size={13} />
-                    <span>{tip.label}</span>
-                  </a>
-                ),
-              )}
-            </div>
-          </section>
-        ) : null}
+          <PreviewConsole
+            mode={mode}
+            onModeChange={onModeChange}
+            singleLabel={singleLabel}
+            abLabel={abLabel}
+            abHint={abHint}
+            uploadTitle={uploadTitle}
+            uploadHint={uploadHint}
+            uploadFormatHint={uploadFormatHint}
+            replaceLabel={replaceLabel}
+            uploadA={uploadA}
+            uploadB={uploadB}
+            onUploadA={onUploadA}
+            onUploadB={onUploadB}
+            titleLabel={titleLabel}
+            titleValue={titleValue}
+            titlePlaceholder={titlePlaceholder}
+            onTitleChange={onTitleChange}
+            channelLabel={channelLabel}
+            channelValue={channelValue}
+            channelPlaceholder={channelPlaceholder}
+            onChannelChange={onChannelChange}
+            dark={dark}
+            onToggleDark={onToggleDark}
+            darkLabel={darkLabel}
+            lightLabel={lightLabel}
+            foldLine={foldLine}
+            onToggleFoldLine={onToggleFoldLine}
+            foldLineLabel={foldLineLabel}
+            foldLineHideLabel={foldLineHideLabel}
+            colorBlind={colorBlind}
+            onToggleColorBlind={onToggleColorBlind}
+            colorBlindLabel={colorBlindLabel}
+            colorBlindOffLabel={colorBlindOffLabel}
+            sceneLabel={sceneLabel}
+            scenes={scenes}
+            scene={scene}
+            onSceneChange={onSceneChange}
+            aLabel={aLabel}
+            bLabel={bLabel}
+          />
+        </div>
 
         {footerHint ? (
           <p className="pstudio-footer-hint">{footerHint}</p>
