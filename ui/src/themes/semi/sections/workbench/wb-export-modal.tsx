@@ -9,6 +9,7 @@ import {
   X,
   ShieldCheck,
   AlertTriangle,
+  Package,
 } from "lucide-react";
 import type { WorkbenchExportResult, WorkbenchT } from "@template/ui";
 
@@ -77,6 +78,14 @@ export function WbExportModal({ result, onClose, t }: WbExportModalProps) {
     a.click();
   };
 
+  const downloadZip = () => {
+    if (!result.multiZip) return;
+    const a = document.createElement("a");
+    a.href = result.multiZip.url;
+    a.download = `workbench-all-sizes.zip`;
+    a.click();
+  };
+
   return (
     <motion.div
       className="wb-export-overlay"
@@ -123,6 +132,20 @@ export function WbExportModal({ result, onClose, t }: WbExportModalProps) {
           <span className="wb-export-size">{sizeLabel}</span>
         </div>
 
+        {/* Multi-size strip — shows the bundled sizes when present */}
+        {result.multiZip && result.multiZip.sizes.length > 0 ? (
+          <div className="wb-export-multisize">
+            <span className="wb-export-multisize-label">{t("export_all_sizes")}</span>
+            <div className="wb-export-multisize-chips">
+              {result.multiZip.sizes.map((s) => (
+                <span key={`${s.width}x${s.height}`} className="wb-export-multisize-chip">
+                  {s.label} · {s.width}×{s.height}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
         {/* YouTube compliance checklist */}
         <div className="wb-export-checks">
           {checks.map((c) => (
@@ -156,6 +179,16 @@ export function WbExportModal({ result, onClose, t }: WbExportModalProps) {
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? t("export_copied") : t("export_copy")}
           </button>
+          {result.multiZip ? (
+            <button
+              type="button"
+              className="wb-export-btn wb-export-btn-zip"
+              onClick={downloadZip}
+            >
+              <Package className="w-4 h-4" />
+              {t("export_zip")}
+            </button>
+          ) : null}
         </div>
       </motion.div>
     </motion.div>

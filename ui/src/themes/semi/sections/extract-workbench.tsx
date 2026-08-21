@@ -177,6 +177,38 @@ export function ExtractWorkbench({
                 {privacyTip}
               </p>
             ) : null}
+
+            {/* ── Capability preview: what frame extraction gets you ── */}
+            <div className="xstudio-capabilities">
+              <div className="xstudio-capabilities-head">
+                <span className="xstudio-capabilities-title">
+                  Turn any video into a thumbnail
+                </span>
+                <span className="xstudio-capabilities-sub">
+                  MP4 · MOV · WebM · AVI
+                </span>
+              </div>
+              <div className="xstudio-capabilities-grid">
+                <div className="xstudio-capability">
+                  <span className="xstudio-capability-title">Scrub any frame</span>
+                  <span className="xstudio-capability-desc">
+                    Step through the video frame by frame
+                  </span>
+                </div>
+                <div className="xstudio-capability">
+                  <span className="xstudio-capability-title">Key moments</span>
+                  <span className="xstudio-capability-desc">
+                    Grab the perfect expression or action
+                  </span>
+                </div>
+                <div className="xstudio-capability">
+                  <span className="xstudio-capability-title">Open in editor</span>
+                  <span className="xstudio-capability-desc">
+                    Send a frame straight to the workbench
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           /* ── Workspace: stage (player) + rail (frame / export) ── */

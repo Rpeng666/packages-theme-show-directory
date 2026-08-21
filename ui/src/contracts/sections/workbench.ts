@@ -81,6 +81,11 @@ export interface WorkbenchExportResult {
   height: number;
   url: string;
   hasText: boolean;
+  /** Optional: a pre-built ZIP of the design at multiple standard sizes. */
+  multiZip?: {
+    url: string;
+    sizes: Array<{ label: string; width: number; height: number }>;
+  };
 }
 
 /** A structured template the canvas can apply (from app `templates.ts`). */

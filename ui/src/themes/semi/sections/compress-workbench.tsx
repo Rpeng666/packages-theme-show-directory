@@ -211,6 +211,38 @@ export function CompressWorkbench({
                 {privacyTip}
               </p>
             ) : null}
+
+            {/* ── Capability preview: what compression gets you ── */}
+            <div className="cstudio-capabilities">
+              <div className="cstudio-capabilities-head">
+                <span className="cstudio-capabilities-title">
+                  Shrink it your way
+                </span>
+                <span className="cstudio-capabilities-sub">
+                  Fits YouTube&apos;s 2 MB limit
+                </span>
+              </div>
+              <div className="cstudio-capabilities-grid">
+                {formatOptions && formatOptions.length > 0
+                  ? formatOptions.map((option) => (
+                      <div key={option.value} className="cstudio-capability">
+                        <span className="cstudio-capability-format">
+                          {option.label}
+                        </span>
+                        <span className="cstudio-capability-desc">
+                          {option.desc}
+                        </span>
+                      </div>
+                    ))
+                  : null}
+                <div className="cstudio-capability">
+                  <span className="cstudio-capability-format">2 MB</span>
+                  <span className="cstudio-capability-desc">
+                    Auto-fit under the limit
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           /* ── Workspace: two-panel workbench ── */

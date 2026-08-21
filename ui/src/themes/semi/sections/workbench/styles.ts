@@ -830,6 +830,44 @@ export const WORKBENCH_CSS = `
   color: #fff;
 }
 
+.wb-export-btn-zip {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.3);
+  color: #86efac;
+}
+.wb-export-btn-zip:hover {
+  background: rgba(74, 222, 128, 0.2);
+  color: #bbf7d0;
+}
+.wb-export-multisize {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 4px 0 12px;
+}
+.wb-export-multisize-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--semi-color-text-3);
+}
+.wb-export-multisize-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.wb-export-multisize-chip {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--semi-color-text-1);
+  background: var(--semi-color-fill-0);
+  border: 1px solid var(--semi-color-border);
+}
+
 /* Scanner gallery overlay */
 .wb-gallery {
   position: absolute;
