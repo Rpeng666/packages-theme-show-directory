@@ -14,11 +14,11 @@ import { SmartIcon } from "../icons";
 /**
  * Semi DownloadWorkbench - a designer-grade YouTube thumbnail download studio.
  *
- * Visual language shared with the AI studios: an orange "grab" hero, a
- * persistent grab bar (URL input + fetch CTA + privacy note), then a quality
- * gallery (2-column grid of preview cards with resolution tags + download
- * buttons) and a "what's next" tips rail. All data + callbacks come from the
- * app; this section only renders.
+ * Compact by design: a single URL input with a small fetch CTA directly
+ * beneath it, then a horizontally scrolling gallery of rectangular quality
+ * cards (recent downloads) and a "what's next" tips rail. The tool page
+ * already renders the page-level hero, so this section ships no hero of its
+ * own. All data + callbacks come from the app; this section only renders.
  */
 
 function cn(...parts: Array<string | false | null | undefined>) {
@@ -28,11 +28,6 @@ function cn(...parts: Array<string | false | null | undefined>) {
 export function DownloadWorkbench({
   className,
   "data-registry": dataRegistry,
-  eyebrow,
-  title,
-  description,
-  badges,
-  meta,
   inputLabel,
   inputPlaceholder,
   fetchLabel,
@@ -70,52 +65,7 @@ export function DownloadWorkbench({
   return (
     <section className={cn("dstudio", className)} data-registry={dataRegistry}>
       <div className="dstudio-shell">
-        {/* ── Hero: orange grab strip ── */}
-        <header className="dstudio-hero">
-          <div className="dstudio-hero-mesh" />
-          <div className="dstudio-hero-glow" />
-          <div className="dstudio-hero-inner">
-            {eyebrow ? (
-              <span className="dstudio-eyebrow">
-                <span className="dstudio-eyebrow-dot" />
-                {eyebrow}
-              </span>
-            ) : null}
-            {title ? <h1 className="dstudio-title">{title}</h1> : null}
-            {description ? <p className="dstudio-desc">{description}</p> : null}
-            {badges && badges.length > 0 ? (
-              <div className="dstudio-hero-badges">
-                {badges.map((badge) => (
-                  <span
-                    key={badge.label}
-                    className={cn(
-                      "dstudio-badge",
-                      badge.tone === "pro"
-                        ? "dstudio-badge-pro"
-                        : badge.tone === "neutral"
-                          ? "dstudio-badge-neutral"
-                          : "dstudio-badge-free",
-                    )}
-                  >
-                    {badge.label}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-            {meta && meta.length > 0 ? (
-              <div className="dstudio-hero-meta">
-                {meta.map((item) => (
-                  <span key={item.text} className="dstudio-meta-chip">
-                    <SmartIcon name={item.icon} size={14} />
-                    {item.text}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        </header>
-
-        {/* ── Grab bar: URL input + fetch ── */}
+        {/* ── Grab: single URL input + compact fetch below ── */}
         <div className="dstudio-grab">
           <form className="dstudio-grab-form" onSubmit={handleSubmit}>
             <Input
@@ -135,7 +85,6 @@ export function DownloadWorkbench({
             />
             <Button
               type="submit"
-              size="lg"
               className="dstudio-fetch"
               disabled={loading || !urlValue?.trim()}
               loading={Boolean(loading)}
@@ -158,7 +107,7 @@ export function DownloadWorkbench({
           ) : null}
         </div>
 
-        {/* ── Quality gallery ── */}
+        {/* ── Recent downloads: horizontal scrolling strip ── */}
         {hasResults ? (
           <div className="dstudio-results">
             <div className="dstudio-results-head">
@@ -178,7 +127,7 @@ export function DownloadWorkbench({
             </div>
 
             {availableCount > 0 ? (
-              <div className="dstudio-quality-grid">
+              <div className="dstudio-quality-strip">
                 {qualities.map((q) => (
                   <QualityCard
                     key={q.key}

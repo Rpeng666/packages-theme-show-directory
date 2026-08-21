@@ -13,18 +13,13 @@ import type {
 /**
  * Default DownloadWorkbench - shadcn-styled fallback of the thumbnail
  * download studio (see the Semi implementation for the full design notes).
- * Same contract: orange grab hero, persistent grab bar, quality gallery and
- * "what's next" tips rail.
+ * Same contract: a single URL input with a compact fetch CTA, a quality
+ * gallery and a "what's next" tips rail.
  */
 
 export function DownloadWorkbench({
   className,
   "data-registry": dataRegistry,
-  eyebrow,
-  title,
-  description,
-  badges,
-  meta,
   inputLabel,
   inputPlaceholder,
   fetchLabel,
@@ -58,64 +53,6 @@ export function DownloadWorkbench({
       className={cn("mx-auto w-full max-w-6xl px-4 py-12", className)}
       data-registry={dataRegistry}
     >
-      {/* Hero */}
-      <header className="relative overflow-hidden rounded-3xl border bg-gradient-to-b from-orange-50 to-background p-8 sm:p-10 dark:from-orange-950/40">
-        <div className="relative z-10 max-w-xl">
-          {eyebrow ? (
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-orange-700 dark:bg-orange-900/50 dark:text-orange-300">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-orange-500" />
-              {eyebrow}
-            </span>
-          ) : null}
-          {title ? (
-            <h1 className="mb-2.5 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              {title}
-            </h1>
-          ) : null}
-          {description ? (
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              {description}
-            </p>
-          ) : null}
-          {badges && badges.length > 0 ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {badges.map((badge) => (
-                <span
-                  key={badge.label}
-                  className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-bold",
-                    badge.tone === "pro"
-                      ? "border-orange-300 bg-orange-50 text-orange-700"
-                      : badge.tone === "neutral"
-                        ? "border-border bg-muted text-muted-foreground"
-                        : "border-orange-300 bg-orange-50 text-orange-700",
-                  )}
-                >
-                  {badge.label}
-                </span>
-              ))}
-            </div>
-          ) : null}
-          {meta && meta.length > 0 ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {meta.map((item) => (
-                <span
-                  key={item.text}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground"
-                >
-                  <SmartIcon
-                    name={item.icon}
-                    size={14}
-                    className="text-orange-600"
-                  />
-                  {item.text}
-                </span>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </header>
-
       {/* Grab bar */}
       <div className="mt-6 rounded-2xl border bg-card p-5 sm:p-6">
         <form

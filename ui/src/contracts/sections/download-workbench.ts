@@ -6,10 +6,10 @@ import type { ReactNode } from "react";
  * Pure presentational: the app keeps the full business layer (YouTube URL →
  * videoId resolution, the /api/thumbnail/variants fetch, per-quality blob
  * download with a new-tab fallback) and passes structured data + callbacks
- * down. The section renders the designed studio: an orange "grab" hero, a
- * persistent grab bar (URL input + fetch CTA + privacy note), then a quality
- * gallery (2-column grid of preview cards with resolution tags + download
- * buttons) and a "what's next" tips rail.
+ * down. The section renders the compact studio: a single URL input with a
+ * small fetch CTA directly beneath it, then a horizontally scrolling gallery
+ * of rectangular quality cards (recent downloads) and a "what's next" tips
+ * rail. No hero — the tool page already provides the page-level header.
  */
 
 export interface DownloadWorkbenchQuality {
@@ -33,12 +33,6 @@ export interface DownloadWorkbenchProps {
   className?: string;
   /** forwarded to the DOM root by the registry wrapper */
   "data-registry"?: string;
-  /** studio hero */
-  eyebrow?: ReactNode;
-  title?: ReactNode;
-  description?: ReactNode;
-  badges?: Array<{ label: string; tone?: "free" | "pro" | "neutral" }>;
-  meta?: Array<{ icon: string; text: string }>;
   /** grab bar */
   inputLabel?: ReactNode;
   inputPlaceholder?: ReactNode;
