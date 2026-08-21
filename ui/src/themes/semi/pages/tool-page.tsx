@@ -15,6 +15,12 @@ export interface ToolWorkspaceData {
   title?: ReactNode
   badge?: ReactNode
   footer?: ReactNode
+  /**
+   * Workspace card max width in px. Defaults to the component default (1080);
+   * wide two-column workbenches (e.g. the preview studio) can widen the outer
+   * frame so their right-hand console rail keeps a comfortable width.
+   */
+  maxWidth?: number
 }
 
 /**
@@ -61,6 +67,7 @@ export function ToolPage({
         title={workspace?.title}
         badge={workspace?.badge}
         footer={workspace?.footer}
+        maxWidth={workspace?.maxWidth}
       >
         {children}
       </ToolWorkspace>
