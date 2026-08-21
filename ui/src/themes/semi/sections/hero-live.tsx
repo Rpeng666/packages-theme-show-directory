@@ -121,11 +121,8 @@ export function HeroLive({
       <div className="app-grid-pattern" aria-hidden />
 
       <div
+        className="semi-two-col-grid"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-          gap: 56,
-          alignItems: "center",
           position: "relative",
           zIndex: 1,
         }}
