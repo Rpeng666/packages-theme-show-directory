@@ -766,7 +766,7 @@ export function PreviewWorkbench({
         <div
           className={cn(
             "pstudio-stage",
-            dark && "pstudio-dark",
+            dark ? "pstudio-dark" : "pstudio-light",
             colorBlind && "pstudio-cvd",
           )}
         >
