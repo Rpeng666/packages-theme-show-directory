@@ -50,6 +50,17 @@ function PreviewStudioHero({
   badges?: Array<{ label: string; tone?: "free" | "pro" | "neutral" }>;
   meta?: Array<{ icon: string; text: string }>;
 }) {
+  // The page-level ToolHero already carries the title/description/badges;
+  // hide this in-card promo header when no copy is provided.
+  if (
+    !eyebrow &&
+    !title &&
+    !description &&
+    !(badges && badges.length > 0) &&
+    !(meta && meta.length > 0)
+  ) {
+    return null;
+  }
   return (
     <header className="pstudio-hero">
       <div className="pstudio-hero-mesh" />

@@ -195,49 +195,54 @@ export function ResizeWorkbench({
     <section className={cn("rstudio", className)} data-registry={dataRegistry}>
       <div className="rstudio-shell">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
-        <header className="rstudio-hero">
-          <div className="rstudio-hero-mesh" aria-hidden />
-          <div className="rstudio-hero-glow" aria-hidden />
-          <div className="rstudio-hero-inner">
-            {eyebrow ? (
-              <div className="rstudio-eyebrow">
-                <span className="rstudio-eyebrow-dot" />
-                <span>{eyebrow}</span>
-              </div>
-            ) : null}
-            {title ? <h1 className="rstudio-title">{title}</h1> : null}
-            {description ? <p className="rstudio-desc">{description}</p> : null}
-            {badges && badges.length > 0 ? (
-              <div className="rstudio-hero-badges">
-                {badges.map((badge, index) => (
-                  <span
-                    key={index}
-                    className={cn(
-                      "rstudio-badge",
-                      badge.tone === "free"
-                        ? "rstudio-badge-free"
-                        : badge.tone === "pro"
-                          ? "rstudio-badge-pro"
-                          : "rstudio-badge-neutral",
-                    )}
-                  >
-                    {badge.label}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-            {meta && meta.length > 0 ? (
-              <div className="rstudio-hero-meta">
-                {meta.map((item, index) => (
-                  <span key={index} className="rstudio-meta-chip">
-                    <SmartIcon name={item.icon} size={13} />
-                    <span>{item.text}</span>
-                  </span>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        </header>
+        {/* Only render the in-card promo header when copy is provided; the
+            page-level ToolHero already carries the title/description/badges,
+            so tools can omit it and jump straight to the functional UI. */}
+        {eyebrow || title || description || (badges && badges.length > 0) || (meta && meta.length > 0) ? (
+          <header className="rstudio-hero">
+            <div className="rstudio-hero-mesh" aria-hidden />
+            <div className="rstudio-hero-glow" aria-hidden />
+            <div className="rstudio-hero-inner">
+              {eyebrow ? (
+                <div className="rstudio-eyebrow">
+                  <span className="rstudio-eyebrow-dot" />
+                  <span>{eyebrow}</span>
+                </div>
+              ) : null}
+              {title ? <h1 className="rstudio-title">{title}</h1> : null}
+              {description ? <p className="rstudio-desc">{description}</p> : null}
+              {badges && badges.length > 0 ? (
+                <div className="rstudio-hero-badges">
+                  {badges.map((badge, index) => (
+                    <span
+                      key={index}
+                      className={cn(
+                        "rstudio-badge",
+                        badge.tone === "free"
+                          ? "rstudio-badge-free"
+                          : badge.tone === "pro"
+                            ? "rstudio-badge-pro"
+                            : "rstudio-badge-neutral",
+                      )}
+                    >
+                      {badge.label}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+              {meta && meta.length > 0 ? (
+                <div className="rstudio-hero-meta">
+                  {meta.map((item, index) => (
+                    <span key={index} className="rstudio-meta-chip">
+                      <SmartIcon name={item.icon} size={13} />
+                      <span>{item.text}</span>
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </header>
+        ) : null}
 
         {/* ── Empty state ──────────────────────────────────────────────── */}
         {!hasSource ? (
@@ -306,6 +311,39 @@ export function ResizeWorkbench({
             ) : null}
 
             {error ? <div className="rstudio-error">{error}</div> : null}
+
+            {/* ── Capability preview: what you can resize to ───────────── */}
+            {platforms && platforms.length > 0 ? (
+              <div className="rstudio-capabilities">
+                <div className="rstudio-capabilities-head">
+                  <span className="rstudio-capabilities-title">
+                    Resize to any size
+                  </span>
+                  <span className="rstudio-capabilities-sub">
+                    {formatOptions
+                      ? formatOptions.map((f) => f.label).join(" · ")
+                      : "JPG · PNG · WebP"}
+                  </span>
+                </div>
+                <div className="rstudio-capabilities-grid">
+                  {platforms.map((platform) => (
+                    <div key={platform.id} className="rstudio-capability">
+                      <div className="rstudio-capability-name">
+                        <SmartIcon name={platform.icon} size={14} />
+                        <span>{platform.name}</span>
+                      </div>
+                      <div className="rstudio-capability-presets">
+                        {platform.presets.slice(0, 3).map((preset) => (
+                          <span key={preset.label} className="rstudio-capability-chip">
+                            {preset.width}×{preset.height}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         ) : (
           /* ── Workbench ─────────────────────────────────────────────── */

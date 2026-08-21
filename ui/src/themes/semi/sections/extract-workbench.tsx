@@ -94,7 +94,8 @@ export function ExtractWorkbench({
   return (
     <section className={cn("xstudio", className)} data-registry={dataRegistry}>
       <div className="xstudio-shell">
-        {/* ── Hero: indigo freeze-frame strip ── */}
+        {/* ── Hero: indigo freeze-frame strip (only when copy provided) ── */}
+        {eyebrow || title || description || (badges && badges.length > 0) || (meta && meta.length > 0) ? (
         <header className="xstudio-hero">
           <div className="xstudio-hero-mesh" />
           <div className="xstudio-hero-glow" />
@@ -138,6 +139,7 @@ export function ExtractWorkbench({
             ) : null}
           </div>
         </header>
+        ) : null}
 
         {!hasSource ? (
           /* ── Empty state ── */

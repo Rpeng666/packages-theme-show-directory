@@ -128,7 +128,8 @@ export function CompressWorkbench({
   return (
     <section className={cn("cstudio", className)} data-registry={dataRegistry}>
       <div className="cstudio-shell">
-        {/* ── Hero: emerald lightweight strip ── */}
+        {/* ── Hero: emerald lightweight strip (only when copy provided) ── */}
+        {eyebrow || title || description || (badges && badges.length > 0) || (meta && meta.length > 0) ? (
         <header className="cstudio-hero">
           <div className="cstudio-hero-mesh" />
           <div className="cstudio-hero-glow" />
@@ -172,6 +173,7 @@ export function CompressWorkbench({
             ) : null}
           </div>
         </header>
+        ) : null}
 
         {!hasSource ? (
           /* ── Empty state ── */
