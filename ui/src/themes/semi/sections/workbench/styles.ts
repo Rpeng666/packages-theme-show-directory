@@ -246,7 +246,21 @@ export const WORKBENCH_CSS = `
   position: relative;
   flex: 1;
   overflow: hidden;
-  background: radial-gradient(600px 400px at 50% 30%, rgba(var(--semi-red-5), 0.06), transparent 70%), var(--semi-color-bg-0);
+  background:
+    radial-gradient(720px 520px at 50% 32%, rgba(var(--semi-red-5), 0.14), transparent 72%),
+    radial-gradient(320px 240px at 18% 82%, rgba(var(--semi-purple-6), 0.08), transparent 70%),
+    linear-gradient(180deg, var(--semi-color-bg-0), #0e0c0a);
+}
+.wb-canvas-area::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 45%, transparent 100%);
 }
 .wb-canvas-area canvas {
   display: block;
@@ -297,15 +311,16 @@ export const WORKBENCH_CSS = `
 
 /* Properties panel — stack of floating glass control cards */
 .wb-panel {
-  width: 280px;
+  width: 300px;
   flex-shrink: 0;
   background: var(--semi-color-bg-1);
   border-left: 1px solid var(--semi-color-border);
   overflow-y: auto;
-  padding: 12px;
+  overflow-x: hidden;
+  padding: 16px 14px 24px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   z-index: 3;
 }
 .wb-panel::-webkit-scrollbar {
@@ -871,24 +886,53 @@ export const WORKBENCH_CSS = `
 /* Scanner gallery overlay */
 .wb-gallery {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 30;
-  background: rgba(8, 6, 12, 0.72);
-  backdrop-filter: blur(8px);
+  height: 224px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--semi-color-bg-1), var(--semi-color-bg-0));
+  border-top: 1px solid var(--semi-color-border);
+  box-shadow: 0 -18px 44px -22px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+.wb-gallery-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  padding: 11px 16px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--semi-color-border);
+  background: var(--semi-color-bg-1);
+}
+.wb-gallery-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--semi-color-text-0);
+}
+.wb-gallery-title svg {
+  color: rgb(var(--semi-purple-6));
+}
+.wb-gallery-hint {
+  flex: 1;
+  font-size: 11px;
+  color: var(--semi-color-text-3);
+  text-align: right;
+  margin-right: 2px;
 }
 .wb-gallery-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 40;
+  position: static;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border: none;
   border-radius: 9px;
   background: var(--semi-color-fill-0);
@@ -1282,7 +1326,6 @@ export const WORKBENCH_CSS = `
   border: 1px solid var(--semi-color-border);
   background: linear-gradient(180deg, var(--semi-color-bg-2), var(--semi-color-bg-1));
   box-shadow: 0 10px 26px -20px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  overflow: hidden;
 }
 .wb-collapse-head {
   display: flex;

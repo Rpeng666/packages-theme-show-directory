@@ -220,20 +220,18 @@ export function WbPropertiesPanel({
         </div>
       </section>
 
-      {/* Content library — emoji stickers + quick shapes */}
+      {/* Content library — emoji stickers + quick shapes (collapsed by default) */}
       <CollapseGroup
         title={t("elements_title")}
         icon={<Sparkles className="w-3.5 h-3.5" />}
-        defaultOpen
       >
         <WbElementsPanel onAdd={onAddElement} t={t} />
       </CollapseGroup>
 
-      {/* Template gallery */}
+      {/* Template gallery (collapsed by default) */}
       <CollapseGroup
         title={t("templates_title")}
         icon={<LayoutTemplate className="w-3.5 h-3.5" />}
-        defaultOpen
       >
         <WbTemplateGallery
           templates={templates}
@@ -371,11 +369,10 @@ export function WbPropertiesPanel({
         </div>
       </CollapseGroup>
 
-      {/* Enhance — photo adjustments */}
+      {/* Enhance — photo adjustments (collapsed by default) */}
       <CollapseGroup
         title={t("enhance.title")}
         icon={<SlidersHorizontal className="w-3.5 h-3.5" />}
-        defaultOpen
       >
         <WbEnhancePanel value={enhance} onChange={onEnhance} t={t} />
       </CollapseGroup>

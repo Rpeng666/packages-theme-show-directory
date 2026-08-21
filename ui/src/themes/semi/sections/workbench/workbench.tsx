@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronRight, ChevronLeft, X } from "lucide-react";
+import { ChevronRight, ChevronLeft, X, ImageIcon } from "lucide-react";
 import type { WorkbenchProps } from "@template/ui";
 
 import { Button } from "../../components/button";
@@ -222,28 +222,39 @@ export function Workbench({
               )}
             </button>
 
-            {/* Scanner image gallery — pick a real thumbnail to drop on canvas */}
+            {/* Scanner image gallery — a bottom dock of swappable thumbnails */}
             <AnimatePresence>
               {galleryOpen && (
                 <motion.div
                   className="wb-gallery"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.18 }}
+                  initial={{ y: 80, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 80, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 30 }}
                 >
-                  <button
-                    type="button"
-                    className="wb-gallery-close"
-                    title={t("gallery_close")}
-                    onClick={() => setGalleryOpen(false)}
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
+                  <div className="wb-gallery-bar">
+                    <span className="wb-gallery-title">
+                      <ImageIcon className="w-3.5 h-3.5" />
+                      <span>{t("gallery_title")}</span>
+                    </span>
+                    <span className="wb-gallery-hint">{t("gallery_hint")}</span>
+                    <button
+                      type="button"
+                      className="wb-gallery-close"
+                      title={t("gallery_close")}
+                      onClick={() => setGalleryOpen(false)}
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                   <WbScannerStream
                     cards={galleryCards}
                     onPick={handlePickImage}
-                    hint={t("gallery_hint")}
+                    initialSpeed={90}
+                    cardWidth={230}
+                    cardHeight={140}
+                    cardGap={22}
+                    repeat={10}
                   />
                 </motion.div>
               )}
