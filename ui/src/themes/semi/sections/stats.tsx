@@ -94,6 +94,14 @@ export function Stats({ section, className = '' }: StatsProps) {
     return () => io.disconnect()
   }, [])
 
+  // Safety net: if the IntersectionObserver never fires (headless capture,
+  // hydration edge case, unusual viewport), force the numbers to their final
+  // value after a short delay so the band never renders "0K+".
+  useEffect(() => {
+    const t = setTimeout(() => setStarted(true), 2500)
+    return () => clearTimeout(t)
+  }, [])
+
   return (
     <SectionShell id={section.id} className={className} padding="sm">
       <div
@@ -134,6 +142,10 @@ export function Stats({ section, className = '' }: StatsProps) {
                   lineHeight: 1.1,
                   letterSpacing: '-0.02em',
                   minHeight: '1.2em',
+                  // compound strings (e.g. "1280×720") are wide — shrink to fit
+                  ...(typeof item.title === 'string' && item.title.length > 6
+                    ? { fontSize: 'clamp(26px, 3.2vw, 38px)', whiteSpace: 'nowrap' }
+                    : {}),
                 }}
               >
                 <CountUpNumber title={item.title} started={started} />
