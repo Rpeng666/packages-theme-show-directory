@@ -26,4 +26,12 @@ export interface ShowcasesProps {
   LinkComponent?: ShowcaseLink
   /** 注入图片渲染；不提供时 fallback 原生 <img> */
   ImageComponent?: ShowcaseImage
+  /** 业务注入：卡片点击动作（模板灵感墙——预载缩略图进工作台）。
+   *  提供时卡片渲染为可点击按钮而非链接。 */
+  onOpen?: (item: {
+    title?: string
+    url?: string
+    target?: string
+    imageSrc?: string
+  }) => void
 }

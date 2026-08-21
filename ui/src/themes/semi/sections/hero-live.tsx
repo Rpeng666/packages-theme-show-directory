@@ -88,6 +88,33 @@ export function HeroLive({
           height: 46px;
           border-radius: 12px;
         }
+        /* error shake — re-triggers whenever the error key changes */
+        @keyframes hlive-shake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-7px); }
+          40% { transform: translateX(6px); }
+          60% { transform: translateX(-4px); }
+          80% { transform: translateX(3px); }
+        }
+        .hlive-error {
+          animation: hlive-shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+        /* image entrance — soft fade + settle */
+        @keyframes hlive-img-in {
+          from { opacity: 0; transform: scale(1.03); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .hlive-img {
+          animation: hlive-img-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        /* empty-canvas breathing glow */
+        @keyframes hlive-breath {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(var(--semi-red-4), 0.35); }
+          50% { box-shadow: 0 0 42px 6px rgba(var(--semi-red-4), 0.55); }
+        }
+        .hlive-empty {
+          animation: hlive-breath 3.2s ease-in-out infinite;
+        }
       `}</style>
       {/* decorative layers — same as the Hero */}
       <div className="app-hero-glow" aria-hidden />
@@ -257,7 +284,11 @@ export function HeroLive({
           </form>
 
           {error ? (
-            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--semi-color-danger)" }}>
+            <div
+              key={String(error)}
+              className="hlive-error"
+              style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--semi-color-danger)" }}
+            >
               <SmartIcon name="AlertTriangle" size={14} />
               <span>{error}</span>
             </div>
@@ -313,16 +344,19 @@ export function HeroLive({
             </div>
 
             {/* Canvas */}
-            <div style={{ aspectRatio: String(ratio), background: "#111" }}>
+            <div style={{ aspectRatio: String(ratio), background: "#111", position: "relative" }}>
               {hasSource ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
+                  key={sourceUrl ?? undefined}
                   src={sourceUrl ?? undefined}
                   alt={canvasLabel as string}
+                  className="hlive-img"
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 />
               ) : (
                 <div
+                  className="hlive-empty"
                   style={{
                     width: "100%",
                     height: "100%",
