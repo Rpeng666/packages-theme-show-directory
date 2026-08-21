@@ -54,6 +54,10 @@ export interface DownloadWorkbenchProps {
   downloadingLabel?: ReactNode;
   downloadingKey?: string | null;
   onDownload?: (quality: DownloadWorkbenchQuality) => void;
+  /** download every available quality as a single ZIP */
+  downloadAllLabel?: ReactNode;
+  downloadingAll?: boolean;
+  onDownloadAll?: () => void;
   qualities?: DownloadWorkbenchQuality[];
   /** empty / no-results state */
   noResultsTitle?: ReactNode;

@@ -47,6 +47,9 @@ export function DownloadWorkbench({
   downloadingLabel,
   downloadingKey,
   onDownload,
+  downloadAllLabel,
+  downloadingAll,
+  onDownloadAll,
   qualities = [],
   noResultsTitle,
   noResultsHint,
@@ -117,13 +120,27 @@ export function DownloadWorkbench({
                   <p className="dstudio-results-found">{foundLabel}</p>
                 ) : null}
               </div>
-              {videoId && videoIdLabel ? (
-                <span className="dstudio-video-chip">
-                  <SmartIcon name="Video" size={13} />
-                  <span>{videoIdLabel}</span>
-                  <b>{videoId}</b>
-                </span>
-              ) : null}
+              <div className="dstudio-results-actions">
+                {videoId && videoIdLabel ? (
+                  <span className="dstudio-video-chip">
+                    <SmartIcon name="Video" size={13} />
+                    <span>{videoIdLabel}</span>
+                    <b>{videoId}</b>
+                  </span>
+                ) : null}
+                {onDownloadAll && availableCount > 1 ? (
+                  <Button
+                    type="button"
+                    className="dstudio-download-all"
+                    disabled={Boolean(downloadingAll)}
+                    loading={Boolean(downloadingAll)}
+                    onClick={onDownloadAll}
+                  >
+                    <SmartIcon name="Download" size={14} />
+                    <span>{downloadAllLabel}</span>
+                  </Button>
+                ) : null}
+              </div>
             </div>
 
             {availableCount > 0 ? (
