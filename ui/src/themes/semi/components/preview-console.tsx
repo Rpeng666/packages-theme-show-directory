@@ -12,8 +12,7 @@ import { SmartIcon } from "../icons";
  * Semi PreviewConsole — the preview studio's narrow control rail: single /
  * A-B mode, dark / fold-line / color-blind toggles, the upload slots, the
  * title + channel inputs and the scene tabs. Presentational — all data and
- * callbacks come from the consumer. Lifted out of the preview-workbench
- * section so other tool workbenches can reuse the same studio control rail.
+ * callbacks come from the consumer.
  */
 
 function cn(...parts: Array<string | false | null | undefined>) {
@@ -49,15 +48,19 @@ function UploadSlot({
   };
 
   return (
-    <div className="pstudio-slot">
+    <div className="overflow-hidden rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-fill-0)]">
       {src ? (
         <>
-          <div className="pstudio-slot-media">
+          <div className="relative aspect-video bg-black">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} alt="Thumbnail" />
-            {label ? <span className="pstudio-slot-tag">{label}</span> : null}
+            <img src={src} alt="Thumbnail" className="h-full w-full object-cover" />
+            {label ? (
+              <span className="absolute left-2.5 top-2.5 inline-flex items-center justify-center rounded-full bg-[rgb(var(--semi-cyan-6))] px-2 py-0.5 text-[11px] font-extrabold tracking-[0.05em] text-white shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+                {label}
+              </span>
+            ) : null}
           </div>
-          <div className="pstudio-slot-actions">
+          <div className="flex items-center justify-between gap-2.5 px-3 py-2.5">
             <Button
               type="button"
               size="sm"
@@ -68,14 +71,16 @@ function UploadSlot({
               <span>{replaceLabel}</span>
             </Button>
             {uploadFormatHint ? (
-              <span className="pstudio-slot-hint">{uploadFormatHint}</span>
+              <span className="text-[11.5px] text-[var(--semi-color-text-2)]">
+                {uploadFormatHint}
+              </span>
             ) : null}
           </div>
         </>
       ) : (
         <button
           type="button"
-          className="pstudio-drop"
+          className="flex w-full cursor-pointer flex-col items-center justify-center gap-1.5 border-[1.5px] border-dashed border-[rgba(var(--semi-cyan-5),0.5)] rounded-[14px] bg-[rgba(var(--semi-cyan-0),0.35)] px-4 py-6 text-[var(--semi-color-text-1)] transition-all duration-[180ms] hover:border-[rgb(var(--semi-cyan-6))]"
           onClick={() => inputRef.current?.click()}
           onDragOver={(event) => event.preventDefault()}
           onDrop={(event) => {
@@ -84,21 +89,25 @@ function UploadSlot({
             if (file) load(file);
           }}
         >
-          <span className="pstudio-drop-icon">
+          <span className="mb-1 flex h-[46px] w-[46px] items-center justify-center rounded-[14px] bg-[rgba(var(--semi-cyan-1),0.8)] text-[rgb(var(--semi-cyan-7))]">
             <SmartIcon name="Upload" size={18} />
           </span>
-          <span className="pstudio-drop-title">
+          <span className="text-[14px] font-semibold text-[var(--semi-color-text-0)]">
             {uploadTitle} <b>{label}</b>
           </span>
-          <span className="pstudio-drop-hint">{uploadHint}</span>
-          <span className="pstudio-drop-format">{uploadFormatHint}</span>
+          <span className="text-[12.5px] text-[var(--semi-color-text-2)]">
+            {uploadHint}
+          </span>
+          <span className="text-[11px] text-[var(--semi-color-text-3)]">
+            {uploadFormatHint}
+          </span>
         </button>
       )}
       <input
         ref={inputRef}
         type="file"
         accept="image/*"
-        className="pstudio-hidden-input"
+        className="hidden"
         onChange={(event) => {
           const file = event.target.files?.[0];
           if (file) load(file);
@@ -193,14 +202,15 @@ export function PreviewConsole({
   bLabel?: ReactNode;
 }) {
   return (
-    <aside className="pstudio-console">
-      <div className="pstudio-toolbar">
-        <div className="pstudio-mode">
+    <aside className="rounded-3xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-5 shadow-[0_12px_34px_rgba(0,0,0,0.05)]">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="inline-flex gap-1 rounded-xl bg-[var(--semi-color-fill-0)] p-1">
           <button
             type="button"
             className={cn(
-              "pstudio-mode-btn",
-              mode === "single" && "is-active",
+              "inline-flex cursor-pointer items-center gap-1.5 rounded-lg border-none bg-transparent px-4 py-2 text-[13px] font-semibold text-[var(--semi-color-text-2)] transition-all duration-[180ms]",
+              mode === "single" &&
+                "bg-[var(--semi-color-bg-0)] text-[var(--semi-color-text-0)] shadow",
             )}
             onClick={() => onModeChange?.("single")}
           >
@@ -209,7 +219,11 @@ export function PreviewConsole({
           </button>
           <button
             type="button"
-            className={cn("pstudio-mode-btn", mode === "ab" && "is-active")}
+            className={cn(
+              "inline-flex cursor-pointer items-center gap-1.5 rounded-lg border-none bg-transparent px-4 py-2 text-[13px] font-semibold text-[var(--semi-color-text-2)] transition-all duration-[180ms]",
+              mode === "ab" &&
+                "bg-[var(--semi-color-bg-0)] text-[var(--semi-color-text-0)] shadow",
+            )}
             onClick={() => onModeChange?.("ab")}
           >
             <SmartIcon name="CheckList" size={15} />
@@ -220,7 +234,7 @@ export function PreviewConsole({
           type="button"
           variant="secondary"
           size="sm"
-          className="pstudio-dark-toggle"
+          className="text-[var(--semi-color-text-1)]"
           onClick={onToggleDark}
         >
           <SmartIcon name={dark ? "Sun" : "Moon"} size={14} />
@@ -231,10 +245,10 @@ export function PreviewConsole({
             type="button"
             variant="secondary"
             size="sm"
-            className="pstudio-dark-toggle"
+            className="text-[var(--semi-color-text-1)]"
             onClick={onToggleFoldLine}
           >
-            <span className="pstudio-fold-glyph">⌁</span>
+            <span className="text-[14px] leading-none">⌁</span>
             <span>{foldLine ? foldLineHideLabel : foldLineLabel}</span>
           </Button>
         ) : null}
@@ -243,7 +257,7 @@ export function PreviewConsole({
             type="button"
             variant="secondary"
             size="sm"
-            className="pstudio-dark-toggle"
+            className="text-[var(--semi-color-text-1)]"
             onClick={onToggleColorBlind}
           >
             <SmartIcon name="Eye" size={14} />
@@ -253,18 +267,13 @@ export function PreviewConsole({
       </div>
 
       {mode === "ab" && abHint ? (
-        <p className="pstudio-ab-hint">
+        <p className="mx-0.5 mt-3.5 flex items-center gap-2 text-[12.5px] leading-[1.5] text-[rgb(var(--semi-cyan-7))]">
           <SmartIcon name="Sparkles" size={14} />
           <span>{abHint}</span>
         </p>
       ) : null}
 
-      <div
-        className={cn(
-          "pstudio-slots",
-          mode === "ab" && "pstudio-slots-duo",
-        )}
-      >
+      <div className={cn("mt-4 grid grid-cols-1 gap-4", mode === "ab" && "grid-cols-1")}>
         <UploadSlot
           label={aLabel}
           src={uploadA}
@@ -284,14 +293,14 @@ export function PreviewConsole({
             uploadFormatHint={uploadFormatHint}
             replaceLabel={replaceLabel}
           />
-        ) : (
-          <div className="pstudio-slot-fill" />
-        )}
+        ) : null}
       </div>
 
-      <div className="pstudio-fields">
-        <label className="pstudio-field">
-          <span className="pstudio-field-label">{titleLabel}</span>
+      <div className="mt-4 grid grid-cols-1 gap-4">
+        <label className="flex flex-col gap-1.5">
+          <span className="text-xs font-bold tracking-[0.02em] text-[var(--semi-color-text-2)]">
+            {titleLabel}
+          </span>
           <Input
             prefix={<SmartIcon name="Text" size={15} />}
             placeholder={
@@ -303,8 +312,10 @@ export function PreviewConsole({
             onChange={(event) => onTitleChange?.(event.target.value)}
           />
         </label>
-        <label className="pstudio-field">
-          <span className="pstudio-field-label">{channelLabel}</span>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-xs font-bold tracking-[0.02em] text-[var(--semi-color-text-2)]">
+            {channelLabel}
+          </span>
           <Input
             prefix={<SmartIcon name="User" size={15} />}
             placeholder={
@@ -319,24 +330,31 @@ export function PreviewConsole({
       </div>
 
       {scenes.length > 0 ? (
-        <div className="pstudio-scenes">
+        <div className="mt-[18px] flex flex-wrap items-center gap-3.5">
           {sceneLabel ? (
-            <span className="pstudio-scenes-label">{sceneLabel}</span>
+            <span className="text-xs font-bold tracking-[0.02em] text-[var(--semi-color-text-2)]">
+              {sceneLabel}
+            </span>
           ) : null}
-          <div className="pstudio-scene-tabs">
+          <div className="flex flex-1 flex-wrap gap-2">
             {scenes.map((s) => (
               <button
                 key={s.id}
                 type="button"
                 className={cn(
-                  "pstudio-scene-tab",
-                  s.id === scene && "is-active",
+                  "inline-flex cursor-pointer items-center gap-[7px] rounded-xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] px-3 py-2 text-[12.5px] font-semibold text-[var(--semi-color-text-1)] transition-all duration-[180ms]",
+                  s.id === scene &&
+                    "border-[rgba(var(--semi-cyan-5),0.45)] bg-[rgba(var(--semi-cyan-1),0.5)] text-[rgb(var(--semi-cyan-7))]",
                 )}
                 onClick={() => onSceneChange?.(s.id)}
               >
                 <SmartIcon name={s.icon} size={15} />
-                <span className="pstudio-scene-tab-label">{s.label}</span>
-                <span className="pstudio-scene-tab-size">{s.size}</span>
+                <span className="whitespace-nowrap text-[12.5px] font-semibold leading-none">
+                  {s.label}
+                </span>
+                <span className="rounded-md bg-[rgba(var(--semi-cyan-2),0.7)] px-1 py-0.5 text-[11px] font-semibold text-[rgb(var(--semi-cyan-8))]">
+                  {s.size}
+                </span>
               </button>
             ))}
           </div>

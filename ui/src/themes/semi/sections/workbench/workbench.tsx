@@ -7,8 +7,7 @@ import { ChevronRight, ChevronLeft, X, ImageIcon } from "lucide-react";
 import type { WorkbenchProps } from "@template/ui";
 
 import { Button } from "../../components/button";
-import { WORKBENCH_CSS } from "./styles";
-import { VIEWS_CSS, WbHudFrame, WbScannerStream } from "./views";
+import { WbHudFrame, WbScannerStream } from "./views";
 import { WbTopBar } from "./wb-topbar";
 import { WbToolBar } from "./wb-toolbar";
 import { WbPropertiesPanel } from "./wb-properties";
@@ -22,7 +21,7 @@ function cn(...parts: Array<string | false | null | undefined>) {
 }
 
 /**
- * Workbench — the full-screen thumbnail editor studio (semi theme).
+ * Workbench — the full-screen thumbnail editor studio (semi theme, HeroUI).
  *
  * The composite shell for the thumbnail editor: top bar, tool rail, canvas
  * stage inside a viewfinder frame, collapsible properties panel, status bar,
@@ -125,9 +124,13 @@ export function Workbench({
   };
 
   return (
-    <div className={cn("wb-root", className)} data-registry={dataRegistry}>
-      <style>{WORKBENCH_CSS + VIEWS_CSS}</style>
-
+    <div
+      className={cn(
+        "relative flex h-screen w-screen flex-col overflow-hidden bg-[#f5f4f1] text-[#1c1a17]",
+        className,
+      )}
+      data-registry={dataRegistry}
+    >
       <WbTopBar
         zoom={zoom}
         canUndo={canUndo}
@@ -151,7 +154,6 @@ export function Workbench({
         onExport={onExportImage}
       />
 
-      {/* Horizontal tool strip — sticky under the top bar */}
       <WbToolBar
         activeTool={activeTool}
         isCropping={isCropping}
@@ -169,15 +171,15 @@ export function Workbench({
         onUploadImage={onUploadFile}
       />
 
-      <div className="wb-workspace">
+      <div className="flex min-h-0 flex-1 overflow-hidden">
         {/* Canvas stage — wrapped in a HUD viewfinder frame */}
-        <div className="wb-canvas-area">
+        <div className="relative flex-1 overflow-hidden bg-[linear-gradient(180deg,#eeece8,#e7e4df)]">
           <WbHudFrame>
             <canvas ref={canvasElRef} className="absolute inset-0" />
 
             {/* Autosave restore banner */}
             {hasAutosave && isEmpty && !initialImageLoaded && (
-              <div className="wb-autosave">
+              <div className="absolute left-1/2 top-3.5 z-20 flex -translate-x-1/2 items-center gap-3 rounded-[14px] border border-[#e9e6e1] bg-white px-4 py-2.5 text-[13px] text-[#4a4642] shadow-[0_16px_40px_-16px_rgba(28,26,23,0.3)]">
                 <span>{t("restore_session")}</span>
                 <Button
                   type="button"
@@ -190,7 +192,7 @@ export function Workbench({
                 <button
                   type="button"
                   onClick={onDismissAutosave}
-                  className="text-[var(--semi-color-text-3)] hover:text-[var(--semi-color-text-1)] text-xs transition-colors"
+                  className="text-xs text-[#a09b94] transition-colors hover:text-[#4a4642]"
                 >
                   {t("dismiss")}
                 </button>
@@ -213,7 +215,7 @@ export function Workbench({
               type="button"
               onClick={() => setPanelOpen((v) => !v)}
               title={panelOpen ? t("hide_panel") : t("show_panel")}
-              className="wb-panel-toggle"
+              className="absolute right-0 top-1/2 z-[10] flex h-12 w-[22px] -translate-y-1/2 items-center justify-center cursor-pointer rounded-l-[10px] border border-[#e9e6e1] border-r-0 bg-white text-[#6b6760] transition-all hover:text-[#1c1a17]"
             >
               {panelOpen ? (
                 <ChevronRight className="w-3 h-3" />
@@ -226,21 +228,23 @@ export function Workbench({
             <AnimatePresence>
               {galleryOpen && (
                 <motion.div
-                  className="wb-gallery"
+                  className="absolute bottom-0 left-0 right-0 z-30 flex h-[224px] flex-col overflow-hidden border-t border-[#e9e6e1] bg-white shadow-[0_-18px_44px_-22px_rgba(28,26,23,0.35)]"
                   initial={{ y: 80, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: 80, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 320, damping: 30 }}
                 >
-                  <div className="wb-gallery-bar">
-                    <span className="wb-gallery-title">
-                      <ImageIcon className="w-3.5 h-3.5" />
+                  <div className="flex shrink-0 items-center gap-2.5 border-b border-[#e9e6e1] bg-white px-4 py-[11px]">
+                    <span className="inline-flex items-center gap-[7px] text-xs font-bold tracking-[0.04em] text-[#1c1a17]">
+                      <ImageIcon className="h-3.5 w-3.5 text-[#8b5cf6]" />
                       <span>{t("gallery_title")}</span>
                     </span>
-                    <span className="wb-gallery-hint">{t("gallery_hint")}</span>
+                    <span className="mr-0.5 flex-1 text-right text-[11px] text-[#a09b94]">
+                      {t("gallery_hint")}
+                    </span>
                     <button
                       type="button"
-                      className="wb-gallery-close"
+                      className="inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-[9px] border-none bg-[#f1efeb] text-[#6b6760] transition-all hover:bg-[#e9e6e1] hover:text-[#1c1a17]"
                       title={t("gallery_close")}
                       onClick={() => setGalleryOpen(false)}
                     >

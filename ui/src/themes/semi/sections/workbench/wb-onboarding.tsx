@@ -29,7 +29,6 @@ export function WbOnboardingOverlay({
   const [url, setUrl] = useState("");
   const [fetching, setFetching] = useState(false);
 
-  // Cards shown in the empty state — first six structured templates.
   const templatePreviews = templates.slice(0, 6).map((tpl) => ({
     labelKey: tpl.labelKey,
     bg: tpl.preview.bg,
@@ -54,28 +53,24 @@ export function WbOnboardingOverlay({
   );
 
   return (
-    <div className="wb-empty">
-      {/* Soft nebula glow behind the glass card */}
+    <div className="absolute inset-0 z-[15] flex items-center justify-center overflow-y-auto p-6">
       <WbNebulaGlow className="opacity-70" />
 
-      <div className="wb-empty-glow" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(520px_360px_at_50%_30%,rgba(252,114,90,0.1),transparent_70%)]" aria-hidden />
 
-      {/* Animated targeting reticle — "acquiring the thumbnail target" */}
-      <WbTargetingReticle className="wb-empty-reticle" />
+      <WbTargetingReticle className="absolute left-1/2 top-1/2 z-0 w-[300px] -translate-x-1/2 -translate-y-1/2 opacity-70 drop-shadow-[0_0_18px_rgba(252,114,90,0.25)]" />
 
-      <div className="wb-empty-card">
-        {/* Heading */}
-        <div className="wb-empty-head">
-          <span className="wb-empty-eyebrow">
-            <span className="wb-empty-eyebrow-dot" />
+      <div className="relative z-[1] flex w-[min(560px,100%)] flex-col gap-4 rounded-[22px] border border-[#e9e6e1] bg-white p-[26px] shadow-[0_40px_90px_-24px_rgba(28,26,23,0.4)]">
+        <div className="flex flex-col gap-1.5">
+          <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-[rgba(252,114,90,0.12)] px-2.5 py-1 text-[11px] font-bold tracking-[0.06em] tabular-nums text-[#e5371d]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#fc725a]" />
             1280 × 720 · 16:9
           </span>
-          <h2 className="wb-empty-title">{t("onboarding_title")}</h2>
-          <p className="wb-empty-desc">{t("onboarding_desc")}</p>
+          <h2 className="m-0 text-[21px] font-bold tracking-[-0.01em] text-[#1c1a17]">{t("onboarding_title")}</h2>
+          <p className="m-0 text-[13px] text-[#6b6760]">{t("onboarding_desc")}</p>
         </div>
 
-        {/* Primary: upload + youtube */}
-        <div className="wb-empty-primary">
+        <div className="flex flex-col gap-3">
           <UploadZone
             isMounted
             onFile={onUpload}
@@ -85,23 +80,23 @@ export function WbOnboardingOverlay({
             primaryText={t("upload_image")}
             clickLabel={t("or_click_browse")}
             formatHint={t("format_hint")}
-            className="wb-empty-upload"
+            className="rounded-2xl"
           />
 
-          <div className="wb-empty-or">
-            <span className="wb-empty-or-line" />
-            <span className="wb-empty-or-text">{t("or_click_browse")}</span>
-            <span className="wb-empty-or-line" />
+          <div className="flex items-center gap-2.5">
+            <span className="h-px flex-1 bg-[#e9e6e1]" />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#a09b94]">{t("or_click_browse")}</span>
+            <span className="h-px flex-1 bg-[#e9e6e1]" />
           </div>
 
-          <form className="wb-empty-youtube" onSubmit={handleYouTube}>
-            <div className="wb-empty-youtube-input">
-              <Youtube className="w-4 h-4 text-[var(--semi-color-text-3)] shrink-0" />
+          <form className="flex gap-2" onSubmit={handleYouTube}>
+            <div className="flex min-w-0 flex-1 items-center gap-2 rounded-[11px] border border-[#e9e6e1] bg-white px-3">
+              <Youtube className="h-4 w-4 shrink-0 text-[#a09b94]" />
               <input
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder={t("youtube_placeholder")}
-                className="bg-transparent flex-1 text-sm outline-none placeholder:text-[var(--semi-color-text-3)]"
+                className="h-9 flex-1 bg-transparent text-sm outline-none placeholder:text-[#a09b94]"
               />
             </div>
             <Button
@@ -115,26 +110,22 @@ export function WbOnboardingOverlay({
           </form>
         </div>
 
-        {/* Templates */}
-        <div className="wb-empty-templates">
-          <div className="wb-empty-templates-head">
+        <div className="flex flex-col gap-2.5 rounded-2xl border border-[#e9e6e1] bg-[#f7f5f2] p-3.5">
+          <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.08em] text-[#6b6760]">
             <LayoutTemplate className="w-3.5 h-3.5" />
             {t("quick_templates")}
           </div>
-          <div className="wb-empty-templates-grid">
+          <div className="grid grid-cols-6 gap-1.5">
             {templatePreviews.map((tpl, i) => (
               <button
                 key={tpl.labelKey}
                 type="button"
                 onClick={() => onTemplate(i)}
                 title={t(tpl.labelKey)}
-                className="wb-empty-tpl"
+                className="relative aspect-video cursor-pointer overflow-hidden rounded-lg border border-[#e9e6e1] transition-all hover:-translate-y-0.5 hover:scale-[1.04] hover:shadow-[0_10px_22px_-10px_rgba(28,26,23,0.35)]"
                 style={{ backgroundColor: tpl.bg }}
               >
-                <span
-                  className="absolute inset-0 flex items-center justify-center text-[8px] font-black leading-tight px-1 text-center"
-                  style={{ color: tpl.textColor }}
-                >
+                <span className="absolute inset-0 flex items-center justify-center px-1 text-center text-[8px] font-black leading-tight" style={{ color: tpl.textColor }}>
                   {tpl.text}
                 </span>
               </button>

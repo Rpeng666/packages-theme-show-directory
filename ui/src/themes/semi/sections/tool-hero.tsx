@@ -44,9 +44,6 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
 
   return (
     <SectionShell id={section.id} className={className} padding="md" maxWidth={1080}>
-      {/* ambient background */}
-      <div className="app-grid-pattern" aria-hidden />
-      <div className="app-hero-glow" style={{ top: -200, height: 420, opacity: 0.7 }} aria-hidden />
 
       <div style={{ position: 'relative', zIndex: 1, maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
         {section.back ? (

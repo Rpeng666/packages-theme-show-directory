@@ -29,10 +29,8 @@ export function WbAppearancePanel({
       {/* Opacity */}
       <div className="space-y-1">
         <div className="flex items-center justify-between">
-          <span className="wb-dims-label">{t("appearance_opacity")}</span>
-          <span className="font-mono text-xs text-[var(--semi-color-text-3)] tabular-nums">
-            {Math.round(opacity * 100)}%
-          </span>
+          <span className="mb-[5px] block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#a09b94]">{t("appearance_opacity")}</span>
+          <span className="font-mono text-xs tabular-nums text-[#a09b94]">{Math.round(opacity * 100)}%</span>
         </div>
         <input
           type="range"
@@ -40,17 +38,17 @@ export function WbAppearancePanel({
           max={100}
           value={Math.round(opacity * 100)}
           onChange={(e) => onChange({ opacity: Number(e.target.value) / 100 })}
-          className="wb-fs-range"
+          className="w-full cursor-pointer accent-[#fc725a]"
         />
       </div>
 
       {/* Blend mode */}
       <div className="space-y-1">
-        <span className="wb-dims-label">{t("appearance_blend")}</span>
+        <span className="mb-[5px] block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#a09b94]">{t("appearance_blend")}</span>
         <select
           value={blendMode}
           onChange={(e) => onChange({ globalCompositeOperation: e.target.value })}
-          className="wb-blend-select"
+          className="h-8 w-full cursor-pointer rounded-[10px] border border-[#e9e6e1] bg-white px-2 text-xs text-[#4a4642] outline-none focus:border-[rgba(252,114,90,0.5)] focus:shadow-[0_0_0_3px_rgba(252,114,90,0.12)]"
         >
           {BLEND_MODES.map((m) => (
             <option key={m.value} value={m.value}>

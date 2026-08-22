@@ -9,6 +9,9 @@ import type {
 
 const STICKERS = ["🔥", "⭐", "💥", "❤️", "😎", "👍", "🎯", "🚀", "💡", "🎬", "📺", "👑", "💎", "⚡", "🏆", "✅"];
 
+const ELEMENT_BTN =
+  "inline-flex h-8 cursor-pointer items-center justify-center rounded-[9px] border border-transparent bg-[#f1efeb] text-[#4a4642] transition-all hover:border-[rgba(252,114,90,0.4)] hover:bg-[#e9e6e1]";
+
 /** One-click content library — emoji stickers + quick shapes. */
 export function WbElementsPanel({
   onAdd,
@@ -21,10 +24,10 @@ export function WbElementsPanel({
     <div className="space-y-3">
       {/* Emoji stickers */}
       <div>
-        <span className="wb-dims-label" style={{ marginBottom: 8 }}>
+        <span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#a09b94]">
           {t("elements_stickers")}
         </span>
-        <div className="wb-elements-grid">
+        <div className="grid grid-cols-8 gap-1">
           {STICKERS.map((s) => (
             <motion.button
               key={s}
@@ -32,7 +35,7 @@ export function WbElementsPanel({
               whileHover={{ scale: 1.22, y: -2 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring", stiffness: 400, damping: 18 }}
-              className="wb-element-btn"
+              className={ELEMENT_BTN}
               title={t("elements_add_sticker")}
               onClick={() => onAdd("emoji", s)}
             >
@@ -44,25 +47,25 @@ export function WbElementsPanel({
 
       {/* Quick shapes */}
       <div>
-        <span className="wb-dims-label" style={{ marginBottom: 8 }}>
+        <span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.08em] text-[#a09b94]">
           {t("elements_shapes")}
         </span>
-        <div className="wb-elements-shapes">
-          <button type="button" className="wb-element-btn" title={t("tool_rect")} onClick={() => onAdd("rect")}>
+        <div className="flex gap-1">
+          <button type="button" className={`${ELEMENT_BTN} flex-1`} title={t("tool_rect")} onClick={() => onAdd("rect")}>
             <Square className="w-4 h-4" />
           </button>
-          <button type="button" className="wb-element-btn" title={t("tool_circle")} onClick={() => onAdd("circle")}>
+          <button type="button" className={`${ELEMENT_BTN} flex-1`} title={t("tool_circle")} onClick={() => onAdd("circle")}>
             <Circle className="w-4 h-4" />
           </button>
-          <button type="button" className="wb-element-btn" title={t("elements_triangle")} onClick={() => onAdd("triangle")}>
+          <button type="button" className={`${ELEMENT_BTN} flex-1`} title={t("elements_triangle")} onClick={() => onAdd("triangle")}>
             <Triangle className="w-4 h-4" />
           </button>
-          <button type="button" className="wb-element-btn" title={t("tool_line")} onClick={() => onAdd("line")}>
+          <button type="button" className={`${ELEMENT_BTN} flex-1`} title={t("tool_line")} onClick={() => onAdd("line")}>
             <Minus className="w-4 h-4" />
           </button>
           <button
             type="button"
-            className="wb-element-btn wb-element-btn-arrow"
+            className={`${ELEMENT_BTN} flex-1 [&>svg]:-scale-x-100`}
             title={t("elements_arrow")}
             onClick={() => onAdd("arrow")}
           >

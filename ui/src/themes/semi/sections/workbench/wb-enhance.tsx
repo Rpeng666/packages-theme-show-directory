@@ -46,7 +46,7 @@ export function WbEnhancePanel({
     <div className="space-y-4">
       {/* One-tap look presets */}
       <div className="flex flex-col gap-2">
-        <span className="text-xs font-semibold uppercase tracking-wide text-[var(--semi-color-text-3)] inline-flex items-center gap-1.5">
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-[#a09b94]">
           <Sparkles className="w-3.5 h-3.5" />
           {t("enhance.presets.title")}
         </span>
@@ -62,15 +62,15 @@ export function WbEnhancePanel({
                 key={preset.id}
                 type="button"
                 onClick={() => onChange(preset.patch)}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+                className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
                   active
                     ? "border-transparent text-white"
-                    : "border-[var(--semi-color-border-2)] text-[var(--semi-color-text-2)] hover:bg-[var(--semi-color-hover)]"
+                    : "border-[#dcd9d3] text-[#6b6760] hover:bg-[#e9e6e1]"
                 }`}
                 style={active ? { background: preset.accent } : undefined}
               >
                 <span
-                  className="w-2.5 h-2.5 rounded-full"
+                  className="h-2.5 w-2.5 rounded-full"
                   style={{ background: active ? "rgba(255,255,255,0.9)" : preset.accent }}
                 />
                 {t(`enhance.presets.${preset.id}`)}
@@ -83,10 +83,10 @@ export function WbEnhancePanel({
       {controls.map((control) => (
         <div key={control.key} className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--semi-color-text-1)]">
+            <span className="text-sm font-medium text-[#4a4642]">
               {t(`enhance.${control.key}`)}
             </span>
-            <span className="font-mono text-xs text-[var(--semi-color-text-3)] tabular-nums">
+            <span className="font-mono text-xs tabular-nums text-[#a09b94]">
               {value[control.key] > 0 ? "+" : ""}
               {value[control.key]}
             </span>
