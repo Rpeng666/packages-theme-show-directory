@@ -104,5 +104,8 @@
     "@types/node": "^20",
     "@types/react": "19.2.2",
     "@types/markdown-it": "^14.1.2"
+  },
+  "scripts": {
+    "convention": "node scripts/discover-convention.mjs"
   }
 }
