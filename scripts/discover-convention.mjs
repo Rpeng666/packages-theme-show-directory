@@ -25,7 +25,7 @@ import { readdirSync, readFileSync, writeFileSync, existsSync, statSync } from "
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const SRC = fileURLToPath(new URL("../src", import.meta.url));
+const SRC = fileURLToPath(new URL("../ui/src", import.meta.url));
 const OUT = join(SRC, "convention.generated.ts");
 
 const THEMES = ["default", "pixel", "semi"];

@@ -4,7 +4,8 @@
   "private": true,
   "description": "Shared asset library: theme-able UI registry (@template/ui), retro UI kit (@pxlkit/*), external-link-cms. Consumed by product repos via git subtree.",
   "scripts": {
-    "build": "pnpm -r build"
+    "build": "pnpm -r build",
+    "convention": "node scripts/discover-convention.mjs"
   },
   "pnpm": {
     "overrides": {
