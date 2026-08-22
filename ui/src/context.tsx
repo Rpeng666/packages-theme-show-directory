@@ -3,7 +3,7 @@
 import * as React from 'react'
 import {
   defaultThemeName,
-  getThemeManifest,
+  resolveAmbient,
   resolveComponent,
   type ThemeComponents,
   type ThemeName,
@@ -19,6 +19,12 @@ import {
  *
  * Only the primitives resolve through this context. Section-level components
  * are app-side and stay on the app's own resolution (getThemeBlock).
+ *
+ * A global <Suspense> wraps the tree here: convention-resolved components are
+ * React.lazy, so this boundary is what lets them suspend while loading. SSR /
+ * static generation waits for every lazy block to resolve (HTML stays
+ * complete), and client chunks are preloaded by Next.js — the fallback is
+ * essentially never visible.
  */
 interface ThemeRegistryValue {
   theme: ThemeName
@@ -44,10 +50,13 @@ export function ThemeRegistryProvider({
 }) {
   const [active, setActive] = React.useState<ThemeName>(theme ?? defaultThemeName)
   const value = React.useMemo(() => ({ theme: active, setTheme: setActive }), [active])
-  const Ambient = getThemeManifest(active).AmbientProvider
+  // resolveAmbient only looks up a pre-built static provider (no component
+  // creation) — the rule is conservative here.
+  const Ambient = resolveAmbient(active)
 
   return (
     <ThemeRegistryContext.Provider value={value}>
+      {/* eslint-disable-next-line react-hooks/static-components */}
       {Ambient ? <Ambient>{children}</Ambient> : children}
     </ThemeRegistryContext.Provider>
   )

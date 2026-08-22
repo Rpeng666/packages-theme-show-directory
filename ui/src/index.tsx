@@ -283,8 +283,6 @@ export {
 } from "./context";
 
 export {
-  registry,
-  getThemeManifest,
   resolveComponent,
   resolveSection,
   resolvePerler,
