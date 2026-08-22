@@ -31,6 +31,8 @@ export interface WorkbenchEnhance {
   exposure: number;
   contrast: number;
   warmth: number;
+  /** optional hard black & white preset */
+  grayscale?: boolean;
 }
 
 export type WorkbenchBackground =
