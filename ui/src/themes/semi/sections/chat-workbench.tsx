@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Tooltip as SemiTooltip } from "@douyinfe/semi-ui";
-import { IconArrowLeft } from "@douyinfe/semi-icons";
+import { ArrowLeft } from "@douyinfe/semi-icons";
 import type {
   ChatSuggestionChip,
   ChatWorkbenchProps,
@@ -151,7 +151,7 @@ function ConversationFrame({
 }: ChatWorkbenchProps) {
   const back = headerBackUrl ? (
     <ConsoleLink href={headerBackUrl} className="chat-conv-back" aria-label="back">
-      <IconArrowLeft size="small" />
+      <ArrowLeft size="small" />
     </ConsoleLink>
   ) : null;
 

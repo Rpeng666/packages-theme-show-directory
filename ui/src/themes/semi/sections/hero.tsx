@@ -2,13 +2,10 @@
 
 import * as React from 'react'
 import type { ReactNode } from 'react'
-import { Typography } from '@douyinfe/semi-ui'
-import { IconArrowRight, IconTickCircle } from '@douyinfe/semi-icons'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import type { HeroProps } from '@template/ui'
 import { SmartIcon } from '../icons'
 import { SectionShell, SectionEyebrow } from './shell'
-
-const { Text } = Typography
 
 const defaultLink = ({ href, target, children, ...p }: any) => (
   <a href={href} target={target} {...p} style={{ textDecoration: 'none' }}>
@@ -93,7 +90,7 @@ function ProductMockup({ image, Img }: { image: HeroProps['section']['image']; I
             fontWeight: 600,
           }}
         >
-          <IconTickCircle style={{ fontSize: 12 }} />
+          <CheckCircle2 style={{ fontSize: 12 }} />
           Free
         </div>
       </div>
@@ -299,7 +296,7 @@ export function Hero({ section, className, LinkComponent, ImageComponent, ...res
                 }}
               >
                 {announcement?.text || section.label}
-                {announcement?.text ? <IconArrowRight style={{ fontSize: 14 }} /> : null}
+                {announcement?.text ? <ArrowRight style={{ fontSize: 14 }} /> : null}
               </span>
             </a>
           ) : null}
@@ -327,7 +324,7 @@ export function Hero({ section, className, LinkComponent, ImageComponent, ...res
           </h1>
 
           {section.description ? (
-            <Text
+            <span
               style={{
                 fontSize: 18,
                 lineHeight: 1.7,
@@ -340,7 +337,7 @@ export function Hero({ section, className, LinkComponent, ImageComponent, ...res
                   {p}
                 </span>
               ))}
-            </Text>
+            </span>
           ) : null}
 
           {/* CTAs */}
@@ -411,7 +408,7 @@ export function Hero({ section, className, LinkComponent, ImageComponent, ...res
                 </div>
               ) : null}
               {section.tip ? (
-                <Text style={{ fontSize: 13, color: 'var(--semi-color-text-2)' }}>{section.tip}</Text>
+                <span style={{ fontSize: 13, color: 'var(--semi-color-text-2)' }}>{section.tip}</span>
               ) : null}
             </div>
           ) : null}

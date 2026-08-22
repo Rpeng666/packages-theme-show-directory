@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { IconTickCircle, IconCrossCircleStroked } from '@douyinfe/semi-icons'
+import { CheckCircle2, XCircle } from 'lucide-react'
 import type { FeaturesCompareProps } from '@template/ui'
 import { SmartIcon } from '../icons'
 import { SectionHeader, SectionShell } from './shell'
@@ -41,9 +41,9 @@ export function FeaturesCompare({ section, className = '' }: FeaturesCompareProp
       {col.map((item, idx) => (
         <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
           {tone === 'before' ? (
-            <IconCrossCircleStroked style={{ color: 'var(--semi-color-text-3)', flexShrink: 0, marginTop: 3, fontSize: 18 }} />
+            <XCircle style={{ color: 'var(--semi-color-text-3)', flexShrink: 0, marginTop: 3, fontSize: 18 }} />
           ) : (
-            <IconTickCircle style={{ color: 'var(--semi-color-primary)', flexShrink: 0, marginTop: 3, fontSize: 18 }} />
+            <CheckCircle2 style={{ color: 'var(--semi-color-primary)', flexShrink: 0, marginTop: 3, fontSize: 18 }} />
           )}
           <div>
             <div style={{ fontSize: 15, fontWeight: 600, color: tone === 'before' ? 'var(--semi-color-text-1)' : 'var(--semi-color-text-0)' }}>
@@ -84,7 +84,7 @@ export function FeaturesCompare({ section, className = '' }: FeaturesCompareProp
                 background: 'var(--semi-color-bg-1)',
               }}
             >
-              {item.icon ? <SmartIcon name={item.icon as string} size={18} /> : <IconTickCircle style={{ color: 'var(--semi-color-primary)', fontSize: 18 }} />}
+              {item.icon ? <SmartIcon name={item.icon as string} size={18} /> : <CheckCircle2 style={{ color: 'var(--semi-color-primary)', fontSize: 18 }} />}
               <div>
                 <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--semi-color-text-0)' }}>{item.title}</div>
                 {item.description ? (

@@ -7,7 +7,7 @@ import {
   Input as SemiInput,
   Select as SemiSelect,
 } from '@douyinfe/semi-ui'
-import { IconChevronRight, IconSearch } from '@douyinfe/semi-icons'
+import { ChevronRight, Search } from 'lucide-react'
 import type { PageHeaderProps } from '@template/ui'
 import { ConsoleLink, useConsoleBridge } from '@template/ui'
 
@@ -64,7 +64,7 @@ export function PageHeader({
       {crumbs && crumbs.length > 0 ? (
         <SemiBreadcrumb
           compact
-          separator={<IconChevronRight size="small" />}
+          separator={<ChevronRight size="small" />}
           style={{ fontSize: 13 }}
         >
           {crumbs.map((crumb, idx) => (
@@ -160,7 +160,7 @@ export function PageHeader({
                 value={keyword}
                 onChange={setKeyword}
                 onEnterPress={submitSearch}
-                prefix={<IconSearch size="small" />}
+                prefix={<Search size="small" />}
                 placeholder={search.placeholder || search.title}
                 showClear
                 onClear={() => setKeyword('')}

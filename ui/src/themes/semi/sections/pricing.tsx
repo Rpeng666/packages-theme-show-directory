@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { RadioGroup, Radio, Select, Button as SemiButton, Tag } from '@douyinfe/semi-ui'
-import { IconTick } from '@douyinfe/semi-icons'
+import { Check } from 'lucide-react'
 import { SmartIcon } from '../icons'
 import type { PricingProps } from '@template/ui'
 import type { PricingItem } from '@template/ui'
@@ -224,7 +224,7 @@ export function Pricing({
                           color: 'var(--semi-color-primary)',
                         }}
                       >
-                        <IconTick size="extra-small" />
+                        <Check size="extra-small" />
                       </span>
                       {feat}
                     </li>

@@ -3,7 +3,7 @@
 import * as React from 'react'
 import type { ReactNode } from 'react'
 import type { FeaturesFlowProps } from '@template/ui'
-import { IconTickCircle } from '@douyinfe/semi-icons'
+import { CheckCircle2 } from 'lucide-react'
 import { SmartIcon } from '../icons'
 import { SectionShell } from './shell'
 
@@ -113,7 +113,7 @@ export function FeaturesFlow({ section, className = '', ImageComponent }: Featur
                   <SmartIcon name={item.icon as string} size={16} />
                 </span>
               ) : (
-                <IconTickCircle style={{ color: 'var(--semi-color-primary)', marginTop: 2, fontSize: 18 }} />
+                <CheckCircle2 style={{ color: 'var(--semi-color-primary)', marginTop: 2, fontSize: 18 }} />
               )}
               <div>
                 <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--semi-color-text-0)' }}>{item.title}</div>

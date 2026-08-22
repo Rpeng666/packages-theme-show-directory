@@ -41,8 +41,7 @@
     "./themes/semi/theme.css": "./src/themes/semi/theme.css"
   },
   "dependencies": {
-    "@douyinfe/semi-icons": "^2.102.0",
-    "@douyinfe/semi-ui": "^2.102.0",
+    "@heroui/react": "^3.2.4",
     "@hookform/resolvers": "^5.2.1",
     "@pxlkit/core": "workspace:*",
     "@pxlkit/gamification": "workspace:*",
@@ -101,8 +100,8 @@
     "react": "^19.0.0"
   },
   "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^20",
-    "@types/react": "19.2.2",
-    "@types/markdown-it": "^14.1.2"
+    "@types/react": "19.2.2"
   }
 }

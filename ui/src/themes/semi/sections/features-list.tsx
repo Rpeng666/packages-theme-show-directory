@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import type { FeaturesListProps } from '@template/ui'
-import { IconArrowRight } from '@douyinfe/semi-icons'
+import { ArrowRight } from 'lucide-react'
 import { SmartIcon } from '../icons'
 import { CardSurface, IconChip, SectionHeader, SectionShell } from './shell'
 
@@ -104,7 +104,7 @@ export function FeaturesList({ section, className = '', ImageComponent, LinkComp
               >
                 {btn.icon ? <SmartIcon name={btn.icon as string} size={16} /> : null}
                 {btn.title}
-                <IconArrowRight style={{ fontSize: 15 }} />
+                <ArrowRight style={{ fontSize: 15 }} />
               </span>
             </Link>
           ))}

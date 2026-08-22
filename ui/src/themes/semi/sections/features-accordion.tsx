@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { useState } from 'react'
-import { IconChevronDown } from '@douyinfe/semi-icons'
+import { ChevronDown } from 'lucide-react'
 import type { FeaturesAccordionProps } from '@template/ui'
 import { SmartIcon } from '../icons'
 import { SectionHeader, SectionShell } from './shell'
@@ -92,7 +92,7 @@ export function FeaturesAccordion({ section, className = '' }: FeaturesAccordion
                     </span>
                   ) : null}
                   <span style={{ flex: 1 }}>{item.title}</span>
-                  <IconChevronDown
+                  <ChevronDown
                     style={{
                       width: 16,
                       height: 16,

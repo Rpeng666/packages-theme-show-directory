@@ -3,7 +3,7 @@
 import * as React from 'react'
 import type { TestimonialsProps } from '@template/ui'
 import type { SectionItem } from '@template/ui'
-import { IconStar } from '@douyinfe/semi-icons'
+import { Star } from 'lucide-react'
 import { CardSurface, SectionHeader, SectionShell } from './shell'
 
 const defaultImage = (props: any) => (
@@ -50,7 +50,7 @@ export function Testimonials({ section, className = '', ImageComponent }: Testim
                 {item.rating != null && Number(item.rating) > 0 ? (
                   <span style={{ display: 'inline-flex', gap: 2, color: 'rgba(var(--semi-amber-5), 1)' }} aria-label={`${item.rating} out of 5`}>
                     {Array.from({ length: Math.min(5, Math.round(Number(item.rating))) }, (_, i) => (
-                      <IconStar key={i} size="small" />
+                      <Star key={i} size="small" />
                     ))}
                   </span>
                 ) : null}

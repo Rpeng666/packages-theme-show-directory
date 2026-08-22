@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import type { CSSProperties } from 'react'
-import { IconArrowLeft } from '@douyinfe/semi-icons'
+import { ArrowLeft } from 'lucide-react'
 import type { ToolHeroProps, ToolHeroBadge, ToolHeroMeta } from '@template/ui'
 import { SmartIcon } from '../icons'
 import { SectionShell } from './shell'
@@ -68,7 +68,7 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
                   transition: 'color 0.2s ease',
                 }}
               >
-                <IconArrowLeft style={{ fontSize: 15 }} />
+                <ArrowLeft style={{ fontSize: 15 }} />
                 {section.back.label}
               </span>
             </Link>

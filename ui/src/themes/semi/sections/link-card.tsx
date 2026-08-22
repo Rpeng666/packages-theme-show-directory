@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { IconArrowRight } from '@douyinfe/semi-icons'
+import { ArrowRight } from 'lucide-react'
 import type { LinkCardProps } from '@template/ui'
 
 /**
@@ -41,7 +41,7 @@ export function LinkCard({ items, columns = 3, className = '' }: LinkCardProps) 
               >
                 {item.title}
               </h3>
-              <IconArrowRight
+              <ArrowRight
                 style={{
                   fontSize: 14,
                   color: 'var(--semi-color-text-3)',

@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import type { CSSProperties } from 'react'
-import { IconArrowRight } from '@douyinfe/semi-icons'
+import { ArrowRight } from 'lucide-react'
 import type { ToolsGridProps } from '@template/ui'
 import { SmartIcon } from '../icons'
 import { CardSurface, IconChip, SectionHeader, SectionShell } from './shell'
@@ -88,7 +88,7 @@ export function ToolsGrid({ section, className = '', LinkComponent }: ToolsGridP
                   }}
                 >
                   {item.cta || 'Open tool'}
-                  <IconArrowRight style={{ fontSize: 15 }} />
+                  <ArrowRight style={{ fontSize: 15 }} />
                 </span>
               </CardSurface>
             </Link>
