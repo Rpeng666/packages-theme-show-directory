@@ -40,7 +40,6 @@ export function WbExportModal({ result, onClose, t }: WbExportModalProps) {
     { ok: result.hasText, label: t("export_check_text"), warn: !result.hasText },
   ];
 
-  // Esc closes; revoke the object URL on unmount.
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -88,7 +87,7 @@ export function WbExportModal({ result, onClose, t }: WbExportModalProps) {
 
   return (
     <motion.div
-      className="wb-export-overlay"
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-[rgba(28,26,23,0.4)] p-6 backdrop-blur-[10px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -96,21 +95,21 @@ export function WbExportModal({ result, onClose, t }: WbExportModalProps) {
       onClick={onClose}
     >
       <motion.div
-        className="wb-export-modal"
+        className="w-[min(460px,92vw)] rounded-[20px] border border-[#e9e6e1] bg-white p-[18px] shadow-[0_30px_70px_-20px_rgba(28,26,23,0.4)]"
         initial={{ scale: 0.92, y: 16, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.95, y: 10, opacity: 0 }}
         transition={{ type: "spring", stiffness: 320, damping: 26 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="wb-export-head">
-          <span className="wb-export-eyebrow">
-            <span className="wb-export-eyebrow-dot" />
+        <div className="mb-3 flex items-center justify-between">
+          <span className="inline-flex items-center gap-[7px] text-[11px] font-bold uppercase tracking-[0.16em] text-[#6b6760]">
+            <span className="h-[7px] w-[7px] rounded-full bg-[#fc725a] shadow-[0_0_10px_rgba(252,114,90,0.9)] animate-[wb-dot-pulse_1.6s_ease-in-out_infinite]" />
             {t("export_ready")}
           </span>
           <button
             type="button"
-            className="wb-export-close"
+            className="inline-flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-[9px] border-none bg-[#f1efeb] text-[#6b6760] transition-all hover:bg-[#e9e6e1] hover:text-[#1c1a17]"
             onClick={onClose}
             title={t("export_close")}
           >
@@ -118,27 +117,23 @@ export function WbExportModal({ result, onClose, t }: WbExportModalProps) {
           </button>
         </div>
 
-        {/* Reveal: preview with brand glow */}
-        <div className="wb-export-preview">
+        <div className="overflow-hidden rounded-xl border border-[#e9e6e1] shadow-[0_0_40px_-12px_rgba(252,114,90,0.4)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={result.url} alt="Exported thumbnail" />
+          <img src={result.url} alt="Exported thumbnail" className="block aspect-video w-full object-cover" />
         </div>
 
-        <div className="wb-export-meta">
-          <span className="wb-export-badge">{fmt}</span>
-          <span className="wb-export-dims">
-            {result.width} × {result.height}
-          </span>
-          <span className="wb-export-size">{sizeLabel}</span>
+        <div className="my-3 flex items-center gap-2.5">
+          <span className="rounded-[7px] border border-[#e9e6e1] bg-[#f1efeb] px-2 py-[3px] text-[11px] font-bold tracking-[0.08em] text-[#1c1a17]">{fmt}</span>
+          <span className="text-xs tabular-nums text-[#4a4642]">{result.width} × {result.height}</span>
+          <span className="ml-auto text-xs font-semibold tabular-nums text-[#4a4642]">{sizeLabel}</span>
         </div>
 
-        {/* Multi-size strip — shows the bundled sizes when present */}
         {result.multiZip && result.multiZip.sizes.length > 0 ? (
-          <div className="wb-export-multisize">
-            <span className="wb-export-multisize-label">{t("export_all_sizes")}</span>
-            <div className="wb-export-multisize-chips">
+          <div className="mb-3 flex flex-wrap items-center gap-2.5">
+            <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#a09b94]">{t("export_all_sizes")}</span>
+            <div className="flex flex-wrap gap-1.5">
               {result.multiZip.sizes.map((s) => (
-                <span key={`${s.width}x${s.height}`} className="wb-export-multisize-chip">
+                <span key={`${s.width}x${s.height}`} className="rounded-full border border-[#e9e6e1] bg-[#f1efeb] px-2 py-[3px] text-[11px] font-semibold text-[#4a4642]">
                   {s.label} · {s.width}×{s.height}
                 </span>
               ))}
@@ -146,43 +141,40 @@ export function WbExportModal({ result, onClose, t }: WbExportModalProps) {
           </div>
         ) : null}
 
-        {/* YouTube compliance checklist */}
-        <div className="wb-export-checks">
+        <div className="mb-3.5 flex flex-col gap-1.5">
           {checks.map((c) => (
             <div
               key={c.label}
-              className={`wb-export-check${c.ok ? "" : " wb-export-check-warn"}`}
+              className={`flex items-center gap-2 rounded-[10px] border px-2.5 py-[7px] text-[11.5px] ${
+                c.ok
+                  ? "border-[rgba(47,158,95,0.25)] bg-[rgba(47,158,95,0.08)] text-[#2f9e5f]"
+                  : "border-[rgba(217,119,6,0.3)] bg-[rgba(217,119,6,0.08)] text-[#b45309]"
+              }`}
             >
-              {c.ok ? (
-                <ShieldCheck className="w-3.5 h-3.5" />
-              ) : (
-                <AlertTriangle className="w-3.5 h-3.5" />
-              )}
-              <span className="wb-export-check-label">{c.label}</span>
-              <span className="wb-export-check-state">
-                {c.ok ? t("export_ok") : t("export_warn")}
-              </span>
+              {c.ok ? <ShieldCheck className="w-3.5 h-3.5" /> : <AlertTriangle className="w-3.5 h-3.5" />}
+              <span className="flex-1">{c.label}</span>
+              <span className="text-[10.5px] font-bold opacity-90">{c.ok ? t("export_ok") : t("export_warn")}</span>
             </div>
           ))}
         </div>
 
-        <div className="wb-export-actions">
+        <div className="flex gap-2">
           <button
             type="button"
-            className="wb-export-btn wb-export-btn-primary"
+            className="inline-flex h-10 flex-1 items-center justify-center gap-[7px] rounded-[11px] border border-transparent bg-[#fc725a] text-[13px] font-semibold text-white shadow-[0_8px_20px_-8px_rgba(252,114,90,0.55)] transition-[filter] hover:brightness-[1.07]"
             onClick={download}
           >
             <Download className="w-4 h-4" />
             {t("export_download")}
           </button>
-          <button type="button" className="wb-export-btn" onClick={copy}>
+          <button type="button" className="inline-flex h-10 flex-1 items-center justify-center gap-[7px] rounded-[11px] border border-[#e9e6e1] bg-[#f7f5f2] text-[13px] font-semibold text-[#4a4642] transition-all hover:bg-[#ece8e3] hover:text-[#1c1a17]" onClick={copy}>
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? t("export_copied") : t("export_copy")}
           </button>
           {result.multiZip ? (
             <button
               type="button"
-              className="wb-export-btn wb-export-btn-zip"
+              className="inline-flex h-10 flex-1 items-center justify-center gap-[7px] rounded-[11px] border border-[rgba(47,158,95,0.3)] bg-[rgba(47,158,95,0.12)] text-[13px] font-semibold text-[#2f9e5f] transition-all hover:bg-[rgba(47,158,95,0.2)] hover:text-[#1f7a47]"
               onClick={downloadZip}
             >
               <Package className="w-4 h-4" />

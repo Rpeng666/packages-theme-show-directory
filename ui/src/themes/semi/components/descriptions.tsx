@@ -1,25 +1,17 @@
 'use client'
 
 import * as React from 'react'
-import { Descriptions as SemiDescriptions } from '@douyinfe/semi-ui'
 import type { DescriptionsProps } from '@template/ui'
 
-/**
- * Semi Descriptions — maps the items-based DescriptionsProps onto Semi
- * Descriptions via its `data` prop (label/value pairs, optional span).
- */
-export function Descriptions({
-  items,
-  column = 1,
-  size = 'medium',
-  className = '',
-}: DescriptionsProps) {
+export function Descriptions({ items = [], column = 2, size = 'medium', className = '' }: DescriptionsProps) {
   return (
-    <SemiDescriptions
-      data={items.map((it) => ({ label: it.label, value: it.content, span: it.span })) as any}
-      column={column}
-      size={size as any}
-      className={className}
-    />
+    <div className={className} style={{ display: 'grid', gridTemplateColumns: `repeat(${column}, minmax(0,1fr))`, gap: size === 'small' ? '8px 20px' : '12px 24px' }}>
+      {items.map((it, i) => (
+        <div key={i} style={{ gridColumn: it.span ? `span ${it.span}` : undefined }}>
+          <div style={{ fontSize: 12.5, color: 'var(--semi-color-text-3)', marginBottom: 2 }}>{it.label}</div>
+          <div style={{ color: 'var(--semi-color-text-1)' }}>{it.content}</div>
+        </div>
+      ))}
+    </div>
   )
 }

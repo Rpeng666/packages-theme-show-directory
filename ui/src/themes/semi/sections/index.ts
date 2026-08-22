@@ -34,3 +34,9 @@ export { PreviewWorkbench } from "./preview-workbench";
 export { DesignerStudio } from "./designer-studio";
 export { HeroLive } from "./hero-live";
 export { Workbench } from "./workbench/workbench";
+
+export { ContentHeader } from "./content-header";
+export { SizeTable } from "./size-table";
+export { FormatGuide } from "./format-guide";
+export { RelatedLinks } from "./related-links";
+export { LinkCard } from "./link-card";

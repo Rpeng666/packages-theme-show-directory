@@ -9,7 +9,7 @@ import type {
   ChatHistoryStat,
 } from "@template/ui";
 import { ConsoleLink } from "@template/ui";
-import { IconChevronLeft, IconChevronRight } from "@douyinfe/semi-icons";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { SmartIcon } from "../icons";
 
@@ -241,7 +241,7 @@ function ChatHistoryPager({
               onClick={() => onPageChange?.(page - 1)}
               aria-label="previous page"
             >
-              <IconChevronLeft size="small" />
+              <ChevronLeft size={15} />
             </button>
             {pages.map((p, idx) =>
               p === "…" ? (
@@ -267,7 +267,7 @@ function ChatHistoryPager({
               onClick={() => onPageChange?.(page + 1)}
               aria-label="next page"
             >
-              <IconChevronRight size="small" />
+              <ChevronRight size="small" />
             </button>
           </nav>
         ) : null}

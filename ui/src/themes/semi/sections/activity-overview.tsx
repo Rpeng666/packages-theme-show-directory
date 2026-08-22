@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Card as SemiCard } from '@douyinfe/semi-ui'
+import { Card } from '../components/card'
 import type {
   ActivityOverviewProps,
   ActivityQuickAction,
@@ -162,7 +162,7 @@ export function ActivityOverview({
 
       <div className="activity-panels">
         {recentTasks && recentTasks.items?.length ? (
-          <SemiCard className="activity-panel">
+          <Card className="activity-panel">
             <div className="activity-panel-header">
               <div className="activity-panel-title">
                 {recentTasks.title ?? 'Recent AI tasks'}
@@ -181,11 +181,11 @@ export function ActivityOverview({
                 <TaskRow key={item.id} item={item} />
               ))}
             </div>
-          </SemiCard>
+          </Card>
         ) : null}
 
         {quickActions && quickActions.items?.length ? (
-          <SemiCard className="activity-panel">
+          <Card className="activity-panel">
             <div className="activity-panel-header">
               <div className="activity-panel-title">
                 {quickActions.title ?? 'Quick start'}
@@ -196,7 +196,7 @@ export function ActivityOverview({
                 <QuickCard key={action.key} action={action} />
               ))}
             </div>
-          </SemiCard>
+          </Card>
         ) : null}
       </div>
     </div>

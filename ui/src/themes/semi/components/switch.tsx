@@ -1,29 +1,29 @@
 'use client'
 
 import * as React from 'react'
-import { Switch as SemiSwitch } from '@douyinfe/semi-ui'
+import { Switch as HeroSwitch } from '@heroui/react'
 import type { SwitchProps } from '@template/ui'
 
+/** Semi Switch — HeroUI Switch with the shared checked/onCheckedChange vocabulary. */
 export function Switch({
   label,
   checked,
   defaultChecked,
   onCheckedChange,
   disabled,
-  tone: _tone,
-  value: _value,
-  id,
   className = '',
+  ...props
 }: SwitchProps) {
   return (
-    <SemiSwitch
-      checked={checked}
-      defaultChecked={defaultChecked}
-      onChange={(next: boolean) => onCheckedChange?.(next)}
-      disabled={disabled}
-      id={id}
+    <HeroSwitch
+      {...(props as any)}
+      isSelected={checked}
+      defaultSelected={defaultChecked}
+      onValueChange={onCheckedChange}
+      isDisabled={disabled}
       className={className}
-      aria-label={typeof label === 'string' ? label : undefined}
-    />
+    >
+      {label}
+    </HeroSwitch>
   )
 }

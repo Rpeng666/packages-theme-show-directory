@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useState } from "react";
-import { Input as SemiInput } from "@douyinfe/semi-ui";
+import { Input } from '../components/input';
 import type { HeroLiveProps } from "@template/ui";
 
 import { SmartIcon } from "../icons";
@@ -248,9 +248,9 @@ export function HeroLive({
             style={{ display: "flex", gap: 10, width: "100%" }}
             onSubmit={handleSubmit}
           >
-            <SemiInput
+            <Input
               value={youtubeInput}
-              onChange={(value) => setYoutubeInput(value)}
+              onChange={(e) => setYoutubeInput(e.target.value)}
               placeholder={youtubePlaceholder}
               prefix={<SmartIcon name="Link" size={14} />}
               className="semi-hlive-input"

@@ -2,12 +2,9 @@
 
 import * as React from 'react'
 import { useMemo, useState } from 'react'
-import {
-  Breadcrumb as SemiBreadcrumb,
-  Input as SemiInput,
-  Select as SemiSelect,
-} from '@douyinfe/semi-ui'
-import { IconChevronRight, IconSearch } from '@douyinfe/semi-icons'
+import { Input } from '../components/input';
+import { Select } from '../components/form';
+import { ChevronRight, Search } from 'lucide-react'
 import type { PageHeaderProps } from '@template/ui'
 import { ConsoleLink, useConsoleBridge } from '@template/ui'
 
@@ -62,27 +59,18 @@ export function PageHeader({
   return (
     <div className={`page-header ${className}`.trim()}>
       {crumbs && crumbs.length > 0 ? (
-        <SemiBreadcrumb
-          compact
-          separator={<IconChevronRight size="small" />}
-          style={{ fontSize: 13 }}
-        >
+        <nav style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', fontSize: 13, color: 'var(--semi-color-text-2)' }}>
           {crumbs.map((crumb, idx) => (
-            <SemiBreadcrumb.Item
-              key={idx}
-              href={crumb.url || ''}
-              noLink={!crumb.url || !!crumb.is_active}
-              active={!!crumb.is_active}
-            >
-              {crumb.icon && (
-                <span style={{ display: 'inline-flex', marginRight: 4 }}>
-                  <SmartIcon name={crumb.icon as string} size={14} />
-                </span>
+            <span key={idx} style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+              {idx > 0 ? <ChevronRight size={13} style={{ color: 'var(--semi-color-text-3)' }} /> : null}
+              {crumb.url && !crumb.is_active ? (
+                <a href={crumb.url} style={{ color: 'inherit', textDecoration: 'none' }}>{crumb.title}</a>
+              ) : (
+                <span style={crumb.is_active ? { color: 'var(--semi-color-text-0)', fontWeight: 600 } : undefined}>{crumb.title}</span>
               )}
-              {crumb.title}
-            </SemiBreadcrumb.Item>
+            </span>
           ))}
-        </SemiBreadcrumb>
+        </nav>
       ) : null}
 
       <div className="page-header-main">
@@ -156,19 +144,16 @@ export function PageHeader({
           ) : null}
           <div className="page-header-toolbar-right">
             {search ? (
-              <SemiInput
+              <Input
                 value={keyword}
-                onChange={setKeyword}
-                onEnterPress={submitSearch}
-                prefix={<IconSearch size="small" />}
+                onChange={(e) => setKeyword(e.target.value)}
+                prefix={<Search size={14} />}
                 placeholder={search.placeholder || search.title}
-                showClear
-                onClear={() => setKeyword('')}
-                style={{ width: 220 }}
+                onKeyDown={(e) => { if (e.key === 'Enter') submitSearch() }}
               />
             ) : null}
             {filters?.map((filter) => (
-              <SemiSelect
+              <Select
                 key={filter.name}
                 value={filter.value || ''}
                 onChange={(value) =>
@@ -180,7 +165,7 @@ export function PageHeader({
                     ),
                   )
                 }
-                optionList={(
+                options={(
                   filter.options?.filter(
                     (option) => option.value && option.value !== '',
                   ) || []
@@ -189,8 +174,8 @@ export function PageHeader({
                   value: option.value as string,
                 }))}
                 placeholder={filter.title}
-                size="small"
-                style={{ width: 160 }}
+                size="sm"
+                
               />
             ))}
           </div>

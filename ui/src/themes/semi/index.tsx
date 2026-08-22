@@ -1,5 +1,5 @@
 // Semi theme barrel — the semi theme's contract implementations.
-// Each entry maps a @template/ui contract key onto an @douyinfe/semi-ui component.
+// Each entry maps a @template/ui contract key onto the HeroUI/Tailwind implementation.
 export { Button } from './components/button'
 export { Badge } from './components/badge'
 export { Card } from './components/card'

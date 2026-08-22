@@ -1,8 +1,9 @@
 "use client";
 
-import * as React from "react";
-import { Tooltip as SemiTooltip } from "@douyinfe/semi-ui";
-import { IconArrowLeft } from "@douyinfe/semi-icons";
+import * as React from "react"
+import { Tooltip } from '../components/tooltip';;
+
+import { ArrowLeft } from 'lucide-react';
 import type {
   ChatSuggestionChip,
   ChatWorkbenchProps,
@@ -151,7 +152,7 @@ function ConversationFrame({
 }: ChatWorkbenchProps) {
   const back = headerBackUrl ? (
     <ConsoleLink href={headerBackUrl} className="chat-conv-back" aria-label="back">
-      <IconArrowLeft size="small" />
+      <ArrowLeft size="small" />
     </ConsoleLink>
   ) : null;
 

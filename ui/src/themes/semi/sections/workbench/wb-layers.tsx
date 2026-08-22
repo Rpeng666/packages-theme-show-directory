@@ -64,10 +64,7 @@ export function WbLayersPanel({
   const reversed = [...layers].reverse();
   const [order, setOrder] = useState<number[]>(() => reversed.map((l) => l.id));
 
-  // Re-sync with the fabric stack whenever the layer structure changes
-  // (add / remove / reorder). Selection-only updates don't bump `version`,
-  // so the drag order stays stable while `isSelected` refreshes live.
-  // (Adjusting state during render keeps the re-sync effect-free.)
+  // Re-sync with the fabric stack whenever the layer structure changes.
   const [lastVersion, setLastVersion] = useState(version);
   if (version !== lastVersion) {
     setLastVersion(version);
@@ -81,9 +78,7 @@ export function WbLayersPanel({
 
   if (layers.length === 0) {
     return (
-      <p className="text-xs px-1 py-2 text-[var(--semi-color-text-3)]">
-        {t("layers_empty")}
-      </p>
+      <p className="px-1 py-2 text-xs text-[#a09b94]">{t("layers_empty")}</p>
     );
   }
 
@@ -115,9 +110,9 @@ export function WbLayersPanel({
             value={layer.id}
             as="div"
             className={cn(
-              "wb-layer",
-              layer.isSelected && "wb-layer-active",
-              !layer.visible && "wb-layer-hidden",
+              "flex cursor-pointer items-center gap-2 rounded-[10px] border border-transparent px-2 py-1.5 transition-all hover:bg-[#f1efeb]",
+              layer.isSelected && "border-[rgba(252,114,90,0.4)] bg-[rgba(252,114,90,0.1)]",
+              !layer.visible && "opacity-45",
             )}
             onClick={(e) => {
               if (e.shiftKey) {
@@ -128,8 +123,7 @@ export function WbLayersPanel({
               }
             }}
           >
-            {/* Drag affordance */}
-            <GripVertical className="w-3 h-3 wb-layer-grip" />
+            <GripVertical className="h-3 w-3 shrink-0 cursor-grab text-[#a09b94] opacity-35 transition-opacity group-hover:opacity-80" />
 
             <button
               type="button"
@@ -139,7 +133,7 @@ export function WbLayersPanel({
                 e.stopPropagation();
                 onToggleLock(layer.id);
               }}
-              className={`wb-layer-btn${layer.locked ? " wb-layer-btn-locked" : ""}`}
+              className={`inline-flex h-[22px] w-[22px] items-center justify-center rounded-[7px] border-none bg-transparent text-[#a09b94] transition-all hover:bg-[#e9e6e1] hover:text-[#1c1a17]${layer.locked ? " !text-[#d97706]" : ""}`}
             >
               {layer.locked ? <Lock className="w-3 h-3" /> : <LockOpen className="w-3 h-3" />}
             </button>
@@ -152,20 +146,20 @@ export function WbLayersPanel({
                 e.stopPropagation();
                 onToggle(layer.id);
               }}
-              className="wb-layer-btn"
+              className="inline-flex h-[22px] w-[22px] items-center justify-center rounded-[7px] border-none bg-transparent text-[#a09b94] transition-all hover:bg-[#e9e6e1] hover:text-[#1c1a17]"
             >
               {layer.visible ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
             </button>
 
-            <span className="wb-layer-dot" style={{ backgroundColor: dotColor }} />
+            <span className="h-2 w-2 shrink-0 rounded-[3px]" style={{ backgroundColor: dotColor }} />
 
-            <LayerIcon className="w-3 h-3 wb-layer-icon" />
+            <LayerIcon className="h-3 w-3 shrink-0 text-[#a09b94]" />
 
-            <span className="wb-layer-label">{layer.label}</span>
+            <span className="min-w-0 flex-1 truncate text-xs text-[#4a4642]">{layer.label}</span>
 
-            <span className="wb-layer-type">{layer.type}</span>
+            <span className="text-[9px] font-bold uppercase tracking-[0.06em] text-[#a09b94]">{layer.type}</span>
 
-            <span className="wb-layer-actions">
+            <span className="flex shrink-0 items-center gap-0.5">
               <button
                 type="button"
                 title={t("layers_up")}
@@ -175,7 +169,7 @@ export function WbLayersPanel({
                   e.stopPropagation();
                   onMove(layer.id, "up");
                 }}
-                className="wb-layer-btn disabled:opacity-30"
+                className="inline-flex h-[22px] w-[22px] items-center justify-center rounded-[7px] border-none bg-transparent text-[#a09b94] transition-all hover:bg-[#e9e6e1] hover:text-[#1c1a17] disabled:opacity-30"
               >
                 <ChevronUp className="w-3 h-3" />
               </button>
@@ -188,7 +182,7 @@ export function WbLayersPanel({
                   e.stopPropagation();
                   onMove(layer.id, "down");
                 }}
-                className="wb-layer-btn disabled:opacity-30"
+                className="inline-flex h-[22px] w-[22px] items-center justify-center rounded-[7px] border-none bg-transparent text-[#a09b94] transition-all hover:bg-[#e9e6e1] hover:text-[#1c1a17] disabled:opacity-30"
               >
                 <ChevronDown className="w-3 h-3" />
               </button>
@@ -200,7 +194,7 @@ export function WbLayersPanel({
                   e.stopPropagation();
                   onDelete(layer.id);
                 }}
-                className="wb-layer-btn wb-layer-btn-danger"
+                className="inline-flex h-[22px] w-[22px] items-center justify-center rounded-[7px] border-none bg-transparent text-[#a09b94] transition-all hover:bg-[#e23b3b] hover:text-white"
               >
                 <Trash2 className="w-3 h-3" />
               </button>

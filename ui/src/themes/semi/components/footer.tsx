@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Divider } from '@douyinfe/semi-ui'
+import { Divider } from './layout'
 import type { FooterProps } from '@template/ui'
 import type { NavItem } from '@template/ui'
 
@@ -91,7 +91,7 @@ export function Footer({
           {localeThemeSlot}
         </div>
 
-        <Divider margin={0} />
+        <div style={{ height: 1, background: "var(--semi-color-border)" }} />
 
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16, paddingTop: 16 }}>
           {footer.copyright ? (

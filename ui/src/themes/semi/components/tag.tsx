@@ -1,37 +1,56 @@
 'use client'
 
 import * as React from 'react'
-import { Tag as SemiTag } from '@douyinfe/semi-ui'
+import { Chip } from '@heroui/react'
 import type { TagProps } from '@template/ui'
 
-const SIZE = { small: 'small', default: 'default', large: 'large' } as const
+/** Hero Chip color from the shared semi color word. */
+const COLOR_MAP: Record<string, 'success' | 'danger' | 'accent' | 'default'> = {
+  green: 'success',
+  red: 'danger',
+  amber: 'default',
+  orange: 'default',
+  blue: 'accent',
+  cyan: 'accent',
+  purple: 'accent',
+  violet: 'accent',
+  pink: 'danger',
+  grey: 'default',
+  neutral: 'default',
+  white: 'default',
+}
 
 /**
- * Semi Tag — maps the shared TagProps onto Semi Tag. Color words pass straight
- * through (Semi's Tag color union); `type` maps to Semi's solid/light/outline/
- * ghost.
+ * Semi Tag — a small label chip (HeroUI Chip). `color` maps semi color words
+ * onto Hero's palette; `type` maps solid/light/outline/ghost onto variants.
  */
 export function Tag({
-  color,
+  color = 'grey',
   size = 'default',
-  closable,
+  closable = false,
   onClose,
   type = 'light',
-  children,
   className = '',
-  ...rest
+  children,
+  ...props
 }: TagProps) {
+  const heroColor = COLOR_MAP[color] ?? 'default'
+  const heroVariant =
+    type === 'solid' ? 'primary'
+    : type === 'outline' ? 'secondary'
+    : type === 'ghost' ? 'tertiary'
+    : 'soft'
+
   return (
-    <SemiTag
-      {...(rest as any)}
-      color={color}
-      size={SIZE[size as keyof typeof SIZE] ?? 'default'}
-      closable={closable}
-      onClose={onClose}
-      type={type}
+    <Chip
+      {...(props as any)}
+      color={heroColor as never}
+      variant={heroVariant as never}
+      size={(size === 'small' ? 'sm' : size === 'large' ? 'lg' : 'md') as never}
+      onClose={closable ? (() => onClose?.(undefined as never)) : undefined}
       className={className}
     >
       {children}
-    </SemiTag>
+    </Chip>
   )
 }

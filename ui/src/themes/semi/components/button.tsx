@@ -1,13 +1,13 @@
 'use client'
 
 import * as React from 'react'
-import { Button as SemiButton, Spin } from '@douyinfe/semi-ui'
+import { Button as HeroButton, Spinner } from '@heroui/react'
 import type { ButtonProps } from '@template/ui'
 
 /**
- * Semi Button — maps the shared `variant`/`size` vocabulary onto Semi's
- * Button `theme`/`size`. `tone` (pixel-native) is ignored; `asChild` forces a
- * primary rendering (Slot semantics like shadcn) since Semi has no asChild.
+ * Semi Button — maps the shared `variant`/`size`/`loading` vocabulary onto
+ * HeroUI v3's Button (react-aria based: `onPress` not `onClick`). `tone` is
+ * ignored; `iconLeft`/`iconRight` become start/end content.
  */
 export function Button({
   variant = 'default',
@@ -15,42 +15,54 @@ export function Button({
   asChild = false,
   loading = false,
   tone: _tone,
-  iconLeft: _iconLeft,
-  iconRight: _iconRight,
-  fullWidth: _fullWidth,
+  iconLeft,
+  iconRight,
+  fullWidth,
   className = '',
   children,
-  type: _nativeType,
   ...props
 }: ButtonProps) {
-  // Map the native HTML `type` (submit/reset/button) onto Semi's `htmlType`;
-  // Semi's own `type` prop means the color scheme and is set below.
-  const htmlType =
-    _nativeType === 'submit' || _nativeType === 'reset'
-      ? _nativeType
+  const heroVariant =
+    variant === 'destructive' ? 'danger'
+    : variant === 'outline' ? 'outline'
+    : variant === 'secondary' ? 'secondary'
+    : variant === 'ghost' || variant === 'link' ? 'ghost'
+    : 'primary'
+
+  const iconOnly = size === 'icon' || size === 'icon-sm'
+  const heroSize = size === 'lg' ? 'lg' : size === 'sm' || iconOnly ? 'sm' : 'md'
+
+  const childAsChild =
+    asChild && React.isValidElement(children)
+      ? (children as React.ReactElement<{ className?: string }>).props.className
       : undefined
 
-  const destructive = variant === 'destructive'
-  const theme: 'solid' | 'light' | 'borderless'
-    = variant === 'ghost' || variant === 'link' ? 'borderless'
-    : variant === 'outline' || variant === 'secondary' ? 'light'
-    : 'solid'
-
-  const semiSize = size === 'sm' ? 'small' : size === 'lg' ? 'large' : 'default'
+  const content = (
+    <>
+      {loading ? <Spinner size="sm" color="current" /> : iconLeft}
+      {children}
+      {iconRight}
+    </>
+  )
 
   return (
-    <SemiButton
-      {...props}
-      theme={theme}
-      type={destructive ? 'danger' : 'primary'}
-      size={semiSize}
-      loading={loading}
-      block={_fullWidth}
-      htmlType={htmlType}
+    <HeroButton
+      variant={heroVariant}
+      size={heroSize}
+      fullWidth={fullWidth}
+      isIconOnly={iconOnly}
+      isDisabled={props.disabled || loading}
+      slot={childAsChild}
+      type={props.type}
+      onPress={(e) => {
+        if (props.onClick) {
+          props.onClick(e as unknown as React.MouseEvent<HTMLButtonElement>)
+        }
+      }}
+      aria-label={props['aria-label']}
       className={className}
-      icon={loading ? <Spin size="small" /> : undefined}
     >
-      {children}
-    </SemiButton>
+      {content}
+    </HeroButton>
   )
 }

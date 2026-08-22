@@ -1,7 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { IconArrowRight, IconEdit2 } from '@douyinfe/semi-icons'
+import {
+  Pencil, ArrowRight, Edit2 } from 'lucide-react'
 import type { ShowcasesProps } from '@template/ui'
 import { SectionHeader, SectionShell } from './shell'
 
@@ -96,9 +97,9 @@ export function Showcases({
           }}
           className="wb-showcase-chip"
         >
-          {onOpen ? <IconEdit2 style={{ fontSize: 13 }} /> : null}
+          {onOpen ? <Pencil style={{ fontSize: 13 }} /> : null}
           {item.cta || (onOpen ? 'Open in Editor' : 'View')}
-          <IconArrowRight style={{ fontSize: 13 }} />
+          <ArrowRight style={{ fontSize: 13 }} />
         </span>
       </div>
     )

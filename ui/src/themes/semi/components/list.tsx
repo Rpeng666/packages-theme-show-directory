@@ -1,37 +1,38 @@
 'use client'
 
 import * as React from 'react'
-import { List as SemiList } from '@douyinfe/semi-ui'
 import type { ListProps } from '@template/ui'
 
-/**
- * Semi List — dataSource + renderItem contract over Semi List. grid →
- * Semi List's grid config ({column, gutter}).
- */
-export function List<T>({
+/** Semi List — a quiet list of renderItem results. */
+export function List<T = unknown>({
   dataSource = [],
   renderItem,
   header,
   footer,
   size = 'default',
-  layout,
-  grid,
-  loading,
-  emptyContent,
   className = '',
 }: ListProps<T>) {
   return (
-    <SemiList<T>
-      dataSource={dataSource}
-      renderItem={renderItem ? (item, ind) => renderItem(item, ind) : undefined}
-      header={header}
-      footer={footer}
-      size={size}
-      layout={layout}
-      grid={grid as never}
-      loading={loading}
-      emptyContent={emptyContent}
-      className={className}
-    />
+    <div className={className} style={{ width: '100%' }}>
+      {header ? (
+        <div style={{ padding: '10px 4px', fontSize: 14, fontWeight: 600, color: 'var(--semi-color-text-1)' }}>{header}</div>
+      ) : null}
+      <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        {dataSource.map((item, index) => (
+          <li
+            key={index}
+            style={{
+              padding: size === 'small' ? '8px 4px' : '12px 4px',
+              borderBottom: index < dataSource.length - 1 ? '1px solid var(--semi-color-border)' : 'none',
+            }}
+          >
+            {renderItem ? renderItem(item, index) : String(item)}
+          </li>
+        ))}
+      </ul>
+      {footer ? (
+        <div style={{ padding: '10px 4px', fontSize: 13, color: 'var(--semi-color-text-3)' }}>{footer}</div>
+      ) : null}
+    </div>
   )
 }

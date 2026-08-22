@@ -22,17 +22,17 @@ export function WbStatusBar({
   const percent = Math.round(zoom * 100);
 
   return (
-    <footer className="wb-statusbar">
+    <footer className="flex h-7 shrink-0 items-center gap-3.5 border-t border-[#e9e6e1] bg-white px-4 text-[11px] text-[#a09b94] tabular-nums">
       <span>{percent}%</span>
-      <span className="wb-topbar-divider" style={{ height: 14 }} />
+      <span className="h-[14px] w-px bg-[#e9e6e1]" />
       <span>
         {canvasW} × {canvasH} px
       </span>
-      <span className="wb-topbar-divider" style={{ height: 14 }} />
+      <span className="h-[14px] w-px bg-[#e9e6e1]" />
       <span>
         x: {mouseX}  y: {mouseY}
       </span>
-      <span className="wb-statusbar-spacer" />
+      <span className="flex-1" />
       <span>{t("status_hint")}</span>
     </footer>
   );

@@ -1,7 +1,7 @@
  'use client'
 
 import * as React from 'react'
-import { Card as SemiCard } from '@douyinfe/semi-ui'
+import { Card } from '../components/card'
 import type { DashboardOverviewProps, DashboardStat } from '@template/ui'
 import { ConsoleLink } from '@template/ui'
 
@@ -73,7 +73,7 @@ export function DashboardOverview({
 
       <div className="dashboard-panels">
         {activities && activities.items?.length ? (
-          <SemiCard className="dashboard-panel">
+          <Card className="dashboard-panel">
             <div className="dashboard-panel-header">
               <div className="dashboard-panel-title">{activities.title}</div>
               {activities.viewAllUrl ? (
@@ -127,11 +127,11 @@ export function DashboardOverview({
                 )
               })}
             </div>
-          </SemiCard>
+          </Card>
         ) : null}
 
         {quickActions && quickActions.items?.length ? (
-          <SemiCard className="dashboard-panel">
+          <Card className="dashboard-panel">
             <div className="dashboard-panel-header">
               <div className="dashboard-panel-title">{quickActions.title}</div>
             </div>
@@ -159,7 +159,7 @@ export function DashboardOverview({
                 </ConsoleLink>
               ))}
             </div>
-          </SemiCard>
+          </Card>
         ) : null}
       </div>
     </div>

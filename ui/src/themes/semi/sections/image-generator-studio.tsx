@@ -1,8 +1,10 @@
 "use client";
 
-import * as React from "react";
+import * as React from "react"
+import { Textarea } from '../components/textarea';
+import { Select } from '../components/form';;
 import type { ReactNode } from "react";
-import { Select as SemiSelect, TextArea as SemiTextArea } from "@douyinfe/semi-ui";
+
 import type {
   ImageGeneratorStudioImage,
   ImageGeneratorStudioProps,
@@ -217,30 +219,30 @@ export function ImageGeneratorStudio({
             <div className="imgstudio-fields">
               <div className="imgstudio-field">
                 <label className="imgstudio-field-label">{providerLabel}</label>
-                <SemiSelect
+                <Select
                   value={provider}
                   onChange={(value) => onProviderChange(String(value))}
-                  optionList={providerOptions.map((option) => ({
+                  options={providerOptions.map((option) => ({
                     label: option.label,
                     value: option.value,
                   }))}
                   placeholder={providerPlaceholder}
                   className="imgstudio-select"
-                  style={{ width: "100%" }}
+                  
                 />
               </div>
               <div className="imgstudio-field">
                 <label className="imgstudio-field-label">{modelLabel}</label>
-                <SemiSelect
+                <Select
                   value={model}
                   onChange={(value) => onModelChange(String(value))}
-                  optionList={modelOptions.map((option) => ({
+                  options={modelOptions.map((option) => ({
                     label: option.label,
                     value: option.value,
                   }))}
                   placeholder={modelPlaceholder}
                   className="imgstudio-select"
-                  style={{ width: "100%" }}
+                  
                 />
               </div>
             </div>
@@ -266,14 +268,14 @@ export function ImageGeneratorStudio({
               <label className="imgstudio-field-label" htmlFor="imgstudio-prompt">
                 {promptLabel}
               </label>
-              <SemiTextArea
+              <Textarea
                 id="imgstudio-prompt"
                 value={prompt}
-                onChange={(value) => onPromptChange(value)}
+                onChange={(e) => onPromptChange(e.target.value)}
                 placeholder={promptPlaceholder}
                 rows={6}
                 className="imgstudio-prompt-area"
-                style={{ width: "100%" }}
+                
               />
               <div className="imgstudio-prompt-meta">
                 <span className="imgstudio-prompt-count">

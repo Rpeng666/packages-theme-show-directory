@@ -179,6 +179,14 @@ export type {
   WorkbenchTool,
   WorkbenchZOp,
   WorkbenchAiTask,
+  ContentHeaderProps,
+  SizeTableProps,
+  SizeTableRow,
+  FormatGuideProps,
+  RelatedLinksProps,
+  RelatedLink,
+  LinkCardProps,
+  LinkCardItem,
 } from "./contracts/sections";
 
 export type { HeaderProps } from "./contracts/header";

@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import type { CSSProperties } from 'react'
-import { IconArrowLeft } from '@douyinfe/semi-icons'
+import { ArrowLeft } from 'lucide-react'
 import type { ToolHeroProps, ToolHeroBadge, ToolHeroMeta } from '@template/ui'
 import { SmartIcon } from '../icons'
 import { SectionShell } from './shell'
@@ -43,14 +43,11 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
     )
 
   return (
-    <SectionShell id={section.id} className={className} padding="lg" maxWidth={1080}>
-      {/* ambient background */}
-      <div className="app-grid-pattern" aria-hidden />
-      <div className="app-hero-glow" style={{ top: -200, height: 520, opacity: 0.85 }} aria-hidden />
+    <SectionShell id={section.id} className={className} padding="md" maxWidth={1080}>
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 820, margin: '0 auto', textAlign: 'center' }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 780, margin: '0 auto', textAlign: 'center' }}>
         {section.back ? (
-          <div style={{ marginBottom: 26 }}>
+          <div style={{ marginBottom: 16 }}>
             <Link
               href={section.back.url || '/'}
               target="_self"
@@ -68,7 +65,7 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
                   transition: 'color 0.2s ease',
                 }}
               >
-                <IconArrowLeft style={{ fontSize: 15 }} />
+                <ArrowLeft style={{ fontSize: 15 }} />
                 {section.back.label}
               </span>
             </Link>
@@ -76,15 +73,15 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
         ) : null}
 
         {(section.eyebrow || section.label) ? (
-          <div style={{ marginBottom: 20 }}>
+          <div style={{ marginBottom: 14 }}>
             <span
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 6,
-                padding: '6px 16px',
+                padding: '5px 14px',
                 borderRadius: 999,
-                fontSize: 12,
+                fontSize: 11.5,
                 fontWeight: 650,
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
@@ -101,9 +98,9 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
         <h1
           style={{
             margin: 0,
-            fontSize: 'clamp(34px, 6vw, 60px)',
-            lineHeight: 1.08,
-            letterSpacing: '-0.03em',
+            fontSize: 'clamp(28px, 4.5vw, 46px)',
+            lineHeight: 1.12,
+            letterSpacing: '-0.025em',
             fontWeight: 800,
             color: 'var(--semi-color-text-0)',
             textWrap: 'balance',
@@ -115,10 +112,10 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
         {section.description ? (
           <p
             style={{
-              margin: '20px auto 0',
-              maxWidth: 640,
-              fontSize: 17,
-              lineHeight: 1.75,
+              margin: '14px auto 0',
+              maxWidth: 600,
+              fontSize: 15.5,
+              lineHeight: 1.65,
               color: 'var(--semi-color-text-2)',
               textWrap: 'pretty',
             }}
@@ -127,7 +124,7 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
         ) : null}
 
         {badges.length ? (
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10, marginTop: 26 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10, marginTop: 18 }}>
             {badges.map((badge, idx) => (
               <BadgePill key={idx} badge={badge} />
             ))}
@@ -141,7 +138,7 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
               flexWrap: 'wrap',
               justifyContent: 'center',
               gap: 10,
-              marginTop: 20,
+              marginTop: 14,
             }}
           >
             {meta.map((m, idx) => (
@@ -151,16 +148,16 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 7,
-                  padding: '7px 14px',
+                  padding: '6px 12px',
                   borderRadius: 999,
-                  fontSize: 13,
+                  fontSize: 12.5,
                   fontWeight: 550,
                   color: 'var(--semi-color-text-1)',
                   background: 'var(--semi-color-bg-1)',
                   border: '1px solid var(--semi-color-border)',
                 }}
               >
-                {m.icon ? <SmartIcon name={m.icon} size={15} /> : null}
+                {m.icon ? <SmartIcon name={m.icon} size={14} /> : null}
                 {m.text}
               </span>
             ))}
@@ -168,7 +165,7 @@ export function ToolHero({ section, className = '', LinkComponent }: ToolHeroPro
         ) : null}
 
         {section.tip ? (
-          <p style={{ margin: '22px 0 0', fontSize: 13, color: 'var(--semi-color-text-3)' }}>{section.tip}</p>
+          <p style={{ margin: '14px 0 0', fontSize: 12.5, color: 'var(--semi-color-text-3)' }}>{section.tip}</p>
         ) : null}
       </div>
     </SectionShell>
@@ -181,9 +178,9 @@ function BadgePill({ badge }: { badge: ToolHeroBadge }) {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 6,
-    padding: '5px 14px',
+    padding: '4px 12px',
     borderRadius: 999,
-    fontSize: 13,
+    fontSize: 12.5,
     fontWeight: 650,
   }
   if (tone === 'free') {

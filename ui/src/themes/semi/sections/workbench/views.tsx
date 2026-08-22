@@ -25,27 +25,14 @@ import { Button } from "../../components/button";
  *  - WbScannerStream  ← ScannerCardStream (gallery card stream, self-contained)
  *  - WbPlatformPicker ← PlatformSizePicker (platform presets)
  *
- * These own their little bits of extra CSS (VIEWS_CSS) which the shell injects
- * alongside the main WORKBENCH_CSS. Everything else is semi-consistent with
+ * These own their little bits of extra CSS
+ * alongside the editor chrome. Everything else is semi-consistent with
  * the surrounding editor chrome.
  */
 
 function cn(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
 }
-
-export const VIEWS_CSS = `
-.wb-hud{position:absolute;inset:0;overflow:hidden;border-radius:14px;border:1px solid rgba(255,255,255,.08)}
-.wb-hud-corner{position:absolute;width:16px;height:16px;pointer-events:none;opacity:.55;border:2px solid rgba(255,255,255,.28)}
-.wb-hud-corner-tl{top:8px;left:8px;border-right:none;border-bottom:none;border-top-left-radius:8px}
-.wb-hud-corner-tr{top:8px;right:8px;border-left:none;border-bottom:none;border-top-right-radius:8px}
-.wb-hud-corner-bl{bottom:8px;left:8px;border-right:none;border-top:none;border-bottom-left-radius:8px}
-.wb-hud-corner-br{bottom:8px;right:8px;border-left:none;border-top:none;border-bottom-right-radius:8px}
-.wb-reticle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:220px;height:220px;pointer-events:none;opacity:.85;animation:wb-reticle-breathe 3.2s ease-in-out infinite}
-@keyframes wb-reticle-breathe{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:.9;transform:translate(-50%,-50%) scale(1.035)}}
-.wb-nebula{position:absolute;inset:0;pointer-events:none;background:radial-gradient(62% 50% at 50% 42%,rgba(139,92,246,.14),transparent 72%)}
-.wb-exposure{width:100%;--exposure-accent:var(--semi-color-primary,#a78bfa)}
-`;
 
 /* ── Canvas viewfinder frame (HudFrame) ─────────────────────────────────── */
 
@@ -57,12 +44,12 @@ export function WbHudFrame({
   className?: string;
 }) {
   return (
-    <div className={cn("wb-hud", className)}>
+    <div className={cn("absolute inset-0 overflow-hidden rounded-2xl border border-[rgba(28,26,23,0.12)]", className)}>
       {children}
-      <span className="wb-hud-corner wb-hud-corner-tl" aria-hidden />
-      <span className="wb-hud-corner wb-hud-corner-tr" aria-hidden />
-      <span className="wb-hud-corner wb-hud-corner-bl" aria-hidden />
-      <span className="wb-hud-corner wb-hud-corner-br" aria-hidden />
+      <span className="pointer-events-none absolute left-2 top-2 h-4 w-4 rounded-tl-lg border-l-2 border-t-2 border-[rgba(28,26,23,0.3)] opacity-60" aria-hidden />
+      <span className="pointer-events-none absolute right-2 top-2 h-4 w-4 rounded-tr-lg border-r-2 border-t-2 border-[rgba(28,26,23,0.3)] opacity-60" aria-hidden />
+      <span className="pointer-events-none absolute bottom-2 left-2 h-4 w-4 rounded-bl-lg border-b-2 border-l-2 border-[rgba(28,26,23,0.3)] opacity-60" aria-hidden />
+      <span className="pointer-events-none absolute bottom-2 right-2 h-4 w-4 rounded-br-lg border-b-2 border-r-2 border-[rgba(28,26,23,0.3)] opacity-60" aria-hidden />
     </div>
   );
 }
@@ -72,7 +59,7 @@ export function WbHudFrame({
 export function WbTargetingReticle({ className }: { className?: string }) {
   return (
     <svg
-      className={cn("wb-reticle", className)}
+      className={cn("pointer-events-none animate-[wb-reticle-breathe_3.2s_ease-in-out_infinite]", className)}
       viewBox="0 0 220 220"
       fill="none"
       aria-hidden
@@ -81,19 +68,19 @@ export function WbTargetingReticle({ className }: { className?: string }) {
         cx="110"
         cy="110"
         r="86"
-        stroke="rgba(255,255,255,.22)"
+        stroke="rgba(252,114,90,.4)"
         strokeWidth="1"
         strokeDasharray="4 6"
       />
-      <circle cx="110" cy="110" r="3" fill="rgba(255,255,255,.75)" />
+      <circle cx="110" cy="110" r="3" fill="rgba(252,114,90,.8)" />
       <path
         d="M110 20v26M110 174v26M20 110h26M174 110h26"
-        stroke="rgba(255,255,255,.5)"
+        stroke="rgba(252,114,90,.5)"
         strokeWidth="1.5"
       />
       <path
         d="M46 60h-18v-18M174 42v18h18M46 160h-18v18M174 178v-18h18"
-        stroke="rgba(255,255,255,.4)"
+        stroke="rgba(28,26,23,.3)"
         strokeWidth="2"
         strokeLinecap="round"
       />
@@ -104,7 +91,12 @@ export function WbTargetingReticle({ className }: { className?: string }) {
 /* ── Nebula backdrop (QuantumNebula) ────────────────────────────────────── */
 
 export function WbNebulaGlow({ className }: { className?: string }) {
-  return <div aria-hidden className={cn("wb-nebula", className)} />;
+  return (
+    <div
+      aria-hidden
+      className={cn("pointer-events-none absolute inset-0 bg-[radial-gradient(62%_50%_at_50%_42%,rgba(252,114,90,0.12),transparent_72%)]", className)}
+    />
+  );
 }
 
 /* ── Exposure slider (ExposureSlider) ───────────────────────────────────── */
@@ -127,10 +119,10 @@ export function WbExposureSlider({
   return (
     <input
       type="range"
-      className="wb-fs-range wb-exposure"
-      style={
-        { "--exposure-accent": accentColor } as React.CSSProperties
-      }
+      className="w-full cursor-pointer"
+      style={{
+        accentColor: accentColor ?? "#fc725a",
+      } as React.CSSProperties}
       min={min}
       max={max}
       step={step}
@@ -358,7 +350,7 @@ export function WbScannerStream({
         @keyframes scs-glitch{0%{opacity:1}50%{opacity:.82}100%{opacity:.94}}
         .scs-line{position:absolute;top:50%;left:50%;width:3px;height:${cardHeight + 30}px;transform:translate(-50%,-50%);border-radius:999px;background:linear-gradient(to bottom,transparent,#a78bfa 20%,#8b5cf6 50%,#a78bfa 80%,transparent);box-shadow:0 0 10px #a78bfa,0 0 24px #8b5cf6,0 0 46px #6366f1;transition:opacity .3s ease;opacity:${isScanning ? 1 : 0};pointer-events:none;z-index:3;animation:scs-pulse 1.5s ease-in-out infinite alternate}
         @keyframes scs-pulse{from{filter:brightness(1)}to{filter:brightness(1.35)}}
-        .scs-label{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:4;padding:3px 10px;border-radius:999px;background:rgba(10,8,16,.55);backdrop-filter:blur(6px);color:#e9d5ff;font-size:11px;letter-spacing:.06em;white-space:nowrap;pointer-events:none;border:1px solid rgba(167,139,250,.25)}
+        .scs-label{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:4;padding:3px 10px;border-radius:999px;background:rgba(28,26,23,.62);backdrop-filter:blur(6px);color:#fff;font-size:11px;letter-spacing:.06em;white-space:nowrap;pointer-events:none;border:1px solid rgba(252,114,90,.4)}
         .scs-hint{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:5;color:var(--semi-color-text-3,#8a8a93);font-size:11px;letter-spacing:.04em;pointer-events:none}
       `}</style>
 

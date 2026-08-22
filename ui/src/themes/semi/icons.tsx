@@ -1,418 +1,276 @@
 "use client";
 
 import * as React from "react";
-
 import {
-  IconAlertCircle,
-  IconAppCenter,
-  IconArrowRight,
-  IconBolt,
-  IconCalendar,
-  IconCamera,
-  IconCheckList,
-  IconClock,
-  IconClose,
-  IconCode,
-  IconCopy,
-  IconCrop,
-  IconDelete,
-  IconDesktop,
-  IconDownload,
-  IconEdit,
-  IconFile,
-  IconFilter,
-  IconGridSquare,
-  IconMonitorStroked,
-  IconSmartphoneStroked,
-  IconSidebar,
-  IconShield,
-  IconEyeOpened,
-  IconAIWandLevel1,
-  IconScissors,
-  IconShrink,
-  IconExpand,
-  IconTemplate,
-  IconColorPalette,
-  IconText,
-  IconFlag,
-  IconArrowLeft,
-  IconCheckCircleStroked,
-  IconRestart,
-  IconRotate,
-  IconFullScreenStroked,
-  IconFontColor,
-  IconFolder,
-  IconGift,
-  IconGlobe,
-  IconHistory,
-  IconImage,
-  IconInbox,
-  IconLanguage,
-  IconLayers,
-  IconLink,
-  IconMusic,
-  IconUnlock,
-  IconLock,
-  IconPlay,
-  IconPlus,
-  IconQuote,
-  IconRedo,
-  IconRefresh,
-  IconSave,
-  IconScan,
-  IconSearch,
-  IconSend,
-  IconStar,
-  IconStop,
-  IconTerminal,
-  IconTick,
-  IconUndo,
-  IconUpload,
-  IconUser,
-  IconVideo,
-  IconWifi,
-  IconActivity,
-  IconBarChartVStroked,
-  IconCoinMoney,
-  IconComment,
-  IconCreditCard,
-  IconCrown,
-  IconKey,
-  IconOrderedList,
-  IconPulse,
-  IconSetting,
-  IconUserGroup,
-  IconPause,
-  IconLoading,
-  IconDisc,
-  IconMoon,
-  IconSun,
-  IconVolume1,
-  IconSync,
-  IconSpin,
-} from "@douyinfe/semi-icons";
+  Activity,
+  AlertCircle,
+  AppWindow,
+  ArrowLeft,
+  ArrowRight,
+  BadgeCheck,
+  BarChart3,
+  Calendar,
+  Camera,
+  Check,
+  CheckCircle2,
+  CheckSquare,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Code,
+  Coins,
+  Copy,
+  CreditCard,
+  Crop,
+  Crown,
+  Disc3,
+  Download,
+  Expand,
+  Eye,
+  FileText,
+  Filter,
+  Flag,
+  Folder,
+  Gift,
+  Globe,
+  History,
+  Image,
+  Inbox,
+  KeyRound,
+  Languages,
+  Layers,
+  LayoutGrid,
+  LayoutTemplate,
+  Link,
+  ListChecks,
+  ListOrdered,
+  Loader2,
+  Lock,
+  LockOpen,
+  Maximize2,
+  MessageCircle,
+  Monitor,
+  Moon,
+  Music,
+  Palette,
+  PanelLeft,
+  Pause,
+  Pencil,
+  Play,
+  Plus,
+  Quote,
+  RefreshCw,
+  RotateCcw,
+  Save,
+  ScanLine,
+  Scissors,
+  Search,
+  Send,
+  Settings,
+  ShieldCheck,
+  Shrink,
+  Smartphone,
+  Sparkles,
+  Square,
+  Star,
+  Sun,
+  Terminal,
+  Trash2,
+  Type,
+  Undo,
+  Unlock,
+  Upload,
+  User,
+  Users,
+  Video,
+  Volume2,
+  Wifi,
+  X,
+  XCircle,
+  Zap,
+} from "lucide-react";
 
 /**
-
  * Shared icon map — the shared `Section`/`Button` data carries icon *names*
-
- * (SmartIcon vocabulary). Semi has no generic icon-by-name registry, so this
-
- * maps the common names onto Semi icons and falls back to a generic app icon.
-
+ * (SmartIcon vocabulary). Maps the common names onto lucide-react icons with
+ * a generic fallback. This is the single icon source for the semi theme;
+ * landing content data uses Ri* names which are aliased here too.
  */
-
 const ICON_MAP: Record<string, React.ReactNode> = {
-  Zap: <IconBolt />,
-
-  Bolt: <IconBolt />,
-
-  ArrowRight: <IconArrowRight />,
-
-  ArrowLeft: <IconArrowLeft />,
-
-  Arrow: <IconArrowRight />,
-
-  Check: <IconTick />,
-
-  CheckCircle2: <IconCheckCircleStroked />,
-
-  CheckCircle: <IconTick />,
-
-  X: <IconClose />,
-
-  Close: <IconClose />,
-
-  Plus: <IconPlus />,
-
-  Star: <IconStar />,
-
-  Quote: <IconQuote />,
-
-  Calendar: <IconCalendar />,
-
-  Clock: <IconClock />,
-
-  Copy: <IconCopy />,
-
-  Download: <IconDownload />,
-
-  Upload: <IconUpload />,
-
-  Save: <IconSave />,
-
-  Refresh: <IconRefresh />,
-
-  RefreshCw: <IconRefresh />,
-
-  RefreshCcw: <IconRefresh />,
-
-  RotateCcw: <IconRotate />,
-
-  Restart: <IconRestart />,
-
-  Sync: <IconSync />,
-
-  Disc: <IconDisc />,
-
-  Volume: <IconVolume1 />,
-
-  Volume2: <IconVolume1 />,
-
-  Undo: <IconUndo />,
-
-  Redo: <IconRedo />,
-
-  History: <IconHistory />,
-
-  Search: <IconSearch />,
-
-  Edit: <IconEdit />,
-
-  Send: <IconSend />,
-
-  Play: <IconPlay />,
-
-  Pause: <IconPause />,
-
-  Stop: <IconStop />,
-
-  Lock: <IconLock />,
-
-  Shield: <IconShield />,
-
-  User: <IconUser />,
-
-  Users: <IconUserGroup />,
-
-  UserGroup: <IconUserGroup />,
-
-  Folder: <IconFolder />,
-
-  Layers: <IconLayers />,
-
-  Globe: <IconGlobe />,
-
-  Language: <IconLanguage />,
-
-  Link: <IconLink />,
-
-  Link2: <IconLink />,
-
-  File: <IconFile />,
-
-  Image: <IconImage />,
-
-  ImageIcon: <IconImage />,
-
-  Video: <IconVideo />,
-
-  Camera: <IconCamera />,
-
-  Desktop: <IconDesktop />,
-  Monitor: <IconMonitorStroked />,
-  Smartphone: <IconSmartphoneStroked />,
-  Sidebar: <IconSidebar />,
-  Eye: <IconEyeOpened />,
-
-  Mobile: <IconSmartphoneStroked />,
-
-  Code: <IconCode />,
-
-  Terminal: <IconTerminal />,
-
-  Gift: <IconGift />,
-
-  Sparkles: <IconAIWandLevel1 />,
-
-  Magic: <IconAIWandLevel1 />,
-
-  Loader2: <IconLoading />,
-
-  LoaderCircle: <IconLoading />,
-
-  Spin: <IconSpin />,
-
-  Music: <IconMusic />,
-
-  Unlock: <IconUnlock />,
-  Crop: <IconCrop />,
-
-  Scan: <IconScan />,
-
-  Delete: <IconDelete />,
-
-  Filter: <IconFilter />,
-
-  Flag: <IconFlag />,
-
-  Warning: <IconAlertCircle />,
-
-  Alert: <IconAlertCircle />,
-
-  Wifi: <IconWifi />,
-
-  CheckList: <IconCheckList />,
-
-  Inbox: <IconInbox />,
-
-  AppCenter: <IconAppCenter />,
-
-  Activity: <IconActivity />,
-
-  Chart: <IconBarChartVStroked />,
-
-  BarChart: <IconBarChartVStroked />,
-
-  Coins: <IconCoinMoney />,
-
-  Money: <IconCoinMoney />,
-
-  CreditCard: <IconCreditCard />,
-
-  Card: <IconCreditCard />,
-
-  Message: <IconComment />,
-
-  Chat: <IconComment />,
-
-  Crown: <IconCrown />,
-
-  Key: <IconKey />,
-
-  Task: <IconOrderedList />,
-
-  List: <IconOrderedList />,
-
-  Pulse: <IconPulse />,
-
-  Settings: <IconSetting />,
+  Zap: <Zap />,
+  Bolt: <Zap />,
+  ArrowRight: <ArrowRight />,
+  ArrowLeft: <ArrowLeft />,
+  Arrow: <ArrowRight />,
+  Check: <Check />,
+  CheckCircle2: <CheckCircle2 />,
+  CheckCircle: <Check />,
+  X: <X />,
+  Close: <X />,
+  Plus: <Plus />,
+  Star: <Star />,
+  Quote: <Quote />,
+  Calendar: <Calendar />,
+  Clock: <Clock />,
+  Copy: <Copy />,
+  Download: <Download />,
+  Upload: <Upload />,
+  Save: <Save />,
+  Refresh: <RefreshCw />,
+  RefreshCw: <RefreshCw />,
+  RefreshCcw: <RotateCcw />,
+  RotateCcw: <RotateCcw />,
+  Restart: <RotateCcw />,
+  Sync: <RefreshCw />,
+  Disc: <Disc3 />,
+  Volume: <Volume2 />,
+  Volume2: <Volume2 />,
+  Undo: <Undo />,
+  Redo: <RotateCcw />,
+  History: <History />,
+  Search: <Search />,
+  Edit: <Pencil />,
+  Send: <Send />,
+  Play: <Play />,
+  Pause: <Pause />,
+  Stop: <Square />,
+  Lock: <Lock />,
+  Shield: <ShieldCheck />,
+  User: <User />,
+  Users: <Users />,
+  UserGroup: <Users />,
+  Folder: <Folder />,
+  Layers: <Layers />,
+  Globe: <Globe />,
+  Language: <Languages />,
+  Link: <Link />,
+  Link2: <Link />,
+  File: <FileText />,
+  Image: <Image />,
+  ImageIcon: <Image />,
+  Video: <Video />,
+  Camera: <Camera />,
+  Desktop: <Monitor />,
+  Monitor: <Monitor />,
+  Smartphone: <Smartphone />,
+  Sidebar: <PanelLeft />,
+  Eye: <Eye />,
+  Mobile: <Smartphone />,
+  Code: <Code />,
+  Terminal: <Terminal />,
+  Gift: <Gift />,
+  Sparkles: <Sparkles />,
+  Magic: <Sparkles />,
+  Loader2: <Loader2 />,
+  LoaderCircle: <Loader2 />,
+  Spin: <Loader2 />,
+  Music: <Music />,
+  Unlock: <Unlock />,
+  Crop: <Crop />,
+  Scan: <ScanLine />,
+  Delete: <Trash2 />,
+  Filter: <Filter />,
+  Flag: <Flag />,
+  Warning: <AlertCircle />,
+  Alert: <AlertCircle />,
+  Wifi: <Wifi />,
+  CheckList: <ListChecks />,
+  Inbox: <Inbox />,
+  AppCenter: <AppWindow />,
+  Activity: <Activity />,
+  Chart: <BarChart3 />,
+  BarChart: <BarChart3 />,
+  Coins: <Coins />,
+  Money: <Coins />,
+  CreditCard: <CreditCard />,
+  Card: <CreditCard />,
+  Message: <MessageCircle />,
+  Chat: <MessageCircle />,
+  Crown: <Crown />,
+  Key: <KeyRound />,
+  Task: <ListOrdered />,
+  List: <ListOrdered />,
+  Pulse: <Activity />,
+  Settings: <Settings />,
 
   // Ri* (remix) names used by landing content data
+  RiYoutubeLine: <Video />,
+  RiVideoLine: <Video />,
+  RiImageEditLine: <Pencil />,
+  RiImageLine: <Image />,
+  RiFileImageLine: <FileText />,
+  RiFileImage2Line: <FileText />,
+  RiUploadCloud2Line: <Upload />,
+  RiUpload2Line: <Upload />,
+  RiDownload2Line: <Download />,
+  RiCropLine: <Crop />,
+  RiLayoutGridLine: <LayoutGrid />,
+  GridSquare: <LayoutGrid />,
+  RiGridLine: <LayoutGrid />,
+  RiStackLine: <Layers />,
+  RiShieldCheckLine: <ShieldCheck />,
+  RiMagicLine: <Sparkles />,
+  RiEyeLine: <Eye />,
+  EyeOpened: <Eye />,
+  RiGlobalLine: <Globe />,
+  RiCompressLine: <Shrink />,
 
-  RiYoutubeLine: <IconVideo />,
+  Moon: <Moon />,
+  Sun: <Sun />,
+  Shrink: <Shrink />,
+  RiExpandLine: <Expand />,
+  RiScissorsLine: <Scissors />,
+  RiTemplateLine: <LayoutTemplate />,
+  RiPaletteLine: <Palette />,
+  RiTextLine: <Type />,
+  Text: <Type />,
+  Palette: <Palette />,
+  Template: <LayoutTemplate />,
+  LayoutTemplate: <LayoutTemplate />,
+  Wand2: <Sparkles />,
+  FontColor: <Type />,
+  Maximize2: <Maximize2 />,
 
-  RiVideoLine: <IconVideo />,
-
-  RiImageEditLine: <IconEdit />,
-
-  RiImageLine: <IconImage />,
-
-  RiFileImageLine: <IconFile />,
-
-  RiFileImage2Line: <IconFile />,
-
-  RiUploadCloud2Line: <IconUpload />,
-
-  RiUpload2Line: <IconUpload />,
-
-  RiDownload2Line: <IconDownload />,
-
-  RiCropLine: <IconCrop />,
-
-  RiLayoutGridLine: <IconGridSquare />,
-
-  GridSquare: <IconGridSquare />,
-  RiGridLine: <IconGridSquare />,
-
-  RiStackLine: <IconLayers />,
-
-  RiShieldCheckLine: <IconShield />,
-
-  RiMagicLine: <IconAIWandLevel1 />,
-
-  RiEyeLine: <IconEyeOpened />,
-
-  EyeOpened: <IconEyeOpened />,
-  RiGlobalLine: <IconGlobe />,
-
-  RiCompressLine: <IconShrink />,
-
-  Moon: <IconMoon />,
-  Sun: <IconSun />,
-  Shrink: <IconShrink />,
-
-  RiExpandLine: <IconExpand />,
-
-  RiScissorsLine: <IconScissors />,
-
-  RiTemplateLine: <IconTemplate />,
-
-  RiPaletteLine: <IconColorPalette />,
-
-  RiTextLine: <IconText />,
-  Text: <IconText />,
-
-  Palette: <IconColorPalette />,
-
-  Template: <IconTemplate />,
-
-  LayoutTemplate: <IconTemplate />,
-
-  Wand2: <IconAIWandLevel1 />,
-
-  FontColor: <IconFontColor />,
-
-  Maximize2: <IconFullScreenStroked />,
+  // common direct icons used by sections
+  ChevronDown: <ChevronDown />,
+  ChevronLeft: <ChevronLeft />,
+  ChevronRight: <ChevronRight />,
+  CheckSquare: <CheckSquare />,
+  BadgeCheck: <BadgeCheck />,
 };
 
 /**
-
- * Render a Semi icon from a shared icon *name*, with a generic fallback.
-
- * `size` is applied via style so both icon sizes render consistently.
-
+ * Render a lucide icon from a shared icon *name*, with a generic fallback.
+ * `size` and `className` pass through to the lucide SVG.
  */
-
 export function SmartIcon({
   name,
-
   size = 16,
-
   className = "",
 }: {
   name?: string;
-
   size?: number;
-
   className?: string;
 }) {
   const el = name ? (ICON_MAP[name] ?? null) : null;
-
+  if (!el) return null;
   return (
     <span
       className={className}
-
       style={{
         display: "inline-flex",
-
         width: size,
-
         height: size,
-
         flexShrink: 0,
-
         alignItems: "center",
-
         justifyContent: "center",
       }}
-
       aria-hidden
     >
-      {el
-        ? React.cloneElement(
-            el as React.ReactElement<{
-              size?: unknown;
-              style?: React.CSSProperties;
-            }>,
-            {
-              size: "inherit",
-
-              style: { fontSize: size, display: "inline-flex" },
-            },
-          )
-        : null}
+      {React.cloneElement(el as React.ReactElement<{ size?: number; className?: string }>, {
+        size,
+      })}
     </span>
   );
 }
-
