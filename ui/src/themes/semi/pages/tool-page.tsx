@@ -63,7 +63,6 @@ export function ToolPage({
   return (
     <div id={id} className="app-tool-page">
       <ToolHero section={hero} LinkComponent={LinkComponent} />
-      111
       <ToolWorkspace
         title={workspace?.title}
         badge={workspace?.badge}

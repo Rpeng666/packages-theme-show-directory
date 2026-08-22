@@ -62,7 +62,7 @@ export function ToolWorkspace({
           }}
         />
 
-        {/* header bar */}
+        {/* header bar — transparent, so it reads as part of the canvas */}
         {(title || badge) ? (
           <div
             style={{
@@ -71,9 +71,8 @@ export function ToolWorkspace({
               justifyContent: 'space-between',
               gap: 12,
               flexWrap: 'wrap',
-              padding: '14px 22px',
+              padding: '16px 24px',
               borderBottom: '1px solid var(--semi-color-border)',
-              background: 'var(--semi-color-fill-0)',
             }}
           >
             {title ? (
@@ -81,11 +80,11 @@ export function ToolWorkspace({
                 <span
                   aria-hidden
                   style={{
-                    width: 8,
-                    height: 8,
+                    width: 7,
+                    height: 7,
                     borderRadius: 999,
                     background: 'rgba(var(--semi-green-5), 1)',
-                    boxShadow: '0 0 0 4px rgba(var(--semi-green-5), 0.15)',
+                    boxShadow: '0 0 0 3px rgba(var(--semi-green-5), 0.14)',
                   }}
                 />
                 <span
@@ -124,7 +123,7 @@ export function ToolWorkspace({
         ) : null}
 
         {/* body */}
-        <div style={{ position: 'relative', padding: '28px 20px 32px' }}>{children}</div>
+        <div style={{ position: 'relative', padding: '28px 24px 32px' }}>{children}</div>
 
         {/* footer hint */}
         {footer ? (
@@ -135,9 +134,8 @@ export function ToolWorkspace({
               justifyContent: 'center',
               gap: 8,
               flexWrap: 'wrap',
-              padding: '12px 22px',
+              padding: '12px 24px',
               borderTop: '1px solid var(--semi-color-border)',
-              background: 'var(--semi-color-fill-0)',
               fontSize: 13,
               color: 'var(--semi-color-text-3)',
               textAlign: 'center',
