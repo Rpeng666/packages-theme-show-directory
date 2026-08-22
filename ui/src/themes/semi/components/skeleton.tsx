@@ -1,19 +1,21 @@
 'use client'
 
 import * as React from 'react'
-import { Skeleton as SemiSkeleton } from '@douyinfe/semi-ui'
 import type { SkeletonProps } from '@template/ui'
 
-export function Skeleton(props: SkeletonProps) {
-  const { className = '', style, ...rest } = props
+/** Semi Skeleton — a quiet shimmering placeholder block. */
+export function Skeleton({ className = '', style, ...props }: SkeletonProps) {
   return (
-    <SemiSkeleton
-      placeholder={
-        <div className={className} style={{ width: '100%', ...style }} {...(rest as any)}>
-          <SemiSkeleton.Image style={{ width: '100%', height: 80, borderRadius: 8 }} />
-        </div>
-      }
-      loading
+    <div
+      {...props}
+      className={className}
+      style={{
+        ...style,
+        position: 'relative',
+        overflow: 'hidden',
+        borderRadius: 8,
+        background: 'var(--semi-color-fill-1)',
+      }}
     />
   )
 }

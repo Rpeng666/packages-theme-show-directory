@@ -1,43 +1,26 @@
 'use client'
 
 import * as React from 'react'
-import { InputNumber as SemiInputNumber } from '@douyinfe/semi-ui'
 import type { InputNumberProps } from '@template/ui'
 
-const SIZE = { sm: 'small', md: 'default', lg: 'large' } as const
-
-/**
- * Semi InputNumber — maps the shared InputNumberProps onto Semi InputNumber.
- * Semi's onChange passes (value, e); the contract normalizes to a number|null.
- */
-export function InputNumber({
-  value,
-  onChange,
-  size = 'md',
-  min,
-  max,
-  step,
-  disabled,
-  placeholder,
-  id,
-  className = '',
-}: InputNumberProps) {
+export function InputNumber({ value, onChange, min, max, step, disabled, size = 'md', placeholder, id, className = '' }: InputNumberProps) {
   return (
-    <SemiInputNumber
-      value={value ?? undefined}
-      onChange={(v: number | string | null) => {
-        if (onChange) {
-          onChange(typeof v === 'string' ? (v === '' ? null : Number.parseFloat(v) || null) : v)
-        }
-      }}
+    <input
+      type="number"
+      id={id}
+      value={value ?? ''}
       min={min}
       max={max}
       step={step}
       disabled={disabled}
-      size={SIZE[size as keyof typeof SIZE] ?? 'default'}
       placeholder={placeholder}
-      id={id}
+      onChange={(e) => onChange?.(e.target.value === '' ? null : Number(e.target.value))}
       className={className}
+      style={{
+        height: size === 'sm' ? 30 : size === 'lg' ? 42 : 36, padding: '0 10px', borderRadius: 10,
+        border: '1px solid var(--semi-color-border)', background: 'var(--semi-color-bg-1)',
+        color: 'var(--semi-color-text-0)', fontSize: 14, outline: 'none', fontVariantNumeric: 'tabular-nums',
+      }}
     />
   )
 }

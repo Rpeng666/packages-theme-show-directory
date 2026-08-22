@@ -1,33 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import { Image as SemiImage } from '@douyinfe/semi-ui'
 import type { ImageProps } from '@template/ui'
 
-/**
- * Semi Image — Semi's built-in viewer (click to zoom / rotate / download)
- * via the `preview` prop. Sizing is controlled by width/height/style.
- */
-export function Image({
-  src,
-  alt,
-  width,
-  height,
-  preview = true,
-  fallback,
-  className = '',
-  style,
-}: ImageProps) {
+export function Image({ src, alt, width, height, preview, fallback, className = '', style }: ImageProps) {
+  const [failed, setFailed] = React.useState(false)
+  if (failed && fallback) return <>{fallback}</>
   return (
-    <SemiImage
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      preview={preview}
-      fallback={fallback}
-      className={className}
-      style={style}
-    />
+    <img src={src} alt={alt ?? ''} width={width} height={height} className={className} style={style} loading="lazy" onError={() => setFailed(true)} onClick={preview ? () => window.open(src, '_blank') : undefined} />
   )
 }

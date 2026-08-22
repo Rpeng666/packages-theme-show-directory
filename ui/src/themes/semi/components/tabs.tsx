@@ -1,15 +1,10 @@
 'use client'
 
 import * as React from 'react'
-import { Tabs as SemiTabs } from '@douyinfe/semi-ui'
+import { Tabs as HeroTabs, Tab as HeroTab } from '@heroui/react'
 import type { TabsProps } from '@template/ui'
 
-const TYPE = { line: 'line', card: 'card', button: 'button', segment: 'button' } as const
-
-/**
- * Semi Tabs — maps the item-based TabsProps onto Semi Tabs (TabPane children).
- * `type` maps line/card/button; `segment` collapses to Semi's button style.
- */
+/** Semi Tabs — item-based Tabs mapped onto HeroUI Tabs. */
 export function Tabs({
   items,
   activeKey,
@@ -19,22 +14,21 @@ export function Tabs({
   className = '',
 }: TabsProps) {
   return (
-    <SemiTabs
-      // Only forward activeKey when it's actually set. Passing activeKey={undefined}
-      // makes Semi treat the tabs as controlled-with-undefined, which leaves every
-      // pane inactive (content hidden). Omitting it lets Semi default to the first
-      // pane and manage switching internally.
-      {...(activeKey !== undefined ? { activeKey } : {})}
-      onChange={onChange}
-      type={TYPE[type as keyof typeof TYPE] ?? 'line'}
-      size={size}
-      className={className}
+    <HeroTabs
+      {...({
+        selectedKey: activeKey,
+        onSelectionChange: (key: React.Key) => onChange?.(String(key)),
+        size: size === 'small' ? 'sm' : size === 'large' ? 'lg' : 'md',
+        color: 'primary',
+        variant: type === 'card' ? 'solid' : 'underlined',
+        className,
+      } as any)}
     >
       {items.map((it) => (
-        <SemiTabs.TabPane key={it.key} itemKey={it.key} tab={it.label} disabled={it.disabled}>
+        <HeroTab key={it.key} {...({ title: it.label, isDisabled: it.disabled } as any)}>
           {it.content}
-        </SemiTabs.TabPane>
+        </HeroTab>
       ))}
-    </SemiTabs>
+    </HeroTabs>
   )
 }

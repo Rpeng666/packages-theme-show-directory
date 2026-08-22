@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { IconChevronDown } from '@douyinfe/semi-icons'
+import { ChevronDown } from 'lucide-react'
 import { Dropdown } from './dropdown'
 import type { HeaderProps, DropdownItem } from '@template/ui'
 
@@ -95,7 +95,7 @@ export function Header({ nav, brandSlot, actions, business, className = '' }: He
                     trigger={
                       <a href={item.url || '#'} className="semi-hdr-link" style={linkStyle}>
                         {item.title}
-                        <IconChevronDown style={{ width: 14, height: 14 }} />
+                        <ChevronDown style={{ width: 14, height: 14 }} />
                       </a>
                     }
                     items={items}

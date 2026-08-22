@@ -1,124 +1,80 @@
 'use client'
 
 import * as React from 'react'
-import { Select as SemiSelect, Button as SemiButton } from '@douyinfe/semi-ui'
 import type { SelectProps, ToggleProps, ToggleGroupProps, BareTextareaProps } from '@template/ui'
 
-/** Semi Select size vocabulary — maps the shared sm/md/lg onto Semi's. */
-const SIZE_MAP: Record<string, 'small' | 'default' | 'large'> = {
-  sm: 'small',
-  md: 'default',
-  lg: 'large',
-}
-
-/**
- * Semi form controls: Select / Toggle (+ group) / BareTextarea backing the
- * shared contract keys that the schema-driven Form/Table stack resolve.
- */
 export function Select({
-  label,
-  options,
-  value,
-  defaultValue,
-  onChange,
-  placeholder,
-  disabled,
-  size = 'md',
-  tone: _tone,
-  className = '',
+  label, options = [], value, defaultValue, onChange, placeholder, disabled, size = 'md', className = '', ...props
 }: SelectProps) {
   return (
-    <div style={{ minWidth: 120 }}>
-      {label ? (
-        <label style={{ display: 'block', fontSize: 13, color: 'var(--semi-color-text-2)', marginBottom: 6 }}>
-          {label}
-        </label>
-      ) : null}
-      <SemiSelect
+    <div className={className} style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+      {label ? <label style={{ fontSize: 13, fontWeight: 550, color: 'var(--semi-color-text-1)' }}>{label}</label> : null}
+      <select
+        {...(props as object)}
         value={value}
         defaultValue={defaultValue}
-        onChange={(v: string | string[] | undefined) => {
-          if (typeof v === 'string') onChange?.(v)
-        }}
-        placeholder={placeholder}
         disabled={disabled}
-        size={SIZE_MAP[size] ?? 'default'}
-        className={className}
-        style={{ width: '100%' }}
-        optionList={options.map((o) => ({ label: o.label, value: o.value }))}
-      />
+        onChange={(e) => onChange?.(e.target.value)}
+        style={{
+          height: size === 'sm' ? 30 : size === 'lg' ? 42 : 36,
+          padding: '0 10px', borderRadius: 10,
+          border: '1px solid var(--semi-color-border)',
+          background: 'var(--semi-color-bg-1)', color: 'var(--semi-color-text-0)',
+          fontSize: 14, outline: 'none',
+        }}
+      >
+        {placeholder ? <option value="" disabled>{placeholder}</option> : null}
+        {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
     </div>
   )
 }
 
 export function Toggle({ value, pressed, children, onClick, className = '', ...props }: ToggleProps) {
   return (
-    <SemiButton
-      theme={pressed ? 'solid' : 'light'}
-      size="small"
-      onClick={onClick}
-      className={className}
-      aria-pressed={pressed}
-      data-value={value}
-      {...(props as object)}
-    >
+    <button type="button" {...(props as object)} aria-pressed={pressed} onClick={onClick} className={className}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8,
+        border: '1px solid var(--semi-color-border)', cursor: 'pointer',
+        background: pressed ? 'var(--app-brand-grad)' : 'var(--semi-color-bg-1)',
+        color: pressed ? '#fff' : 'var(--semi-color-text-1)', fontSize: 13, fontWeight: 600,
+      }}>
       {children}
-    </SemiButton>
+    </button>
   )
 }
 
 export function ToggleGroup({
-  type = 'single',
-  value,
-  defaultValue,
-  onChange,
-  size = 'md',
-  variant = 'solid',
-  className = '',
-  children,
-  ...props
+  type = 'single', value, defaultValue, onChange, size = 'md', variant = 'soft', className = '', ...props
 }: ToggleGroupProps) {
-  const isMultiple = type === 'multiple'
-  const current = value as string | string[] | undefined
-  const defaultVal = defaultValue as string | string[] | undefined
-
+  const items = (props as { items?: Array<{ value: string; label: string }> }).items ?? []
+  const multi = type === 'multiple'
+  const selected = value ?? defaultValue ?? (multi ? [] : '')
+  const isActive = (v: string) => multi ? Array.isArray(selected) && (selected as string[]).includes(v) : selected === v
+  const toggle = (v: string) => {
+    if (multi) {
+      const cur = Array.isArray(selected) ? selected : []
+      const next = cur.includes(v) ? cur.filter((x) => x !== v) : [...cur, v]
+      onChange?.(next)
+    } else {
+      onChange?.(v)
+    }
+  }
   return (
-    <div
-      role="group"
-      aria-label={props['aria-label']}
-      className={className}
-      style={{ display: 'inline-flex', gap: 8, flexWrap: 'wrap' }}
-    >
-      {React.Children.map(children, (child) => {
-        if (!React.isValidElement<ToggleProps>(child)) return child
-        const childValue = child.props.value
-        const pressed = isMultiple
-          ? Array.isArray(current) && current.includes(childValue)
-          : current === childValue
-        const defaultPressed = isMultiple
-          ? Array.isArray(defaultVal) && defaultVal.includes(childValue)
-          : defaultVal === childValue
-        const active = value !== undefined ? pressed : defaultPressed
-        return React.cloneElement(child, {
-          pressed: active,
-          onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
-            child.props.onClick?.(e)
-            if (isMultiple) {
-              const next = Array.isArray(current) ? [...current] : []
-              const i = next.indexOf(childValue)
-              if (i >= 0) next.splice(i, 1)
-              else next.push(childValue)
-              onChange?.(next)
-            } else {
-              onChange?.(childValue)
-            }
-          },
-        })
-      })}
+    <div className={className} style={{ display: 'inline-flex', gap: 4, padding: 3, borderRadius: 10, background: 'var(--semi-color-fill-0)' }}>
+      {items.map((it) => (
+        <button key={it.value} type="button" onClick={() => toggle(it.value)} aria-pressed={isActive(it.value)}
+          style={{ padding: '5px 12px', borderRadius: 7, border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 600,
+            background: isActive(it.value) ? 'var(--semi-color-bg-1)' : 'transparent',
+            color: isActive(it.value) ? 'var(--semi-color-text-0)' : 'var(--semi-color-text-2)',
+            boxShadow: isActive(it.value) ? '0 1px 4px rgba(0,0,0,0.2)' : 'none' }}>
+          {it.label}
+        </button>
+      ))}
     </div>
   )
 }
 
 export function BareTextarea(props: BareTextareaProps) {
-  return <textarea {...props} />
+  return <textarea {...(props as any)} />
 }

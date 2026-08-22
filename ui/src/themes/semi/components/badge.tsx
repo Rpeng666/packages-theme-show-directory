@@ -1,39 +1,53 @@
 'use client'
 
 import * as React from 'react'
-import { Tag } from '@douyinfe/semi-ui'
+import { Chip } from '@heroui/react'
 import type { BadgeProps } from '@template/ui'
 
-/**
- * Semi Badge — thin wrapper around Semi Tag. `tone` (pixel-native) maps to
- * Semi Tag color; `variant` chooses the Tag `color`+`type`.
- */
-const TONE_COLOR: Record<string, [string, 'solid' | 'light' | 'outline']> = {
-  green: ['green', 'light'],
-  cyan: ['blue', 'light'],
-  gold: ['amber', 'light'],
-  red: ['red', 'light'],
-  purple: ['violet', 'light'],
-  pink: ['pink', 'light'],
-  neutral: ['grey', 'light'],
+/** Hero Chip color from the shared tone word. */
+const TONE_COLOR: Record<string, 'success' | 'danger' | 'accent' | 'default'> = {
+  green: 'success',
+  red: 'danger',
+  cyan: 'accent',
+  purple: 'accent',
+  blue: 'accent',
+  pink: 'danger',
+  gold: 'default',
+  neutral: 'default',
 }
 
+/**
+ * Semi Badge — a small status pill. Maps the shared variant/tone vocabulary
+ * onto HeroUI Chip.
+ */
 export function Badge({
   variant = 'default',
   tone = 'neutral',
-  size: _size,
-  iconLeft: _iconLeft,
+  size = 'md',
+  iconLeft,
   className = '',
   children,
   ...props
 }: BadgeProps) {
-  const [color, baseType] = TONE_COLOR[tone] ?? TONE_COLOR.neutral
-  const type = variant === 'outline' ? 'outline' : variant === 'secondary' ? 'light' : baseType
-  const styles: React.CSSProperties = {}
-  if (variant === 'destructive') styles.color = 'var(--semi-color-danger)'
+  const color =
+    variant === 'destructive' ? 'danger'
+    : variant === 'outline' ? 'default'
+    : TONE_COLOR[tone] ?? 'default'
+  const heroVariant =
+    variant === 'outline' ? 'tertiary'
+    : variant === 'secondary' ? 'soft'
+    : 'primary'
+
   return (
-    <Tag color={color} type={type} className={className} style={styles} {...(props as any)}>
+    <Chip
+      {...(props as object)}
+      color={color}
+      variant={heroVariant as 'primary' | 'soft' | 'tertiary'}
+      size={size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : 'md'}
+      className={className}
+    >
+      {iconLeft}
       {children}
-    </Tag>
+    </Chip>
   )
 }

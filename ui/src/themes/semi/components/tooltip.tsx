@@ -1,20 +1,10 @@
 'use client'
 
 import * as React from 'react'
-import { Tooltip as SemiTooltip, Tag } from '@douyinfe/semi-ui'
+import { Tooltip as HeroTooltip } from '@heroui/react'
 import type { TooltipProps } from '@template/ui'
 
-/**
- * Semi Tooltip — wraps children in a Semi Tooltip with the `content` rendered
- * as a small bubble. `side`, `trigger`, `delay` map onto Semi's position.
- */
-const POS: Record<string, 'top' | 'bottom' | 'left' | 'right'> = {
-  top: 'top',
-  bottom: 'bottom',
-  left: 'left',
-  right: 'right',
-}
-
+/** Semi Tooltip — HeroUI Tooltip with the shared side/trigger vocabulary. */
 export function Tooltip({
   content,
   children,
@@ -27,25 +17,18 @@ export function Tooltip({
   sideOffset,
   className = '',
 }: TooltipProps) {
+  const placement = (side === 'right' ? 'right' : side === 'left' ? 'left' : side === 'bottom' ? 'bottom' : 'top') as never
+  const delayMs = typeof delay === 'number' ? delay : delay?.open
   return (
-    <SemiTooltip
-      content={<span className={className}>{content}</span>}
-      position={POS[side] ?? 'top'}
-      trigger={trigger}
-      visible={open}
-      defaultVisible={defaultOpen}
-      onVisibleChange={(v: boolean) => onOpenChange?.(v)}
-      mouseEnterDelay={typeof delay === 'number' ? delay / 1000 : Decimal(delay)}
-      mouseLeaveDelay={0.1}
-      spacing={sideOffset}
+    <HeroTooltip
+      {...({ content, placement, delay: delayMs, offset: sideOffset } as any)}
+      isOpen={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+      trigger={trigger === 'click' ? 'focus' : 'hover'}
+      className={className}
     >
       {children}
-    </SemiTooltip>
+    </HeroTooltip>
   )
-}
-
-function Decimal(delay?: number | { open?: number; close?: number }): number {
-  if (typeof delay === 'number') return delay / 1000
-  const open = delay?.open
-  return open != null ? open / 1000 : 0
 }
