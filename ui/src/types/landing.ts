@@ -22,8 +22,8 @@ export interface SectionSource {
 }
 
 export interface Section {
-  /** Every landing section carries a stable anchor id (DOM <section id=...> target). Required. */
-  id: string;
+  /** Every landing section carries a stable anchor id (DOM <section id=...> target). Optional — some apps' data doesn't set it. */
+  id?: string;
   block?: string;
   label?: string;
   sr_only_title?: string;

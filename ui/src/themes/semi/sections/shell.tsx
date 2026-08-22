@@ -8,8 +8,8 @@ import type { CSSProperties, ReactNode } from 'react'
 /* ------------------------------------------------------------------ */
 
 export interface SectionShellProps {
-  /** DOM anchor id for the rendered <section> — required so anchor navigation / scroll-margin target the section (sections pass `section.id`) */
-  id: string
+  /** DOM anchor id for the rendered <section> — anchor navigation / scroll-margin target (sections pass `section.id`) */
+  id?: string
   className?: string
   children: ReactNode
   /** Section vertical padding */
