@@ -58,6 +58,10 @@ export type {
   ToolHeroLink,
 } from "./tool-hero";
 export type { PageHeaderProps } from "./page-header";
+export type { ContentHeaderProps } from "./content-header";
+export type { SizeTableProps, SizeTableRow } from "./size-table";
+export type { FormatGuideProps } from "./format-guide";
+export type { RelatedLinksProps, RelatedLink } from "./related-links";
 export type {
   DashboardOverviewProps,
   DashboardStat,
