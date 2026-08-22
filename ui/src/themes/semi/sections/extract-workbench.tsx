@@ -64,6 +64,16 @@ export function ExtractWorkbench({
   frameResolutionLabel,
   framePlaceholder,
   frameUrl,
+  gridCardTitle,
+  gridHint,
+  gridCountLabel,
+  gridCount = 9,
+  onGridCountChange,
+  gridUrl,
+  onCaptureGrid,
+  gridCapturing,
+  downloadGridLabel,
+  onDownloadGrid,
   exportCardTitle,
   downloadLabel,
   downloadHint,
@@ -371,6 +381,64 @@ export function ExtractWorkbench({
                 ) : null}
                 {downloadHint ? (
                   <p className="xstudio-download-hint">{downloadHint}</p>
+                ) : null}
+              </section>
+
+              {/* One-click contact-sheet grid (N frames) */}
+              <section className="xstudio-card">
+                <div className="xstudio-card-head">
+                  <span className="xstudio-card-icon">
+                    <SmartIcon name="RiLayoutGridLine" size={15} />
+                  </span>
+                  <h2 className="xstudio-card-title">{gridCardTitle}</h2>
+                </div>
+                <p className="xstudio-grid-hint">{gridHint}</p>
+                <div className="xstudio-grid-controls">
+                  <span className="xstudio-grid-count-label">{gridCountLabel}</span>
+                  <div className="xstudio-grid-count-options">
+                    {[6, 9, 12].map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        className={`xstudio-grid-count-btn ${gridCount === n ? "is-active" : ""}`}
+                        onClick={() => onGridCountChange?.(n)}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  size="lg"
+                  className="xstudio-grid-capture"
+                  onClick={() => onCaptureGrid?.(gridCount)}
+                  disabled={!videoUrl || gridCapturing}
+                >
+                  <SmartIcon name="Layers" size={17} />
+                  <span>{gridCapturing ? "…" : gridCardTitle}</span>
+                </Button>
+                {gridUrl ? (
+                  <div className="xstudio-grid-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={gridUrl}
+                      alt="Contact sheet grid"
+                      className="xstudio-grid-img"
+                    />
+                    {onDownloadGrid ? (
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="secondary"
+                        className="xstudio-grid-download"
+                        onClick={onDownloadGrid}
+                      >
+                        <SmartIcon name="Download" size={14} />
+                        <span>{downloadGridLabel}</span>
+                      </Button>
+                    ) : null}
+                  </div>
                 ) : null}
               </section>
 

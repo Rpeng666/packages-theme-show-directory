@@ -59,6 +59,17 @@ export interface ExtractWorkbenchProps {
   frameResolutionLabel?: ReactNode;
   framePlaceholder?: ReactNode;
   frameUrl?: string | null;
+  /** contact-sheet grid capture — one-click N frames from the video */
+  gridCardTitle?: ReactNode;
+  gridHint?: ReactNode;
+  gridCountLabel?: ReactNode;
+  gridCount?: number;
+  onGridCountChange?: (count: number) => void;
+  gridUrl?: string | null;
+  onCaptureGrid?: (count: number) => void;
+  gridCapturing?: boolean;
+  downloadGridLabel?: ReactNode;
+  onDownloadGrid?: () => void;
   /** export dock */
   exportCardTitle?: ReactNode;
   downloadLabel?: ReactNode;
