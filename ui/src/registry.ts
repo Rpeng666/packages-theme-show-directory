@@ -1,26 +1,39 @@
 /**
- * Component registry — aggregates the per-theme manifests and resolves
- * contract keys to concrete implementations.
+ * Component registry — convention-over-configuration resolver.
  *
- * Each theme registers its own components in `src/themes/<theme>/manifest.ts`
- * (default / pixel / semi); this file only assembles the `registry` map and
- * provides the resolution functions (`resolveComponent`/`resolveSection`/…).
- * The shared contract types live in `registry-types.ts`.
+ * No hand-written manifests. The filesystem IS the registry: a build-time
+ * script (`scripts/discover-convention.mjs`, run on predev/prebuild) scans the
+ * convention layout and generates `convention.generated.ts` — so adding a
+ * block = dropping a file:
  *
- * This is the piece that makes the contracts reusable across themes: a theme
- * declares which implementations back each contract key, and consumers always
- * resolve through `resolveComponent`/`useThemeComponent`, never importing a
- * concrete visual implementation directly.
+ *   themes/<theme>/components/<Name>.tsx    primitives (file or dir/index)
+ *   themes/<theme>/sections/<Name>.tsx      landing blocks
+ *   themes/<theme>/pages/<Name>.tsx         page-level shells
+ *   themes/<theme>/editor|light-tool-demo/… pixel feature assets
+ *   themes/<theme>/ambient.tsx              ambient provider
+ *
+ * A contract key maps to the export with the same name (PascalCase) in the
+ * matching file; aggregate files (one file exporting several components) work
+ * automatically because every named export is collected. Resolution is a plain
+ * synchronous lookup with the fallback contract:
+ *
+ *   1. the requested theme (e.g. semi)
+ *   2. the default theme (fallback when the active theme doesn't ship the block)
+ *   3. any other theme that has it ("哪个有就用哪个")
+ *   4. an empty component when nothing exists ("都没有就直接返回空")
+ *
+ * Because collection happens at build time via plain static imports, there is
+ * no runtime registry object, no React.lazy, no Suspense — resolve stays
+ * synchronous for the ~200 module-top-level call sites, and it works on both
+ * Turbopack (dev) and webpack/Turbopack (build) without bundler-specific
+ * dynamic-import features.
  */
 import { createElement } from "react";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 
-import { defaultManifest } from "./themes/default/manifest";
-import { pixelManifest } from "./themes/pixel/manifest";
-import { semiManifest } from "./themes/semi/manifest";
+import { conventionIndex, conventionAmbient } from "./convention.generated";
 import type {
   ThemeName,
-  ThemeManifest,
   ThemeComponents,
   SectionComponents,
   PerlerBeadsComponents,
@@ -55,9 +68,8 @@ export type {
 /**
  * `defaultThemeName` lives in this aggregator module (not `registry-types`) to
  * preserve the registry↔context cycle topology: context.tsx imports it from
- * "./registry", and registry's body (via the manifests → cleaner components →
- * context) is mid-evaluation when context's module body runs — see the TDZ
- * note in context.tsx.
+ * "./registry", and registry's body (via the generated convention imports) is
+ * mid-evaluation when context's module body runs — see the TDZ note in context.tsx.
  */
 export const defaultThemeName = "default";
 
@@ -70,15 +82,11 @@ export function getActiveTheme(): ThemeName {
   return (process.env.NEXT_PUBLIC_THEME as ThemeName) || defaultThemeName;
 }
 
-export const registry: Record<ThemeName, ThemeManifest> = {
-  default: defaultManifest,
-  pixel: pixelManifest,
-  semi: semiManifest,
-};
+/** Known theme directories — the convention roots that the codegen scans. */
+export const THEME_NAMES: readonly ThemeName[] = ["default", "pixel", "semi"];
 
-export function getThemeManifest(name?: ThemeName): ThemeManifest {
-  return registry[name ?? defaultThemeName] ?? registry[defaultThemeName];
-}
+/** The "nothing exists anywhere" fallback — renders nothing, never throws. */
+const EmptyComponent: ComponentType<any> = () => null;
 
 /**
  * Registry identity tag — every component resolved through the registry gets
@@ -111,10 +119,54 @@ function withRegistryTag(
   return wrapped;
 }
 
+// ---------------------------------------------------------------------------
+// Convention resolution — generated index lookup with the fallback chain.
+// ---------------------------------------------------------------------------
+
+/** Convention category → directory under themes/<theme>/. */
+type Category =
+  | "components"
+  | "sections"
+  | "pages"
+  | "sections/perler-beads"
+  | "sections/cleaner"
+  | "sections/dither"
+  | "sections/blog"
+  | "editor"
+  | "light-tool-demo";
+
+/**
+ * The single convention resolver. Synchronous lookup over the fallback chain:
+ * requested theme → default → any other theme → empty.
+ */
+function resolveConvention<K extends string>(
+  category: Category,
+  key: K,
+  theme: ThemeName | undefined,
+  tagPrefix: string,
+): ComponentType<any> {
+  const active = theme ?? getActiveTheme();
+  const candidates = [
+    active,
+    defaultThemeName,
+    ...THEME_NAMES.filter((t) => t !== active && t !== defaultThemeName),
+  ];
+  for (const t of candidates) {
+    const comp = conventionIndex[t]?.[category]?.[key];
+    if (comp) return withRegistryTag(tagPrefix, t, comp);
+    // page-level shells (ToolPage / ConsoleLayout) register under `pages`.
+    if (category === "components" || category === "sections") {
+      const pageComp = conventionIndex[t]?.pages?.[key];
+      if (pageComp) return withRegistryTag(tagPrefix, t, pageComp);
+    }
+  }
+  return EmptyComponent;
+}
+
 /**
  * Resolve a contract key to its implementation. `theme` is optional — when
  * omitted, resolves against the active theme (NEXT_PUBLIC_THEME), falling back
- * to the default theme when the theme hasn't registered that component.
+ * to the default theme, then any theme, then an empty component.
  *
  * Usage: resolveComponent('Footer')  /  resolveComponent('Button', 'default')
  */
@@ -122,18 +174,13 @@ export function resolveComponent<K extends keyof ThemeComponents>(
   key: K,
   theme?: ThemeName,
 ): ThemeComponents[K] {
-  const t = theme ?? getActiveTheme();
-  const themed = getThemeManifest(t).components[key];
-  // Tag prefix = the theme that actually supplied the implementation (so a
-  // fallback to default shows `default:Key`, not a misleading `pixel:Key`).
-  const source = themed ? t : defaultThemeName;
-  const Comp = themed ?? getThemeManifest(defaultThemeName).components[key]!;
-  return withRegistryTag(key, source, Comp) as ThemeComponents[K];
+  return resolveConvention("components", key, theme, key) as ThemeComponents[K];
 }
 
 /**
  * Resolve a section (Hero/Faq/Cta/…). `theme` is optional — when omitted,
- * resolves against the active theme, falling back to the default theme.
+ * resolves against the active theme, falling back to the default theme, then
+ * any theme, then an empty component.
  *
  * Usage: resolveSection('Faq')  /  resolveSection('Hero', 'default')
  */
@@ -141,107 +188,70 @@ export function resolveSection<K extends keyof SectionComponents>(
   key: K,
   theme?: ThemeName,
 ): SectionComponents[K] {
-  const t = theme ?? getActiveTheme();
-  const themed = getThemeManifest(t).sections?.[key];
-  const source = themed ? t : defaultThemeName;
-  const Comp = themed ?? getThemeManifest(defaultThemeName).sections?.[key]!;
-  return withRegistryTag(key, source, Comp) as SectionComponents[K];
+  return resolveConvention("sections", key, theme, key) as SectionComponents[K];
 }
 
 /**
- * Resolve a perler-beads workbench component. The feature is pixel-only, so
- * the implementation always resolves against `pixel` (never falls back to the
- * default theme, which has no perler entries) — but the active theme is still
- * used for the registry identity tag, mirroring the other resolvers.
- *
+ * Resolve a perler-beads workbench component (pixel feature, sections/perler-beads).
  * Usage: resolvePerler('ColorPalette')  /  resolvePerler('InstallPWA')
  */
 export function resolvePerler<K extends keyof PerlerBeadsComponents>(
   key: K,
   theme?: ThemeName,
 ): PerlerBeadsComponents[K] {
-  const t = theme ?? getActiveTheme();
-  const themed = getThemeManifest(t).perler?.[key];
-  const source = themed ? t : "pixel";
-  const Comp = themed ?? getThemeManifest("pixel").perler?.[key]!;
-  return withRegistryTag(
-    `Perler${key}`,
-    source,
-    Comp,
-  ) as PerlerBeadsComponents[K];
+  return resolveConvention("sections/perler-beads", key, theme, `Perler${key}`) as PerlerBeadsComponents[K];
 }
 
 /**
- * Resolve a dither workbench component. The feature is pixel-only, so the
- * implementation always resolves against `pixel` (never falls back to the
- * default theme) — mirroring `resolvePerler`.
- *
+ * Resolve a dither workbench component (pixel feature, sections/dither).
  * Usage: resolveDither('SettingsPanel')  /  resolveDither('Preview')
  */
 export function resolveDither<K extends keyof DitherComponents>(
   key: K,
   theme?: ThemeName,
 ): DitherComponents[K] {
-  const t = theme ?? getActiveTheme();
-  const themed = getThemeManifest(t).dither?.[key];
-  const source = themed ? t : "pixel";
-  const Comp = themed ?? getThemeManifest("pixel").dither?.[key]!;
-  return withRegistryTag(`Dither${key}`, source, Comp) as DitherComponents[K];
+  return resolveConvention("sections/dither", key, theme, `Dither${key}`) as DitherComponents[K];
 }
 
 /**
- * Resolve a generic image-editor shell component. The asset is pixel-only, so
- * the implementation always resolves against `pixel` (never falls back to the
- * default theme) — mirroring `resolvePerler`/`resolveDither`.
- *
+ * Resolve a generic image-editor shell component (pixel feature, editor/).
  * Usage: resolveEditor('Shell')  /  resolveEditor('Sidebar')
  */
 export function resolveEditor<K extends keyof EditorComponents>(
   key: K,
   theme?: ThemeName,
 ): EditorComponents[K] {
-  const t = theme ?? getActiveTheme();
-  const themed = getThemeManifest(t).editor?.[key];
-  const source = themed ? t : "pixel";
-  const Comp = themed ?? getThemeManifest("pixel").editor?.[key]!;
-  return withRegistryTag(`Editor${key}`, source, Comp) as EditorComponents[K];
+  return resolveConvention("editor", key, theme, `Editor${key}`) as EditorComponents[K];
 }
 
 /**
- * Resolve a cleaner workbench display component. Falls back to the `pixel`
- * implementation when the active theme has no cleaner entry (mirroring
- * `resolveEditor`/`resolveDither`) — pixel is the historical reference.
- *
+ * Resolve a cleaner workbench display component (pixel feature, sections/cleaner).
  * Usage: resolveCleaner('Workbench')  /  resolveCleaner('Output')
  */
 export function resolveCleaner<K extends keyof CleanerComponents>(
   key: K,
   theme?: ThemeName,
 ): CleanerComponents[K] {
-  const t = theme ?? getActiveTheme();
-  const themed = getThemeManifest(t).cleaner?.[key];
-  const source = themed ? t : "pixel";
-  const Comp = themed ?? getThemeManifest("pixel").cleaner?.[key]!;
-  return withRegistryTag(`Cleaner${key}`, source, Comp) as CleanerComponents[K];
+  return resolveConvention("sections/cleaner", key, theme, `Cleaner${key}`) as CleanerComponents[K];
 }
 
 /**
- * Resolve a light-tool demo component. The asset is pixel-only, so the
- * implementation always resolves against `pixel` (never the default theme).
- *
+ * Resolve a light-tool demo component (pixel feature, light-tool-demo/).
  * Usage: resolveLightDemo('Demo')
  */
 export function resolveLightDemo<K extends keyof LightDemoComponents>(
   key: K,
   theme?: ThemeName,
 ): LightDemoComponents[K] {
-  const t = theme ?? getActiveTheme();
-  const themed = getThemeManifest(t).lightDemo?.[key];
-  const source = themed ? t : "pixel";
-  const Comp = themed ?? getThemeManifest("pixel").lightDemo?.[key]!;
-  return withRegistryTag(
-    `LightDemo${key}`,
-    source,
-    Comp,
-  ) as LightDemoComponents[K];
+  return resolveConvention("light-tool-demo", key, theme, `LightDemo${key}`) as LightDemoComponents[K];
+}
+
+/**
+ * Resolve a theme's ambient provider by convention — `themes/<theme>/ambient.tsx`.
+ * Returns null when the theme ships no ambient provider.
+ */
+export function resolveAmbient(
+  theme: ThemeName,
+): ComponentType<{ children: ReactNode }> | null {
+  return conventionAmbient[theme] ?? null;
 }
