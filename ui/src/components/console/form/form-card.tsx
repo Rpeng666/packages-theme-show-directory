@@ -3,7 +3,7 @@
 import { Fragment, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
-
+import { useThemeComponent } from '../../../context';
 import { ConsoleLink } from '../bridge';
 import { Form } from './index';
 import {
@@ -14,16 +14,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '../../../components/breadcrumb';
-import { Button } from '../../../themes/default/button';
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../../../themes/default/card';
 import { cn } from '../../../lib/utils';
 import { Crumb } from '../../../contracts/features/common';
 import { Form as FormType } from '../../../contracts/features/form';
@@ -45,12 +35,40 @@ export function FormCard({
   collapsible?: boolean;
   defaultCollapsed?: boolean;
 }) {
+  // Resolve the active theme's Card/Button (Semi under the semi theme, shadcn
+  // under default) so console cards render the theme-native surface.
+  const Card = useThemeComponent('Card');
+  const Button = useThemeComponent('Button');
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
 
+  const titleNode =
+    title || collapsible ? (
+      <span className="flex items-center gap-2">
+        {title}
+        {collapsible && (
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+          >
+            {isCollapsed ? <ChevronDown className="size-4" /> : <ChevronUp className="size-4" />}
+          </Button>
+        )}
+      </span>
+    ) : undefined;
+
   return (
-    <Card className={cn(className)}>
+    <Card
+      className={cn(className)}
+      title={titleNode}
+      description={
+        description ? (
+          <span dangerouslySetInnerHTML={{ __html: description }} />
+        ) : undefined
+      }
+    >
       {crumbs && crumbs.length > 0 && (
-        <Breadcrumb className="px-6">
+        <Breadcrumb className="mb-4">
           <BreadcrumbList>
             {crumbs.map((crumb, index) => (
               <Fragment key={index}>
@@ -70,36 +88,10 @@ export function FormCard({
         </Breadcrumb>
       )}
 
-      {(title || description || collapsible) && (
-        <CardHeader>
-          {title && <CardTitle>{title}</CardTitle>}
-          {description && (
-            <CardDescription
-              dangerouslySetInnerHTML={{ __html: description }}
-            />
-          )}
-          {collapsible && (
-            <CardAction>
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                onClick={() => setIsCollapsed(!isCollapsed)}
-              >
-                {isCollapsed ? (
-                  <ChevronDown className="size-4" />
-                ) : (
-                  <ChevronUp className="size-4" />
-                )}
-              </Button>
-            </CardAction>
-          )}
-        </CardHeader>
-      )}
-
       {form && (
-        <CardContent className={cn(collapsible && isCollapsed && 'hidden')}>
+        <div className={cn(collapsible && isCollapsed && 'hidden')}>
           <Form {...form} />
-        </CardContent>
+        </div>
       )}
     </Card>
   );

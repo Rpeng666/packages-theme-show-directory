@@ -37,9 +37,12 @@
       "types": "./src/themes/default/sections/*.tsx",
       "import": "./src/themes/default/sections/*.tsx",
       "default": "./src/themes/default/sections/*.tsx"
-    }
+    },
+    "./themes/semi/theme.css": "./src/themes/semi/theme.css"
   },
   "dependencies": {
+    "@douyinfe/semi-icons": "^2.102.0",
+    "@douyinfe/semi-ui": "^2.102.0",
     "@hookform/resolvers": "^5.2.1",
     "@pxlkit/core": "workspace:*",
     "@pxlkit/gamification": "workspace:*",

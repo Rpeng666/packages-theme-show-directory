@@ -3,21 +3,10 @@
 import { ConsoleLink } from './bridge';
 import { ReactNode } from 'react';
 
-
-import { Badge } from '../../themes/default/badge';
-import { Button } from '../../themes/default/button';
-import {
-  Card as CardComponent,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../../themes/default/card';
+import { useThemeComponent } from '../../context';
+import { SmartIcon } from '../smart-icon';
 import { cn } from '../../lib/utils';
 import { Button as ButtonType } from '../../contracts/features/common';
-
-import { SmartIcon } from '../smart-icon';
 
 export function PanelCard({
   title,
@@ -36,46 +25,53 @@ export function PanelCard({
   children?: ReactNode;
   className?: string;
 }) {
-  return (
-    <CardComponent className={cn('overflow-hidden pb-0', className)}>
-      {(title || description) && (
-        <CardHeader>
-          <CardTitle>
-            {title}
-            {label && (
-              <Badge
-                variant="outline"
-                className="float-right rounded-md px-2 py-1 text-xs"
-              >
-                {label}
-              </Badge>
-            )}
-          </CardTitle>
-          {description && <CardDescription>{description}</CardDescription>}
-        </CardHeader>
-      )}
-      {(content || children) && (
-        <CardContent className="text-muted-foreground">
-          {content || children}
-        </CardContent>
-      )}
-      {buttons && buttons.length > 0 && (
-        <CardFooter className="bg-muted flex justify-start gap-4 py-4">
-          {buttons.map((button, idx) => (
-            <Button
-              key={idx}
-              variant={button.variant || 'default'}
-              size={button.size || 'default'}
-              asChild
+  // Resolve the active theme's Card/Badge/Button (Semi under the semi theme,
+  // shadcn under default) so console cards render the theme-native surface.
+  const Card = useThemeComponent('Card');
+  const Badge = useThemeComponent('Badge');
+  const Button = useThemeComponent('Button');
+
+  const titleNode =
+    title || label ? (
+      <span className="flex items-center gap-2">
+        {title}
+        {label && (
+          <Badge variant="outline" tone="neutral" size="sm">
+            {label}
+          </Badge>
+        )}
+      </span>
+    ) : undefined;
+
+  const footer =
+    buttons && buttons.length > 0 ? (
+      <span className="flex flex-wrap items-center gap-3">
+        {buttons.map((button, idx) => (
+          <Button
+            key={idx}
+            variant={button.variant || 'default'}
+            size={button.size || 'default'}
+          >
+            <ConsoleLink
+              href={button.url || ''}
+              target={button.target || '_self'}
             >
-              <ConsoleLink href={button.url || ''} target={button.target || '_self'}>
-                {button.icon && <SmartIcon name={button.icon as string} />}
-                {button.title}
-              </ConsoleLink>
-            </Button>
-          ))}
-        </CardFooter>
-      )}
-    </CardComponent>
+              {button.icon && <SmartIcon name={button.icon as string} />}
+              {button.title}
+            </ConsoleLink>
+          </Button>
+        ))}
+      </span>
+    ) : undefined;
+
+  return (
+    <Card
+      className={cn(className)}
+      title={titleNode}
+      description={description}
+      footer={footer}
+    >
+      {content || children}
+    </Card>
   );
 }

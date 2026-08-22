@@ -87,7 +87,7 @@ export const PixelScrollArea = forwardRef<HTMLDivElement, PixelScrollAreaProps>(
     !ariaLabelledBy &&
     explicitTabIndex === undefined
   ) {
-    // eslint-disable-next-line no-console
+     
     console.warn(
       '[PixelScrollArea] missing aria-label / aria-labelledby on a focusable scroll region. ' +
         'Provide one so keyboard + screen-reader users know what they\'re scrolling.',

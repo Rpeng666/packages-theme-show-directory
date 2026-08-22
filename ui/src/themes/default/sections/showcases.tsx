@@ -27,7 +27,7 @@ interface ShowcaseGroup {
  * lightweight; the pixel theme's is the richer retro rendering. Link/Image
  * are injected by the app.
  */
-export function Showcases({ section, className, LinkComponent, ImageComponent, ...rest }: ShowcasesProps) {
+export function Showcases({ section, className, LinkComponent, ImageComponent, onOpen, ...rest }: ShowcasesProps) {
   const groups = (section.groups as ShowcaseGroup[]) || [];
   const items = (section.items as ShowcaseItem[]) || [];
   const [selectedGroup, setSelectedGroup] = useState<string>(
@@ -140,6 +140,23 @@ export function Showcases({ section, className, LinkComponent, ImageComponent, .
 
             return item.button ? (
               <div key={index}>{cardContent}</div>
+            ) : onOpen ? (
+              <button
+                key={index}
+                type="button"
+                onClick={() =>
+                  onOpen({
+                    title: item.title,
+                    url: item.url,
+                    target: item.target,
+                    imageSrc: item.image?.src,
+                  })
+                }
+                aria-label={`Open ${item.title ?? 'item'} in the editor`}
+                className="text-left"
+              >
+                {cardContent}
+              </button>
             ) : (
               <Link key={index} href={item.url || ''} target={item.target}>
                 {cardContent}

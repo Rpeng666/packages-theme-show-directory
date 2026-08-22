@@ -1,0 +1,10 @@
+/*
+ * Semi theme stylesheet — Semi Design's component stylesheet, vendored
+ * into this package (pinned to @douyinfe/semi-ui 2.102.0) because Semi's
+ * exports map doesn't expose the dist bundle and its ESM build ships no
+ * per-component CSS. Consumed by the app's semi theme entry:
+ *   @import '@template/ui/themes/semi/theme.css';
+ *
+ * To refresh: cp node_modules/@douyinfe/semi-ui/dist/css/semi.min.css ./semi.min.css
+ */
+@import './semi.min.css';

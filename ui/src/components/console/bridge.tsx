@@ -29,6 +29,10 @@ export interface ConsoleBridgeValue {
   routerPush?: (url: string) => void;
   /** Locale-stripped pathname (matches NavItem.url semantics). */
   pathname?: string;
+  /** Raw query string (e.g. "?page=2&email=x" or "") for URL-driven
+   *  search/filter controls. The host app supplies it from next/navigation's
+   *  useSearchParams; without it the package falls back to an empty query. */
+  searchParams?: string;
 }
 
 const ConsoleBridgeContext = createContext<ConsoleBridgeValue>({});

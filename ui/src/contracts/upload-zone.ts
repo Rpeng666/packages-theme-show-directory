@@ -13,6 +13,8 @@ export interface UploadZoneProps {
   onDrop: (e: React.DragEvent<HTMLDivElement>) => void
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void
   onClick: () => void
+  /** 原生文件选择回调（semi Upload beforeUpload 直传 File；default 忽略） */
+  onFile?: (file: File) => void
   /** 主文案（含可点击部分） */
   primaryText?: ReactNode
   /** 可点击的「选择文件」文案 */

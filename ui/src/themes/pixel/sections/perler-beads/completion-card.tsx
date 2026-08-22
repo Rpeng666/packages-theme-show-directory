@@ -4,7 +4,7 @@ import { cn } from '../../../../lib/utils';
 import React, { useState, useRef, useCallback } from 'react';
 import type { PerlerMappedPixel } from '../../../../contracts/perler-beads/types';
 import { defaultPerlerT, type PerlerT } from './i18n';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 type MappedPixel = PerlerMappedPixel;
 
 export interface PerlerCompletionCardProps {
