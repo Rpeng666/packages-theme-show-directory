@@ -1,19 +1,32 @@
 'use client'
 
 import * as React from 'react'
-import { Modal } from '@heroui/react'
+import { Modal, useOverlayState } from '@heroui/react'
 import type { DialogProps, PromoModalProps, HintBannerProps } from '@template/ui'
 
+/**
+ * Semi Dialog — HeroUI Modal (react-aria based). Uses `useOverlayState` for the
+ * controlled open/close and the compound Modal.Container/Dialog sub-parts so it
+ * renders as a proper overlay, not inline content.
+ */
 export function Dialog({ open, onOpenChange, title, description, children, footer, size = 'md', className = '' }: DialogProps) {
+  const state = useOverlayState({ isOpen: open, onOpenChange: (o) => onOpenChange(o) })
+  const heroSize = size === 'sm' ? 'sm' : size === 'lg' ? 'lg' : size === 'xl' ? 'xl' : 'md'
+
   return (
-    <Modal
-      {...({ isOpen: open, onOpenChange, size } as any)}
-      className={className}
-    >
-      {title ? <div style={{ fontSize: 17, fontWeight: 700, padding: '20px 24px 0', color: 'var(--semi-color-text-0)' }}>{title}</div> : null}
-      {description ? <div style={{ padding: '6px 24px 0', fontSize: 14, color: 'var(--semi-color-text-2)' }}>{description}</div> : null}
-      <div style={{ padding: '16px 24px', color: 'var(--semi-color-text-1)' }}>{children}</div>
-      {footer ? <div style={{ padding: '0 24px 20px', display: 'flex', justifyContent: 'flex-end', gap: 10 }}>{footer}</div> : null}
+    <Modal state={state}>
+      <Modal.Container size={heroSize as never} placement="center">
+        <Modal.Dialog className={className}>
+          {title ? (
+            <Modal.Header>
+              <Modal.Heading>{title}</Modal.Heading>
+            </Modal.Header>
+          ) : null}
+          {description ? <div style={{ padding: '0 24px', fontSize: 14, color: 'var(--semi-color-text-2)' }}>{description}</div> : null}
+          <Modal.Body>{children}</Modal.Body>
+          {footer ? <Modal.Footer>{footer}</Modal.Footer> : null}
+        </Modal.Dialog>
+      </Modal.Container>
     </Modal>
   )
 }
