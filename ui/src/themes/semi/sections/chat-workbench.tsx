@@ -1,8 +1,9 @@
 "use client";
 
-import * as React from "react";
-import { Tooltip as SemiTooltip } from "@douyinfe/semi-ui";
-import { ArrowLeft } from "@douyinfe/semi-icons";
+import * as React from "react"
+import { Tooltip } from '../components/tooltip';;
+
+import { ArrowLeft } from 'lucide-react';
 import type {
   ChatSuggestionChip,
   ChatWorkbenchProps,

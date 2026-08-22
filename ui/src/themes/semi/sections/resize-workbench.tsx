@@ -1,9 +1,10 @@
 "use client";
 
-import * as React from "react";
+import * as React from "react"
+import { Input } from '../components/input';;
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { Input as SemiInput } from "@douyinfe/semi-ui";
+
 import type {
   ResizeWorkbenchFormat,
   ResizeWorkbenchProps,
@@ -285,9 +286,9 @@ export function ResizeWorkbench({
             ) : null}
 
             <form className="rstudio-youtube" onSubmit={handleYouTubeSubmit}>
-              <SemiInput
+              <Input
                 value={youtubeInput}
-                onChange={(value) => setYoutubeInput(value)}
+                onChange={(e) => setYoutubeInput(e.target.value)}
                 placeholder={youtubePlaceholder}
                 prefix={<SmartIcon name="Link" size={14} />}
                 className="rstudio-youtube-input"
@@ -521,7 +522,7 @@ export function ResizeWorkbench({
                 <div className="rstudio-dims">
                   <div className="rstudio-dim">
                     <span className="rstudio-dim-label">{widthLabel}</span>
-                    <SemiInput
+                    <Input
                       type="number"
                       min={1}
                       max={7680}
@@ -554,7 +555,7 @@ export function ResizeWorkbench({
                   </button>
                   <div className="rstudio-dim">
                     <span className="rstudio-dim-label">{heightLabel}</span>
-                    <SemiInput
+                    <Input
                       type="number"
                       min={1}
                       max={4320}

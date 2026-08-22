@@ -2,7 +2,9 @@
 
 import * as React from 'react'
 import { useState } from 'react'
-import { RadioGroup, Radio, Select, Button as SemiButton, Tag } from '@douyinfe/semi-ui'
+import { Select } from '../components/form';
+import { Button } from '../components/button';
+import { Tag } from '../components/tag';
 import { Check } from 'lucide-react'
 import { SmartIcon } from '../icons'
 import type { PricingProps } from '@template/ui'
@@ -59,23 +61,18 @@ export function Pricing({
 
       {section.groups && section.groups.length > 0 ? (
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 44 }}>
-          <RadioGroup
-            type="button"
-            buttonSize="large"
-            value={group}
-            onChange={(e) => setGroup(e.target.value)}
-          >
-            {section.groups.map((item, i) => (
-              <Radio key={i} value={item.name || ''}>
-                {item.title}
-                {item.label ? (
-                  <Tag size="small" color="violet" style={{ marginLeft: 8 }}>
-                    {item.label}
-                  </Tag>
-                ) : null}
-              </Radio>
-            ))}
-          </RadioGroup>
+          <div style={{ display: 'inline-flex', gap: 4, padding: 4, borderRadius: 12, background: 'var(--semi-color-fill-0)' }}>
+            {section.groups.map((item, i) => {
+              const active = group === item.name
+              return (
+                <button key={i} type="button" onClick={() => setGroup(item.name || '')} aria-pressed={active}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 18px', borderRadius: 9, border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 650, background: active ? 'var(--semi-color-bg-1)' : 'transparent', color: active ? 'var(--semi-color-text-0)' : 'var(--semi-color-text-2)', boxShadow: active ? '0 2px 8px rgba(0,0,0,0.2)' : 'none' }}>
+                  {item.title}
+                  {item.label ? <Tag size="small" color="violet" style={{ marginLeft: 8 }}>{item.label}</Tag> : null}
+                </button>
+              )
+            })}
+          </div>
         </div>
       ) : null}
 
@@ -161,11 +158,11 @@ export function Pricing({
                   ) : null}
                   {currencies.length > 1 ? (
                     <Select
-                      size="small"
+                      size="sm"
                       value={selectedCurrency}
                       onChange={(value) => handleCurrencyChange(item.product_id, String(value))}
-                      optionList={currencies.map((c) => ({ value: c.currency, label: c.currency.toUpperCase(), otherKey: c.currency }))}
-                      style={{ width: 72, marginLeft: 'auto' }}
+                      options={currencies.map((c) => ({ value: c.currency, label: c.currency.toUpperCase(), otherKey: c.currency }))}
+                      
                     />
                   ) : null}
                 </div>
@@ -180,14 +177,14 @@ export function Pricing({
                 ) : null}
 
                 {isCurrentPlan ? (
-                  <SemiButton theme="light" size="large" block disabled>
+                  <Button variant="secondary" size="lg" fullWidth disabled>
                     {tCurrentPlan}
-                  </SemiButton>
+                  </Button>
                 ) : (
-                  <SemiButton
-                    theme="solid"
-                    size="large"
-                    block
+                  <Button
+                    variant="default"
+                    size="lg"
+                    fullWidth
                     loading={isLoading && item.product_id === productId}
                     onClick={() => onPayment(item)}
                   >
@@ -199,7 +196,7 @@ export function Pricing({
                         {item.button?.title}
                       </>
                     )}
-                  </SemiButton>
+                  </Button>
                 )}
 
                 {item.features_title ? (
