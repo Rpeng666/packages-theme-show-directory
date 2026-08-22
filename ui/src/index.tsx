@@ -185,6 +185,8 @@ export type {
   FormatGuideProps,
   RelatedLinksProps,
   RelatedLink,
+  LinkCardProps,
+  LinkCardItem,
 } from "./contracts/sections";
 
 export type { HeaderProps } from "./contracts/header";

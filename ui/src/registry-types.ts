@@ -88,6 +88,7 @@ import type { ContentHeaderProps } from "./contracts/sections/content-header";
 import type { SizeTableProps } from "./contracts/sections/size-table";
 import type { FormatGuideProps } from "./contracts/sections/format-guide";
 import type { RelatedLinksProps } from "./contracts/sections/related-links";
+import type { LinkCardProps } from "./contracts/sections/link-card";
 import type { DashboardOverviewProps } from "./contracts/sections/dashboard-overview";
 import type { SettingsOverviewProps } from "./contracts/sections/settings-overview";
 import type { ActivityOverviewProps } from "./contracts/sections/activity-overview";
@@ -260,6 +261,7 @@ export interface SectionComponents {
   SizeTable: ComponentType<SizeTableProps>;
   FormatGuide: ComponentType<FormatGuideProps>;
   RelatedLinks: ComponentType<RelatedLinksProps>;
+  LinkCard: ComponentType<LinkCardProps>;
   DashboardOverview: ComponentType<DashboardOverviewProps>;
   SettingsOverview: ComponentType<SettingsOverviewProps>;
   ActivityOverview: ComponentType<ActivityOverviewProps>;

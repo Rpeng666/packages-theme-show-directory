@@ -39,3 +39,4 @@ export { ContentHeader } from "./content-header";
 export { SizeTable } from "./size-table";
 export { FormatGuide } from "./format-guide";
 export { RelatedLinks } from "./related-links";
+export { LinkCard } from "./link-card";

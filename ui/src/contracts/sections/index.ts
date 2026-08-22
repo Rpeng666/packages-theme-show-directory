@@ -62,6 +62,7 @@ export type { ContentHeaderProps } from "./content-header";
 export type { SizeTableProps, SizeTableRow } from "./size-table";
 export type { FormatGuideProps } from "./format-guide";
 export type { RelatedLinksProps, RelatedLink } from "./related-links";
+export type { LinkCardProps, LinkCardItem } from "./link-card";
 export type {
   DashboardOverviewProps,
   DashboardStat,
