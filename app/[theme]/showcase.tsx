@@ -7,7 +7,7 @@ import { DEMO_PROPS } from "@/themes/demo";
 
 /**
  * Previews a single theme block. The block is a forwarder resolved from the
- * theme registry (themes/index.ts); demo props come from themes/demo.ts
+ * theme registry (themes/index.ts); demo props come from themes/demo.tsx
  * (keyed by block name). Data that isn't wired yet renders a placeholder so
  * the page never 500s.
  */

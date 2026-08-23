@@ -270,4 +270,227 @@ export const DEMO_PROPS: Record<string, any> = {
   Blog: { section: blogSection },
   BlogDetail: { section: blogDetailSection, post: blogDetailPost },
   ActivityOverview: activityOverviewProps,
+
+  // ── primitives (components) ──────────────────────────────────────────
+  Button: {
+    children: "Click me",
+  },
+  Badge: {
+    children: "New",
+    variant: "default",
+  },
+  Card: {
+    title: "Getting started",
+    description: "A card demo for the theme system.",
+    children: "Card body content rendered by the active theme.",
+  },
+  Input: {
+    placeholder: "Search…",
+    label: "Search",
+    className: "w-full max-w-sm",
+  },
+  Textarea: {
+    placeholder: "Write something…",
+    label: "Message",
+    className: "w-full max-w-md",
+  },
+  Switch: {
+    label: "Airplane mode",
+    defaultChecked: true,
+  },
+  Avatar: {
+    name: "Ada Lovelace",
+    size: "lg",
+  },
+  Progress: {
+    value: 65,
+    showValue: true,
+    label: "Uploading…",
+  },
+  Skeleton: {
+    className: "h-4 w-64",
+  },
+  Tabs: {
+    items: [
+      { key: "overview", label: "Overview", content: "Overview panel." },
+      { key: "activity", label: "Activity", content: "Activity panel." },
+      { key: "settings", label: "Settings", content: "Settings panel." },
+    ],
+  },
+  Tag: {
+    children: "v1.2.0",
+  },
+  Slider: {
+    defaultValue: 40,
+    className: "w-full max-w-sm",
+  },
+  Spin: {
+    spinning: true,
+    tip: "Loading…",
+  },
+  Empty: {
+    description: "No items found.",
+  },
+  Box: {
+    children: "Box surface",
+    tone: "green",
+    variant: "soft",
+    padding: "md",
+  },
+  Divider: {
+    label: "or",
+  },
+  Stack: {
+    gap: 3,
+    children: (
+      <>
+        <div className="h-10 w-24 rounded bg-card" />
+        <div className="h-10 w-24 rounded bg-card" />
+        <div className="h-10 w-24 rounded bg-card" />
+      </>
+    ),
+  },
+  Label: {
+    children: "Display name",
+  },
+  Select: {
+    label: "Language",
+    placeholder: "Pick a language",
+    options: [
+      { value: "ts", label: "TypeScript" },
+      { value: "js", label: "JavaScript" },
+      { value: "py", label: "Python" },
+    ],
+    className: "w-full max-w-xs",
+  },
+  Dropdown: {
+    trigger: <span className="text-sm font-medium">Actions</span>,
+    items: [
+      { value: "edit", children: "Edit" },
+      { value: "share", children: "Share" },
+      { value: "sep", separator: true },
+      { value: "delete", children: "Delete" },
+    ],
+  },
+  Collapse: {
+    items: [
+      { key: "one", title: "General settings", children: "General settings body." },
+      { key: "two", title: "Advanced", children: "Advanced settings body." },
+    ],
+    defaultActiveKeys: ["one"],
+  },
+  List: {
+    dataSource: [
+      { name: "Ada Lovelace", role: "Mathematician" },
+      { name: "Grace Hopper", role: "Computer scientist" },
+      { name: "Linus Torvalds", role: "Software engineer" },
+    ],
+    renderItem: (item: any) => (
+      <div className="flex items-center justify-between py-2">
+        <span className="font-medium">{item.name}</span>
+        <span className="text-gray-11">{item.role}</span>
+      </div>
+    ),
+  },
+  Table: {
+    columns: [
+      { key: "name", title: "Name", dataIndex: "name" },
+      { key: "role", title: "Role", dataIndex: "role" },
+    ],
+    dataSource: [
+      { key: "1", name: "Ada Lovelace", role: "Mathematician" },
+      { key: "2", name: "Grace Hopper", role: "Computer scientist" },
+    ],
+  },
+  Descriptions: {
+    column: 2,
+    items: [
+      { key: "1", label: "Name", content: "Ada Lovelace" },
+      { key: "2", label: "Role", content: "Mathematician" },
+      { key: "3", label: "Year", content: "1843" },
+    ],
+  },
+  Timeline: {
+    items: [
+      { content: "Project kickoff", time: "Jan 2024" },
+      { content: "First prototype", time: "Mar 2024" },
+      { content: "Launch", time: "Aug 2024", type: "success" },
+    ],
+  },
+  Steps: {
+    items: [
+      { title: "Upload", description: "Add your file" },
+      { title: "Process", description: "Transform it" },
+      { title: "Download", description: "Grab the result" },
+    ],
+    current: 1,
+  },
+  Navigation: {
+    items: [
+      { itemKey: "home", text: "Home" },
+      { itemKey: "docs", text: "Docs", items: [{ itemKey: "getting-started", text: "Getting Started" }, { itemKey: "api", text: "API" }] },
+      { itemKey: "settings", text: "Settings" },
+    ],
+    defaultSelectedKey: "home",
+  },
+  Banner: {
+    type: "info",
+    title: "Heads up",
+    description: "This is an informational banner.",
+  },
+  ColorPicker: {
+    defaultValue: "#7c4fff",
+  },
+  CopyText: {
+    text: "npm install @template/ui",
+    copyable: true,
+    code: true,
+  },
+  IconFrame: {
+    icon: <span className="text-xl">✦</span>,
+    size: 64,
+  },
+  DualCta: {
+    onPrimary: () => {},
+    onSecondary: () => {},
+    primaryLabel: "Get started",
+    secondaryLabel: "Learn more",
+  },
+  HintBanner: {
+    actionHint: "Select all",
+    recommendHint: "Press ⌘A to select everything",
+  },
+  InputNumber: {
+    defaultValue: 42,
+    min: 0,
+    max: 100,
+    className: "w-full max-w-xs",
+  },
+  Tooltip: {
+    content: "Tooltip content",
+    children: <span className="text-sm font-medium">Hover me</span>,
+  },
+  Header: {
+    nav: [
+      { title: "Code Images", url: "#" },
+      { title: "Icon Maker", url: "#" },
+      { title: "Prompts", url: "#" },
+    ],
+    actions: [{ title: "Sign in", url: "#" }],
+  },
+  Footer: {
+    footer: {
+      id: "footer",
+      brand: { title: "Brand", description: "Built with the shared UI package." },
+      nav: {
+        items: [
+          { title: "Product", children: [{ title: "Code Images", url: "#" }, { title: "Icon Maker", url: "#" }] },
+          { title: "Resources", children: [{ title: "Prompts", url: "#" }] },
+        ],
+      },
+      copyright: "© 2024 Brand",
+      social: { items: [{ title: "X", url: "#" }, { title: "GitHub", url: "#" }] },
+      agreement: { items: [{ title: "Terms", url: "#" }, { title: "Privacy", url: "#" }] },
+    },
+  },
 };
