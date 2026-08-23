@@ -93,7 +93,4 @@ export * from './tool-footer';
 export * from './tool-header';
 export * from './tool-settings';
 export * from './tooltip';
-export * from './tooltip-trigger';
-export * from './tooltip-content';
-export * from './tooltip-provider';
 export * from './upload-zone';

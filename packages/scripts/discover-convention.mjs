@@ -59,6 +59,12 @@ const COMPOSITE_CHILDREN = new Set([
   "CardAction",
   "CardDescription",
   "CardContent",
+  // Tooltip composite sub-components — Tooltip (contract) is self-contained
+  // (Provider + Root + Trigger + Content inline); these exist only for
+  // app-side composable call sites and never resolve on their own.
+  "TooltipTrigger",
+  "TooltipContent",
+  "TooltipProvider",
 ]);
 
 /** Extract named exports from TS/TSX source via regex (project style). */
