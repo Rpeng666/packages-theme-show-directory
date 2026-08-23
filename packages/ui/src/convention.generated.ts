@@ -54,396 +54,390 @@ import * as __m46 from "./themes/default/banner";
 import * as __m47 from "./themes/default/box";
 import * as __m48 from "./themes/default/button";
 import * as __m49 from "./themes/default/card";
-import * as __m50 from "./themes/default/card";
-import * as __m51 from "./themes/default/card";
-import * as __m52 from "./themes/default/card";
-import * as __m53 from "./themes/default/card";
-import * as __m54 from "./themes/default/card";
-import * as __m55 from "./themes/default/card";
-import * as __m56 from "./themes/default/carousel";
-import * as __m57 from "./themes/default/collapse";
-import * as __m58 from "./themes/default/color-picker";
-import * as __m59 from "./themes/default/copy-text";
-import * as __m60 from "./themes/default/descriptions";
-import * as __m61 from "./themes/default/dialog";
-import * as __m62 from "./themes/default/dropdown";
-import * as __m63 from "./themes/default/dual-cta";
-import * as __m64 from "./themes/default/empty";
-import * as __m65 from "./themes/default/footer";
-import * as __m66 from "./themes/default/form";
-import * as __m67 from "./themes/default/form";
-import * as __m68 from "./themes/default/form";
-import * as __m69 from "./themes/default/form";
-import * as __m70 from "./themes/default/header";
-import * as __m71 from "./themes/default/hint-banner";
-import * as __m72 from "./themes/default/iconframe";
-import * as __m73 from "./themes/default/image";
-import * as __m74 from "./themes/default/input-number";
-import * as __m75 from "./themes/default/input";
-import * as __m76 from "./themes/default/label";
-import * as __m77 from "./themes/default/layout-shell";
-import * as __m78 from "./themes/default/layout";
-import * as __m79 from "./themes/default/layout";
-import * as __m80 from "./themes/default/layout";
-import * as __m81 from "./themes/default/layout";
-import * as __m82 from "./themes/default/list";
-import * as __m83 from "./themes/default/navigation";
-import * as __m84 from "./themes/default/progress";
-import * as __m85 from "./themes/default/promo-modal";
-import * as __m86 from "./themes/default/skeleton";
-import * as __m87 from "./themes/default/slider";
-import * as __m88 from "./themes/default/spin";
-import * as __m89 from "./themes/default/steps";
-import * as __m90 from "./themes/default/switch";
-import * as __m91 from "./themes/default/table";
-import * as __m92 from "./themes/default/tabs";
-import * as __m93 from "./themes/default/tag";
-import * as __m94 from "./themes/default/textarea";
-import * as __m95 from "./themes/default/timeline";
-import * as __m96 from "./themes/default/tool-footer";
-import * as __m97 from "./themes/default/tool-header";
-import * as __m98 from "./themes/default/tool-settings";
-import * as __m103 from "./themes/default/tooltip";
-import * as __m100 from "./themes/default/tooltip-composite";
-import * as __m101 from "./themes/default/tooltip-composite";
-import * as __m102 from "./themes/default/tooltip-composite";
-import * as __m104 from "./themes/default/upload-zone";
-import * as __m105 from "./themes/pixel/sections/blog/blog-detail";
-import * as __m106 from "./themes/pixel/sections/blog/blog-tool-cta";
-import * as __m107 from "./themes/pixel/sections/blog/blog";
-import * as __m108 from "./themes/pixel/sections/blog/related-posts";
-import * as __m109 from "./themes/pixel/sections/cleaner/analyze-panel";
-import * as __m110 from "./themes/pixel/sections/cleaner/context-selector";
-import * as __m111 from "./themes/pixel/sections/cleaner/highlighted";
-import * as __m112 from "./themes/pixel/sections/cleaner/highlighted";
-import * as __m113 from "./themes/pixel/sections/cleaner/output";
-import * as __m114 from "./themes/pixel/sections/cleaner/workbench";
-import * as __m115 from "./themes/pixel/sections/cta";
-import * as __m116 from "./themes/pixel/sections/dither/dither-preview";
-import * as __m117 from "./themes/pixel/sections/dither/dither-settings-panel";
-import * as __m118 from "./themes/pixel/sections/faq";
-import * as __m119 from "./themes/pixel/sections/features/features-accordion";
-import * as __m120 from "./themes/pixel/sections/features/features-compare";
-import * as __m121 from "./themes/pixel/sections/features/features-flow";
-import * as __m122 from "./themes/pixel/sections/features/features-grid";
-import * as __m123 from "./themes/pixel/sections/features/features-list";
-import * as __m124 from "./themes/pixel/sections/features/features-step";
-import * as __m125 from "./themes/pixel/sections/features/features";
-import * as __m126 from "./themes/pixel/sections/hero-cleaner";
-import * as __m127 from "./themes/pixel/sections/hero";
-import * as __m128 from "./themes/pixel/sections/perler-beads/app-device-mockup";
-import * as __m129 from "./themes/pixel/sections/perler-beads/app-feature-tabs";
-import * as __m130 from "./themes/pixel/sections/perler-beads/app-landing";
-import * as __m131 from "./themes/pixel/sections/perler-beads/app-store-badges";
-import * as __m132 from "./themes/pixel/sections/perler-beads/app-store-badges";
-import * as __m133 from "./themes/pixel/sections/perler-beads/celebration-animation";
-import * as __m134 from "./themes/pixel/sections/perler-beads/color-palette";
-import * as __m135 from "./themes/pixel/sections/perler-beads/color-panel";
-import * as __m136 from "./themes/pixel/sections/perler-beads/color-stats-panel";
-import * as __m137 from "./themes/pixel/sections/perler-beads/color-status-bar";
-import * as __m138 from "./themes/pixel/sections/perler-beads/color-swatches";
-import * as __m139 from "./themes/pixel/sections/perler-beads/color-swatches";
-import * as __m140 from "./themes/pixel/sections/perler-beads/community-card";
-import * as __m141 from "./themes/pixel/sections/perler-beads/community-feed";
-import * as __m142 from "./themes/pixel/sections/perler-beads/completion-card";
-import * as __m143 from "./themes/pixel/sections/perler-beads/custom-palette-editor";
-import * as __m144 from "./themes/pixel/sections/perler-beads/donation-modal";
-import * as __m145 from "./themes/pixel/sections/perler-beads/download-settings-modal";
-import * as __m146 from "./themes/pixel/sections/perler-beads/floating-color-palette";
-import * as __m147 from "./themes/pixel/sections/perler-beads/floating-toolbar";
-import * as __m148 from "./themes/pixel/sections/perler-beads/focus-canvas";
-import * as __m149 from "./themes/pixel/sections/perler-beads/focus-header";
-import * as __m150 from "./themes/pixel/sections/perler-beads/focus-mode-pre-download-modal";
-import * as __m151 from "./themes/pixel/sections/perler-beads/gallery-card";
-import * as __m152 from "./themes/pixel/sections/perler-beads/gallery-feed";
-import * as __m153 from "./themes/pixel/sections/perler-beads/grid-tooltip";
-import * as __m154 from "./themes/pixel/sections/perler-beads/image-compare-modal";
-import * as __m155 from "./themes/pixel/sections/perler-beads/install-pwa";
-import * as __m156 from "./themes/pixel/sections/perler-beads/magnifier-selection-overlay";
-import * as __m157 from "./themes/pixel/sections/perler-beads/magnifier-tool";
-import * as __m158 from "./themes/pixel/sections/perler-beads/perler-selection-overlay";
-import * as __m159 from "./themes/pixel/sections/perler-beads/perler-tool-rail";
-import * as __m160 from "./themes/pixel/sections/perler-beads/perler-work-bar";
-import * as __m161 from "./themes/pixel/sections/perler-beads/pixelated-preview-canvas";
-import * as __m162 from "./themes/pixel/sections/perler-beads/progress-bar";
-import * as __m163 from "./themes/pixel/sections/perler-beads/sample-gallery";
-import * as __m164 from "./themes/pixel/sections/perler-beads/settings-panel";
-import * as __m165 from "./themes/pixel/sections/perler-beads/share-modal";
-import * as __m166 from "./themes/pixel/sections/perler-beads/toolbar";
-import * as __m167 from "./themes/pixel/sections/pricing";
-import * as __m168 from "./themes/pixel/sections/showcases-flow";
-import * as __m169 from "./themes/pixel/sections/showcases";
-import * as __m170 from "./themes/pixel/sections/testimonials";
-import * as __m171 from "./themes/pixel/sections/tools-grid";
-import * as __m172 from "./themes/pixel/sections/perler-beads/app-device-mockup";
-import * as __m173 from "./themes/pixel/sections/perler-beads/app-feature-tabs";
-import * as __m174 from "./themes/pixel/sections/perler-beads/app-landing";
-import * as __m175 from "./themes/pixel/sections/perler-beads/app-store-badges";
-import * as __m176 from "./themes/pixel/sections/perler-beads/app-store-badges";
-import * as __m177 from "./themes/pixel/sections/perler-beads/celebration-animation";
-import * as __m178 from "./themes/pixel/sections/perler-beads/color-palette";
-import * as __m179 from "./themes/pixel/sections/perler-beads/color-panel";
-import * as __m180 from "./themes/pixel/sections/perler-beads/color-stats-panel";
-import * as __m181 from "./themes/pixel/sections/perler-beads/color-status-bar";
-import * as __m182 from "./themes/pixel/sections/perler-beads/color-swatches";
-import * as __m183 from "./themes/pixel/sections/perler-beads/color-swatches";
-import * as __m184 from "./themes/pixel/sections/perler-beads/community-card";
-import * as __m185 from "./themes/pixel/sections/perler-beads/community-feed";
-import * as __m186 from "./themes/pixel/sections/perler-beads/completion-card";
-import * as __m187 from "./themes/pixel/sections/perler-beads/custom-palette-editor";
-import * as __m188 from "./themes/pixel/sections/perler-beads/donation-modal";
-import * as __m189 from "./themes/pixel/sections/perler-beads/download-settings-modal";
-import * as __m190 from "./themes/pixel/sections/perler-beads/floating-color-palette";
-import * as __m191 from "./themes/pixel/sections/perler-beads/floating-toolbar";
-import * as __m192 from "./themes/pixel/sections/perler-beads/focus-canvas";
-import * as __m193 from "./themes/pixel/sections/perler-beads/focus-header";
-import * as __m194 from "./themes/pixel/sections/perler-beads/focus-mode-pre-download-modal";
-import * as __m195 from "./themes/pixel/sections/perler-beads/gallery-card";
-import * as __m196 from "./themes/pixel/sections/perler-beads/gallery-feed";
-import * as __m197 from "./themes/pixel/sections/perler-beads/grid-tooltip";
-import * as __m198 from "./themes/pixel/sections/perler-beads/image-compare-modal";
-import * as __m199 from "./themes/pixel/sections/perler-beads/install-pwa";
-import * as __m200 from "./themes/pixel/sections/perler-beads/magnifier-selection-overlay";
-import * as __m201 from "./themes/pixel/sections/perler-beads/magnifier-tool";
-import * as __m202 from "./themes/pixel/sections/perler-beads/perler-selection-overlay";
-import * as __m203 from "./themes/pixel/sections/perler-beads/perler-tool-rail";
-import * as __m204 from "./themes/pixel/sections/perler-beads/perler-work-bar";
-import * as __m205 from "./themes/pixel/sections/perler-beads/pixelated-preview-canvas";
-import * as __m206 from "./themes/pixel/sections/perler-beads/progress-bar";
-import * as __m207 from "./themes/pixel/sections/perler-beads/sample-gallery";
-import * as __m208 from "./themes/pixel/sections/perler-beads/settings-panel";
-import * as __m209 from "./themes/pixel/sections/perler-beads/share-modal";
-import * as __m210 from "./themes/pixel/sections/perler-beads/toolbar";
-import * as __m211 from "./themes/pixel/sections/cleaner/analyze-panel";
-import * as __m212 from "./themes/pixel/sections/cleaner/context-selector";
-import * as __m213 from "./themes/pixel/sections/cleaner/highlighted";
-import * as __m214 from "./themes/pixel/sections/cleaner/highlighted";
-import * as __m215 from "./themes/pixel/sections/cleaner/output";
-import * as __m216 from "./themes/pixel/sections/cleaner/workbench";
-import * as __m217 from "./themes/pixel/sections/dither/dither-preview";
-import * as __m218 from "./themes/pixel/sections/dither/dither-settings-panel";
-import * as __m219 from "./themes/pixel/sections/blog/blog-detail";
-import * as __m220 from "./themes/pixel/sections/blog/blog-tool-cta";
-import * as __m221 from "./themes/pixel/sections/blog/blog";
-import * as __m222 from "./themes/pixel/sections/blog/related-posts";
-import * as __m223 from "./themes/pixel/editor/editor-canvas";
-import * as __m224 from "./themes/pixel/editor/editor-shell";
-import * as __m225 from "./themes/pixel/editor/editor-sidebar";
-import * as __m226 from "./themes/pixel/editor/editor-toolbar";
-import * as __m227 from "./themes/pixel/editor/panels/adjustment-row";
-import * as __m228 from "./themes/pixel/editor/panels/editor-panel";
-import * as __m229 from "./themes/pixel/editor/panels/preset-grid";
-import * as __m230 from "./themes/pixel/editor/panels/tool-button";
-import * as __m231 from "./themes/pixel/light-tool-demo/artifact-hero";
-import * as __m232 from "./themes/pixel/light-tool-demo/background-generator-demo";
-import * as __m233 from "./themes/pixel/light-tool-demo/before-after";
-import * as __m234 from "./themes/pixel/light-tool-demo/craft-entry-nav";
-import * as __m235 from "./themes/pixel/light-tool-demo/game-icon-generator-demo";
-import * as __m236 from "./themes/pixel/light-tool-demo/light-tool-demo";
-import * as __m237 from "./themes/pixel/light-tool-demo/palette-extractor-demo";
-import * as __m238 from "./themes/pixel/light-tool-demo/param-generator-demo";
-import * as __m239 from "./themes/pixel/light-tool-demo/patterns/bg-patterns";
-import * as __m240 from "./themes/pixel/light-tool-demo/patterns/icon-templates";
-import * as __m241 from "./themes/pixel/light-tool-demo/patterns/pixel-library";
-import * as __m242 from "./themes/pixel/avatar";
-import * as __m243 from "./themes/pixel/badge";
-import * as __m244 from "./themes/pixel/box";
-import * as __m245 from "./themes/pixel/button";
-import * as __m246 from "./themes/pixel/card";
-import * as __m247 from "./themes/pixel/dialog";
-import * as __m248 from "./themes/pixel/dropdown";
-import * as __m249 from "./themes/pixel/dual-cta";
-import * as __m250 from "./themes/pixel/footer";
-import * as __m251 from "./themes/pixel/form";
-import * as __m252 from "./themes/pixel/form";
-import * as __m253 from "./themes/pixel/form";
-import * as __m254 from "./themes/pixel/form";
-import * as __m255 from "./themes/pixel/hint-banner";
-import * as __m256 from "./themes/pixel/iconframe";
-import * as __m257 from "./themes/pixel/input";
-import * as __m258 from "./themes/pixel/label";
-import * as __m259 from "./themes/pixel/layout";
-import * as __m260 from "./themes/pixel/layout";
-import * as __m261 from "./themes/pixel/layout";
-import * as __m262 from "./themes/pixel/layout";
-import * as __m263 from "./themes/pixel/pageshell";
-import * as __m264 from "./themes/pixel/progress";
-import * as __m265 from "./themes/pixel/promo-modal";
-import * as __m266 from "./themes/pixel/skeleton";
-import * as __m267 from "./themes/pixel/switch";
-import * as __m268 from "./themes/pixel/textarea";
-import * as __m269 from "./themes/pixel/theme-toggler";
-import * as __m270 from "./themes/pixel/tool-footer";
-import * as __m271 from "./themes/pixel/tool-header";
-import * as __m272 from "./themes/pixel/tool-settings";
-import * as __m273 from "./themes/pixel/tooltip";
-import * as __m274 from "./themes/pixel/upload-zone";
-import * as __m276 from "./themes/semi/components/avatar";
-import * as __m277 from "./themes/semi/components/badge";
-import * as __m278 from "./themes/semi/components/banner";
-import * as __m279 from "./themes/semi/components/box";
-import * as __m280 from "./themes/semi/components/box";
-import * as __m281 from "./themes/semi/components/button";
-import * as __m282 from "./themes/semi/components/card";
-import * as __m283 from "./themes/semi/components/carousel";
-import * as __m284 from "./themes/semi/components/collapse";
-import * as __m285 from "./themes/semi/components/color-picker";
-import * as __m286 from "./themes/semi/components/copy-text";
-import * as __m287 from "./themes/semi/components/descriptions";
-import * as __m288 from "./themes/semi/components/dropdown";
-import * as __m289 from "./themes/semi/components/empty";
-import * as __m290 from "./themes/semi/components/footer";
-import * as __m291 from "./themes/semi/components/form";
-import * as __m292 from "./themes/semi/components/form";
-import * as __m293 from "./themes/semi/components/form";
-import * as __m294 from "./themes/semi/components/form";
-import * as __m295 from "./themes/semi/components/header";
-import * as __m296 from "./themes/semi/components/image";
-import * as __m297 from "./themes/semi/components/input-number";
-import * as __m298 from "./themes/semi/components/input";
-import * as __m299 from "./themes/semi/components/layout-shell";
-import * as __m300 from "./themes/semi/components/layout";
-import * as __m301 from "./themes/semi/components/layout";
-import * as __m302 from "./themes/semi/components/layout";
-import * as __m303 from "./themes/semi/components/layout";
-import * as __m304 from "./themes/semi/components/list";
-import * as __m305 from "./themes/semi/components/navigation";
-import * as __m306 from "./themes/semi/components/overlay";
-import * as __m307 from "./themes/semi/components/overlay";
-import * as __m308 from "./themes/semi/components/overlay";
-import * as __m309 from "./themes/semi/components/preview-console";
-import * as __m310 from "./themes/semi/components/preview-stage";
-import * as __m311 from "./themes/semi/components/preview-tips";
-import * as __m312 from "./themes/semi/components/progress";
-import * as __m313 from "./themes/semi/components/skeleton";
-import * as __m314 from "./themes/semi/components/slider";
-import * as __m315 from "./themes/semi/components/spin";
-import * as __m316 from "./themes/semi/components/steps";
-import * as __m317 from "./themes/semi/components/switch";
-import * as __m318 from "./themes/semi/components/table";
-import * as __m319 from "./themes/semi/components/tabs";
-import * as __m320 from "./themes/semi/components/tag";
-import * as __m321 from "./themes/semi/components/textarea";
-import * as __m322 from "./themes/semi/components/timeline";
-import * as __m323 from "./themes/semi/components/tooltip";
-import * as __m324 from "./themes/semi/components/upload-zone";
-import * as __m398 from "./themes/semi/icons";
-import * as __m325 from "./themes/semi/sections/activity-overview";
-import * as __m326 from "./themes/semi/sections/chat-history";
-import * as __m327 from "./themes/semi/sections/chat-workbench";
-import * as __m328 from "./themes/semi/sections/compress-workbench";
-import * as __m329 from "./themes/semi/sections/content-header";
-import * as __m330 from "./themes/semi/sections/cta";
-import * as __m331 from "./themes/semi/sections/dashboard-overview";
-import * as __m332 from "./themes/semi/sections/designer-studio-controls";
-import * as __m333 from "./themes/semi/sections/designer-studio-controls";
-import * as __m334 from "./themes/semi/sections/designer-studio-controls";
-import * as __m335 from "./themes/semi/sections/designer-studio-controls";
-import * as __m336 from "./themes/semi/sections/designer-studio-controls";
-import * as __m337 from "./themes/semi/sections/designer-studio";
-import * as __m338 from "./themes/semi/sections/download-workbench";
-import * as __m339 from "./themes/semi/sections/extract-workbench";
-import * as __m340 from "./themes/semi/sections/faq";
-import * as __m341 from "./themes/semi/sections/features-accordion";
-import * as __m342 from "./themes/semi/sections/features-compare";
-import * as __m343 from "./themes/semi/sections/features-grid";
-import * as __m344 from "./themes/semi/sections/features-list";
-import * as __m345 from "./themes/semi/sections/features-media";
-import * as __m346 from "./themes/semi/sections/features-step";
-import * as __m347 from "./themes/semi/sections/features";
-import * as __m348 from "./themes/semi/sections/format-guide";
-import * as __m349 from "./themes/semi/sections/hero-live";
-import * as __m350 from "./themes/semi/sections/hero";
-import * as __m351 from "./themes/semi/sections/image-generator-studio";
-import * as __m352 from "./themes/semi/sections/link-card";
-import * as __m353 from "./themes/semi/sections/logos";
-import * as __m354 from "./themes/semi/sections/music-generator-studio";
-import * as __m355 from "./themes/semi/sections/page-header";
-import * as __m356 from "./themes/semi/sections/preview-workbench";
-import * as __m357 from "./themes/semi/sections/pricing";
-import * as __m358 from "./themes/semi/sections/related-links";
-import * as __m359 from "./themes/semi/sections/resize-workbench";
-import * as __m360 from "./themes/semi/sections/settings-overview";
-import * as __m361 from "./themes/semi/sections/shell";
-import * as __m362 from "./themes/semi/sections/shell";
-import * as __m363 from "./themes/semi/sections/shell";
-import * as __m364 from "./themes/semi/sections/shell";
-import * as __m365 from "./themes/semi/sections/shell";
-import * as __m366 from "./themes/semi/sections/showcases";
-import * as __m367 from "./themes/semi/sections/size-table";
-import * as __m368 from "./themes/semi/sections/stats";
-import * as __m369 from "./themes/semi/sections/subscribe";
-import * as __m370 from "./themes/semi/sections/testimonials";
-import * as __m371 from "./themes/semi/sections/tool-hero";
-import * as __m372 from "./themes/semi/sections/tool-workspace";
-import * as __m373 from "./themes/semi/sections/tools-grid";
-import * as __m374 from "./themes/semi/sections/video-generator-studio";
-import * as __m375 from "./themes/semi/sections/workbench/context-menu";
-import * as __m376 from "./themes/semi/sections/workbench/views";
-import * as __m377 from "./themes/semi/sections/workbench/views";
-import * as __m378 from "./themes/semi/sections/workbench/views";
-import * as __m379 from "./themes/semi/sections/workbench/views";
-import * as __m380 from "./themes/semi/sections/workbench/views";
-import * as __m381 from "./themes/semi/sections/workbench/views";
-import * as __m382 from "./themes/semi/sections/workbench/wb-ai-title";
-import * as __m383 from "./themes/semi/sections/workbench/wb-appearance";
-import * as __m384 from "./themes/semi/sections/workbench/wb-elements";
-import * as __m385 from "./themes/semi/sections/workbench/wb-enhance";
-import * as __m386 from "./themes/semi/sections/workbench/wb-export-modal";
-import * as __m387 from "./themes/semi/sections/workbench/wb-layers";
-import * as __m388 from "./themes/semi/sections/workbench/wb-onboarding";
-import * as __m389 from "./themes/semi/sections/workbench/wb-properties";
-import * as __m390 from "./themes/semi/sections/workbench/wb-remove-bg";
-import * as __m391 from "./themes/semi/sections/workbench/wb-statusbar";
-import * as __m392 from "./themes/semi/sections/workbench/wb-templates";
-import * as __m393 from "./themes/semi/sections/workbench/wb-toolbar";
-import * as __m394 from "./themes/semi/sections/workbench/wb-topbar";
-import * as __m395 from "./themes/semi/sections/workbench/workbench";
-import * as __m396 from "./themes/semi/pages/console-layout";
-import * as __m397 from "./themes/semi/pages/tool-page";
-import * as __m399 from "./themes/raycast/components/action-menu";
-import * as __m400 from "./themes/raycast/components/color-input";
-import * as __m401 from "./themes/raycast/components/desktop";
-import * as __m402 from "./themes/raycast/components/dock";
-import * as __m403 from "./themes/raycast/components/dot";
-import * as __m404 from "./themes/raycast/components/floating-action-bar";
-import * as __m405 from "./themes/raycast/components/footer";
-import * as __m406 from "./themes/raycast/components/footer";
-import * as __m407 from "./themes/raycast/components/form-section";
-import * as __m408 from "./themes/raycast/components/form-section";
-import * as __m409 from "./themes/raycast/components/frame-context";
-import * as __m410 from "./themes/raycast/components/frame-context";
-import * as __m411 from "./themes/raycast/components/header";
-import * as __m412 from "./themes/raycast/components/header";
-import * as __m413 from "./themes/raycast/components/icon-grid";
-import * as __m414 from "./themes/raycast/components/icon-picker";
-import * as __m415 from "./themes/raycast/components/icon-preview-stage";
-import * as __m416 from "./themes/raycast/components/info-dialog";
-import * as __m417 from "./themes/raycast/components/input";
-import * as __m418 from "./themes/raycast/components/input";
-import * as __m419 from "./themes/raycast/components/kbd";
-import * as __m420 from "./themes/raycast/components/kbd";
-import * as __m421 from "./themes/raycast/components/kbd";
-import * as __m422 from "./themes/raycast/components/keyboard-shortcuts";
-import * as __m423 from "./themes/raycast/components/no-ssr";
-import * as __m424 from "./themes/raycast/components/panel";
-import * as __m425 from "./themes/raycast/components/prompt-card";
-import * as __m426 from "./themes/raycast/components/selection-summary";
-import * as __m427 from "./themes/raycast/components/sidebar-filter";
-import * as __m428 from "./themes/raycast/components/sidebar-nav";
-import * as __m429 from "./themes/raycast/components/sidebar";
-import * as __m430 from "./themes/raycast/components/switch";
-import * as __m431 from "./themes/raycast/components/theme-card";
-import * as __m432 from "./themes/raycast/components/theme-controls";
-import * as __m433 from "./themes/raycast/components/theme-switcher";
-import * as __m434 from "./themes/raycast/components/toast";
-import * as __m435 from "./themes/raycast/components/toast";
-import * as __m436 from "./themes/raycast/components/toast";
-import * as __m437 from "./themes/raycast/components/toast";
-import * as __m438 from "./themes/raycast/components/toolbar-actions";
-import * as __m439 from "./themes/raycast/sections/code-workbench";
-import * as __m440 from "./themes/raycast/pages/workbench";
-import * as __a275 from "./themes/pixel/ambient";
+import * as __m50 from "./themes/default/carousel";
+import * as __m51 from "./themes/default/collapse";
+import * as __m52 from "./themes/default/color-picker";
+import * as __m53 from "./themes/default/copy-text";
+import * as __m54 from "./themes/default/descriptions";
+import * as __m55 from "./themes/default/dialog";
+import * as __m56 from "./themes/default/dropdown";
+import * as __m57 from "./themes/default/dual-cta";
+import * as __m58 from "./themes/default/empty";
+import * as __m59 from "./themes/default/footer";
+import * as __m60 from "./themes/default/form";
+import * as __m61 from "./themes/default/form";
+import * as __m62 from "./themes/default/form";
+import * as __m63 from "./themes/default/form";
+import * as __m64 from "./themes/default/header";
+import * as __m65 from "./themes/default/hint-banner";
+import * as __m66 from "./themes/default/iconframe";
+import * as __m67 from "./themes/default/image";
+import * as __m68 from "./themes/default/input-number";
+import * as __m69 from "./themes/default/input";
+import * as __m70 from "./themes/default/label";
+import * as __m71 from "./themes/default/layout-shell";
+import * as __m72 from "./themes/default/layout";
+import * as __m73 from "./themes/default/layout";
+import * as __m74 from "./themes/default/layout";
+import * as __m75 from "./themes/default/layout";
+import * as __m76 from "./themes/default/list";
+import * as __m77 from "./themes/default/navigation";
+import * as __m78 from "./themes/default/progress";
+import * as __m79 from "./themes/default/promo-modal";
+import * as __m80 from "./themes/default/skeleton";
+import * as __m81 from "./themes/default/slider";
+import * as __m82 from "./themes/default/spin";
+import * as __m83 from "./themes/default/steps";
+import * as __m84 from "./themes/default/switch";
+import * as __m85 from "./themes/default/table";
+import * as __m86 from "./themes/default/tabs";
+import * as __m87 from "./themes/default/tag";
+import * as __m88 from "./themes/default/textarea";
+import * as __m89 from "./themes/default/timeline";
+import * as __m90 from "./themes/default/tool-footer";
+import * as __m91 from "./themes/default/tool-header";
+import * as __m92 from "./themes/default/tool-settings";
+import * as __m97 from "./themes/default/tooltip";
+import * as __m94 from "./themes/default/tooltip-composite";
+import * as __m95 from "./themes/default/tooltip-composite";
+import * as __m96 from "./themes/default/tooltip-composite";
+import * as __m98 from "./themes/default/upload-zone";
+import * as __m99 from "./themes/pixel/sections/blog/blog-detail";
+import * as __m100 from "./themes/pixel/sections/blog/blog-tool-cta";
+import * as __m101 from "./themes/pixel/sections/blog/blog";
+import * as __m102 from "./themes/pixel/sections/blog/related-posts";
+import * as __m103 from "./themes/pixel/sections/cleaner/analyze-panel";
+import * as __m104 from "./themes/pixel/sections/cleaner/context-selector";
+import * as __m105 from "./themes/pixel/sections/cleaner/highlighted";
+import * as __m106 from "./themes/pixel/sections/cleaner/highlighted";
+import * as __m107 from "./themes/pixel/sections/cleaner/output";
+import * as __m108 from "./themes/pixel/sections/cleaner/workbench";
+import * as __m109 from "./themes/pixel/sections/cta";
+import * as __m110 from "./themes/pixel/sections/dither/dither-preview";
+import * as __m111 from "./themes/pixel/sections/dither/dither-settings-panel";
+import * as __m112 from "./themes/pixel/sections/faq";
+import * as __m113 from "./themes/pixel/sections/features/features-accordion";
+import * as __m114 from "./themes/pixel/sections/features/features-compare";
+import * as __m115 from "./themes/pixel/sections/features/features-flow";
+import * as __m116 from "./themes/pixel/sections/features/features-grid";
+import * as __m117 from "./themes/pixel/sections/features/features-list";
+import * as __m118 from "./themes/pixel/sections/features/features-step";
+import * as __m119 from "./themes/pixel/sections/features/features";
+import * as __m120 from "./themes/pixel/sections/hero-cleaner";
+import * as __m121 from "./themes/pixel/sections/hero";
+import * as __m122 from "./themes/pixel/sections/perler-beads/app-device-mockup";
+import * as __m123 from "./themes/pixel/sections/perler-beads/app-feature-tabs";
+import * as __m124 from "./themes/pixel/sections/perler-beads/app-landing";
+import * as __m125 from "./themes/pixel/sections/perler-beads/app-store-badges";
+import * as __m126 from "./themes/pixel/sections/perler-beads/app-store-badges";
+import * as __m127 from "./themes/pixel/sections/perler-beads/celebration-animation";
+import * as __m128 from "./themes/pixel/sections/perler-beads/color-palette";
+import * as __m129 from "./themes/pixel/sections/perler-beads/color-panel";
+import * as __m130 from "./themes/pixel/sections/perler-beads/color-stats-panel";
+import * as __m131 from "./themes/pixel/sections/perler-beads/color-status-bar";
+import * as __m132 from "./themes/pixel/sections/perler-beads/color-swatches";
+import * as __m133 from "./themes/pixel/sections/perler-beads/color-swatches";
+import * as __m134 from "./themes/pixel/sections/perler-beads/community-card";
+import * as __m135 from "./themes/pixel/sections/perler-beads/community-feed";
+import * as __m136 from "./themes/pixel/sections/perler-beads/completion-card";
+import * as __m137 from "./themes/pixel/sections/perler-beads/custom-palette-editor";
+import * as __m138 from "./themes/pixel/sections/perler-beads/donation-modal";
+import * as __m139 from "./themes/pixel/sections/perler-beads/download-settings-modal";
+import * as __m140 from "./themes/pixel/sections/perler-beads/floating-color-palette";
+import * as __m141 from "./themes/pixel/sections/perler-beads/floating-toolbar";
+import * as __m142 from "./themes/pixel/sections/perler-beads/focus-canvas";
+import * as __m143 from "./themes/pixel/sections/perler-beads/focus-header";
+import * as __m144 from "./themes/pixel/sections/perler-beads/focus-mode-pre-download-modal";
+import * as __m145 from "./themes/pixel/sections/perler-beads/gallery-card";
+import * as __m146 from "./themes/pixel/sections/perler-beads/gallery-feed";
+import * as __m147 from "./themes/pixel/sections/perler-beads/grid-tooltip";
+import * as __m148 from "./themes/pixel/sections/perler-beads/image-compare-modal";
+import * as __m149 from "./themes/pixel/sections/perler-beads/install-pwa";
+import * as __m150 from "./themes/pixel/sections/perler-beads/magnifier-selection-overlay";
+import * as __m151 from "./themes/pixel/sections/perler-beads/magnifier-tool";
+import * as __m152 from "./themes/pixel/sections/perler-beads/perler-selection-overlay";
+import * as __m153 from "./themes/pixel/sections/perler-beads/perler-tool-rail";
+import * as __m154 from "./themes/pixel/sections/perler-beads/perler-work-bar";
+import * as __m155 from "./themes/pixel/sections/perler-beads/pixelated-preview-canvas";
+import * as __m156 from "./themes/pixel/sections/perler-beads/progress-bar";
+import * as __m157 from "./themes/pixel/sections/perler-beads/sample-gallery";
+import * as __m158 from "./themes/pixel/sections/perler-beads/settings-panel";
+import * as __m159 from "./themes/pixel/sections/perler-beads/share-modal";
+import * as __m160 from "./themes/pixel/sections/perler-beads/toolbar";
+import * as __m161 from "./themes/pixel/sections/pricing";
+import * as __m162 from "./themes/pixel/sections/showcases-flow";
+import * as __m163 from "./themes/pixel/sections/showcases";
+import * as __m164 from "./themes/pixel/sections/testimonials";
+import * as __m165 from "./themes/pixel/sections/tools-grid";
+import * as __m166 from "./themes/pixel/sections/perler-beads/app-device-mockup";
+import * as __m167 from "./themes/pixel/sections/perler-beads/app-feature-tabs";
+import * as __m168 from "./themes/pixel/sections/perler-beads/app-landing";
+import * as __m169 from "./themes/pixel/sections/perler-beads/app-store-badges";
+import * as __m170 from "./themes/pixel/sections/perler-beads/app-store-badges";
+import * as __m171 from "./themes/pixel/sections/perler-beads/celebration-animation";
+import * as __m172 from "./themes/pixel/sections/perler-beads/color-palette";
+import * as __m173 from "./themes/pixel/sections/perler-beads/color-panel";
+import * as __m174 from "./themes/pixel/sections/perler-beads/color-stats-panel";
+import * as __m175 from "./themes/pixel/sections/perler-beads/color-status-bar";
+import * as __m176 from "./themes/pixel/sections/perler-beads/color-swatches";
+import * as __m177 from "./themes/pixel/sections/perler-beads/color-swatches";
+import * as __m178 from "./themes/pixel/sections/perler-beads/community-card";
+import * as __m179 from "./themes/pixel/sections/perler-beads/community-feed";
+import * as __m180 from "./themes/pixel/sections/perler-beads/completion-card";
+import * as __m181 from "./themes/pixel/sections/perler-beads/custom-palette-editor";
+import * as __m182 from "./themes/pixel/sections/perler-beads/donation-modal";
+import * as __m183 from "./themes/pixel/sections/perler-beads/download-settings-modal";
+import * as __m184 from "./themes/pixel/sections/perler-beads/floating-color-palette";
+import * as __m185 from "./themes/pixel/sections/perler-beads/floating-toolbar";
+import * as __m186 from "./themes/pixel/sections/perler-beads/focus-canvas";
+import * as __m187 from "./themes/pixel/sections/perler-beads/focus-header";
+import * as __m188 from "./themes/pixel/sections/perler-beads/focus-mode-pre-download-modal";
+import * as __m189 from "./themes/pixel/sections/perler-beads/gallery-card";
+import * as __m190 from "./themes/pixel/sections/perler-beads/gallery-feed";
+import * as __m191 from "./themes/pixel/sections/perler-beads/grid-tooltip";
+import * as __m192 from "./themes/pixel/sections/perler-beads/image-compare-modal";
+import * as __m193 from "./themes/pixel/sections/perler-beads/install-pwa";
+import * as __m194 from "./themes/pixel/sections/perler-beads/magnifier-selection-overlay";
+import * as __m195 from "./themes/pixel/sections/perler-beads/magnifier-tool";
+import * as __m196 from "./themes/pixel/sections/perler-beads/perler-selection-overlay";
+import * as __m197 from "./themes/pixel/sections/perler-beads/perler-tool-rail";
+import * as __m198 from "./themes/pixel/sections/perler-beads/perler-work-bar";
+import * as __m199 from "./themes/pixel/sections/perler-beads/pixelated-preview-canvas";
+import * as __m200 from "./themes/pixel/sections/perler-beads/progress-bar";
+import * as __m201 from "./themes/pixel/sections/perler-beads/sample-gallery";
+import * as __m202 from "./themes/pixel/sections/perler-beads/settings-panel";
+import * as __m203 from "./themes/pixel/sections/perler-beads/share-modal";
+import * as __m204 from "./themes/pixel/sections/perler-beads/toolbar";
+import * as __m205 from "./themes/pixel/sections/cleaner/analyze-panel";
+import * as __m206 from "./themes/pixel/sections/cleaner/context-selector";
+import * as __m207 from "./themes/pixel/sections/cleaner/highlighted";
+import * as __m208 from "./themes/pixel/sections/cleaner/highlighted";
+import * as __m209 from "./themes/pixel/sections/cleaner/output";
+import * as __m210 from "./themes/pixel/sections/cleaner/workbench";
+import * as __m211 from "./themes/pixel/sections/dither/dither-preview";
+import * as __m212 from "./themes/pixel/sections/dither/dither-settings-panel";
+import * as __m213 from "./themes/pixel/sections/blog/blog-detail";
+import * as __m214 from "./themes/pixel/sections/blog/blog-tool-cta";
+import * as __m215 from "./themes/pixel/sections/blog/blog";
+import * as __m216 from "./themes/pixel/sections/blog/related-posts";
+import * as __m217 from "./themes/pixel/editor/editor-canvas";
+import * as __m218 from "./themes/pixel/editor/editor-shell";
+import * as __m219 from "./themes/pixel/editor/editor-sidebar";
+import * as __m220 from "./themes/pixel/editor/editor-toolbar";
+import * as __m221 from "./themes/pixel/editor/panels/adjustment-row";
+import * as __m222 from "./themes/pixel/editor/panels/editor-panel";
+import * as __m223 from "./themes/pixel/editor/panels/preset-grid";
+import * as __m224 from "./themes/pixel/editor/panels/tool-button";
+import * as __m225 from "./themes/pixel/light-tool-demo/artifact-hero";
+import * as __m226 from "./themes/pixel/light-tool-demo/background-generator-demo";
+import * as __m227 from "./themes/pixel/light-tool-demo/before-after";
+import * as __m228 from "./themes/pixel/light-tool-demo/craft-entry-nav";
+import * as __m229 from "./themes/pixel/light-tool-demo/game-icon-generator-demo";
+import * as __m230 from "./themes/pixel/light-tool-demo/light-tool-demo";
+import * as __m231 from "./themes/pixel/light-tool-demo/palette-extractor-demo";
+import * as __m232 from "./themes/pixel/light-tool-demo/param-generator-demo";
+import * as __m233 from "./themes/pixel/light-tool-demo/patterns/bg-patterns";
+import * as __m234 from "./themes/pixel/light-tool-demo/patterns/icon-templates";
+import * as __m235 from "./themes/pixel/light-tool-demo/patterns/pixel-library";
+import * as __m236 from "./themes/pixel/avatar";
+import * as __m237 from "./themes/pixel/badge";
+import * as __m238 from "./themes/pixel/box";
+import * as __m239 from "./themes/pixel/button";
+import * as __m240 from "./themes/pixel/card";
+import * as __m241 from "./themes/pixel/dialog";
+import * as __m242 from "./themes/pixel/dropdown";
+import * as __m243 from "./themes/pixel/dual-cta";
+import * as __m244 from "./themes/pixel/footer";
+import * as __m245 from "./themes/pixel/form";
+import * as __m246 from "./themes/pixel/form";
+import * as __m247 from "./themes/pixel/form";
+import * as __m248 from "./themes/pixel/form";
+import * as __m249 from "./themes/pixel/hint-banner";
+import * as __m250 from "./themes/pixel/iconframe";
+import * as __m251 from "./themes/pixel/input";
+import * as __m252 from "./themes/pixel/label";
+import * as __m253 from "./themes/pixel/layout";
+import * as __m254 from "./themes/pixel/layout";
+import * as __m255 from "./themes/pixel/layout";
+import * as __m256 from "./themes/pixel/layout";
+import * as __m257 from "./themes/pixel/pageshell";
+import * as __m258 from "./themes/pixel/progress";
+import * as __m259 from "./themes/pixel/promo-modal";
+import * as __m260 from "./themes/pixel/skeleton";
+import * as __m261 from "./themes/pixel/switch";
+import * as __m262 from "./themes/pixel/textarea";
+import * as __m263 from "./themes/pixel/theme-toggler";
+import * as __m264 from "./themes/pixel/tool-footer";
+import * as __m265 from "./themes/pixel/tool-header";
+import * as __m266 from "./themes/pixel/tool-settings";
+import * as __m267 from "./themes/pixel/tooltip";
+import * as __m268 from "./themes/pixel/upload-zone";
+import * as __m270 from "./themes/semi/components/avatar";
+import * as __m271 from "./themes/semi/components/badge";
+import * as __m272 from "./themes/semi/components/banner";
+import * as __m273 from "./themes/semi/components/box";
+import * as __m274 from "./themes/semi/components/box";
+import * as __m275 from "./themes/semi/components/button";
+import * as __m276 from "./themes/semi/components/card";
+import * as __m277 from "./themes/semi/components/carousel";
+import * as __m278 from "./themes/semi/components/collapse";
+import * as __m279 from "./themes/semi/components/color-picker";
+import * as __m280 from "./themes/semi/components/copy-text";
+import * as __m281 from "./themes/semi/components/descriptions";
+import * as __m282 from "./themes/semi/components/dropdown";
+import * as __m283 from "./themes/semi/components/empty";
+import * as __m284 from "./themes/semi/components/footer";
+import * as __m285 from "./themes/semi/components/form";
+import * as __m286 from "./themes/semi/components/form";
+import * as __m287 from "./themes/semi/components/form";
+import * as __m288 from "./themes/semi/components/form";
+import * as __m289 from "./themes/semi/components/header";
+import * as __m290 from "./themes/semi/components/image";
+import * as __m291 from "./themes/semi/components/input-number";
+import * as __m292 from "./themes/semi/components/input";
+import * as __m293 from "./themes/semi/components/layout-shell";
+import * as __m294 from "./themes/semi/components/layout";
+import * as __m295 from "./themes/semi/components/layout";
+import * as __m296 from "./themes/semi/components/layout";
+import * as __m297 from "./themes/semi/components/layout";
+import * as __m298 from "./themes/semi/components/list";
+import * as __m299 from "./themes/semi/components/navigation";
+import * as __m300 from "./themes/semi/components/overlay";
+import * as __m301 from "./themes/semi/components/overlay";
+import * as __m302 from "./themes/semi/components/overlay";
+import * as __m303 from "./themes/semi/components/preview-console";
+import * as __m304 from "./themes/semi/components/preview-stage";
+import * as __m305 from "./themes/semi/components/preview-tips";
+import * as __m306 from "./themes/semi/components/progress";
+import * as __m307 from "./themes/semi/components/skeleton";
+import * as __m308 from "./themes/semi/components/slider";
+import * as __m309 from "./themes/semi/components/spin";
+import * as __m310 from "./themes/semi/components/steps";
+import * as __m311 from "./themes/semi/components/switch";
+import * as __m312 from "./themes/semi/components/table";
+import * as __m313 from "./themes/semi/components/tabs";
+import * as __m314 from "./themes/semi/components/tag";
+import * as __m315 from "./themes/semi/components/textarea";
+import * as __m316 from "./themes/semi/components/timeline";
+import * as __m317 from "./themes/semi/components/tooltip";
+import * as __m318 from "./themes/semi/components/upload-zone";
+import * as __m392 from "./themes/semi/icons";
+import * as __m319 from "./themes/semi/sections/activity-overview";
+import * as __m320 from "./themes/semi/sections/chat-history";
+import * as __m321 from "./themes/semi/sections/chat-workbench";
+import * as __m322 from "./themes/semi/sections/compress-workbench";
+import * as __m323 from "./themes/semi/sections/content-header";
+import * as __m324 from "./themes/semi/sections/cta";
+import * as __m325 from "./themes/semi/sections/dashboard-overview";
+import * as __m326 from "./themes/semi/sections/designer-studio-controls";
+import * as __m327 from "./themes/semi/sections/designer-studio-controls";
+import * as __m328 from "./themes/semi/sections/designer-studio-controls";
+import * as __m329 from "./themes/semi/sections/designer-studio-controls";
+import * as __m330 from "./themes/semi/sections/designer-studio-controls";
+import * as __m331 from "./themes/semi/sections/designer-studio";
+import * as __m332 from "./themes/semi/sections/download-workbench";
+import * as __m333 from "./themes/semi/sections/extract-workbench";
+import * as __m334 from "./themes/semi/sections/faq";
+import * as __m335 from "./themes/semi/sections/features-accordion";
+import * as __m336 from "./themes/semi/sections/features-compare";
+import * as __m337 from "./themes/semi/sections/features-grid";
+import * as __m338 from "./themes/semi/sections/features-list";
+import * as __m339 from "./themes/semi/sections/features-media";
+import * as __m340 from "./themes/semi/sections/features-step";
+import * as __m341 from "./themes/semi/sections/features";
+import * as __m342 from "./themes/semi/sections/format-guide";
+import * as __m343 from "./themes/semi/sections/hero-live";
+import * as __m344 from "./themes/semi/sections/hero";
+import * as __m345 from "./themes/semi/sections/image-generator-studio";
+import * as __m346 from "./themes/semi/sections/link-card";
+import * as __m347 from "./themes/semi/sections/logos";
+import * as __m348 from "./themes/semi/sections/music-generator-studio";
+import * as __m349 from "./themes/semi/sections/page-header";
+import * as __m350 from "./themes/semi/sections/preview-workbench";
+import * as __m351 from "./themes/semi/sections/pricing";
+import * as __m352 from "./themes/semi/sections/related-links";
+import * as __m353 from "./themes/semi/sections/resize-workbench";
+import * as __m354 from "./themes/semi/sections/settings-overview";
+import * as __m355 from "./themes/semi/sections/shell";
+import * as __m356 from "./themes/semi/sections/shell";
+import * as __m357 from "./themes/semi/sections/shell";
+import * as __m358 from "./themes/semi/sections/shell";
+import * as __m359 from "./themes/semi/sections/shell";
+import * as __m360 from "./themes/semi/sections/showcases";
+import * as __m361 from "./themes/semi/sections/size-table";
+import * as __m362 from "./themes/semi/sections/stats";
+import * as __m363 from "./themes/semi/sections/subscribe";
+import * as __m364 from "./themes/semi/sections/testimonials";
+import * as __m365 from "./themes/semi/sections/tool-hero";
+import * as __m366 from "./themes/semi/sections/tool-workspace";
+import * as __m367 from "./themes/semi/sections/tools-grid";
+import * as __m368 from "./themes/semi/sections/video-generator-studio";
+import * as __m369 from "./themes/semi/sections/workbench/context-menu";
+import * as __m370 from "./themes/semi/sections/workbench/views";
+import * as __m371 from "./themes/semi/sections/workbench/views";
+import * as __m372 from "./themes/semi/sections/workbench/views";
+import * as __m373 from "./themes/semi/sections/workbench/views";
+import * as __m374 from "./themes/semi/sections/workbench/views";
+import * as __m375 from "./themes/semi/sections/workbench/views";
+import * as __m376 from "./themes/semi/sections/workbench/wb-ai-title";
+import * as __m377 from "./themes/semi/sections/workbench/wb-appearance";
+import * as __m378 from "./themes/semi/sections/workbench/wb-elements";
+import * as __m379 from "./themes/semi/sections/workbench/wb-enhance";
+import * as __m380 from "./themes/semi/sections/workbench/wb-export-modal";
+import * as __m381 from "./themes/semi/sections/workbench/wb-layers";
+import * as __m382 from "./themes/semi/sections/workbench/wb-onboarding";
+import * as __m383 from "./themes/semi/sections/workbench/wb-properties";
+import * as __m384 from "./themes/semi/sections/workbench/wb-remove-bg";
+import * as __m385 from "./themes/semi/sections/workbench/wb-statusbar";
+import * as __m386 from "./themes/semi/sections/workbench/wb-templates";
+import * as __m387 from "./themes/semi/sections/workbench/wb-toolbar";
+import * as __m388 from "./themes/semi/sections/workbench/wb-topbar";
+import * as __m389 from "./themes/semi/sections/workbench/workbench";
+import * as __m390 from "./themes/semi/pages/console-layout";
+import * as __m391 from "./themes/semi/pages/tool-page";
+import * as __m393 from "./themes/raycast/components/action-menu";
+import * as __m394 from "./themes/raycast/components/color-input";
+import * as __m395 from "./themes/raycast/components/desktop";
+import * as __m396 from "./themes/raycast/components/dock";
+import * as __m397 from "./themes/raycast/components/dot";
+import * as __m398 from "./themes/raycast/components/floating-action-bar";
+import * as __m399 from "./themes/raycast/components/footer";
+import * as __m400 from "./themes/raycast/components/footer";
+import * as __m401 from "./themes/raycast/components/form-section";
+import * as __m402 from "./themes/raycast/components/form-section";
+import * as __m403 from "./themes/raycast/components/frame-context";
+import * as __m404 from "./themes/raycast/components/frame-context";
+import * as __m405 from "./themes/raycast/components/header";
+import * as __m406 from "./themes/raycast/components/header";
+import * as __m407 from "./themes/raycast/components/icon-grid";
+import * as __m408 from "./themes/raycast/components/icon-picker";
+import * as __m409 from "./themes/raycast/components/icon-preview-stage";
+import * as __m410 from "./themes/raycast/components/info-dialog";
+import * as __m411 from "./themes/raycast/components/input";
+import * as __m412 from "./themes/raycast/components/input";
+import * as __m413 from "./themes/raycast/components/kbd";
+import * as __m414 from "./themes/raycast/components/kbd";
+import * as __m415 from "./themes/raycast/components/kbd";
+import * as __m416 from "./themes/raycast/components/keyboard-shortcuts";
+import * as __m417 from "./themes/raycast/components/no-ssr";
+import * as __m418 from "./themes/raycast/components/panel";
+import * as __m419 from "./themes/raycast/components/prompt-card";
+import * as __m420 from "./themes/raycast/components/selection-summary";
+import * as __m421 from "./themes/raycast/components/sidebar-filter";
+import * as __m422 from "./themes/raycast/components/sidebar-nav";
+import * as __m423 from "./themes/raycast/components/sidebar";
+import * as __m424 from "./themes/raycast/components/switch";
+import * as __m425 from "./themes/raycast/components/theme-card";
+import * as __m426 from "./themes/raycast/components/theme-controls";
+import * as __m427 from "./themes/raycast/components/theme-switcher";
+import * as __m428 from "./themes/raycast/components/toast";
+import * as __m429 from "./themes/raycast/components/toast";
+import * as __m430 from "./themes/raycast/components/toast";
+import * as __m431 from "./themes/raycast/components/toast";
+import * as __m432 from "./themes/raycast/components/toolbar-actions";
+import * as __m433 from "./themes/raycast/sections/code-workbench";
+import * as __m434 from "./themes/raycast/pages/workbench";
+import * as __a269 from "./themes/pixel/ambient";
 
 /** theme → category → key → component (collected from the filesystem). */
 export const conventionIndex: Record<string, any> = {
@@ -503,434 +497,428 @@ export const conventionIndex: Record<string, any> = {
       "Box": __m47["Box"],
       "Button": __m48["Button"],
       "Card": __m49["Card"],
-      "CardHeader": __m50["CardHeader"],
-      "CardFooter": __m51["CardFooter"],
-      "CardTitle": __m52["CardTitle"],
-      "CardAction": __m53["CardAction"],
-      "CardDescription": __m54["CardDescription"],
-      "CardContent": __m55["CardContent"],
-      "Carousel": __m56["Carousel"],
-      "Collapse": __m57["Collapse"],
-      "ColorPicker": __m58["ColorPicker"],
-      "CopyText": __m59["CopyText"],
-      "Descriptions": __m60["Descriptions"],
-      "Dialog": __m61["Dialog"],
-      "Dropdown": __m62["Dropdown"],
-      "DualCta": __m63["DualCta"],
-      "Empty": __m64["Empty"],
-      "Footer": __m65["Footer"],
-      "Select": __m66["Select"],
-      "Toggle": __m67["Toggle"],
-      "ToggleGroup": __m68["ToggleGroup"],
-      "BareTextarea": __m69["BareTextarea"],
-      "Header": __m70["Header"],
-      "HintBanner": __m71["HintBanner"],
-      "IconFrame": __m72["IconFrame"],
-      "Image": __m73["Image"],
-      "InputNumber": __m74["InputNumber"],
-      "Input": __m75["Input"],
-      "Label": __m76["Label"],
-      "LayoutShell": __m77["LayoutShell"],
-      "Stack": __m78["Stack"],
-      "Cluster": __m79["Cluster"],
-      "Grid": __m80["Grid"],
-      "Divider": __m81["Divider"],
-      "List": __m82["List"],
-      "Navigation": __m83["Navigation"],
-      "Progress": __m84["Progress"],
-      "PromoModal": __m85["PromoModal"],
-      "Skeleton": __m86["Skeleton"],
-      "Slider": __m87["Slider"],
-      "Spin": __m88["Spin"],
-      "Steps": __m89["Steps"],
-      "Switch": __m90["Switch"],
-      "Table": __m91["Table"],
-      "Tabs": __m92["Tabs"],
-      "Tag": __m93["Tag"],
-      "Textarea": __m94["Textarea"],
-      "Timeline": __m95["Timeline"],
-      "ToolFooter": __m96["ToolFooter"],
-      "ToolHeader": __m97["ToolHeader"],
-      "ToolSettings": __m98["ToolSettings"],
-      "Tooltip": __m103["Tooltip"],
-      "TooltipTrigger": __m100["TooltipTrigger"],
-      "TooltipContent": __m101["TooltipContent"],
-      "TooltipProvider": __m102["TooltipProvider"],
-      "UploadZone": __m104["UploadZone"],
+      "Carousel": __m50["Carousel"],
+      "Collapse": __m51["Collapse"],
+      "ColorPicker": __m52["ColorPicker"],
+      "CopyText": __m53["CopyText"],
+      "Descriptions": __m54["Descriptions"],
+      "Dialog": __m55["Dialog"],
+      "Dropdown": __m56["Dropdown"],
+      "DualCta": __m57["DualCta"],
+      "Empty": __m58["Empty"],
+      "Footer": __m59["Footer"],
+      "Select": __m60["Select"],
+      "Toggle": __m61["Toggle"],
+      "ToggleGroup": __m62["ToggleGroup"],
+      "BareTextarea": __m63["BareTextarea"],
+      "Header": __m64["Header"],
+      "HintBanner": __m65["HintBanner"],
+      "IconFrame": __m66["IconFrame"],
+      "Image": __m67["Image"],
+      "InputNumber": __m68["InputNumber"],
+      "Input": __m69["Input"],
+      "Label": __m70["Label"],
+      "LayoutShell": __m71["LayoutShell"],
+      "Stack": __m72["Stack"],
+      "Cluster": __m73["Cluster"],
+      "Grid": __m74["Grid"],
+      "Divider": __m75["Divider"],
+      "List": __m76["List"],
+      "Navigation": __m77["Navigation"],
+      "Progress": __m78["Progress"],
+      "PromoModal": __m79["PromoModal"],
+      "Skeleton": __m80["Skeleton"],
+      "Slider": __m81["Slider"],
+      "Spin": __m82["Spin"],
+      "Steps": __m83["Steps"],
+      "Switch": __m84["Switch"],
+      "Table": __m85["Table"],
+      "Tabs": __m86["Tabs"],
+      "Tag": __m87["Tag"],
+      "Textarea": __m88["Textarea"],
+      "Timeline": __m89["Timeline"],
+      "ToolFooter": __m90["ToolFooter"],
+      "ToolHeader": __m91["ToolHeader"],
+      "ToolSettings": __m92["ToolSettings"],
+      "Tooltip": __m97["Tooltip"],
+      "TooltipTrigger": __m94["TooltipTrigger"],
+      "TooltipContent": __m95["TooltipContent"],
+      "TooltipProvider": __m96["TooltipProvider"],
+      "UploadZone": __m98["UploadZone"],
     },
   },
   "pixel": {
     "sections": {
-      "BlogDetail": __m105["BlogDetail"],
-      "BlogToolCta": __m106["BlogToolCta"],
-      "Blog": __m107["Blog"],
-      "RelatedPosts": __m108["RelatedPosts"],
-      "AnalyzePanel": __m109["AnalyzePanel"],
-      "ContextModeSelector": __m110["ContextModeSelector"],
-      "HighlightedText": __m111["HighlightedText"],
-      "HighlightedWords": __m112["HighlightedWords"],
-      "CleanerOutput": __m113["CleanerOutput"],
-      "CleanerWorkbench": __m114["CleanerWorkbench"],
-      "Cta": __m115["Cta"],
-      "DitherPreview": __m116["DitherPreview"],
-      "DitherSettingsPanel": __m117["DitherSettingsPanel"],
-      "Faq": __m118["Faq"],
-      "FeaturesAccordion": __m119["FeaturesAccordion"],
-      "FeaturesCompare": __m120["FeaturesCompare"],
-      "FeaturesFlow": __m121["FeaturesFlow"],
-      "FeaturesGrid": __m122["FeaturesGrid"],
-      "FeaturesList": __m123["FeaturesList"],
-      "FeaturesStep": __m124["FeaturesStep"],
-      "Features": __m125["Features"],
-      "HeroCleaner": __m126["HeroCleaner"],
-      "Hero": __m127["Hero"],
-      "PerlerDeviceMockup": __m128["PerlerDeviceMockup"],
-      "PerlerFeatureTabs": __m129["PerlerFeatureTabs"],
-      "PerlerAppLanding": __m130["PerlerAppLanding"],
-      "PerlerStoreBadge": __m131["PerlerStoreBadge"],
-      "PerlerStoreButtons": __m132["PerlerStoreButtons"],
-      "CelebrationAnimation": __m133["CelebrationAnimation"],
-      "ColorPalette": __m134["ColorPalette"],
-      "ColorPanel": __m135["ColorPanel"],
-      "ColorStatsPanel": __m136["ColorStatsPanel"],
-      "ColorStatusBar": __m137["ColorStatusBar"],
-      "ColorSwatches": __m138["ColorSwatches"],
-      "PRESET_SWATCHES": __m139["PRESET_SWATCHES"],
-      "PerlerCommunityCard": __m140["PerlerCommunityCard"],
-      "PerlerCommunityFeed": __m141["PerlerCommunityFeed"],
-      "CompletionCard": __m142["CompletionCard"],
-      "CustomPaletteEditor": __m143["CustomPaletteEditor"],
-      "DonationModal": __m144["DonationModal"],
-      "DownloadSettingsModal": __m145["DownloadSettingsModal"],
-      "FloatingColorPalette": __m146["FloatingColorPalette"],
-      "FloatingToolbar": __m147["FloatingToolbar"],
-      "FocusCanvas": __m148["FocusCanvas"],
-      "FocusHeader": __m149["FocusHeader"],
-      "FocusModePreDownloadModal": __m150["FocusModePreDownloadModal"],
-      "PerlerGalleryCard": __m151["PerlerGalleryCard"],
-      "PerlerGalleryFeed": __m152["PerlerGalleryFeed"],
-      "GridTooltip": __m153["GridTooltip"],
-      "ImageCompareModal": __m154["ImageCompareModal"],
-      "InstallPWA": __m155["InstallPWA"],
-      "MagnifierSelectionOverlay": __m156["MagnifierSelectionOverlay"],
-      "MagnifierTool": __m157["MagnifierTool"],
-      "PerlerSelectionOverlay": __m158["PerlerSelectionOverlay"],
-      "PerlerToolRail": __m159["PerlerToolRail"],
-      "PerlerWorkBar": __m160["PerlerWorkBar"],
-      "PixelatedPreviewCanvas": __m161["PixelatedPreviewCanvas"],
-      "ProgressBar": __m162["ProgressBar"],
-      "SampleGallery": __m163["SampleGallery"],
-      "SettingsPanel": __m164["SettingsPanel"],
-      "ShareModal": __m165["ShareModal"],
-      "ToolBar": __m166["ToolBar"],
-      "Pricing": __m167["Pricing"],
-      "ShowcasesFlow": __m168["ShowcasesFlow"],
-      "Showcases": __m169["Showcases"],
-      "Testimonials": __m170["Testimonials"],
-      "ToolsGrid": __m171["ToolsGrid"],
+      "BlogDetail": __m99["BlogDetail"],
+      "BlogToolCta": __m100["BlogToolCta"],
+      "Blog": __m101["Blog"],
+      "RelatedPosts": __m102["RelatedPosts"],
+      "AnalyzePanel": __m103["AnalyzePanel"],
+      "ContextModeSelector": __m104["ContextModeSelector"],
+      "HighlightedText": __m105["HighlightedText"],
+      "HighlightedWords": __m106["HighlightedWords"],
+      "CleanerOutput": __m107["CleanerOutput"],
+      "CleanerWorkbench": __m108["CleanerWorkbench"],
+      "Cta": __m109["Cta"],
+      "DitherPreview": __m110["DitherPreview"],
+      "DitherSettingsPanel": __m111["DitherSettingsPanel"],
+      "Faq": __m112["Faq"],
+      "FeaturesAccordion": __m113["FeaturesAccordion"],
+      "FeaturesCompare": __m114["FeaturesCompare"],
+      "FeaturesFlow": __m115["FeaturesFlow"],
+      "FeaturesGrid": __m116["FeaturesGrid"],
+      "FeaturesList": __m117["FeaturesList"],
+      "FeaturesStep": __m118["FeaturesStep"],
+      "Features": __m119["Features"],
+      "HeroCleaner": __m120["HeroCleaner"],
+      "Hero": __m121["Hero"],
+      "PerlerDeviceMockup": __m122["PerlerDeviceMockup"],
+      "PerlerFeatureTabs": __m123["PerlerFeatureTabs"],
+      "PerlerAppLanding": __m124["PerlerAppLanding"],
+      "PerlerStoreBadge": __m125["PerlerStoreBadge"],
+      "PerlerStoreButtons": __m126["PerlerStoreButtons"],
+      "CelebrationAnimation": __m127["CelebrationAnimation"],
+      "ColorPalette": __m128["ColorPalette"],
+      "ColorPanel": __m129["ColorPanel"],
+      "ColorStatsPanel": __m130["ColorStatsPanel"],
+      "ColorStatusBar": __m131["ColorStatusBar"],
+      "ColorSwatches": __m132["ColorSwatches"],
+      "PRESET_SWATCHES": __m133["PRESET_SWATCHES"],
+      "PerlerCommunityCard": __m134["PerlerCommunityCard"],
+      "PerlerCommunityFeed": __m135["PerlerCommunityFeed"],
+      "CompletionCard": __m136["CompletionCard"],
+      "CustomPaletteEditor": __m137["CustomPaletteEditor"],
+      "DonationModal": __m138["DonationModal"],
+      "DownloadSettingsModal": __m139["DownloadSettingsModal"],
+      "FloatingColorPalette": __m140["FloatingColorPalette"],
+      "FloatingToolbar": __m141["FloatingToolbar"],
+      "FocusCanvas": __m142["FocusCanvas"],
+      "FocusHeader": __m143["FocusHeader"],
+      "FocusModePreDownloadModal": __m144["FocusModePreDownloadModal"],
+      "PerlerGalleryCard": __m145["PerlerGalleryCard"],
+      "PerlerGalleryFeed": __m146["PerlerGalleryFeed"],
+      "GridTooltip": __m147["GridTooltip"],
+      "ImageCompareModal": __m148["ImageCompareModal"],
+      "InstallPWA": __m149["InstallPWA"],
+      "MagnifierSelectionOverlay": __m150["MagnifierSelectionOverlay"],
+      "MagnifierTool": __m151["MagnifierTool"],
+      "PerlerSelectionOverlay": __m152["PerlerSelectionOverlay"],
+      "PerlerToolRail": __m153["PerlerToolRail"],
+      "PerlerWorkBar": __m154["PerlerWorkBar"],
+      "PixelatedPreviewCanvas": __m155["PixelatedPreviewCanvas"],
+      "ProgressBar": __m156["ProgressBar"],
+      "SampleGallery": __m157["SampleGallery"],
+      "SettingsPanel": __m158["SettingsPanel"],
+      "ShareModal": __m159["ShareModal"],
+      "ToolBar": __m160["ToolBar"],
+      "Pricing": __m161["Pricing"],
+      "ShowcasesFlow": __m162["ShowcasesFlow"],
+      "Showcases": __m163["Showcases"],
+      "Testimonials": __m164["Testimonials"],
+      "ToolsGrid": __m165["ToolsGrid"],
     },
     "sections/perler-beads": {
-      "PerlerDeviceMockup": __m172["PerlerDeviceMockup"],
-      "PerlerFeatureTabs": __m173["PerlerFeatureTabs"],
-      "PerlerAppLanding": __m174["PerlerAppLanding"],
-      "PerlerStoreBadge": __m175["PerlerStoreBadge"],
-      "PerlerStoreButtons": __m176["PerlerStoreButtons"],
-      "CelebrationAnimation": __m177["CelebrationAnimation"],
-      "ColorPalette": __m178["ColorPalette"],
-      "ColorPanel": __m179["ColorPanel"],
-      "ColorStatsPanel": __m180["ColorStatsPanel"],
-      "ColorStatusBar": __m181["ColorStatusBar"],
-      "ColorSwatches": __m182["ColorSwatches"],
-      "PRESET_SWATCHES": __m183["PRESET_SWATCHES"],
-      "PerlerCommunityCard": __m184["PerlerCommunityCard"],
-      "PerlerCommunityFeed": __m185["PerlerCommunityFeed"],
-      "CompletionCard": __m186["CompletionCard"],
-      "CustomPaletteEditor": __m187["CustomPaletteEditor"],
-      "DonationModal": __m188["DonationModal"],
-      "DownloadSettingsModal": __m189["DownloadSettingsModal"],
-      "FloatingColorPalette": __m190["FloatingColorPalette"],
-      "FloatingToolbar": __m191["FloatingToolbar"],
-      "FocusCanvas": __m192["FocusCanvas"],
-      "FocusHeader": __m193["FocusHeader"],
-      "FocusModePreDownloadModal": __m194["FocusModePreDownloadModal"],
-      "PerlerGalleryCard": __m195["PerlerGalleryCard"],
-      "PerlerGalleryFeed": __m196["PerlerGalleryFeed"],
-      "GridTooltip": __m197["GridTooltip"],
-      "ImageCompareModal": __m198["ImageCompareModal"],
-      "InstallPWA": __m199["InstallPWA"],
-      "MagnifierSelectionOverlay": __m200["MagnifierSelectionOverlay"],
-      "MagnifierTool": __m201["MagnifierTool"],
-      "PerlerSelectionOverlay": __m202["PerlerSelectionOverlay"],
-      "PerlerToolRail": __m203["PerlerToolRail"],
-      "PerlerWorkBar": __m204["PerlerWorkBar"],
-      "PixelatedPreviewCanvas": __m205["PixelatedPreviewCanvas"],
-      "ProgressBar": __m206["ProgressBar"],
-      "SampleGallery": __m207["SampleGallery"],
-      "SettingsPanel": __m208["SettingsPanel"],
-      "ShareModal": __m209["ShareModal"],
-      "ToolBar": __m210["ToolBar"],
+      "PerlerDeviceMockup": __m166["PerlerDeviceMockup"],
+      "PerlerFeatureTabs": __m167["PerlerFeatureTabs"],
+      "PerlerAppLanding": __m168["PerlerAppLanding"],
+      "PerlerStoreBadge": __m169["PerlerStoreBadge"],
+      "PerlerStoreButtons": __m170["PerlerStoreButtons"],
+      "CelebrationAnimation": __m171["CelebrationAnimation"],
+      "ColorPalette": __m172["ColorPalette"],
+      "ColorPanel": __m173["ColorPanel"],
+      "ColorStatsPanel": __m174["ColorStatsPanel"],
+      "ColorStatusBar": __m175["ColorStatusBar"],
+      "ColorSwatches": __m176["ColorSwatches"],
+      "PRESET_SWATCHES": __m177["PRESET_SWATCHES"],
+      "PerlerCommunityCard": __m178["PerlerCommunityCard"],
+      "PerlerCommunityFeed": __m179["PerlerCommunityFeed"],
+      "CompletionCard": __m180["CompletionCard"],
+      "CustomPaletteEditor": __m181["CustomPaletteEditor"],
+      "DonationModal": __m182["DonationModal"],
+      "DownloadSettingsModal": __m183["DownloadSettingsModal"],
+      "FloatingColorPalette": __m184["FloatingColorPalette"],
+      "FloatingToolbar": __m185["FloatingToolbar"],
+      "FocusCanvas": __m186["FocusCanvas"],
+      "FocusHeader": __m187["FocusHeader"],
+      "FocusModePreDownloadModal": __m188["FocusModePreDownloadModal"],
+      "PerlerGalleryCard": __m189["PerlerGalleryCard"],
+      "PerlerGalleryFeed": __m190["PerlerGalleryFeed"],
+      "GridTooltip": __m191["GridTooltip"],
+      "ImageCompareModal": __m192["ImageCompareModal"],
+      "InstallPWA": __m193["InstallPWA"],
+      "MagnifierSelectionOverlay": __m194["MagnifierSelectionOverlay"],
+      "MagnifierTool": __m195["MagnifierTool"],
+      "PerlerSelectionOverlay": __m196["PerlerSelectionOverlay"],
+      "PerlerToolRail": __m197["PerlerToolRail"],
+      "PerlerWorkBar": __m198["PerlerWorkBar"],
+      "PixelatedPreviewCanvas": __m199["PixelatedPreviewCanvas"],
+      "ProgressBar": __m200["ProgressBar"],
+      "SampleGallery": __m201["SampleGallery"],
+      "SettingsPanel": __m202["SettingsPanel"],
+      "ShareModal": __m203["ShareModal"],
+      "ToolBar": __m204["ToolBar"],
     },
     "sections/cleaner": {
-      "AnalyzePanel": __m211["AnalyzePanel"],
-      "ContextModeSelector": __m212["ContextModeSelector"],
-      "HighlightedText": __m213["HighlightedText"],
-      "HighlightedWords": __m214["HighlightedWords"],
-      "CleanerOutput": __m215["CleanerOutput"],
-      "CleanerWorkbench": __m216["CleanerWorkbench"],
+      "AnalyzePanel": __m205["AnalyzePanel"],
+      "ContextModeSelector": __m206["ContextModeSelector"],
+      "HighlightedText": __m207["HighlightedText"],
+      "HighlightedWords": __m208["HighlightedWords"],
+      "CleanerOutput": __m209["CleanerOutput"],
+      "CleanerWorkbench": __m210["CleanerWorkbench"],
     },
     "sections/dither": {
-      "DitherPreview": __m217["DitherPreview"],
-      "DitherSettingsPanel": __m218["DitherSettingsPanel"],
+      "DitherPreview": __m211["DitherPreview"],
+      "DitherSettingsPanel": __m212["DitherSettingsPanel"],
     },
     "sections/blog": {
-      "BlogDetail": __m219["BlogDetail"],
-      "BlogToolCta": __m220["BlogToolCta"],
-      "Blog": __m221["Blog"],
-      "RelatedPosts": __m222["RelatedPosts"],
+      "BlogDetail": __m213["BlogDetail"],
+      "BlogToolCta": __m214["BlogToolCta"],
+      "Blog": __m215["Blog"],
+      "RelatedPosts": __m216["RelatedPosts"],
     },
     "editor": {
-      "EditorCanvas": __m223["EditorCanvas"],
-      "EditorShell": __m224["EditorShell"],
-      "EditorSidebar": __m225["EditorSidebar"],
-      "EditorToolbar": __m226["EditorToolbar"],
-      "AdjustmentRow": __m227["AdjustmentRow"],
-      "EditorPanel": __m228["EditorPanel"],
-      "PresetGrid": __m229["PresetGrid"],
-      "ToolButton": __m230["ToolButton"],
+      "EditorCanvas": __m217["EditorCanvas"],
+      "EditorShell": __m218["EditorShell"],
+      "EditorSidebar": __m219["EditorSidebar"],
+      "EditorToolbar": __m220["EditorToolbar"],
+      "AdjustmentRow": __m221["AdjustmentRow"],
+      "EditorPanel": __m222["EditorPanel"],
+      "PresetGrid": __m223["PresetGrid"],
+      "ToolButton": __m224["ToolButton"],
     },
     "light-tool-demo": {
-      "ArtifactHero": __m231["ArtifactHero"],
-      "BackgroundGeneratorDemo": __m232["BackgroundGeneratorDemo"],
-      "BeforeAfter": __m233["BeforeAfter"],
-      "CraftEntryNav": __m234["CraftEntryNav"],
-      "GameIconGeneratorDemo": __m235["GameIconGeneratorDemo"],
-      "LightToolDemo": __m236["LightToolDemo"],
-      "PaletteExtractorDemo": __m237["PaletteExtractorDemo"],
-      "ParamGeneratorDemo": __m238["ParamGeneratorDemo"],
-      "BG_PATTERNS": __m239["BG_PATTERNS"],
-      "ICON_TEMPLATES": __m240["ICON_TEMPLATES"],
-      "PIXEL_PATTERNS": __m241["PIXEL_PATTERNS"],
+      "ArtifactHero": __m225["ArtifactHero"],
+      "BackgroundGeneratorDemo": __m226["BackgroundGeneratorDemo"],
+      "BeforeAfter": __m227["BeforeAfter"],
+      "CraftEntryNav": __m228["CraftEntryNav"],
+      "GameIconGeneratorDemo": __m229["GameIconGeneratorDemo"],
+      "LightToolDemo": __m230["LightToolDemo"],
+      "PaletteExtractorDemo": __m231["PaletteExtractorDemo"],
+      "ParamGeneratorDemo": __m232["ParamGeneratorDemo"],
+      "BG_PATTERNS": __m233["BG_PATTERNS"],
+      "ICON_TEMPLATES": __m234["ICON_TEMPLATES"],
+      "PIXEL_PATTERNS": __m235["PIXEL_PATTERNS"],
     },
     "components": {
-      "Avatar": __m242["Avatar"],
-      "Badge": __m243["Badge"],
-      "Box": __m244["Box"],
-      "Button": __m245["Button"],
-      "Card": __m246["Card"],
-      "Dialog": __m247["Dialog"],
-      "Dropdown": __m248["Dropdown"],
-      "DualCta": __m249["DualCta"],
-      "Footer": __m250["Footer"],
-      "Select": __m251["Select"],
-      "Toggle": __m252["Toggle"],
-      "ToggleGroup": __m253["ToggleGroup"],
-      "BareTextarea": __m254["BareTextarea"],
-      "HintBanner": __m255["HintBanner"],
-      "IconFrame": __m256["IconFrame"],
-      "Input": __m257["Input"],
-      "Label": __m258["Label"],
-      "Stack": __m259["Stack"],
-      "Cluster": __m260["Cluster"],
-      "Grid": __m261["Grid"],
-      "Divider": __m262["Divider"],
-      "PageShell": __m263["PageShell"],
-      "Progress": __m264["Progress"],
-      "PromoModal": __m265["PromoModal"],
-      "Skeleton": __m266["Skeleton"],
-      "Switch": __m267["Switch"],
-      "Textarea": __m268["Textarea"],
-      "PixelThemeToggler": __m269["PixelThemeToggler"],
-      "ToolFooter": __m270["ToolFooter"],
-      "ToolHeader": __m271["ToolHeader"],
-      "ToolSettings": __m272["ToolSettings"],
-      "Tooltip": __m273["Tooltip"],
-      "UploadZone": __m274["UploadZone"],
+      "Avatar": __m236["Avatar"],
+      "Badge": __m237["Badge"],
+      "Box": __m238["Box"],
+      "Button": __m239["Button"],
+      "Card": __m240["Card"],
+      "Dialog": __m241["Dialog"],
+      "Dropdown": __m242["Dropdown"],
+      "DualCta": __m243["DualCta"],
+      "Footer": __m244["Footer"],
+      "Select": __m245["Select"],
+      "Toggle": __m246["Toggle"],
+      "ToggleGroup": __m247["ToggleGroup"],
+      "BareTextarea": __m248["BareTextarea"],
+      "HintBanner": __m249["HintBanner"],
+      "IconFrame": __m250["IconFrame"],
+      "Input": __m251["Input"],
+      "Label": __m252["Label"],
+      "Stack": __m253["Stack"],
+      "Cluster": __m254["Cluster"],
+      "Grid": __m255["Grid"],
+      "Divider": __m256["Divider"],
+      "PageShell": __m257["PageShell"],
+      "Progress": __m258["Progress"],
+      "PromoModal": __m259["PromoModal"],
+      "Skeleton": __m260["Skeleton"],
+      "Switch": __m261["Switch"],
+      "Textarea": __m262["Textarea"],
+      "PixelThemeToggler": __m263["PixelThemeToggler"],
+      "ToolFooter": __m264["ToolFooter"],
+      "ToolHeader": __m265["ToolHeader"],
+      "ToolSettings": __m266["ToolSettings"],
+      "Tooltip": __m267["Tooltip"],
+      "UploadZone": __m268["UploadZone"],
     },
   },
   "semi": {
     "components": {
-      "Avatar": __m276["Avatar"],
-      "Badge": __m277["Badge"],
-      "Banner": __m278["Banner"],
-      "Box": __m279["Box"],
-      "IconFrame": __m280["IconFrame"],
-      "Button": __m281["Button"],
-      "Card": __m282["Card"],
-      "Carousel": __m283["Carousel"],
-      "Collapse": __m284["Collapse"],
-      "ColorPicker": __m285["ColorPicker"],
-      "CopyText": __m286["CopyText"],
-      "Descriptions": __m287["Descriptions"],
-      "Dropdown": __m288["Dropdown"],
-      "Empty": __m289["Empty"],
-      "Footer": __m290["Footer"],
-      "Select": __m291["Select"],
-      "Toggle": __m292["Toggle"],
-      "ToggleGroup": __m293["ToggleGroup"],
-      "BareTextarea": __m294["BareTextarea"],
-      "Header": __m295["Header"],
-      "Image": __m296["Image"],
-      "InputNumber": __m297["InputNumber"],
-      "Input": __m298["Input"],
-      "LayoutShell": __m299["LayoutShell"],
-      "Stack": __m300["Stack"],
-      "Cluster": __m301["Cluster"],
-      "Grid": __m302["Grid"],
-      "Divider": __m303["Divider"],
-      "List": __m304["List"],
-      "Navigation": __m305["Navigation"],
-      "Dialog": __m306["Dialog"],
-      "PromoModal": __m307["PromoModal"],
-      "HintBanner": __m308["HintBanner"],
-      "PreviewConsole": __m309["PreviewConsole"],
-      "PreviewStage": __m310["PreviewStage"],
-      "PreviewTips": __m311["PreviewTips"],
-      "Progress": __m312["Progress"],
-      "Skeleton": __m313["Skeleton"],
-      "Slider": __m314["Slider"],
-      "Spin": __m315["Spin"],
-      "Steps": __m316["Steps"],
-      "Switch": __m317["Switch"],
-      "Table": __m318["Table"],
-      "Tabs": __m319["Tabs"],
-      "Tag": __m320["Tag"],
-      "Textarea": __m321["Textarea"],
-      "Timeline": __m322["Timeline"],
-      "Tooltip": __m323["Tooltip"],
-      "UploadZone": __m324["UploadZone"],
-      "SmartIcon": __m398["SmartIcon"],
+      "Avatar": __m270["Avatar"],
+      "Badge": __m271["Badge"],
+      "Banner": __m272["Banner"],
+      "Box": __m273["Box"],
+      "IconFrame": __m274["IconFrame"],
+      "Button": __m275["Button"],
+      "Card": __m276["Card"],
+      "Carousel": __m277["Carousel"],
+      "Collapse": __m278["Collapse"],
+      "ColorPicker": __m279["ColorPicker"],
+      "CopyText": __m280["CopyText"],
+      "Descriptions": __m281["Descriptions"],
+      "Dropdown": __m282["Dropdown"],
+      "Empty": __m283["Empty"],
+      "Footer": __m284["Footer"],
+      "Select": __m285["Select"],
+      "Toggle": __m286["Toggle"],
+      "ToggleGroup": __m287["ToggleGroup"],
+      "BareTextarea": __m288["BareTextarea"],
+      "Header": __m289["Header"],
+      "Image": __m290["Image"],
+      "InputNumber": __m291["InputNumber"],
+      "Input": __m292["Input"],
+      "LayoutShell": __m293["LayoutShell"],
+      "Stack": __m294["Stack"],
+      "Cluster": __m295["Cluster"],
+      "Grid": __m296["Grid"],
+      "Divider": __m297["Divider"],
+      "List": __m298["List"],
+      "Navigation": __m299["Navigation"],
+      "Dialog": __m300["Dialog"],
+      "PromoModal": __m301["PromoModal"],
+      "HintBanner": __m302["HintBanner"],
+      "PreviewConsole": __m303["PreviewConsole"],
+      "PreviewStage": __m304["PreviewStage"],
+      "PreviewTips": __m305["PreviewTips"],
+      "Progress": __m306["Progress"],
+      "Skeleton": __m307["Skeleton"],
+      "Slider": __m308["Slider"],
+      "Spin": __m309["Spin"],
+      "Steps": __m310["Steps"],
+      "Switch": __m311["Switch"],
+      "Table": __m312["Table"],
+      "Tabs": __m313["Tabs"],
+      "Tag": __m314["Tag"],
+      "Textarea": __m315["Textarea"],
+      "Timeline": __m316["Timeline"],
+      "Tooltip": __m317["Tooltip"],
+      "UploadZone": __m318["UploadZone"],
+      "SmartIcon": __m392["SmartIcon"],
     },
     "sections": {
-      "ActivityOverview": __m325["ActivityOverview"],
-      "ChatHistory": __m326["ChatHistory"],
-      "ChatWorkbench": __m327["ChatWorkbench"],
-      "CompressWorkbench": __m328["CompressWorkbench"],
-      "ContentHeader": __m329["ContentHeader"],
-      "Cta": __m330["Cta"],
-      "DashboardOverview": __m331["DashboardOverview"],
-      "SettingLabel": __m332["SettingLabel"],
-      "SliderRow": __m333["SliderRow"],
-      "SwitchRow": __m334["SwitchRow"],
-      "ColorRow": __m335["ColorRow"],
-      "Segmented": __m336["Segmented"],
-      "DesignerStudio": __m337["DesignerStudio"],
-      "DownloadWorkbench": __m338["DownloadWorkbench"],
-      "ExtractWorkbench": __m339["ExtractWorkbench"],
-      "Faq": __m340["Faq"],
-      "FeaturesAccordion": __m341["FeaturesAccordion"],
-      "FeaturesCompare": __m342["FeaturesCompare"],
-      "FeaturesGrid": __m343["FeaturesGrid"],
-      "FeaturesList": __m344["FeaturesList"],
-      "FeaturesFlow": __m345["FeaturesFlow"],
-      "FeaturesStep": __m346["FeaturesStep"],
-      "Features": __m347["Features"],
-      "FormatGuide": __m348["FormatGuide"],
-      "HeroLive": __m349["HeroLive"],
-      "Hero": __m350["Hero"],
-      "ImageGeneratorStudio": __m351["ImageGeneratorStudio"],
-      "LinkCard": __m352["LinkCard"],
-      "Logos": __m353["Logos"],
-      "MusicGeneratorStudio": __m354["MusicGeneratorStudio"],
-      "PageHeader": __m355["PageHeader"],
-      "PreviewWorkbench": __m356["PreviewWorkbench"],
-      "Pricing": __m357["Pricing"],
-      "RelatedLinks": __m358["RelatedLinks"],
-      "ResizeWorkbench": __m359["ResizeWorkbench"],
-      "SettingsOverview": __m360["SettingsOverview"],
-      "SectionShell": __m361["SectionShell"],
-      "SectionEyebrow": __m362["SectionEyebrow"],
-      "SectionHeader": __m363["SectionHeader"],
-      "CardSurface": __m364["CardSurface"],
-      "IconChip": __m365["IconChip"],
-      "Showcases": __m366["Showcases"],
-      "SizeTable": __m367["SizeTable"],
-      "Stats": __m368["Stats"],
-      "Subscribe": __m369["Subscribe"],
-      "Testimonials": __m370["Testimonials"],
-      "ToolHero": __m371["ToolHero"],
-      "ToolWorkspace": __m372["ToolWorkspace"],
-      "ToolsGrid": __m373["ToolsGrid"],
-      "VideoGeneratorStudio": __m374["VideoGeneratorStudio"],
-      "WbContextMenu": __m375["WbContextMenu"],
-      "WbHudFrame": __m376["WbHudFrame"],
-      "WbTargetingReticle": __m377["WbTargetingReticle"],
-      "WbNebulaGlow": __m378["WbNebulaGlow"],
-      "WbExposureSlider": __m379["WbExposureSlider"],
-      "WbScannerStream": __m380["WbScannerStream"],
-      "WbPlatformPicker": __m381["WbPlatformPicker"],
-      "WbAiTitleGenerator": __m382["WbAiTitleGenerator"],
-      "WbAppearancePanel": __m383["WbAppearancePanel"],
-      "WbElementsPanel": __m384["WbElementsPanel"],
-      "WbEnhancePanel": __m385["WbEnhancePanel"],
-      "WbExportModal": __m386["WbExportModal"],
-      "WbLayersPanel": __m387["WbLayersPanel"],
-      "WbOnboardingOverlay": __m388["WbOnboardingOverlay"],
-      "WbPropertiesPanel": __m389["WbPropertiesPanel"],
-      "WbRemoveBgPanel": __m390["WbRemoveBgPanel"],
-      "WbStatusBar": __m391["WbStatusBar"],
-      "WbTemplateGallery": __m392["WbTemplateGallery"],
-      "WbToolBar": __m393["WbToolBar"],
-      "WbTopBar": __m394["WbTopBar"],
-      "Workbench": __m395["Workbench"],
+      "ActivityOverview": __m319["ActivityOverview"],
+      "ChatHistory": __m320["ChatHistory"],
+      "ChatWorkbench": __m321["ChatWorkbench"],
+      "CompressWorkbench": __m322["CompressWorkbench"],
+      "ContentHeader": __m323["ContentHeader"],
+      "Cta": __m324["Cta"],
+      "DashboardOverview": __m325["DashboardOverview"],
+      "SettingLabel": __m326["SettingLabel"],
+      "SliderRow": __m327["SliderRow"],
+      "SwitchRow": __m328["SwitchRow"],
+      "ColorRow": __m329["ColorRow"],
+      "Segmented": __m330["Segmented"],
+      "DesignerStudio": __m331["DesignerStudio"],
+      "DownloadWorkbench": __m332["DownloadWorkbench"],
+      "ExtractWorkbench": __m333["ExtractWorkbench"],
+      "Faq": __m334["Faq"],
+      "FeaturesAccordion": __m335["FeaturesAccordion"],
+      "FeaturesCompare": __m336["FeaturesCompare"],
+      "FeaturesGrid": __m337["FeaturesGrid"],
+      "FeaturesList": __m338["FeaturesList"],
+      "FeaturesFlow": __m339["FeaturesFlow"],
+      "FeaturesStep": __m340["FeaturesStep"],
+      "Features": __m341["Features"],
+      "FormatGuide": __m342["FormatGuide"],
+      "HeroLive": __m343["HeroLive"],
+      "Hero": __m344["Hero"],
+      "ImageGeneratorStudio": __m345["ImageGeneratorStudio"],
+      "LinkCard": __m346["LinkCard"],
+      "Logos": __m347["Logos"],
+      "MusicGeneratorStudio": __m348["MusicGeneratorStudio"],
+      "PageHeader": __m349["PageHeader"],
+      "PreviewWorkbench": __m350["PreviewWorkbench"],
+      "Pricing": __m351["Pricing"],
+      "RelatedLinks": __m352["RelatedLinks"],
+      "ResizeWorkbench": __m353["ResizeWorkbench"],
+      "SettingsOverview": __m354["SettingsOverview"],
+      "SectionShell": __m355["SectionShell"],
+      "SectionEyebrow": __m356["SectionEyebrow"],
+      "SectionHeader": __m357["SectionHeader"],
+      "CardSurface": __m358["CardSurface"],
+      "IconChip": __m359["IconChip"],
+      "Showcases": __m360["Showcases"],
+      "SizeTable": __m361["SizeTable"],
+      "Stats": __m362["Stats"],
+      "Subscribe": __m363["Subscribe"],
+      "Testimonials": __m364["Testimonials"],
+      "ToolHero": __m365["ToolHero"],
+      "ToolWorkspace": __m366["ToolWorkspace"],
+      "ToolsGrid": __m367["ToolsGrid"],
+      "VideoGeneratorStudio": __m368["VideoGeneratorStudio"],
+      "WbContextMenu": __m369["WbContextMenu"],
+      "WbHudFrame": __m370["WbHudFrame"],
+      "WbTargetingReticle": __m371["WbTargetingReticle"],
+      "WbNebulaGlow": __m372["WbNebulaGlow"],
+      "WbExposureSlider": __m373["WbExposureSlider"],
+      "WbScannerStream": __m374["WbScannerStream"],
+      "WbPlatformPicker": __m375["WbPlatformPicker"],
+      "WbAiTitleGenerator": __m376["WbAiTitleGenerator"],
+      "WbAppearancePanel": __m377["WbAppearancePanel"],
+      "WbElementsPanel": __m378["WbElementsPanel"],
+      "WbEnhancePanel": __m379["WbEnhancePanel"],
+      "WbExportModal": __m380["WbExportModal"],
+      "WbLayersPanel": __m381["WbLayersPanel"],
+      "WbOnboardingOverlay": __m382["WbOnboardingOverlay"],
+      "WbPropertiesPanel": __m383["WbPropertiesPanel"],
+      "WbRemoveBgPanel": __m384["WbRemoveBgPanel"],
+      "WbStatusBar": __m385["WbStatusBar"],
+      "WbTemplateGallery": __m386["WbTemplateGallery"],
+      "WbToolBar": __m387["WbToolBar"],
+      "WbTopBar": __m388["WbTopBar"],
+      "Workbench": __m389["Workbench"],
     },
     "pages": {
-      "ConsoleLayout": __m396["ConsoleLayout"],
-      "ToolPage": __m397["ToolPage"],
+      "ConsoleLayout": __m390["ConsoleLayout"],
+      "ToolPage": __m391["ToolPage"],
     },
   },
   "raycast": {
     "components": {
-      "WorkbenchActionMenu": __m399["WorkbenchActionMenu"],
-      "WorkbenchColorInput": __m400["WorkbenchColorInput"],
-      "WorkbenchDesktop": __m401["WorkbenchDesktop"],
-      "WorkbenchDock": __m402["WorkbenchDock"],
-      "WorkbenchDot": __m403["WorkbenchDot"],
-      "WorkbenchFloatingActionBar": __m404["WorkbenchFloatingActionBar"],
-      "WorkbenchFooter": __m405["WorkbenchFooter"],
-      "WorkbenchControlItem": __m406["WorkbenchControlItem"],
-      "WorkbenchFormSection": __m407["WorkbenchFormSection"],
-      "WorkbenchFormItem": __m408["WorkbenchFormItem"],
-      "WorkbenchFrameProvider": __m409["WorkbenchFrameProvider"],
-      "WorkbenchFrameContext": __m410["WorkbenchFrameContext"],
-      "WorkbenchHeader": __m411["WorkbenchHeader"],
-      "WorkbenchActions": __m412["WorkbenchActions"],
-      "WorkbenchIconGrid": __m413["WorkbenchIconGrid"],
-      "WorkbenchIconPicker": __m414["WorkbenchIconPicker"],
-      "WorkbenchIconPreviewStage": __m415["WorkbenchIconPreviewStage"],
-      "WorkbenchInfoDialog": __m416["WorkbenchInfoDialog"],
-      "WorkbenchInput": __m417["WorkbenchInput"],
-      "WorkbenchInputSlot": __m418["WorkbenchInputSlot"],
-      "WorkbenchKbd": __m419["WorkbenchKbd"],
-      "WorkbenchKbds": __m420["WorkbenchKbds"],
-      "WorkbenchShortcutRow": __m421["WorkbenchShortcutRow"],
-      "WorkbenchKeyboardShortcutsDialog": __m422["WorkbenchKeyboardShortcutsDialog"],
-      "WorkbenchNoSSR": __m423["WorkbenchNoSSR"],
-      "WorkbenchPanel": __m424["WorkbenchPanel"],
-      "WorkbenchPromptCard": __m425["WorkbenchPromptCard"],
-      "WorkbenchSelectionSummary": __m426["WorkbenchSelectionSummary"],
-      "WorkbenchSidebarFilter": __m427["WorkbenchSidebarFilter"],
-      "WorkbenchSidebarNav": __m428["WorkbenchSidebarNav"],
-      "WorkbenchSidebar": __m429["WorkbenchSidebar"],
-      "WorkbenchSwitch": __m430["WorkbenchSwitch"],
-      "WorkbenchThemeCard": __m431["WorkbenchThemeCard"],
-      "WorkbenchThemeControls": __m432["WorkbenchThemeControls"],
-      "WorkbenchThemeSwitcher": __m433["WorkbenchThemeSwitcher"],
-      "WorkbenchToast": __m434["WorkbenchToast"],
-      "WorkbenchToastViewport": __m435["WorkbenchToastViewport"],
-      "WorkbenchToastProvider": __m436["WorkbenchToastProvider"],
-      "WorkbenchToastTitle": __m437["WorkbenchToastTitle"],
-      "WorkbenchToolbarActions": __m438["WorkbenchToolbarActions"],
+      "WorkbenchActionMenu": __m393["WorkbenchActionMenu"],
+      "WorkbenchColorInput": __m394["WorkbenchColorInput"],
+      "WorkbenchDesktop": __m395["WorkbenchDesktop"],
+      "WorkbenchDock": __m396["WorkbenchDock"],
+      "WorkbenchDot": __m397["WorkbenchDot"],
+      "WorkbenchFloatingActionBar": __m398["WorkbenchFloatingActionBar"],
+      "WorkbenchFooter": __m399["WorkbenchFooter"],
+      "WorkbenchControlItem": __m400["WorkbenchControlItem"],
+      "WorkbenchFormSection": __m401["WorkbenchFormSection"],
+      "WorkbenchFormItem": __m402["WorkbenchFormItem"],
+      "WorkbenchFrameProvider": __m403["WorkbenchFrameProvider"],
+      "WorkbenchFrameContext": __m404["WorkbenchFrameContext"],
+      "WorkbenchHeader": __m405["WorkbenchHeader"],
+      "WorkbenchActions": __m406["WorkbenchActions"],
+      "WorkbenchIconGrid": __m407["WorkbenchIconGrid"],
+      "WorkbenchIconPicker": __m408["WorkbenchIconPicker"],
+      "WorkbenchIconPreviewStage": __m409["WorkbenchIconPreviewStage"],
+      "WorkbenchInfoDialog": __m410["WorkbenchInfoDialog"],
+      "WorkbenchInput": __m411["WorkbenchInput"],
+      "WorkbenchInputSlot": __m412["WorkbenchInputSlot"],
+      "WorkbenchKbd": __m413["WorkbenchKbd"],
+      "WorkbenchKbds": __m414["WorkbenchKbds"],
+      "WorkbenchShortcutRow": __m415["WorkbenchShortcutRow"],
+      "WorkbenchKeyboardShortcutsDialog": __m416["WorkbenchKeyboardShortcutsDialog"],
+      "WorkbenchNoSSR": __m417["WorkbenchNoSSR"],
+      "WorkbenchPanel": __m418["WorkbenchPanel"],
+      "WorkbenchPromptCard": __m419["WorkbenchPromptCard"],
+      "WorkbenchSelectionSummary": __m420["WorkbenchSelectionSummary"],
+      "WorkbenchSidebarFilter": __m421["WorkbenchSidebarFilter"],
+      "WorkbenchSidebarNav": __m422["WorkbenchSidebarNav"],
+      "WorkbenchSidebar": __m423["WorkbenchSidebar"],
+      "WorkbenchSwitch": __m424["WorkbenchSwitch"],
+      "WorkbenchThemeCard": __m425["WorkbenchThemeCard"],
+      "WorkbenchThemeControls": __m426["WorkbenchThemeControls"],
+      "WorkbenchThemeSwitcher": __m427["WorkbenchThemeSwitcher"],
+      "WorkbenchToast": __m428["WorkbenchToast"],
+      "WorkbenchToastViewport": __m429["WorkbenchToastViewport"],
+      "WorkbenchToastProvider": __m430["WorkbenchToastProvider"],
+      "WorkbenchToastTitle": __m431["WorkbenchToastTitle"],
+      "WorkbenchToolbarActions": __m432["WorkbenchToolbarActions"],
     },
     "sections": {
-      "CodeWorkbench": __m439["CodeWorkbench"],
+      "CodeWorkbench": __m433["CodeWorkbench"],
     },
     "pages": {
-      "WorkbenchPage": __m440["WorkbenchPage"],
+      "WorkbenchPage": __m434["WorkbenchPage"],
     },
   },
 };
 
 /** theme → ambient provider (themes/<theme>/ambient.tsx). */
 export const conventionAmbient: Record<string, ComponentType<any>> = {
-  "pixel": (__a275 as any).PixelAmbientProvider ?? (__a275 as any).AmbientProvider ?? (__a275 as any).default,
+  "pixel": (__a269 as any).PixelAmbientProvider ?? (__a269 as any).AmbientProvider ?? (__a269 as any).default,
 };

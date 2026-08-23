@@ -271,13 +271,6 @@ export const DEMO_PROPS: Record<string, any> = {
   BlogDetail: { section: blogDetailSection, post: blogDetailPost },
   ActivityOverview: activityOverviewProps,
 
-  // ── card composites ─────────────────────────────────────────────────
-  CardHeader: { children: "Card header" },
-  CardTitle: { children: "Card title" },
-  CardDescription: { children: "Card description" },
-  CardContent: { children: "Card body content." },
-  CardFooter: { children: "Card footer" },
-  CardAction: { children: <span className="text-sm font-medium">Action</span> },
   Carousel: {
     children: [
       <div key="1" className="flex h-32 items-center justify-center rounded-lg bg-gray-4 text-gray-9">Slide 1</div>,

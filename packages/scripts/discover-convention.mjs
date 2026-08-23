@@ -48,6 +48,19 @@ const SKIP_NAME = /(^|\/)(index|helpers|types|styles|lib|dither-i18n)(\.|$)/;
 const SKIP_EXT = /\.(d\.ts|css|json)$/;
 const SKIP_I18N = /\.i18n\./;
 
+/** Composite sub-components that ship alongside a parent but are never
+ * resolved through the registry on their own (callers use the parent or
+ * import them directly from the package barrel). Registering them pollutes
+ * the directory — e.g. CardHeader/CardTitle/... under Card. Skip them. */
+const COMPOSITE_CHILDREN = new Set([
+  "CardHeader",
+  "CardFooter",
+  "CardTitle",
+  "CardAction",
+  "CardDescription",
+  "CardContent",
+]);
+
 /** Extract named exports from TS/TSX source via regex (project style). */
 function parseExports(source) {
   const names = new Set();
@@ -114,7 +127,7 @@ function collect() {
         if (!/\.(tsx|ts)$/.test(base)) continue;
         const source = readFileSync(file, "utf8");
         const exports = parseExports(source);
-        const components = exports.filter((n) => /^[A-Z]/.test(n));
+        const components = exports.filter((n) => /^[A-Z]/.test(n) && !COMPOSITE_CHILDREN.has(n));
         if (components.length === 0) {
           // maybe a default-export file
           if (/export\s+default/.test(source)) {
@@ -140,7 +153,7 @@ function collect() {
       if (base === "ambient.tsx" || base === "index.tsx") continue;
       const rel = relative(SRC, file).replace(/\\/g, "/");
       const source = readFileSync(file, "utf8");
-      const components = parseExports(source).filter((n) => /^[A-Z]/.test(n));
+      const components = parseExports(source).filter((n) => /^[A-Z]/.test(n) && !COMPOSITE_CHILDREN.has(n));
       if (components.length === 0) continue;
       (index[theme] ??= {});
       (index[theme].components ??= {});
