@@ -6,6 +6,7 @@ export const props = {
     description: "Pull stills from any video.",
     badges: [{ label: "Free", tone: "free" }],
     videoName: "demo.mp4",
+    videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
     videoRef: null,
     onDropFile: () => {},
     playing: false,
