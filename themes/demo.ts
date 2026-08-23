@@ -216,23 +216,58 @@ export const blogDetailPost = {
     "Every block in themes/default/blocks is a forwarder: it resolves the registered section from the registry and injects the section data. The registry falls back through requested theme → default → any theme → empty.",
 };
 
-/** Every demo section keyed by block name. */
-export const DEMO_SECTIONS: Record<string, Section> = {
-  Hero: heroSection,
-  Features: featuresSection,
-  FeaturesGrid: featuresGridSection,
-  FeaturesStep: featuresStepSection,
-  FeaturesAccordion: featuresAccordionSection,
-  FeaturesCompare: featuresCompareSection,
-  Faq: faqSection,
-  Cta: ctaSection,
-  Subscribe: subscribeSection,
-  Testimonials: testimonialsSection,
-  ToolsGrid: toolsGridSection,
-  Showcases: showcasesSection,
-  HeroCleaner: heroCleanerSection,
-  HeroLive: heroLiveSection,
-  Pricing: pricingSection,
-  Blog: blogSection,
-  BlogDetail: blogDetailSection,
+
+/** ActivityOverview — activity-center home block (needs stats etc., not a Section). */
+export const activityOverviewProps = {
+  welcomeTitle: "Welcome back, Ada",
+  welcomeDescription: "Here's what's been happening across your workspace today.",
+  stats: [
+    { key: "tasks", label: "AI tasks", value: "128", icon: "sparkles", tone: "blue" as const, hint: "+12 today" },
+    { key: "images", label: "Images", value: "342", icon: "image", tone: "purple" as const, hint: "24 in queue" },
+    { key: "songs", label: "Songs", value: "56", icon: "music", tone: "green" as const, hint: "3 new" },
+    { key: "videos", label: "Videos", value: "12", icon: "video", tone: "gold" as const, hint: "1 exporting" },
+  ],
+  recentTasks: {
+    title: "Recent AI tasks",
+    viewAllLabel: "View all",
+    viewAllUrl: "#",
+    items: [
+      { id: "t1", title: "Music generation", description: "Suno · v3", icon: "music", badge: { label: "Done", tone: "green" as const }, time: "3 min ago" },
+      { id: "t2", title: "Image upscale", description: "Stable Diffusion · x4", icon: "image", badge: { label: "Running", tone: "blue" as const }, time: "12 min ago" },
+      { id: "t3", title: "Prompt rewrite", description: "GPT-4o", icon: "sparkles", badge: { label: "Done", tone: "green" as const }, time: "1 h ago" },
+      { id: "t4", title: "Video trim", description: "CapCut · 0:42", icon: "video", badge: { label: "Failed", tone: "red" as const }, time: "2 h ago" },
+    ],
+  },
+  quickActions: {
+    title: "Quick start",
+    items: [
+      { key: "qa1", title: "New chat", description: "Start a conversation", icon: "message", tone: "blue" as const, url: "#" },
+      { key: "qa2", title: "Generate image", description: "Text to image", icon: "image", tone: "purple" as const, url: "#" },
+      { key: "qa3", title: "Clean background", description: "Remove background", icon: "eraser", tone: "green" as const, url: "#" },
+      { key: "qa4", title: "Export PDF", description: "Convert to PDF", icon: "file", tone: "gold" as const, url: "#" },
+    ],
+  },
+};
+
+/** Every demo prop bundle keyed by block name — either `{ section }` for
+ * section-driven blocks, or bespoke props for workbench/studio blocks. */
+export const DEMO_PROPS: Record<string, any> = {
+  Hero: { section: heroSection },
+  Features: { section: featuresSection },
+  FeaturesGrid: { section: featuresGridSection },
+  FeaturesStep: { section: featuresStepSection },
+  FeaturesAccordion: { section: featuresAccordionSection },
+  FeaturesCompare: { section: featuresCompareSection },
+  Faq: { section: faqSection },
+  Cta: { section: ctaSection },
+  Subscribe: { section: subscribeSection },
+  Testimonials: { section: testimonialsSection },
+  ToolsGrid: { section: toolsGridSection },
+  Showcases: { section: showcasesSection },
+  HeroCleaner: { section: heroCleanerSection },
+  HeroLive: { section: heroLiveSection },
+  Pricing: { section: pricingSection },
+  Blog: { section: blogSection },
+  BlogDetail: { section: blogDetailSection, post: blogDetailPost },
+  ActivityOverview: activityOverviewProps,
 };
