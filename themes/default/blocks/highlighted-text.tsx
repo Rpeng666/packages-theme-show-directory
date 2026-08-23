@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { resolveCleaner } from '@template/ui';
+import { resolveCleaner, useActiveTheme } from '@template/ui';
 
 /**
- * default HighlightedText block — forwarder. Resolves the registered section/component
- * through the registry and forwards props. No hand-rolled markup.
+ * default HighlightedText block — forwarder. Resolves the registered
+ * implementation through the registry for the ACTIVE theme (from context) and
+ * forwards props. No hand-rolled markup.
  */
 export function HighlightedText(props: any) {
-  const Comp = resolveCleaner('HighlightedText' as never) as React.ComponentType<any>;
+  const theme = useActiveTheme();
+  const Comp = resolveCleaner('HighlightedText' as never, theme as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

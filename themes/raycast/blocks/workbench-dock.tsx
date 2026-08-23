@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { resolveComponent } from '@template/ui';
+import { resolveComponent, useActiveTheme } from '@template/ui';
 
 /**
- * raycast WorkbenchDock block — forwarder. Resolves the registered section/component
- * through the registry and forwards props. No hand-rolled markup.
+ * raycast WorkbenchDock block — forwarder. Resolves the registered
+ * implementation through the registry for the ACTIVE theme (from context) and
+ * forwards props. No hand-rolled markup.
  */
 export function WorkbenchDock(props: any) {
-  const Comp = resolveComponent('WorkbenchDock' as never) as React.ComponentType<any>;
+  const theme = useActiveTheme();
+  const Comp = resolveComponent('WorkbenchDock' as never, theme as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { resolveEditor } from '@template/ui';
+import { resolveEditor, useActiveTheme } from '@template/ui';
 
 /**
- * pixel EditorPanel block — forwarder. Resolves the registered section/component
- * through the registry and forwards props. No hand-rolled markup.
+ * pixel EditorPanel block — forwarder. Resolves the registered
+ * implementation through the registry for the ACTIVE theme (from context) and
+ * forwards props. No hand-rolled markup.
  */
 export function EditorPanel(props: any) {
-  const Comp = resolveEditor('EditorPanel' as never) as React.ComponentType<any>;
+  const theme = useActiveTheme();
+  const Comp = resolveEditor('EditorPanel' as never, theme as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

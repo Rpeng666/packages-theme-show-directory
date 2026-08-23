@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { resolvePerler } from '@template/ui';
+import { resolvePerler, useActiveTheme } from '@template/ui';
 
 /**
- * pixel MagnifierTool block — forwarder. Resolves the registered section/component
- * through the registry and forwards props. No hand-rolled markup.
+ * pixel MagnifierTool block — forwarder. Resolves the registered
+ * implementation through the registry for the ACTIVE theme (from context) and
+ * forwards props. No hand-rolled markup.
  */
 export function MagnifierTool(props: any) {
-  const Comp = resolvePerler('MagnifierTool' as never) as React.ComponentType<any>;
+  const theme = useActiveTheme();
+  const Comp = resolvePerler('MagnifierTool' as never, theme as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

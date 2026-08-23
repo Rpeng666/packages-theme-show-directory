@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { resolveSection } from '@template/ui';
+import { resolveSection, useActiveTheme } from '@template/ui';
 
 /**
- * pixel FeaturesAccordion block — forwarder. Resolves the registered section/component
- * through the registry and forwards props. No hand-rolled markup.
+ * pixel FeaturesAccordion block — forwarder. Resolves the registered
+ * implementation through the registry for the ACTIVE theme (from context) and
+ * forwards props. No hand-rolled markup.
  */
 export function FeaturesAccordion(props: any) {
-  const Comp = resolveSection('FeaturesAccordion' as never) as React.ComponentType<any>;
+  const theme = useActiveTheme();
+  const Comp = resolveSection('FeaturesAccordion' as never, theme as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

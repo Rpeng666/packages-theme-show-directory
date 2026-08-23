@@ -5,6 +5,24 @@
 @layer base {
   :root {
     --background: 0 0% 5%;
+    --foreground: 0 0% 93%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 93%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 0 0% 93%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 0 0% 13%;
+    --secondary-foreground: 0 0% 93%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 63%;
+    --accent: 0 0% 13%;
+    --accent-foreground: 0 0% 93%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 93%;
     --panel: 0 0% 9.4118%; /* gray-2 */
     --white: 0 0% 100%;
     --black: 0 0% 0%;
@@ -83,6 +101,30 @@ body {
   margin: 0;
   font-family: Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ── pixel theme (pxlkit retro tokens) ────────────────────────────── */
+[data-theme="pixel"] {
+  --retro-bg: #0a0a0f;
+  --retro-surface: #12121a;
+  --retro-card: #1a1a2e;
+  --retro-text: #e8e6e3;
+  --retro-border: #2a2a3e;
+  --retro-border-strong: #4a4a66;
+  --retro-primary: #818cf8;
+  --retro-secondary: #fcd34d;
+  --retro-accent: #34d399;
+  --retro-muted: #8888aa;
+  --retro-green: #00ff88;
+  --retro-green-hover: #00cc6a;
+  --retro-cyan: #4ecdc4;
+  --retro-red: #ff6b6b;
+  --retro-gold: #ffd700;
+  --retro-purple: #a855f7;
+  --retro-pink: #ff77a8;
+  --retro-shadow-green: rgba(0, 255, 136, 0.3);
+  --retro-shadow-green-lg: rgba(0, 255, 136, 0.2);
+  --retro-shadow-gold: rgba(255, 215, 0, 0.3);
 }
 
 body {

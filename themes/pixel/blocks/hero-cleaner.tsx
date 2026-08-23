@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { resolveSection } from '@template/ui';
+import { resolveSection, useActiveTheme } from '@template/ui';
 
 /**
- * pixel HeroCleaner block — forwarder. Resolves the registered section/component
- * through the registry and forwards props. No hand-rolled markup.
+ * pixel HeroCleaner block — forwarder. Resolves the registered
+ * implementation through the registry for the ACTIVE theme (from context) and
+ * forwards props. No hand-rolled markup.
  */
 export function HeroCleaner(props: any) {
-  const Comp = resolveSection('HeroCleaner' as never) as React.ComponentType<any>;
+  const theme = useActiveTheme();
+  const Comp = resolveSection('HeroCleaner' as never, theme as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

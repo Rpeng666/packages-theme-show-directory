@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { resolveComponent } from '@template/ui';
+import { resolveComponent, useActiveTheme } from '@template/ui';
 
 /**
- * semi SmartIcon block — forwarder. Resolves the registered section/component
- * through the registry and forwards props. No hand-rolled markup.
+ * semi SmartIcon block — forwarder. Resolves the registered
+ * implementation through the registry for the ACTIVE theme (from context) and
+ * forwards props. No hand-rolled markup.
  */
 export function SmartIcon(props: any) {
-  const Comp = resolveComponent('SmartIcon' as never) as React.ComponentType<any>;
+  const theme = useActiveTheme();
+  const Comp = resolveComponent('SmartIcon' as never, theme as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }
