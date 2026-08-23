@@ -12,31 +12,16 @@ import { Button } from "../components/button";
 import { SmartIcon } from "../icons";
 
 /**
- * Semi CompressWorkbench - a designer-grade thumbnail compression studio.
+ * Semi CompressWorkbench — immersive studio layout (option C).
  *
- * Visual language shared with the AI studios: an emerald "lightweight" hero,
- * a guided empty state (gradient dropzone + privacy tip), then a two-panel
- * workbench - a left control rail (source card, format + quality settings,
- * live results with a savings meter) and a right stage (before / after
- * comparison, the YouTube 2MB gauge and the export dock). All data +
- * callbacks come from the app; this section only renders.
+ * A thin top toolbar (title + format pills + quality + export) over a big
+ * center canvas with a before/after compare slider, a large savings figure,
+ * and a bottom status bar. The emerald design-system tokens are kept; the
+ * old two-panel card layout is replaced.
  */
 
 function cn(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
-}
-
-/** Semi-style step heading with a mono number. */
-function StepHeading({ n, title }: { n: string; title: ReactNode }) {
-  return (
-    <div className="mb-4 flex items-center gap-2.5">
-      <span className="font-mono text-[11px] font-bold tracking-[0.06em] text-[rgb(var(--semi-green-7))]">
-        {n}
-      </span>
-      <h2 className="m-0 text-[15px] font-bold text-[var(--semi-color-text-0)]">{title}</h2>
-      <span className="flex-1" />
-    </div>
-  )
 }
 
 function formatBytes(bytes?: number): string {
@@ -113,24 +98,13 @@ export function CompressWorkbench({
   const extension = EXTENSION[format];
   const saved = savingsPercent ?? 0;
   const savedPositive = saved > 0;
-  const meterRatio =
-    compressedSizeBytes && sourceSizeBytes
-      ? Math.min(
-          100,
-          Math.max(
-            0,
-            (compressedSizeBytes / Math.max(1, sourceSizeBytes)) * 100,
-          ),
-        )
-      : 0;
+  const [compare, setCompare] = useState(0.5);
 
   const handleDragOver = (event: React.DragEvent) => {
     event.preventDefault();
     setDragging(true);
   };
-
   const handleDragLeave = () => setDragging(false);
-
   const handleDrop = (event: React.DragEvent) => {
     event.preventDefault();
     setDragging(false);
@@ -139,318 +113,281 @@ export function CompressWorkbench({
   };
 
   return (
-    <section className={cn("relative overflow-hidden py-12", className)} data-registry={dataRegistry}>
-      <div className="px-4">
-        {/* ── Hero: emerald lightweight strip (only when copy provided) ── */}
-        {eyebrow || title || description || (badges && badges.length > 0) || (meta && meta.length > 0) ? (
-        <header className="px-7 py-8 pb-7">
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(var(--semi-grey-9),0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--semi-grey-9),0.05) 1px, transparent 1px)",
-              backgroundSize: "42px 42px",
-              maskImage:
-                "radial-gradient(ellipse 80% 72% at 50% 0%, #000 35%, transparent 100%)",
-            }}
-          />
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(460px 320px at 22% 18%, rgba(var(--semi-green-5),0.16), transparent 70%), radial-gradient(520px 360px at 80% 26%, rgba(var(--semi-teal-4),0.12), transparent 70%)",
-            }}
-          />
-          <div className="relative z-[1] max-w-[640px]">
+    <section
+      className={cn("relative overflow-hidden", className)}
+      data-registry={dataRegistry}
+    >
+      <div className="flex min-h-[calc(100vh-3.5rem)] flex-col">
+        {/* ── Top toolbar: title + controls + export ── */}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-[var(--semi-color-border)] px-6 py-4">
+          <div className="min-w-0">
             {eyebrow ? (
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-[rgba(var(--semi-green-1),0.7)] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-[rgb(var(--semi-green-7))]">
-                <span className="h-2 w-2 rounded-full bg-[rgb(var(--semi-green-5))] animate-[cstudio-pulse_2.4s_ease-in-out_infinite]" />
+              <p className="mb-0.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-[rgb(var(--semi-green-7))]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[rgb(var(--semi-green-5))]" />
                 {eyebrow}
-              </span>
-            ) : null}
-            {title ? <h1 className="m-0 mb-2.5 text-[clamp(30px,4vw,44px)] leading-[1.12] font-extrabold tracking-[-0.02em] text-[var(--semi-color-text-0)]">{title}</h1> : null}
-            {description ? <p className="m-0 max-w-[560px] text-[15px] leading-[1.7] text-[var(--semi-color-text-2)]">{description}</p> : null}
-            {badges && badges.length > 0 ? (
-              <div className="mt-[18px] flex flex-wrap gap-2">
-                {badges.map((badge) => (
-                  <span
-                    key={badge.label}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded-full border border-transparent px-3 py-[5px] text-xs font-bold",
-                      badge.tone === "pro"
-                        ? "bg-[rgba(var(--semi-indigo-1),0.6)] text-[rgb(var(--semi-indigo-6))] border-[rgba(var(--semi-indigo-5),0.25)]"
-                        : badge.tone === "neutral"
-                          ? "bg-[var(--semi-color-fill-0)] text-[var(--semi-color-text-2)]"
-                          : "bg-[rgba(var(--semi-green-1),0.7)] text-[rgb(var(--semi-green-7))] border-[rgba(var(--semi-green-5),0.25)]",
-                    )}
-                  >
-                    {badge.label}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-            {meta && meta.length > 0 ? (
-              <div className="mt-[18px] flex flex-wrap gap-2">
-                {meta.map((item) => (
-                  <span key={item.text} className="inline-flex items-center gap-1.5 rounded-full bg-[var(--semi-color-fill-0)] px-3 py-1.5 text-xs font-semibold text-[var(--semi-color-text-1)]">
-                    <SmartIcon name={item.icon} size={14} />
-                    {item.text}
-                  </span>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        </header>
-        ) : null}
-
-        {!hasSource ? (
-          /* ── Empty state ── */
-          <div className="mt-6">
-            <button
-              type="button"
-              className={cn(
-                "relative flex min-h-[260px] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-[24px] border-2 border-dashed border-[rgba(var(--semi-green-5),0.4)] bg-[linear-gradient(180deg,rgba(var(--semi-green-0),0.45),var(--semi-color-bg-1))] px-[18px] py-7 text-center transition-[border-color,background,transform] duration-[200ms]",
-                dragging && "scale-[1.005] border-[rgb(var(--semi-green-5))] bg-[linear-gradient(180deg,rgba(var(--semi-green-0),0.9),var(--semi-color-bg-1))]",
-              )}
-              onClick={onReplace}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              <span className="pointer-events-none absolute h-[200px] w-[200px] rounded-full border border-[rgba(var(--semi-green-5),0.18)] animate-[cstudio-ring-pulse_3s_ease-in-out_infinite]" />
-              <span className="relative mb-2.5 inline-flex h-[60px] w-[60px] items-center justify-center rounded-[20px] bg-[linear-gradient(135deg,rgb(var(--semi-green-5)),rgb(var(--semi-teal-4)))] text-white shadow-[0_16px_36px_-14px_rgba(var(--semi-green-5),0.65)]">
-                <SmartIcon name="Shrink" size={26} />
-              </span>
-              {emptyPrimary ? (
-                <span className="relative text-[18px] font-bold text-[var(--semi-color-text-0)]">{emptyPrimary}</span>
-              ) : null}
-              {emptyClickLabel ? (
-                <span className="relative text-[14px] font-semibold text-[rgb(var(--semi-green-7))]">{emptyClickLabel}</span>
-              ) : null}
-              {emptyHint ? (
-                <span className="relative mt-1.5 text-xs text-[var(--semi-color-text-3)]">{emptyHint}</span>
-              ) : null}
-            </button>
-            {privacyTip ? (
-              <p className="mt-[18px] flex items-center justify-center gap-[7px] text-xs text-[var(--semi-color-text-3)]">
-                <SmartIcon name="Shield" size={14} />
-                {privacyTip}
               </p>
             ) : null}
+            <h1 className="m-0 truncate text-[20px] font-extrabold tracking-[-0.01em] text-[var(--semi-color-text-0)]">
+              {title}
+            </h1>
+          </div>
 
-            {/* ── Capability preview: what compression gets you ── */}
-            <div className="mt-6 border-t border-[var(--semi-color-border)] pt-5">
-              <div className="mb-3.5 flex flex-wrap items-baseline justify-between gap-3">
-                <span className="text-[13px] font-bold tracking-[0.02em] text-[var(--semi-color-text-0)]">
-                  Shrink it your way
-                </span>
-                <span className="text-xs font-semibold tracking-[0.04em] text-[var(--semi-color-text-3)]">
-                  Fits YouTube&apos;s 2 MB limit
-                </span>
-              </div>
-              <div className="grid gap-2.5">
-                {formatOptions && formatOptions.length > 0
-                  ? formatOptions.map((option) => (
-                      <div key={option.value} className="flex flex-col gap-1 rounded-xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-2)] p-3 px-3.5">
-                        <span className="text-[14px] font-bold tracking-[0.02em] text-[rgb(var(--semi-green-6))]">{option.label}</span>
-                        <span className="text-xs text-[var(--semi-color-text-3)]">{option.desc}</span>
-                      </div>
-                    ))
-                  : null}
-              </div>
+          <span className="hidden h-6 w-px bg-[var(--semi-color-border)] sm:block" />
+
+          {/* Format pills */}
+          <div className="flex items-center gap-1.5">
+            <span className="mr-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--semi-color-text-3)]">
+              {formatLabel}
+            </span>
+            <div className="flex overflow-hidden rounded-[10px] border border-[var(--semi-color-border)]">
+              {formatOptions.map((option) => {
+                const active = option.value === format;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => onFormatChange(option.value)}
+                    className={cn(
+                      "cursor-pointer px-3 py-1.5 font-mono text-xs font-bold transition-colors duration-[150ms]",
+                      active
+                        ? "bg-[rgba(var(--semi-green-5),0.9)] text-white"
+                        : "bg-[var(--semi-color-fill-0)] text-[var(--semi-color-text-2)] hover:bg-[var(--semi-color-fill-1)]",
+                    )}
+                  >
+                    {option.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
-        ) : (
-          /* ── Workspace: two-panel workbench ── */
-          <div className="grid grid-cols-1 gap-5">
-            <div className="flex flex-col gap-4">
-              {/* Source card */}
-              <section className="rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <StepHeading n="01" title={sourceCardTitle} />
-                <div className="mb-3 flex items-center justify-end">
-                  {replaceLabel && onReplace ? (
-                    <button type="button" className="cursor-pointer border-none bg-transparent p-0 text-xs font-bold text-[rgb(var(--semi-green-7))] transition-colors duration-[180ms]" onClick={onReplace}>{replaceLabel}</button>
-                  ) : null}
+
+          {/* Quality */}
+          <label className="flex min-w-[160px] flex-1 items-center gap-2.5 sm:max-w-[260px]">
+            <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--semi-color-text-3)]">
+              {qualityLabel}
+            </span>
+            <input
+              type="range"
+              min={10}
+              max={100}
+              step={1}
+              value={qualityValue}
+              onChange={(event) => onQualityChange(Number(event.target.value))}
+              className="w-full cursor-pointer accent-[rgb(var(--semi-green-5))]"
+              aria-label={typeof qualityLabel === "string" ? qualityLabel : "quality"}
+            />
+            <span className="w-9 shrink-0 text-right font-mono text-xs font-bold tabular-nums text-[rgb(var(--semi-green-7))]">
+              {qualityValue}%
+            </span>
+          </label>
+
+          {onAutoFit2MB ? (
+            <button
+              type="button"
+              onClick={onAutoFit2MB}
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[rgba(var(--semi-green-5),0.4)] bg-[linear-gradient(180deg,rgba(var(--semi-green-5),0.14),rgba(var(--semi-green-5),0.06))] px-3 py-1.5 text-xs font-semibold text-[rgb(var(--semi-green-6))] transition-[background,transform] duration-[100ms] active:scale-95"
+            >
+              <span className="text-[13px] leading-none">✦</span>
+              {autoFitLabel}
+            </button>
+          ) : null}
+
+          <div className="ml-auto flex items-center gap-2">
+            {replaceLabel && onReplace ? (
+              <button
+                type="button"
+                onClick={onReplace}
+                className="cursor-pointer border-none bg-transparent p-0 text-xs font-bold text-[var(--semi-color-text-3)] transition-colors duration-[150ms] hover:text-[rgb(var(--semi-green-7))]"
+              >
+                {replaceLabel}
+              </button>
+            ) : null}
+            <Button
+              type="button"
+              size="lg"
+              className="!h-9 shrink-0"
+              onClick={onDownload}
+              disabled={busy || !compressedUrl}
+              loading={Boolean(busy)}
+            >
+              <SmartIcon name="Download" size={16} />
+              <span>{downloadLabel ? downloadLabel : `Download ${extension}`}</span>
+            </Button>
+          </div>
+        </div>
+
+        {/* ── Body ── */}
+        <div className="flex flex-1 flex-col px-6 py-6">
+          {!hasSource ? (
+            /* Empty state — centered drop zone */
+            <div className="flex flex-1 flex-col items-center justify-center">
+              <button
+                type="button"
+                className={cn(
+                  "relative flex w-full max-w-xl cursor-pointer flex-col items-center justify-center gap-1.5 rounded-[24px] border-2 border-dashed border-[rgba(var(--semi-green-5),0.4)] bg-[linear-gradient(180deg,rgba(var(--semi-green-0),0.45),var(--semi-color-bg-1))] px-[18px] py-14 text-center transition-[border-color,background,transform] duration-[200ms]",
+                  dragging && "scale-[1.005] border-[rgb(var(--semi-green-5))] bg-[linear-gradient(180deg,rgba(var(--semi-green-0),0.9),var(--semi-color-bg-1))]",
+                )}
+                onClick={onReplace}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                <span className="pointer-events-none absolute h-[200px] w-[200px] rounded-full border border-[rgba(var(--semi-green-5),0.18)] animate-[cstudio-ring-pulse_3s_ease-in-out_infinite]" />
+                <span className="relative mb-2.5 inline-flex h-[60px] w-[60px] items-center justify-center rounded-[20px] bg-[linear-gradient(135deg,rgb(var(--semi-green-5)),rgb(var(--semi-teal-4)))] text-white shadow-[0_16px_36px_-14px_rgba(var(--semi-green-5),0.65)]">
+                  <SmartIcon name="Shrink" size={26} />
+                </span>
+                {emptyPrimary ? (
+                  <span className="relative text-[18px] font-bold text-[var(--semi-color-text-0)]">{emptyPrimary}</span>
+                ) : null}
+                {emptyClickLabel ? (
+                  <span className="relative text-[14px] font-semibold text-[rgb(var(--semi-green-7))]">{emptyClickLabel}</span>
+                ) : null}
+                {emptyHint ? (
+                  <span className="relative mt-1.5 text-xs text-[var(--semi-color-text-3)]">{emptyHint}</span>
+                ) : null}
+              </button>
+              {privacyTip ? (
+                <p className="mt-5 flex items-center gap-[7px] text-xs text-[var(--semi-color-text-3)]">
+                  <SmartIcon name="Shield" size={14} />
+                  {privacyTip}
+                </p>
+              ) : null}
+            </div>
+          ) : (
+            /* Immersive workspace */
+            <div className="flex flex-1 flex-col">
+              {/* Center canvas: before/after compare */}
+              <div className="relative mx-auto w-full max-w-4xl overflow-hidden rounded-[20px] border border-[var(--semi-color-border)] bg-[var(--semi-color-fill-0)]">
+                {/* compare labels */}
+                <span className="absolute left-3 top-3 z-20 rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.06em] text-white">
+                  {beforeLabel} · {formatBytes(sourceSizeBytes)}
+                </span>
+                <span className="absolute right-3 top-3 z-20 rounded-full bg-[rgba(var(--semi-green-5),0.9)] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.06em] text-white">
+                  {afterLabel} · {formatBytes(compressedSizeBytes)}
+                </span>
+
+                {/* after (base) */}
+                <div className="aspect-video w-full">
+                  {compressedUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={compressedUrl}
+                      alt={typeof afterLabel === "string" ? afterLabel : "after"}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-[var(--semi-color-text-3)] animate-[cstudio-spin_1s_linear_infinite]">
+                      <SmartIcon name="RefreshCw" size={24} />
+                    </div>
+                  )}
                 </div>
-                {sourceUrl ? (
-                  <div className="flex aspect-video items-center justify-center overflow-hidden rounded-[14px] border border-[var(--semi-color-border)] bg-[var(--semi-color-fill-0)]">
+
+                {/* before (clipped) */}
+                {sourceUrl && (
+                  <div
+                    className="pointer-events-none absolute inset-0 z-10 overflow-hidden"
+                    style={{ width: `${compare * 100}%` }}
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={sourceUrl}
-                      alt={typeof sourceName === "string" ? sourceName : "source"}
+                      alt={typeof beforeLabel === "string" ? beforeLabel : "before"}
                       className="h-full w-full object-contain"
                     />
                   </div>
-                ) : null}
-                <div className="mt-3.5 flex items-center justify-between gap-2.5">
-                  <span className="text-xs font-semibold uppercase tracking-[0.06em] text-[var(--semi-color-text-3)]">{sourceMetaLabel}</span>
-                  <span className="text-right text-[13px] font-semibold text-[var(--semi-color-text-1)]">
-                    {sourceName || "—"}
-                    {sourceSizeBytes ? ` · ${formatBytes(sourceSizeBytes)}` : ""}
-                    {sourceWidth && sourceHeight ? ` · ${sourceWidth}×${sourceHeight}` : ""}
-                  </span>
-                </div>
-              </section>
+                )}
 
-              {/* Settings card */}
-              <section className="rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <StepHeading n="02" title={settingsCardTitle} />
-                {formatLabel ? <h3 className="m-0 mb-2 text-xs font-semibold text-[var(--semi-color-text-2)]">{formatLabel}</h3> : null}
-                <div className="grid grid-cols-1 gap-2">
-                  {formatOptions.map((option) => {
-                    const active = option.value === format;
-                    return (
-                      <button
-                        key={option.value}
-                        type="button"
-                        className={cn(
-                          "flex cursor-pointer flex-col items-center gap-0.5 rounded-xl border border-[var(--semi-color-border)] bg-[var(--semi-color-fill-0)] px-2 py-2.5 transition-[border-color,background] duration-[180ms]",
-                          active && "border-[rgba(var(--semi-green-5),0.45)] bg-[rgba(var(--semi-green-1),0.5)]",
-                        )}
-                        onClick={() => onFormatChange(option.value)}
-                      >
-                        <span className="text-[13px] font-extrabold text-[var(--semi-color-text-0)]">{option.label}</span>
-                        <span className="text-[10px] text-[var(--semi-color-text-3)]">{option.desc}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="text-[13px] font-semibold text-[var(--semi-color-text-1)]">{qualityLabel}</span>
-                  <span className="text-[13px] font-bold tabular-nums text-[rgb(var(--semi-green-7))]">{qualityValue}%</span>
-                </div>
+                {/* divider + handle */}
+                <div
+                  className="pointer-events-none absolute inset-y-0 z-20 w-0.5 bg-white/90 shadow-[0_0_12px_rgba(0,0,0,0.5)]"
+                  style={{ left: `${compare * 100}%` }}
+                />
+                <span
+                  className="pointer-events-none absolute top-1/2 z-20 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-[rgb(var(--semi-green-7))] shadow-md"
+                  style={{ left: `${compare * 100}%` }}
+                >
+                  <SmartIcon name="ArrowLeftRight" size={16} />
+                </span>
+
+                {/* drag input */}
                 <input
                   type="range"
-                  min={10}
+                  min={0}
                   max={100}
-                  step={1}
-                  value={qualityValue}
-                  onChange={(event) => onQualityChange(Number(event.target.value))}
-                  className="w-full cursor-pointer accent-[rgb(var(--semi-green-5))]"
-                  aria-label={typeof qualityLabel === "string" ? qualityLabel : "quality"}
+                  value={Math.round(compare * 100)}
+                  onChange={(e) => setCompare(Number(e.target.value) / 100)}
+                  aria-label="Compare before and after"
+                  className="absolute inset-0 z-30 h-full w-full cursor-ew-resize appearance-none bg-transparent opacity-0"
                 />
-                {onAutoFit2MB ? (
-                  <button type="button" onClick={onAutoFit2MB} className="mt-2.5 inline-flex cursor-pointer items-center gap-2 rounded-full border border-[rgba(var(--semi-green-5),0.4)] bg-[linear-gradient(180deg,rgba(var(--semi-green-5),0.14),rgba(var(--semi-green-5),0.06))] px-3 py-1.5 text-xs font-semibold text-[rgb(var(--semi-green-6))] transition-[background,transform] duration-[100ms] active:scale-95">
-                    <span className="text-[14px] leading-none">✦</span>
-                    <span>{autoFitLabel}</span>
-                  </button>
+              </div>
+
+              {/* Big figure */}
+              <div className="mx-auto mt-8 flex w-full max-w-4xl flex-wrap items-end justify-center gap-x-8 gap-y-3">
+                <div className="text-center">
+                  <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--semi-color-text-3)]">
+                    {originalLabel}
+                  </p>
+                  <p className="m-0 mt-1 font-mono text-[26px] font-bold leading-none text-[var(--semi-color-text-1)]">
+                    {formatBytes(sourceSizeBytes)}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 pb-1 text-[rgb(var(--semi-green-7))]">
+                  <SmartIcon name="ArrowRight" size={20} />
+                </div>
+                <div className="text-center">
+                  <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--semi-color-text-3)]">
+                    {compressedLabel}
+                  </p>
+                  <p className="m-0 mt-1 font-mono text-[26px] font-bold leading-none text-[rgb(var(--semi-green-7))]">
+                    {processing && !compressedSizeBytes ? "…" : formatBytes(compressedSizeBytes)}
+                  </p>
+                </div>
+                {savedPositive ? (
+                  <span className="rounded-full bg-[rgba(var(--semi-green-1),0.7)] px-3 py-1.5 font-mono text-sm font-extrabold tabular-nums text-[rgb(var(--semi-green-7))]">
+                    −{saved}%
+                  </span>
                 ) : null}
-                <div className="mt-1.5 flex justify-between text-[11px] text-[var(--semi-color-text-3)]">
-                  <span>{smallerLabel}</span>
-                  <span>{betterLabel}</span>
-                </div>
-              </section>
+              </div>
 
-              {/* Results card */}
-              <section className="rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <StepHeading n="03" title={resultsCardTitle} />
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between gap-2.5 rounded-xl bg-[var(--semi-color-fill-0)] px-3 py-[9px]">
-                    <span className="text-xs font-semibold text-[var(--semi-color-text-3)]">{originalLabel}</span>
-                    <span className="text-[13px] font-semibold tabular-nums text-[var(--semi-color-text-1)]">{formatBytes(sourceSizeBytes)}</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2.5 rounded-xl bg-[var(--semi-color-fill-0)] px-3 py-[9px]">
-                    <span className="text-xs font-semibold text-[var(--semi-color-text-3)]">{compressedLabel}</span>
-                    <span className="text-[13px] font-semibold tabular-nums text-[rgb(var(--semi-green-7))]">
-                      {processing && !compressedSizeBytes ? "…" : formatBytes(compressedSizeBytes)}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2.5 rounded-xl bg-[rgba(var(--semi-green-1),0.5)] px-3 py-[9px]">
-                    <span className="text-xs font-semibold text-[var(--semi-color-text-3)]">{savedLabel}</span>
-                    <span className={cn("text-[13px] font-extrabold tabular-nums text-[var(--semi-color-text-2)]", savedPositive && "text-[rgb(var(--semi-green-6))]")}>
-                      {savedPositive ? `−${saved}%` : "—"}
-                    </span>
-                  </div>
-                </div>
-                {meterRatio > 0 ? (
-                  <div className="mt-4">
-                    <div className="h-2 overflow-hidden rounded-full bg-[var(--semi-color-fill-0)]">
-                      <div className="h-full rounded-full bg-[linear-gradient(90deg,rgb(var(--semi-teal-4)),rgb(var(--semi-green-5)))] transition-[width] duration-[250ms]" style={{ width: `${meterRatio}%` }} />
-                    </div>
-                    <div className="mt-1 flex justify-between text-[10px] text-[var(--semi-color-text-3)]">
-                      <span>0%</span>
-                      <span>100%</span>
-                    </div>
-                  </div>
-                ) : null}
-              </section>
-            </div>
-
-            <div className="flex min-w-0 flex-col gap-5">
-              {/* Before / after comparison */}
-              <section className="overflow-hidden rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <div className="mb-4 flex items-center gap-2.5">
-                  <span className="font-mono text-[11px] font-bold tracking-[0.06em] text-[rgb(var(--semi-green-7))]">04</span>
-                  <h2 className="m-0 text-[15px] font-bold text-[var(--semi-color-text-0)]">{stageCardTitle}</h2>
-                  <span className="flex-1" />
-                  {compressedSizeBytes && sourceSizeBytes ? (
-                    <span className={cn("inline-flex items-center rounded-full bg-[var(--semi-color-fill-0)] px-2.5 py-1 text-xs font-bold tabular-nums text-[var(--semi-color-text-2)]", savedPositive && "bg-[rgba(var(--semi-green-1),0.7)] text-[rgb(var(--semi-green-7))]")}>
-                      {savedPositive ? `−${saved}%` : "No savings"}
-                    </span>
-                  ) : null}
-                </div>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <div>
-                    <div className="mb-2 flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--semi-color-text-3)]">{beforeLabel}</span>
-                      <span className="text-[11px] font-semibold tabular-nums text-[var(--semi-color-text-2)]">{formatBytes(sourceSizeBytes)}</span>
-                    </div>
-                    {sourceUrl ? (
-                      <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-[14px] border border-[var(--semi-color-border)] bg-[var(--semi-color-fill-0)]">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={sourceUrl} alt={typeof beforeLabel === "string" ? beforeLabel : "before"} className="h-full w-full object-contain" />
-                      </div>
-                    ) : null}
-                  </div>
-                  <div>
-                    <div className="mb-2 flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--semi-color-text-3)]">{afterLabel}</span>
-                      <span className="text-[11px] font-semibold tabular-nums text-[var(--semi-color-text-2)]">{formatBytes(compressedSizeBytes)}</span>
-                    </div>
-                    <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-[14px] border border-[var(--semi-color-border)] bg-[var(--semi-color-fill-0)]">
-                      {compressedUrl ? (
-                        <>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={compressedUrl} alt={typeof afterLabel === "string" ? afterLabel : "after"} className="h-full w-full object-contain" />
-                          {processing ? (
-                            <span className="absolute right-2 top-2 inline-flex items-center gap-[5px] rounded-full bg-[rgba(var(--semi-grey-9),0.6)] px-2 py-[3px] text-[11px] font-bold text-white">
-                              <SmartIcon name="RefreshCw" size={13} />…
-                            </span>
-                          ) : null}
-                        </>
-                      ) : (
-                        <div className="inline-flex items-center justify-center text-[var(--semi-color-text-3)] animate-[cstudio-spin_1s_linear_infinite]">
-                          <SmartIcon name="RefreshCw" size={20} />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* 2MB gauge */}
+              {/* limit gauge */}
               {limitState !== "idle" ? (
-                <div className={cn("flex items-center gap-2.5 rounded-[14px] px-4 py-3.5 text-[13px] font-semibold leading-[1.5]", limitState === "ok" ? "bg-[rgba(var(--semi-green-1),0.6)] text-[rgb(var(--semi-green-7))] border border-[rgba(var(--semi-green-4),0.35)]" : "bg-[rgba(var(--semi-amber-1),0.6)] text-[rgb(var(--semi-amber-7))] border border-[rgba(var(--semi-amber-4),0.35)]")}>
+                <div className={cn(
+                  "mx-auto mt-6 flex w-full max-w-4xl items-center gap-2.5 rounded-[14px] px-4 py-3 text-[13px] font-semibold leading-[1.5]",
+                  limitState === "ok"
+                    ? "border border-[rgba(var(--semi-green-4),0.35)] bg-[rgba(var(--semi-green-1),0.6)] text-[rgb(var(--semi-green-7))]"
+                    : "border border-[rgba(var(--semi-amber-4),0.35)] bg-[rgba(var(--semi-amber-1),0.6)] text-[rgb(var(--semi-amber-7))]",
+                )}>
                   <SmartIcon name={limitState === "ok" ? "CheckCircle" : "Alert"} size={15} />
                   <span>{limitState === "ok" ? limitOkMessage : limitOverMessage}</span>
                 </div>
               ) : null}
 
-              {/* Export dock */}
-              <section className="rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <StepHeading n="05" title={exportCardTitle} />
-                <Button type="button" size="lg" className="w-full" onClick={onDownload} disabled={busy || !compressedUrl} loading={Boolean(busy)}>
-                  <SmartIcon name="Download" size={17} />
-                  <span>{downloadLabel ? downloadLabel : `Download Compressed ${extension}`}</span>
-                </Button>
-                {downloadHint ? <p className="m-0 mt-3 text-center text-xs text-[var(--semi-color-text-3)]">{downloadHint}</p> : null}
-                {error ? <div className="mt-4 rounded-xl bg-[rgba(var(--semi-red-1),0.6)] border border-[rgba(var(--semi-red-4),0.3)] px-4 py-3 text-[13px] font-semibold text-[rgb(var(--semi-red-6))]">{error}</div> : null}
-              </section>
+              {error ? (
+                <div className="mx-auto mt-4 w-full max-w-4xl rounded-xl border border-[rgba(var(--semi-red-4),0.3)] bg-[rgba(var(--semi-red-1),0.6)] px-4 py-3 text-[13px] font-semibold text-[rgb(var(--semi-red-6))]">
+                  {error}
+                </div>
+              ) : null}
 
-              {footerHint ? <p className="mt-5 text-center text-xs text-[var(--semi-color-text-3)]">{footerHint}</p> : null}
+              {footerHint ? (
+                <p className="mx-auto mt-6 w-full max-w-4xl text-center text-xs text-[var(--semi-color-text-3)]">
+                  {footerHint}
+                </p>
+              ) : null}
             </div>
-          </div>
-        )}
+          )}
+        </div>
+
+        {/* ── Bottom status bar ── */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[var(--semi-color-border)] px-6 py-2.5">
+          <span className="flex items-center gap-2 text-[11px] font-semibold text-[var(--semi-color-text-2)]">
+            <SmartIcon name="Image" size={13} />
+            {sourceName || "—"}
+            {sourceWidth && sourceHeight ? ` · ${sourceWidth}×${sourceHeight}` : ""}
+          </span>
+          <span className="text-[11px] text-[var(--semi-color-text-3)]">
+            {sourceMetaLabel} · {privacyTip || footerHint}
+          </span>
+        </div>
       </div>
     </section>
   );
