@@ -1,0 +1,24 @@
+{
+  "name": "@pxlkit/core",
+  "version": "1.3.4",
+  "description": "Local workspace copy of pxlkit core — pixel icon rendering engine (PxlKitIcon, animated/parallax icons, SVG utils). Ported from vendor/pxlkit; source consumed directly via TS.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./index.ts",
+  "module": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "import": "./index.ts",
+      "default": "./index.ts"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2"
+  }
+}

@@ -1,0 +1,16 @@
+.switcher {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 100%;
+  padding: 32px 0;
+  box-sizing: content-box;
+  gap: 32px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.edge {
+  flex-shrink: 0;
+  width: 0;
+}
