@@ -393,9 +393,6 @@ export const DEMO_PROPS: Record<string, any> = {
     isCustomPalette: false,
     t: (key: string) => key,
   },
-  TooltipTrigger: { children: <span className="text-sm font-medium">Hover me</span> },
-  TooltipContent: { children: "Tooltip content" },
-  TooltipProvider: { children: null },
   UploadZone: {
     isMounted: true,
     onDrop: () => {},
@@ -519,6 +516,7 @@ export const DEMO_PROPS: Record<string, any> = {
     onStyleChange: () => {},
     lyrics: "Verse 1…",
     onLyricsChange: () => {},
+    prompt: "A calm ambient track with soft pads",
     signedIn: true,
     isGenerating: false,
     generateLabel: "Generate",
@@ -941,6 +939,7 @@ export const DEMO_PROPS: Record<string, any> = {
     t: (key: string) => key,
   },
   CleanerOutput: {
+    t: (key: string) => key,
     outputView: "changes",
     outputCount: 3,
     output: "The team completed the task efficiently.",
