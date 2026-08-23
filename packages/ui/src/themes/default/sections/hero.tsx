@@ -8,6 +8,21 @@ import { cn } from '../../../lib/utils';
 import type { HeroProps, SectionLink, SectionImage } from '../../../contracts/sections/hero';
 import type { SectionItem } from '../../../types/landing';
 
+/**
+ * Default Hero — restrained editor style.
+ *
+ * Left: eyebrow + headline (highlight in a soft mark), description, dual
+ * CTA, feature row. Right: a real "app window" mock (window chrome with
+ * traffic lights + a small chart card) instead of a placeholder box.
+ */
+
+const FEATURE_TONES: Record<string, string> = {
+  blue: 'bg-blue/10 text-blue',
+  green: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+  purple: 'bg-purple/10 text-purple',
+  gold: 'bg-amber-500/10 text-amber-600 dark:text-amber-400',
+};
+
 export function Hero({ section, className, LinkComponent, ImageComponent }: HeroProps) {
   const highlightText = section.highlight_text ?? '';
   let texts: string[] | null = null;
@@ -33,22 +48,20 @@ export function Hero({ section, className, LinkComponent, ImageComponent }: Hero
           {/* Left: copy */}
           <div className="flex flex-col items-start text-left">
             {section.label && (
-              <div className="border-border bg-accent text-accent-foreground mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium">
-                <Sparkles className="size-3.5" strokeWidth={1.5} />
+              <div className="border-border bg-card mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
+                <span className="size-1.5 rounded-full bg-primary" />
                 {section.label}
               </div>
             )}
 
             {texts && texts.length > 0 ? (
-              <h1 className="text-foreground text-4xl font-bold tracking-tight text-balance sm:text-5xl md:text-6xl">
+              <h1 className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl">
                 {texts[0]}
-                <span className="bg-accent text-accent-foreground rounded-lg px-2 py-0.5">
-                  {highlightText}
-                </span>
+                <span className="text-primary">{highlightText}</span>
                 {texts[1]}
               </h1>
             ) : (
-              <h1 className="text-foreground text-4xl font-bold tracking-tight text-balance sm:text-5xl md:text-6xl">
+              <h1 className="text-foreground text-4xl font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl">
                 {section.title}
               </h1>
             )}
@@ -66,19 +79,16 @@ export function Hero({ section, className, LinkComponent, ImageComponent }: Hero
                     asChild
                     size={button.size || 'default'}
                     variant={button.variant || 'default'}
-                    className={cn('gap-2 px-5 text-sm')}
+                    className={cn('gap-2 px-5 text-sm', button.variant === 'default' && 'group')}
                     key={idx}
                   >
                     <Link
                       href={button.url ?? ''}
                       target={button.target ?? '_self'}
                     >
-                      {button.icon && (
-                        <SmartIcon name={button.icon as string} />
-                      )}
                       <span>{button.title}</span>
                       {button.variant === 'default' && (
-                        <ArrowRight className="size-4" />
+                        <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                       )}
                     </Link>
                   </Button>
@@ -87,16 +97,22 @@ export function Hero({ section, className, LinkComponent, ImageComponent }: Hero
             )}
 
             {section.features && section.features.length > 0 && (
-              <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-3">
                 {section.features.map((feature: SectionItem, idx: number) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <div className="bg-accent text-accent-foreground flex size-9 shrink-0 items-center justify-center rounded-xl">
+                    <div
+                      className={cn(
+                        'flex size-8 shrink-0 items-center justify-center rounded-lg',
+                        FEATURE_TONES[feature.tone as string] ??
+                          'bg-primary/10 text-primary'
+                      )}
+                    >
                       {feature.icon && (
-                        <SmartIcon name={feature.icon as string} size={18} />
+                        <SmartIcon name={feature.icon as string} size={16} />
                       )}
                     </div>
                     <div>
-                      <p className="text-foreground text-sm font-semibold">
+                      <p className="text-foreground text-sm font-medium">
                         {feature.title}
                       </p>
                       <p className="text-muted-foreground text-xs">
@@ -109,23 +125,51 @@ export function Hero({ section, className, LinkComponent, ImageComponent }: Hero
             )}
           </div>
 
-          {/* Right: visual */}
+          {/* Right: app-window mockup */}
           <div className="relative hidden lg:block">
-            <div className="bg-muted ring-border relative mx-auto aspect-[4/3] w-full max-w-lg rounded-3xl p-6 shadow-sm ring-1">
-              <div className="relative flex h-full flex-col items-center justify-center gap-5">
-                <div className="bg-accent flex size-20 items-center justify-center rounded-2xl">
-                  <Sparkles
-                    className="text-accent-foreground size-10"
-                    strokeWidth={1.5}
-                  />
+            <div className="border-border bg-card relative mx-auto w-full max-w-lg overflow-hidden rounded-2xl border shadow-sm">
+              {/* window chrome */}
+              <div className="border-border flex items-center gap-1.5 border-b bg-muted/50 px-4 py-2.5">
+                <span className="size-2.5 rounded-full bg-[#ff5f57]" />
+                <span className="size-2.5 rounded-full bg-[#febc2e]" />
+                <span className="size-2.5 rounded-full bg-[#28c840]" />
+                <span className="ml-3 h-4 flex-1 rounded-md bg-muted" />
+              </div>
+              {/* body: chart card + stat chips */}
+              <div className="space-y-4 p-5">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Output size</p>
+                    <p className="text-foreground font-mono text-xl font-semibold">
+                      980 KB
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+                    −79%
+                  </span>
                 </div>
-                <div className="w-3/4 space-y-2.5">
-                  <div className="bg-border h-2 w-full rounded-full" />
-                  <div className="bg-border h-2 w-5/6 rounded-full" />
-                  <div className="bg-border h-2 w-4/6 rounded-full" />
+                {/* bars */}
+                <div className="flex h-24 items-end gap-2">
+                  {[40, 65, 50, 80, 60, 90, 70, 100, 55, 75, 62, 88].map(
+                    (h, i) => (
+                      <div
+                        key={i}
+                        className={cn(
+                          'flex-1 rounded-t-md',
+                          i === 7
+                            ? 'bg-primary'
+                            : 'bg-muted-foreground/20'
+                        )}
+                        style={{ height: `${h}%` }}
+                      />
+                    )
+                  )}
                 </div>
-                <div className="bg-primary text-primary-foreground absolute top-6 right-6 rounded-full px-3 py-1 text-xs font-medium shadow-sm">
-                  AI Cleaned
+                <div className="flex items-center justify-between rounded-lg border border-border bg-muted/40 px-3 py-2">
+                  <span className="text-xs font-medium text-foreground">
+                    Download compressed
+                  </span>
+                  <span className="text-xs text-muted-foreground">JPG · 80%</span>
                 </div>
               </div>
             </div>
