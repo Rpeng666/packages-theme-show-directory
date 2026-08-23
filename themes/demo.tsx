@@ -7,10 +7,12 @@
  */
 import { DEMO_PROPS as DEFAULT_PROPS } from "./default/mockdata";
 import { DEMO_PROPS as PIXEL_PROPS } from "./pixel/mockdata";
+import { DEMO_PROPS as SEMI_PROPS } from "./semi/mockdata";
 
 const REGISTRIES: Record<string, Record<string, any>> = {
   default: DEFAULT_PROPS,
   pixel: PIXEL_PROPS,
+  semi: SEMI_PROPS,
 };
 
 export const DEMO_PROPS = DEFAULT_PROPS;
