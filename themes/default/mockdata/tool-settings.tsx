@@ -21,5 +21,26 @@ export const props = {
     onOpenCustomPalette: () => {},
     customPaletteCount: 0,
     isCustomPalette: false,
-    t: (key: string) => key,
+    t: (key: string, values?: Record<string, string | number>) => {
+      const EN: Record<string, string> = {
+        granularity: "X-axis cuts (10-300)",
+        threshold: "Color merge threshold (0-100)",
+        apply: "Apply",
+        removeBg: "Remove background",
+        undo: "Undo",
+        mode: "Processing mode",
+        modeCartoon: "Cartoon (dominant)",
+        modeReal: "Real (average)",
+        colorSystem: "Color system",
+        managePalette: "Manage palette ({count} colors)",
+        customPaletteActive: "Custom palette active",
+      };
+      let text = EN[key] ?? key;
+      if (values) {
+        for (const [k, v] of Object.entries(values)) {
+          text = text.replace(new RegExp(`\\{${k}\\}`), String(v));
+        }
+      }
+      return text;
+    },
   };
