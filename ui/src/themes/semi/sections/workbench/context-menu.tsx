@@ -87,8 +87,8 @@ export function WbContextMenu({
       transition={{ duration: 0.12 }}
       className="fixed z-[200] min-w-[180px] rounded-[14px] border border-[#e9e6e1] bg-white/95 p-1.5 shadow-[0_18px_48px_-12px_rgba(28,26,23,0.35)] backdrop-blur-[14px]"
       style={{
-        left: Math.min(x, window.innerWidth - 224),
-        top: Math.min(y, window.innerHeight - 360),
+        left: Math.min(x, (typeof window !== 'undefined' ? window.innerWidth : 800) - 224),
+        top: Math.min(y, (typeof window !== 'undefined' ? window.innerHeight : 600) - 360),
       }}
       role="menu"
     >

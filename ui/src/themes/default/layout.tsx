@@ -77,12 +77,23 @@ export function Grid({
   style,
   ...rest
 }: GridProps) {
-  const colStyle =
-    typeof cols === 'number' ? { gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` } : undefined
+  let colClasses = ''
+  if (typeof cols === 'number') {
+    colClasses = `grid-cols-${cols}`
+  } else if (cols && typeof cols === 'object') {
+    // responsive breakpoints: { base: 1, sm: 2, md: 3, lg: 4, xl: 5 }
+    const parts: string[] = []
+    if (cols.base) parts.push(`grid-cols-${cols.base}`)
+    if (cols.sm) parts.push(`sm:grid-cols-${cols.sm}`)
+    if (cols.md) parts.push(`md:grid-cols-${cols.md}`)
+    if (cols.lg) parts.push(`lg:grid-cols-${cols.lg}`)
+    if (cols.xl) parts.push(`xl:grid-cols-${cols.xl}`)
+    colClasses = parts.join(' ')
+  }
   return (
     <div
-      className={cn('grid', gapMap[gap], className)}
-      style={colStyle ?? style}
+      className={cn('grid', gapMap[gap], colClasses || undefined, className)}
+      style={style}
       {...rest}
     />
   )

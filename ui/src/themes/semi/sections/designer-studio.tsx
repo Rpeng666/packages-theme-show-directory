@@ -214,7 +214,7 @@ function StageRail({
         })}
       </div>
       <span className="designstudio-rail-count">
-        {stageOfLabel} {activeIndex + 1} {stageTotalLabel} {list.length}
+        {stageOfLabel} {activeIndex + 1} / {list.length}
       </span>
     </div>
   );

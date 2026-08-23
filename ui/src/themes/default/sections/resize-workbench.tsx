@@ -15,9 +15,31 @@ import type {
 /**
  * Default ResizeWorkbench - shadcn-styled fallback of the resize studio
  * section (see the Semi implementation for the full design notes).
- * Same contract: amber precision hero, guided empty state, two-panel
+ * Same contract: guided empty state, two-panel
  * workbench with control rail + stage + export dock.
  */
+
+/** Small section heading with a step number. */
+function StepHeading({
+  n,
+  title,
+  right,
+}: {
+  n: string;
+  title: ReactNode;
+  right?: ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className="font-mono text-[11px] font-semibold text-muted-foreground">
+        {n}
+      </span>
+      <h2 className="text-[13px] font-semibold tracking-tight">{title}</h2>
+      <span className="flex-1" />
+      {right}
+    </div>
+  );
+}
 
 const EXTENSION: Record<ResizeWorkbenchFormat, string> = {
   "image/jpeg": "JPG",
@@ -33,7 +55,7 @@ const CHECK_ICON: Record<ResizeWorkbenchQualityCheck["status"], string> = {
 
 const CHECK_TONE: Record<ResizeWorkbenchQualityCheck["status"], string> = {
   ok: "text-emerald-600",
-  warn: "text-amber-600",
+  warn: "text-primary",
   error: "text-red-600",
 };
 
@@ -81,7 +103,7 @@ function CanvasPreview({
       width={width}
       height={height}
       style={{ width: displayWidth, height: displayHeight, maxWidth: "100%" }}
-      className="rounded-lg border bg-muted shadow-sm"
+      className="rounded-lg border bg-muted"
     />
   );
 }
@@ -188,8 +210,8 @@ export function ResizeWorkbench({
         {(eyebrow || title || description) && (
           <div className="mb-6 space-y-2">
             {eyebrow && (
-              <div className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wide text-amber-600 uppercase">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+              <div className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wide text-primary uppercase">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 {eyebrow}
               </div>
             )}
@@ -216,11 +238,11 @@ export function ResizeWorkbench({
           className={cn(
             "group flex w-full cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed px-6 py-12 transition",
             dragging
-              ? "border-amber-400 bg-amber-50"
-              : "border-border bg-muted/30 hover:border-amber-400 hover:bg-amber-50",
+              ? "border-primary bg-primary/10"
+              : "border-border bg-muted/30 hover:border-primary hover:bg-primary/10",
           )}
         >
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <SmartIcon name="Upload" size={26} />
           </span>
           <span className="text-base font-semibold">{emptyPrimary}</span>
@@ -247,7 +269,7 @@ export function ResizeWorkbench({
             value={youtubeInput}
             onChange={(event) => setYoutubeInput(event.target.value)}
             placeholder={youtubePlaceholder}
-            className="flex-1 rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-amber-400"
+            className="flex-1 rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
           />
           <button
             type="submit"
@@ -281,10 +303,12 @@ export function ResizeWorkbench({
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[360px_1fr]">
         {/* Left rail */}
         <div className="space-y-4">
-          <div className="rounded-xl border bg-card p-4 shadow-sm">
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-sm font-semibold">{sourceCardTitle}</span>
-              {onReplace && (
+          <div className="rounded-xl border bg-card p-5">
+            <StepHeading
+              n="01"
+              title={sourceCardTitle}
+              right={
+                onReplace && (
                 <button
                   type="button"
                   onClick={onReplace}
@@ -293,8 +317,9 @@ export function ResizeWorkbench({
                   <SmartIcon name="RefreshCcwIcon" size={12} />
                   {replaceLabel}
                 </button>
-              )}
-            </div>
+                )
+              }
+            />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={sourceUrl || undefined}
@@ -332,8 +357,8 @@ export function ResizeWorkbench({
           </div>
 
           {qualityChecks.length > 0 && (
-            <div className="rounded-xl border bg-card p-4 shadow-sm">
-              <span className="text-sm font-semibold">{qualityCardTitle}</span>
+            <div className="rounded-xl border bg-card p-5">
+              <StepHeading n="02" title={qualityCardTitle} />
               <ul className="mt-2 space-y-1.5">
                 {qualityChecks.map((check, index) => (
                   <li
@@ -352,8 +377,8 @@ export function ResizeWorkbench({
             </div>
           )}
 
-          <div className="rounded-xl border bg-card p-4 shadow-sm">
-            <span className="text-sm font-semibold">{targetCardTitle}</span>
+          <div className="rounded-xl border bg-card p-5">
+            <StepHeading n="03" title={targetCardTitle} />
             {platforms.length > 1 && (
               <div className="mt-2 flex flex-wrap gap-1">
                 {platforms.map((platform) => (
@@ -364,7 +389,7 @@ export function ResizeWorkbench({
                     className={cn(
                       "inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs",
                       platform.id === activePlatform
-                        ? "bg-amber-100 text-amber-700"
+                        ? "bg-primary/10 text-primary"
                         : "text-muted-foreground hover:bg-muted",
                     )}
                   >
@@ -389,8 +414,8 @@ export function ResizeWorkbench({
                     className={cn(
                       "rounded-lg border p-2 text-left transition",
                       active
-                        ? "border-amber-400 bg-amber-50"
-                        : "hover:border-amber-300",
+                        ? "border-primary bg-primary/10"
+                        : "hover:border-primary/40",
                     )}
                   >
                     <span className="block text-xs font-medium">
@@ -405,8 +430,8 @@ export function ResizeWorkbench({
             </div>
           </div>
 
-          <div className="rounded-xl border bg-card p-4 shadow-sm">
-            <span className="text-sm font-semibold">{customCardTitle}</span>
+          <div className="rounded-xl border bg-card p-5">
+            <StepHeading n="04" title={customCardTitle} />
             <div className="mt-2 flex items-end gap-2">
               <div className="flex-1">
                 <span className="text-xs text-muted-foreground">
@@ -432,7 +457,7 @@ export function ResizeWorkbench({
                 className={cn(
                   "flex h-9 w-9 items-center justify-center rounded-lg border",
                   aspectLocked
-                    ? "border-amber-400 bg-amber-50 text-amber-600"
+                    ? "border-primary bg-primary/10 text-primary"
                     : "text-muted-foreground",
                 )}
               >
@@ -461,11 +486,11 @@ export function ResizeWorkbench({
               step={1}
               value={activeWidth}
               onChange={(event) => onWidthChange(Number(event.target.value))}
-              className="mt-3 w-full accent-amber-500"
+              className="mt-3 w-full accent-primary"
             />
             <p className="mt-1 text-xs text-muted-foreground">
               {outputLabel}:{" "}
-              <span className="font-medium text-amber-600">
+              <span className="font-medium text-primary">
                 {activeWidth} × {activeHeight} px
               </span>
             </p>
@@ -474,13 +499,16 @@ export function ResizeWorkbench({
 
         {/* Right stage */}
         <div className="space-y-4">
-          <div className="rounded-xl border bg-card p-4 shadow-sm">
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-sm font-semibold">{previewCardTitle}</span>
-              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-                {activeWidth} × {activeHeight}
-              </span>
-            </div>
+          <div className="rounded-xl border bg-card p-5">
+            <StepHeading
+              n="05"
+              title={previewCardTitle}
+              right={
+                <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+                  {activeWidth} × {activeHeight}
+                </span>
+              }
+            />
             <div className="flex min-h-[220px] items-center justify-center rounded-lg bg-[repeating-conic-gradient(#80808015_0%_25%,transparent_0%_50%)] bg-[length:20px_20px] p-4">
               {sourceUrl && (
                 <CanvasPreview
@@ -493,8 +521,8 @@ export function ResizeWorkbench({
           </div>
 
           {multiSizeLabel && (
-            <div className="rounded-xl border bg-card p-4 shadow-sm">
-              <span className="text-sm font-semibold">{multiSizeLabel}</span>
+            <div className="rounded-xl border bg-card p-5">
+              <StepHeading n="06" title={multiSizeLabel} />
               <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {[1280, 640, 480, 320].map((w) => {
                   const h = Math.round((w * 9) / 16);
@@ -519,8 +547,8 @@ export function ResizeWorkbench({
             </div>
           )}
 
-          <div className="rounded-xl border bg-card p-4 shadow-sm">
-            <span className="text-sm font-semibold">{exportCardTitle}</span>
+          <div className="rounded-xl border bg-card p-5">
+            <StepHeading n="07" title={exportCardTitle} />
             <div className="mt-2 grid grid-cols-3 gap-2">
               {formatOptions.map((option) => (
                 <button
@@ -530,8 +558,8 @@ export function ResizeWorkbench({
                   className={cn(
                     "rounded-lg border py-2 text-center",
                     option.value === format
-                      ? "border-amber-400 bg-amber-50"
-                      : "hover:border-amber-300",
+                      ? "border-primary bg-primary/10"
+                      : "hover:border-primary/40",
                   )}
                 >
                   <span className="block text-sm font-bold">
@@ -547,7 +575,7 @@ export function ResizeWorkbench({
               type="button"
               onClick={onDownload}
               disabled={busy}
-              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-amber-500 py-3 text-base font-semibold text-white transition hover:bg-amber-600 disabled:opacity-60"
+              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3 text-base font-semibold text-white transition hover:bg-primary/90 disabled:opacity-60"
             >
               <SmartIcon name="Download" size={17} />
               {downloadLabel

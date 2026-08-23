@@ -24,6 +24,28 @@ const TAB_ICONS: Record<VideoGeneratorStudioTab, string> = {
   "video-to-video": "Video",
 };
 
+/** Small section heading with a step number. */
+function StepHeading({
+  n,
+  title,
+  right,
+}: {
+  n: string;
+  title: ReactNode;
+  right?: ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className="font-mono text-[11px] font-semibold text-muted-foreground">
+        {n}
+      </span>
+      <h2 className="text-[13px] font-semibold tracking-tight">{title}</h2>
+      <span className="flex-1" />
+      {right}
+    </div>
+  );
+}
+
 export function VideoGeneratorStudio({
   className,
   "data-registry": dataRegistry,
@@ -115,10 +137,10 @@ export function VideoGeneratorStudio({
       data-registry={dataRegistry}
     >
       <div className="container mx-auto max-w-6xl px-4 md:px-8">
-        {/* hero */}
-        <header className="relative mb-10 overflow-hidden rounded-3xl border bg-gradient-to-br from-cyan-500/10 via-background to-background px-6 py-10 md:px-10 md:py-12">
+        {/* Header — quiet hairline rule */}
+        <header className="border-b pb-8 mb-10">
           <div
-            className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl"
+            className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl"
             aria-hidden
           />
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
@@ -126,8 +148,8 @@ export function VideoGeneratorStudio({
               {eyebrow ? (
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full border bg-background/80 px-3 py-1 text-xs font-medium text-muted-foreground">
                   <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-500 opacity-60" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-500" />
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                   </span>
                   {eyebrow}
                 </div>
@@ -144,7 +166,7 @@ export function VideoGeneratorStudio({
 
             <aside className="w-full shrink-0 rounded-2xl border bg-card p-5 shadow-sm md:w-64">
               <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-500">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <SmartIcon name="Coins" size={14} />
                 </span>
                 {balanceLabel}
@@ -167,7 +189,7 @@ export function VideoGeneratorStudio({
               )}
               {costChipLabel ? (
                 <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-foreground">
-                  <SmartIcon name="Zap" size={12} className="text-cyan-500" />
+                  <SmartIcon name="Zap" size={12} className="text-primary" />
                   {costChipLabel}
                 </div>
               ) : null}
@@ -188,15 +210,8 @@ export function VideoGeneratorStudio({
         {/* workspace */}
         <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           {/* deck */}
-          <section className="rounded-2xl border bg-card p-6 shadow-sm">
-            <div className="mb-5 flex items-center gap-2.5">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-500">
-                <SmartIcon name="Sparkles" size={15} />
-              </span>
-              <h2 className="text-lg font-semibold text-foreground">
-                {deckTitle}
-              </h2>
-            </div>
+          <section className="rounded-xl border bg-card p-6">
+            <StepHeading n="01" title={deckTitle} />
 
             {tabs.length > 1 ? (
               <div className="mb-5 flex gap-1 rounded-xl border bg-muted/60 p-1">
@@ -278,7 +293,7 @@ export function VideoGeneratorStudio({
                   <SmartIcon
                     name={referenceImageSlot ? "ImageIcon" : "Link"}
                     size={13}
-                    className="text-cyan-500"
+                    className="text-primary"
                   />
                   <span>
                     {referenceImageSlot
@@ -346,7 +361,7 @@ export function VideoGeneratorStudio({
               onClick={onGenerate}
               disabled={generateDisabled}
               className={cn(
-                "mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all hover:bg-cyan-600 disabled:opacity-55",
+                "mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-55",
                 busy && "animate-pulse",
               )}
             >
@@ -361,7 +376,7 @@ export function VideoGeneratorStudio({
             <div className="mt-3.5 flex flex-wrap items-center gap-x-3 gap-y-2">
               {creditsCostLabel ? (
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-semibold text-foreground">
-                  <SmartIcon name="Coins" size={12} className="text-cyan-500" />
+                  <SmartIcon name="Coins" size={12} className="text-primary" />
                   {creditsCostLabel}
                 </span>
               ) : null}
@@ -373,7 +388,7 @@ export function VideoGeneratorStudio({
               {!signedIn && buyCreditsLabel && buyCreditsHref ? (
                 <ConsoleLink
                   href={buyCreditsHref}
-                  className="ml-auto text-sm font-semibold text-cyan-500 hover:underline"
+                  className="ml-auto text-sm font-semibold text-primary hover:underline"
                 >
                   {buyCreditsLabel}
                 </ConsoleLink>
@@ -386,13 +401,13 @@ export function VideoGeneratorStudio({
                   <span className="font-medium text-foreground">
                     {progressLabel}
                   </span>
-                  <span className="font-bold text-cyan-500">
+                  <span className="font-bold text-primary">
                     {progress ?? 0}%
                   </span>
                 </div>
                 <div className="h-2 overflow-hidden rounded-full bg-muted">
                   <div
-                    className="h-full rounded-full bg-cyan-500 transition-all"
+                    className="h-full rounded-full bg-primary transition-all"
                     style={{ width: `${progress ?? 0}%` }}
                   />
                 </div>
@@ -405,87 +420,97 @@ export function VideoGeneratorStudio({
             ) : null}
           </section>
 
-          {/* stage */}
-          <section className="rounded-2xl border bg-card p-6 shadow-sm">
-            <div className="mb-5 flex items-center gap-2.5">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-500">
-                <SmartIcon name="Video" size={15} />
-              </span>
-              <h2 className="text-lg font-semibold text-foreground">
-                {stageTitle}
-              </h2>
-              {videos.length > 0 ? (
-                <span className="ml-auto inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-cyan-500/10 px-2 text-xs font-semibold text-cyan-500">
-                  {videos.length}
-                </span>
-              ) : null}
-            </div>
+          {/* stage — latest video preview + thumbnail grid */}
+          <section className="flex flex-col">
+            <StepHeading
+              n="02"
+              title={stageTitle}
+              right={
+                videos.length > 0 ? (
+                  <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                    {videos.length}
+                  </span>
+                ) : null
+              }
+            />
 
             {videos.length > 0 ? (
-              <div
-                className={cn(
-                  "grid gap-6",
-                  videos.length === 1 ? "grid-cols-1" : "sm:grid-cols-2",
-                )}
-              >
-                {videos.map((video: VideoGeneratorStudioVideo) => (
-                  <figure key={video.id} className="group space-y-2.5">
-                    <div className="relative overflow-hidden rounded-xl border bg-muted">
-                      <video
-                        src={video.url}
-                        controls
-                        preload="metadata"
-                        playsInline
-                        className="h-auto w-full"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => onDownload?.(video)}
-                        disabled={downloadingId === video.id}
-                        aria-label={downloadLabel}
-                        title={downloadLabel}
-                        className="absolute right-3 bottom-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/90 text-foreground opacity-0 shadow-lg transition-all hover:bg-background group-hover:opacity-100 disabled:opacity-60"
-                      >
-                        {downloadingId === video.id ? (
-                          <SmartIcon
-                            name="Loader2"
-                            size={16}
-                            className="animate-spin"
+              <>
+                {/* latest video — large preview */}
+                <figure className="group mt-4 rounded-xl border bg-card p-4">
+                  <div className="relative overflow-hidden rounded-lg border bg-muted">
+                    <video
+                      src={videos[0].url}
+                      controls
+                      preload="metadata"
+                      playsInline
+                      className="h-auto w-full"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => onDownload?.(videos[0])}
+                      disabled={downloadingId === videos[0].id}
+                      aria-label={downloadLabel}
+                      title={downloadLabel}
+                      className="absolute right-3 bottom-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-background/90 text-foreground opacity-0 shadow-lg transition-all hover:bg-background group-hover:opacity-100 disabled:opacity-60"
+                    >
+                      {downloadingId === videos[0].id ? (
+                        <SmartIcon name="Loader2" size={16} className="animate-spin" />
+                      ) : (
+                        <SmartIcon name="Download" size={16} />
+                      )}
+                    </button>
+                  </div>
+                  <figcaption className="mt-2.5 flex items-start justify-between gap-3">
+                    {videos[0].prompt ? (
+                      <span className="line-clamp-2 flex-1 text-xs text-muted-foreground">
+                        {videos[0].prompt}
+                      </span>
+                    ) : null}
+                    {videos[0].model ? (
+                      <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                        {videos[0].model}
+                      </span>
+                    ) : null}
+                  </figcaption>
+                </figure>
+
+                {/* thumbnail grid for the rest */}
+                {videos.length > 1 ? (
+                  <div className="mt-3 grid grid-cols-3 gap-2">
+                    {videos.slice(1).map((video: VideoGeneratorStudioVideo) => (
+                      <figure key={video.id} className="group">
+                        <div className="relative aspect-video overflow-hidden rounded-md border bg-muted">
+                          <video
+                            src={video.url}
+                            preload="metadata"
+                            playsInline
+                            className="h-full w-full object-cover"
                           />
-                        ) : (
-                          <SmartIcon name="Download" size={16} />
-                        )}
-                      </button>
-                    </div>
-                    <figcaption className="flex items-start justify-between gap-3">
-                      {video.prompt ? (
-                        <span className="line-clamp-2 flex-1 text-xs text-muted-foreground">
-                          {video.prompt}
-                        </span>
-                      ) : null}
-                      {video.model ? (
-                        <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
-                          {video.model}
-                        </span>
-                      ) : null}
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
+                          <button
+                            type="button"
+                            onClick={() => onDownload?.(video)}
+                            disabled={downloadingId === video.id}
+                            aria-label={downloadLabel}
+                            title={downloadLabel}
+                            className="absolute inset-0 flex items-center justify-center bg-black/30 text-white opacity-0 transition-opacity group-hover:opacity-100 disabled:opacity-60"
+                          >
+                            {downloadingId === video.id ? (
+                              <SmartIcon name="Loader2" size={14} className="animate-spin" />
+                            ) : (
+                              <SmartIcon name="Download" size={14} />
+                            )}
+                          </button>
+                        </div>
+                      </figure>
+                    ))}
+                  </div>
+                ) : null}
+              </>
             ) : (
-              <div className="flex flex-col items-center justify-center py-20 text-center">
-                <div className="relative mb-5 flex h-20 w-20 items-center justify-center rounded-2xl border bg-muted/50">
-                  <SmartIcon
-                    name="Video"
-                    size={30}
-                    className="text-muted-foreground"
-                  />
-                  {busy ? (
-                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-500 opacity-60" />
-                      <span className="relative inline-flex h-3 w-3 rounded-full bg-cyan-500" />
-                    </span>
-                  ) : null}
+              <div className="mt-4 flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-muted/20 py-16 text-center">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-xl border bg-card text-muted-foreground">
+                  <SmartIcon name="Video" size={26} />
                 </div>
                 <p className="text-sm text-muted-foreground">
                   {busy ? stageReadyLabel : stageEmptyLabel}
@@ -496,6 +521,7 @@ export function VideoGeneratorStudio({
               </div>
             )}
           </section>
+
         </div>
 
         {footerHint ? (

@@ -15,7 +15,7 @@ const SIZES = [16, 32, 64] as const;
  * Icon-template library + color pickers + size + transparent preview + PNG
  * export. Reusable asset (packages/ui).
  */
-export function GameIconGeneratorDemo() {
+export function GameIconGeneratorDemo({ className }: { className?: string }) {
   const [template, setTemplate] = React.useState<IconTemplateId>('sword');
   const [colors, setColors] = React.useState<IconColors>({
     primary: '#C94F3D',
@@ -72,12 +72,13 @@ export function GameIconGeneratorDemo() {
   };
 
   return (
-    <div className={cn('flex flex-col gap-5 border-2 border-foreground/15 bg-retro-surface/20 p-4 pxl-corner-md md:flex-row md:gap-6')}>
+    <div className={cn('flex flex-col gap-5 border-2 border-retro-border bg-retro-surface/30 p-4 pxl-corner-md md:flex-row md:gap-6', className)}>
       {/* Left: controls */}
-      <div className="flex w-full flex-col gap-4 md:w-72 md:shrink-0">
-        <div>
-          <span className="mb-2 block font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            Icon template
+      <div className="flex w-full flex-col md:w-72 md:shrink-0">
+        {/* Template */}
+        <div className="border-b border-retro-border/40 pb-4">
+          <span className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-retro-muted">
+            <span className="font-bold text-retro-cyan">01</span> Icon template
           </span>
           <PixelSelect
             value={template}
@@ -88,15 +89,20 @@ export function GameIconGeneratorDemo() {
           />
         </div>
 
-        <div className="flex flex-col gap-3">
+        {/* Colors */}
+        <div className="flex flex-col gap-3 border-b border-retro-border/40 py-4">
+          <span className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-retro-muted">
+            <span className="font-bold text-retro-cyan">02</span> Colors
+          </span>
           <PixelColorInput label="Primary" value={colors.primary} onChange={(v) => updateColor('primary', v)} presets={['#C94F3D', '#2F7FE0', '#4CAF50', '#9C27B0', '#00BCD4', '#F5C542']} />
           <PixelColorInput label="Accent" value={colors.secondary} onChange={(v) => updateColor('secondary', v)} presets={['#F5D76E', '#FFFFFF', '#FF9800', '#E91E63', '#8BC34A', '#03A9F4']} />
           <PixelColorInput label="Outline" value={colors.outline} onChange={(v) => updateColor('outline', v)} presets={['#3A3A3A', '#1A1A1A', '#5D4037', '#455A64', '#212121']} />
         </div>
 
-        <div>
-          <span className="mb-2 block font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            Size
+        {/* Size */}
+        <div className="py-4">
+          <span className="mb-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-retro-muted">
+            <span className="font-bold text-retro-cyan">03</span> Size
           </span>
           <div className="flex gap-2">
             {SIZES.map((s) => (
@@ -107,7 +113,7 @@ export function GameIconGeneratorDemo() {
                 className={`flex-1 border-2 px-2 py-1.5 font-mono text-xs transition-colors pxl-corner-sm ${
                   size === s
                     ? 'border-retro-cyan/60 bg-retro-cyan/15 text-retro-cyan'
-                    : 'border-foreground/15 bg-retro-surface/30 text-muted-foreground hover:border-foreground/30 hover:text-foreground'
+                    : 'border-retro-border bg-retro-surface/30 text-muted-foreground hover:border-retro-cyan/40 hover:text-foreground'
                 }`}
               >
                 {s}×{s}
@@ -124,20 +130,20 @@ export function GameIconGeneratorDemo() {
       {/* Right: previews */}
       <div className="flex min-w-0 flex-1 flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            Preview (transparent)
+          <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-retro-muted">
+            <span className="font-bold text-retro-cyan">04</span> Preview (transparent)
           </span>
-          <div className="grid h-32 place-items-center border-2 border-foreground/10 bg-[repeating-conic-gradient(#ddd_0_25%,#fff_0_50%)] bg-[length:12px_12px] p-3 pxl-corner-sm">
-            <canvas ref={previewRef} className="border border-foreground/10 [image-rendering:pixelated]" aria-hidden />
+          <div className="grid h-32 place-items-center border-2 border-retro-border bg-[repeating-conic-gradient(#3a3a3a_0_25%,#1a1a2e_0_50%)] bg-[length:12px_12px] p-3 pxl-corner-sm">
+            <canvas ref={previewRef} className="border-2 border-retro-border [image-rendering:pixelated]" aria-hidden />
           </div>
         </div>
 
         <div className="flex flex-col gap-2">
-          <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            4× zoom
+          <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-retro-muted">
+            <span className="font-bold text-retro-cyan">05</span> 4× zoom
           </span>
-          <div className="grid place-items-center overflow-auto border-2 border-foreground/10 bg-[repeating-conic-gradient(#ddd_0_25%,#fff_0_50%)] bg-[length:12px_12px] p-3 pxl-corner-sm">
-            <canvas ref={exportRef} className="max-h-56 max-w-full border border-foreground/10 [image-rendering:pixelated]" aria-hidden />
+          <div className="grid place-items-center overflow-auto border-2 border-retro-border bg-[repeating-conic-gradient(#3a3a3a_0_25%,#1a1a2e_0_50%)] bg-[length:12px_12px] p-3 pxl-corner-sm">
+            <canvas ref={exportRef} className="max-h-56 max-w-full border-2 border-retro-border [image-rendering:pixelated]" aria-hidden />
           </div>
         </div>
       </div>

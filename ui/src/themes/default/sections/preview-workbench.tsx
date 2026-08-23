@@ -14,9 +14,28 @@ import type {
 /**
  * Default PreviewWorkbench - shadcn-styled fallback of the thumbnail
  * inspect studio (see the Semi implementation for the full design notes).
- * Same contract: sky hero, console (single / A-B mode, upload slots, title +
- * channel, dark toggle, scene tabs), a YouTube-context stage and tips rail.
+ * Same contract: console (single / A-B mode, upload slots, title + channel,
+ * dark toggle, scene tabs), a YouTube-context stage and tips rail.
  */
+
+/** Small section heading with a step number. */
+function StepHeading({
+  n,
+  title,
+}: {
+  n: string;
+  title?: ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className="font-mono text-[11px] font-semibold text-muted-foreground">
+        {n}
+      </span>
+      <h2 className="text-[13px] font-semibold tracking-tight">{title}</h2>
+      <span className="flex-1" />
+    </div>
+  );
+}
 
 const FAKE = [
   {
@@ -124,7 +143,7 @@ function UserThumb({
   const wrap = cn(
     "relative flex aspect-video flex-shrink-0 items-center justify-center overflow-hidden rounded-lg",
     src
-      ? "ring-2 ring-sky-500 ring-offset-1"
+      ? "ring-2 ring-primary ring-offset-1"
       : "border-2 border-dashed bg-muted text-muted-foreground",
     className,
   );
@@ -136,7 +155,7 @@ function UserThumb({
       >
         <SmartIcon name="ImageIcon" size={15} />
         {badge ? (
-          <span className="absolute left-1.5 top-1.5 rounded-full bg-sky-600 px-2 py-0.5 text-[10px] font-extrabold text-white shadow">
+          <span className="absolute left-1.5 top-1.5 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
             {badge}
           </span>
         ) : null}
@@ -152,7 +171,7 @@ function UserThumb({
         className="h-full w-full object-cover"
       />
       {badge ? (
-        <span className="absolute left-1.5 top-1.5 rounded-full bg-sky-600 px-2 py-0.5 text-[10px] font-extrabold text-white shadow">
+        <span className="absolute left-1.5 top-1.5 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
           {badge}
         </span>
       ) : null}
@@ -465,7 +484,7 @@ function UploadSlot({
               className="h-full w-full object-cover"
             />
             {label ? (
-              <span className="absolute left-2.5 top-2.5 flex h-6 min-w-6 items-center justify-center rounded-full bg-sky-600 px-2 text-[11px] font-extrabold text-white shadow">
+              <span className="absolute left-2.5 top-2.5 flex h-6 min-w-6 items-center justify-center rounded-full bg-primary px-2 text-[11px] font-semibold text-primary-foreground">
                 {label}
               </span>
             ) : null}
@@ -474,7 +493,7 @@ function UploadSlot({
             <button
               type="button"
               onClick={() => inputRef.current?.click()}
-              className="inline-flex items-center gap-1.5 rounded-lg border bg-background px-3 py-1.5 text-xs font-semibold transition-colors hover:border-sky-400 hover:text-sky-600"
+              className="inline-flex items-center gap-1.5 rounded-lg border bg-background px-3 py-1.5 text-xs font-semibold transition-colors hover:border-primary/50 hover:text-foreground"
             >
               <SmartIcon name="RefreshCw" size={13} />
               {replaceLabel}
@@ -496,13 +515,13 @@ function UploadSlot({
             const file = e.dataTransfer.files?.[0];
             if (file) load(file);
           }}
-          className="flex w-full min-h-[190px] flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-sky-300 bg-sky-50/60 p-6 text-center transition-colors hover:border-sky-400 hover:bg-sky-100/70"
+          className="flex w-full min-h-[190px] flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-border bg-muted/30 p-6 text-center transition-colors hover:border-primary/60"
         >
-          <span className="mb-1 flex h-11 w-11 items-center justify-center rounded-xl bg-sky-100 text-sky-600">
+          <span className="mb-1 flex h-11 w-11 items-center justify-center rounded-xl border bg-card text-muted-foreground">
             <SmartIcon name="Upload" size={18} />
           </span>
           <span className="text-sm font-semibold">
-            {uploadTitle} <b className="text-sky-600">{label}</b>
+            {uploadTitle} <b className="text-foreground">{label}</b>
           </span>
           <span className="text-xs text-muted-foreground">{uploadHint}</span>
           <span className="text-[11px] text-muted-foreground/70">
@@ -585,56 +604,41 @@ export function PreviewWorkbench({
       className={cn("mx-auto w-full max-w-6xl px-4 py-12", className)}
       data-registry={dataRegistry}
     >
-      {/* Hero */}
-      <header className="relative overflow-hidden rounded-3xl border bg-gradient-to-b from-sky-50 to-background p-8 sm:p-10 dark:from-sky-950/40">
+      {/* Header — quiet hairline rule */}
+      <header className="border-b pb-8 mb-10">
         <div className="relative z-10 max-w-xl">
           {eyebrow ? (
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-sky-700 dark:bg-sky-900/50 dark:text-sky-300">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-sky-500" />
+            <div className="mb-3 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+              <span className="size-1.5 rounded-full bg-primary" />
               {eyebrow}
-            </span>
+            </div>
           ) : null}
           {title ? (
-            <h1 className="mb-2.5 text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               {title}
             </h1>
           ) : null}
           {description ? (
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               {description}
             </p>
           ) : null}
-          {badges && badges.length > 0 ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {badges.map((badge) => (
+          {(badges && badges.length > 0) || (meta && meta.length > 0) ? (
+            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5">
+              {badges?.map((badge) => (
                 <span
                   key={badge.label}
-                  className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-bold",
-                    badge.tone === "pro"
-                      ? "border-sky-300 bg-sky-50 text-sky-700"
-                      : badge.tone === "neutral"
-                        ? "border-border bg-muted text-muted-foreground"
-                        : "border-sky-300 bg-sky-50 text-sky-700",
-                  )}
+                  className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground"
                 >
                   {badge.label}
                 </span>
               ))}
-            </div>
-          ) : null}
-          {meta && meta.length > 0 ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {meta.map((item) => (
+              {meta?.map((item) => (
                 <span
                   key={item.text}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground"
                 >
-                  <SmartIcon
-                    name={item.icon}
-                    size={14}
-                    className="text-sky-600"
-                  />
+                  <SmartIcon name={item.icon} size={12} />
                   {item.text}
                 </span>
               ))}
@@ -643,10 +647,10 @@ export function PreviewWorkbench({
         </div>
       </header>
 
-      {/* Console */}
-      <div className="mt-6 rounded-3xl border bg-card p-5 shadow-sm sm:p-6">
+      {/* Console — control rail */}
+      <div className="rounded-xl border bg-card p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex gap-1 rounded-xl bg-muted p-1">
+          <div className="inline-flex gap-1 rounded-lg border bg-muted/60 p-1">
             {[
               { key: "single" as const, label: singleLabel, icon: "Monitor" },
               { key: "ab" as const, label: abLabel, icon: "ListChecks" },
@@ -656,9 +660,9 @@ export function PreviewWorkbench({
                 type="button"
                 onClick={() => onModeChange?.(m.key)}
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-[13px] font-semibold transition-colors",
+                  "inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13px] font-medium transition-colors",
                   mode === m.key
-                    ? "bg-background text-sky-600 shadow-sm"
+                    ? "bg-background text-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground",
                 )}
               >
@@ -670,7 +674,7 @@ export function PreviewWorkbench({
           <button
             type="button"
             onClick={onToggleDark}
-            className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-sky-300 hover:text-sky-600"
+            className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             <SmartIcon name={dark ? "SunDim" : "Moon"} size={14} />
             {dark ? lightLabel : darkLabel}
@@ -678,112 +682,114 @@ export function PreviewWorkbench({
         </div>
 
         {mode === "ab" && abHint ? (
-          <p className="mt-3 flex items-center gap-2 text-xs font-medium text-sky-600">
+          <p className="mt-3 flex items-center gap-2 text-xs font-medium text-primary">
             <SmartIcon name="Sparkles" size={14} />
             {abHint}
           </p>
         ) : null}
 
-        <div
-          className={cn(
-            "mt-4 grid grid-cols-1 gap-4",
-            mode === "ab" && "md:grid-cols-2",
-          )}
-        >
-          <UploadSlot
-            label={aLabel}
-            src={uploadA}
-            onUpload={onUploadA}
-            uploadTitle={uploadTitle}
-            uploadHint={uploadHint}
-            uploadFormatHint={uploadFormatHint}
-            replaceLabel={replaceLabel}
-          />
-          {mode === "ab" ? (
+        <div className="mt-6 border-t pt-5">
+          <StepHeading n="01" title={uploadTitle} />
+          <div
+            className={cn(
+              "mt-4 grid grid-cols-1 gap-4",
+              mode === "ab" && "md:grid-cols-2",
+            )}
+          >
             <UploadSlot
-              label={bLabel}
-              src={uploadB}
-              onUpload={onUploadB}
+              label={aLabel}
+              src={uploadA}
+              onUpload={onUploadA}
               uploadTitle={uploadTitle}
               uploadHint={uploadHint}
               uploadFormatHint={uploadFormatHint}
               replaceLabel={replaceLabel}
             />
-          ) : null}
+            {mode === "ab" ? (
+              <UploadSlot
+                label={bLabel}
+                src={uploadB}
+                onUpload={onUploadB}
+                uploadTitle={uploadTitle}
+                uploadHint={uploadHint}
+                uploadFormatHint={uploadFormatHint}
+                replaceLabel={replaceLabel}
+              />
+            ) : null}
+          </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <label className="flex flex-col gap-1.5">
-            <span className="text-xs font-bold text-muted-foreground">
-              {titleLabel}
-            </span>
-            <div className="relative">
-              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sky-600">
-                <SmartIcon name="Type" size={15} />
+        <div className="mt-6 border-t pt-5">
+          <StepHeading n="02" title={titleLabel} />
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-xs font-medium text-muted-foreground">
+                {titleLabel}
               </span>
-              <input
-                type="text"
-                placeholder={
-                  typeof titlePlaceholder === "string"
-                    ? titlePlaceholder
-                    : "Your video title here…"
-                }
-                value={titleValue ?? ""}
-                onChange={(e) => onTitleChange?.(e.target.value)}
-                className="w-full rounded-xl border bg-background py-2.5 pl-9 pr-3.5 text-sm outline-none transition-colors focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-              />
-            </div>
-          </label>
-          <label className="flex flex-col gap-1.5">
-            <span className="text-xs font-bold text-muted-foreground">
-              {channelLabel}
-            </span>
-            <div className="relative">
-              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sky-600">
-                <SmartIcon name="User" size={15} />
+              <div className="relative">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  <SmartIcon name="Type" size={15} />
+                </span>
+                <input
+                  type="text"
+                  placeholder={
+                    typeof titlePlaceholder === "string"
+                      ? titlePlaceholder
+                      : "Your video title here…"
+                  }
+                  value={titleValue ?? ""}
+                  onChange={(e) => onTitleChange?.(e.target.value)}
+                  className="h-9 w-full rounded-lg border border-input bg-background py-2 pl-9 pr-3.5 text-sm outline-none focus:ring-2 focus:ring-ring"
+                />
+              </div>
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className="text-xs font-medium text-muted-foreground">
+                {channelLabel}
               </span>
-              <input
-                type="text"
-                placeholder={
-                  typeof channelPlaceholder === "string"
-                    ? channelPlaceholder
-                    : "Your Channel"
-                }
-                value={channelValue ?? ""}
-                onChange={(e) => onChannelChange?.(e.target.value)}
-                className="w-full rounded-xl border bg-background py-2.5 pl-9 pr-3.5 text-sm outline-none transition-colors focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20"
-              />
-            </div>
-          </label>
+              <div className="relative">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  <SmartIcon name="User" size={15} />
+                </span>
+                <input
+                  type="text"
+                  placeholder={
+                    typeof channelPlaceholder === "string"
+                      ? channelPlaceholder
+                      : "Your Channel"
+                  }
+                  value={channelValue ?? ""}
+                  onChange={(e) => onChannelChange?.(e.target.value)}
+                  className="h-9 w-full rounded-lg border border-input bg-background py-2 pl-9 pr-3.5 text-sm outline-none focus:ring-2 focus:ring-ring"
+                />
+              </div>
+            </label>
+          </div>
         </div>
 
         {scenes.length > 0 ? (
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            {sceneLabel ? (
-              <span className="text-xs font-bold text-muted-foreground">
-                {sceneLabel}
-              </span>
-            ) : null}
-            <div className="flex flex-1 flex-wrap gap-2">
+          <div className="mt-6 border-t pt-5">
+            <StepHeading n="03" title={sceneLabel} />
+            <div className="mt-4 flex flex-1 flex-wrap gap-2">
               {scenes.map((s) => (
                 <button
                   key={s.id}
                   type="button"
                   onClick={() => onSceneChange?.(s.id)}
                   className={cn(
-                    "inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition-colors",
+                    "inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors",
                     s.id === scene
-                      ? "border-sky-500 bg-sky-50 text-sky-700 shadow-sm dark:bg-sky-900/40"
-                      : "text-muted-foreground hover:border-sky-300 hover:text-foreground",
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border text-muted-foreground hover:text-foreground",
                   )}
                 >
                   <SmartIcon name={s.icon} size={14} />
                   {s.label}
                   <span
                     className={cn(
-                      "rounded-full px-1.5 py-0.5 text-[10px] font-bold",
+                      "rounded-full px-1.5 py-0.5 text-[10px] font-medium",
                       s.id === scene
-                        ? "bg-sky-100 text-sky-700"
+                        ? "bg-primary/15 text-primary"
                         : "bg-muted text-muted-foreground",
                     )}
                   >
@@ -799,7 +805,7 @@ export function PreviewWorkbench({
       {/* Stage */}
       <div
         className={cn(
-          "mt-6 overflow-hidden rounded-3xl border shadow-lg transition-colors",
+          "mt-6 overflow-hidden rounded-xl border transition-colors",
           dark ? "border-neutral-800 bg-[#0f0f0f]" : "border-border bg-white",
         )}
       >
@@ -834,7 +840,7 @@ export function PreviewWorkbench({
               {activeScene?.label ?? scene}
             </span>
           </div>
-          <span className="hidden items-center gap-1.5 rounded-full bg-sky-100 px-2.5 py-1 text-[10px] font-bold text-sky-700 sm:inline-flex dark:bg-sky-900/50 dark:text-sky-300">
+          <span className="hidden items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary sm:inline-flex">
             {mode === "ab" ? abLabel : singleLabel}
             <b>{activeScene?.size}</b>
           </span>
@@ -851,14 +857,9 @@ export function PreviewWorkbench({
 
       {/* Tips */}
       {tips && tips.length > 0 ? (
-        <section className="mt-8 rounded-2xl border bg-card p-5">
-          <div className="mb-3 flex items-center gap-2.5">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-100 text-sky-700">
-              <SmartIcon name="Sparkles" size={15} />
-            </span>
-            <h2 className="text-sm font-bold">{tipsTitle}</h2>
-          </div>
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 border-t pt-6">
+          <StepHeading n="04" title={tipsTitle} />
+          <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
             {tips.map((tip) =>
               tip.scene ? (
                 <button
@@ -866,10 +867,10 @@ export function PreviewWorkbench({
                   type="button"
                   onClick={() => onSceneChange?.(tip.scene as PreviewSceneId)}
                   className={cn(
-                    "flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-xs font-semibold transition-colors",
+                    "flex items-center gap-2 rounded-lg border px-3 py-2.5 text-left text-xs font-medium transition-colors",
                     tip.scene === scene
-                      ? "border-sky-500 bg-sky-50 text-sky-700"
-                      : "text-muted-foreground hover:border-sky-300 hover:text-foreground",
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border text-muted-foreground hover:text-foreground",
                   )}
                 >
                   <SmartIcon name="Eye" size={13} />
@@ -879,7 +880,7 @@ export function PreviewWorkbench({
                 <a
                   key={tip.href}
                   href={tip.href}
-                  className="flex items-center gap-2 rounded-xl border px-3 py-2.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-sky-300 hover:text-foreground"
+                  className="flex items-center gap-2 rounded-lg border border-border px-3 py-2.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
                   <SmartIcon name="ArrowRight" size={13} />
                   {tip.label}
@@ -887,7 +888,7 @@ export function PreviewWorkbench({
               ),
             )}
           </div>
-        </section>
+        </div>
       ) : null}
 
       {footerHint ? (
