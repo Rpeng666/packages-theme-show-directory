@@ -69,7 +69,11 @@ export const props = {
     alignmentLabel: "Alignment",
     shadowLabel: "Shadow",
     design: { bgColor: "#111", rounded: 0, showBorder: false, borderWidth: 0, borderColor: "#000", imageFit: "cover", shadow: true, title: "Bold", subtitle: "Subtitle", titleColor: "#fff", titleSize: 72, titleAlign: "left", textY: 60, effects: { brightness: 100, contrast: 110, saturation: 110 } },
-    previewUrl: "",
+    previewUrl:
+      "data:image/svg+xml;utf8," +
+      encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360"><rect width="640" height="360" fill="#111"/><rect x="70" y="70" width="500" height="220" rx="12" fill="#333"/><text x="320" y="180" font-size="40" text-anchor="middle" fill="#fff">Bold</text><text x="320" y="220" font-size="20" text-anchor="middle" fill="#aaa">Subtitle</text></svg>'
+      ),
     onUpdateDesign: () => {},
     onResetDesign: () => {},
     onOpenTemplates: () => {},
