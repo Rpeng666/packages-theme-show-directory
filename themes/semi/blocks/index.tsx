@@ -2,7 +2,7 @@
  * Theme block barrel for the `semi` theme.
  * Every block is a forwarder: it resolves the registered section/component
  * through @template/ui and injects the data — no hand-rolled markup.
- * AUTO-EXPANDED from the registry (sections + components + feature categories).
+ * AUTO-EXPANDED from the registry.
  */
 
 export * from './activity-overview';

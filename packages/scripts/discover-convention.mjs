@@ -65,6 +65,16 @@ const COMPOSITE_CHILDREN = new Set([
   "TooltipTrigger",
   "TooltipContent",
   "TooltipProvider",
+  // Editor suite internals — the image editor is a single workbench;
+  // EditorShell is the entry (composes Toolbar/Sidebar/Canvas via slots),
+  // the rest are parts that app composes through @template/ui directly.
+  "EditorToolbar",
+  "EditorSidebar",
+  "EditorCanvas",
+  "EditorPanel",
+  "AdjustmentRow",
+  "PresetGrid",
+  "ToolButton",
 ]);
 
 /** Extract named exports from TS/TSX source via regex (project style). */

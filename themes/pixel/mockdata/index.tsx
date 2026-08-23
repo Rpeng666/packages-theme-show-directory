@@ -4,7 +4,6 @@
  * AUTO-EXPANDED from themes/pixel/mockdata/*.tsx
  */
 
-import { props as AdjustmentRowProps } from "./adjustment-row";
 import { props as AnalyzePanelProps } from "./analyze-panel";
 import { props as ArtifactHeroProps } from "./artifact-hero";
 import { props as AvatarProps } from "./avatar";
@@ -40,11 +39,7 @@ import { props as DonationModalProps } from "./donation-modal";
 import { props as DownloadSettingsModalProps } from "./download-settings-modal";
 import { props as DropdownProps } from "./dropdown";
 import { props as DualCtaProps } from "./dual-cta";
-import { props as EditorCanvasProps } from "./editor-canvas";
-import { props as EditorPanelProps } from "./editor-panel";
 import { props as EditorShellProps } from "./editor-shell";
-import { props as EditorSidebarProps } from "./editor-sidebar";
-import { props as EditorToolbarProps } from "./editor-toolbar";
 import { props as FaqProps } from "./faq";
 import { props as FeaturesAccordionProps } from "./features-accordion";
 import { props as FeaturesCompareProps } from "./features-compare";
@@ -92,7 +87,6 @@ import { props as PerlerToolRailProps } from "./perler-tool-rail";
 import { props as PerlerWorkBarProps } from "./perler-work-bar";
 import { props as PixelThemeTogglerProps } from "./pixel-theme-toggler";
 import { props as PixelatedPreviewCanvasProps } from "./pixelated-preview-canvas";
-import { props as PresetGridProps } from "./preset-grid";
 import { props as PricingProps } from "./pricing";
 import { props as ProgressBarProps } from "./progress-bar";
 import { props as ProgressProps } from "./progress";
@@ -112,7 +106,6 @@ import { props as TextareaProps } from "./textarea";
 import { props as ToggleGroupProps } from "./toggle-group";
 import { props as ToggleProps } from "./toggle";
 import { props as ToolBarProps } from "./tool-bar";
-import { props as ToolButtonProps } from "./tool-button";
 import { props as ToolFooterProps } from "./tool-footer";
 import { props as ToolHeaderProps } from "./tool-header";
 import { props as ToolSettingsProps } from "./tool-settings";
@@ -121,7 +114,6 @@ import { props as TooltipProps } from "./tooltip";
 import { props as UploadZoneProps } from "./upload-zone";
 
 export const DEMO_PROPS: Record<string, any> = {
-  AdjustmentRow: AdjustmentRowProps,
   AnalyzePanel: AnalyzePanelProps,
   ArtifactHero: ArtifactHeroProps,
   Avatar: AvatarProps,
@@ -157,11 +149,7 @@ export const DEMO_PROPS: Record<string, any> = {
   DownloadSettingsModal: DownloadSettingsModalProps,
   Dropdown: DropdownProps,
   DualCta: DualCtaProps,
-  EditorCanvas: EditorCanvasProps,
-  EditorPanel: EditorPanelProps,
   EditorShell: EditorShellProps,
-  EditorSidebar: EditorSidebarProps,
-  EditorToolbar: EditorToolbarProps,
   Faq: FaqProps,
   FeaturesAccordion: FeaturesAccordionProps,
   FeaturesCompare: FeaturesCompareProps,
@@ -209,7 +197,6 @@ export const DEMO_PROPS: Record<string, any> = {
   PerlerWorkBar: PerlerWorkBarProps,
   PixelThemeToggler: PixelThemeTogglerProps,
   PixelatedPreviewCanvas: PixelatedPreviewCanvasProps,
-  PresetGrid: PresetGridProps,
   Pricing: PricingProps,
   ProgressBar: ProgressBarProps,
   Progress: ProgressProps,
@@ -229,7 +216,6 @@ export const DEMO_PROPS: Record<string, any> = {
   ToggleGroup: ToggleGroupProps,
   Toggle: ToggleProps,
   ToolBar: ToolBarProps,
-  ToolButton: ToolButtonProps,
   ToolFooter: ToolFooterProps,
   ToolHeader: ToolHeaderProps,
   ToolSettings: ToolSettingsProps,

@@ -2,7 +2,7 @@
  * Theme block barrel for the `pixel` theme.
  * Every block is a forwarder: it resolves the registered section/component
  * through @template/ui and injects the data — no hand-rolled markup.
- * AUTO-EXPANDED from the registry (sections + components + feature categories).
+ * AUTO-EXPANDED from the registry.
  */
 
 export * from './blog-detail';
@@ -104,14 +104,7 @@ export * from './tool-header';
 export * from './tool-settings';
 export * from './tooltip';
 export * from './upload-zone';
-export * from './editor-canvas';
 export * from './editor-shell';
-export * from './editor-sidebar';
-export * from './editor-toolbar';
-export * from './adjustment-row';
-export * from './editor-panel';
-export * from './preset-grid';
-export * from './tool-button';
 export * from './artifact-hero';
 export * from './background-generator-demo';
 export * from './before-after';
