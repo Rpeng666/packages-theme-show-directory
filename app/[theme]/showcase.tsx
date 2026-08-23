@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
+import { useSearchParams } from "next/navigation";
 import { resolveComponent } from "@template/ui";
-
-const THEME_NAMES = ["default", "pixel", "semi", "raycast"];
+import { THEME_NAMES } from "./catalog";
+import { cn } from "@/utils/cn";
 
 type Preview = {
   key: string;
@@ -137,25 +138,37 @@ const PREVIEWS: Preview[] = [
 ];
 
 export function ThemeShowcase({ theme }: { theme: string }) {
+  const searchParams = useSearchParams();
+  const selected = searchParams?.get("c") ?? null;
   const active = (THEME_NAMES as readonly string[]).includes(theme) ? theme : "default";
 
+  React.useEffect(() => {
+    if (!selected) return;
+    const el = document.getElementById(selected);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [selected]);
+
   return (
-    <div className="flex flex-col gap-8 px-[360px] py-8">
-      <h1 className="text-lg font-bold">{active} theme</h1>
-      <p className="text-sm text-gray-9">
-        Live component previews. The directory on the left lists themes; panels below render each
-        component with the active theme&apos;s implementation.
-      </p>
-      <div className="flex flex-col gap-6 max-w-4xl">
-        {PREVIEWS.map((p) => (
-          <section key={p.key} className="flex flex-col gap-3">
+    <div className="flex flex-col gap-6 max-w-4xl">
+      {PREVIEWS.map((p) => {
+        const isSelected = selected === p.key;
+        return (
+          <section
+            key={p.key}
+            id={p.key}
+            data-active={isSelected}
+            className={cn(
+              "flex flex-col gap-3 scroll-mt-6",
+              isSelected ? "rounded-xl border border-white/10 ring-1 ring-brand/40" : ""
+            )}
+          >
             <h2 className="text-sm font-medium text-gray-11">{p.label}</h2>
             <div className="grid gap-3 rounded-xl border border-panel bg-panel/40 p-5">
               {p.render(active)}
             </div>
           </section>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }
