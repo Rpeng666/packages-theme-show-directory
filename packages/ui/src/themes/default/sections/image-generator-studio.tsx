@@ -106,31 +106,29 @@ export function ImageGeneratorStudio({
       data-registry={dataRegistry}
     >
       <div className="container mx-auto max-w-6xl px-4 md:px-8">
-        {/* hero */}
-        <header className="relative mb-10 overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/10 via-background to-background px-6 py-10 md:px-10 md:py-12">
-          <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" aria-hidden />
+        {/* hero — quiet header with a hairline rule */}
+        <header className="border-b pb-8 mb-10">
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <div className="max-w-xl">
               {eyebrow ? (
-                <div className="mb-3 inline-flex items-center gap-2 rounded-full border bg-background/80 px-3 py-1 text-xs font-medium text-muted-foreground">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-                  </span>
+                <div className="mb-3 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+                  <span className="size-1.5 rounded-full bg-primary" />
                   {eyebrow}
                 </div>
               ) : null}
               {title ? (
-                <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
                   {title}
                 </h1>
               ) : null}
               {description ? (
-                <p className="mt-3 text-muted-foreground">{description}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {description}
+                </p>
               ) : null}
             </div>
 
-            <aside className="w-full shrink-0 rounded-2xl border bg-card p-5 shadow-sm md:w-64">
+            <aside className="w-full shrink-0 rounded-xl border bg-card p-5 md:w-64">
               <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <SmartIcon name="Coins" size={14} />
@@ -139,7 +137,7 @@ export function ImageGeneratorStudio({
               </div>
               {signedIn ? (
                 <div className="mt-3 flex items-baseline gap-1.5">
-                  <span className="text-3xl font-bold text-foreground">{balanceValue}</span>
+                  <span className="text-3xl font-semibold tracking-tight text-foreground">{balanceValue}</span>
                   {balanceUnit ? (
                     <span className="text-sm text-muted-foreground">{balanceUnit}</span>
                   ) : null}
@@ -168,12 +166,12 @@ export function ImageGeneratorStudio({
         {/* workspace */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           {/* prompt deck */}
-          <section className="rounded-2xl border bg-card p-6 shadow-sm">
+          <section className="rounded-xl border bg-card p-6">
             <div className="mb-5 flex items-center gap-2.5">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <SmartIcon name="Sparkles" size={15} />
               </span>
-              <h2 className="text-lg font-semibold text-foreground">{deckTitle}</h2>
+              <h2 className="text-[15px] font-semibold tracking-tight text-foreground">{deckTitle}</h2>
             </div>
 
             {tabs.length > 1 ? (
@@ -276,7 +274,7 @@ export function ImageGeneratorStudio({
               disabled={generateDisabled}
               onClick={onGenerate}
               className={cn(
-                "mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all",
+                "mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90",
                 "hover:bg-primary/90 disabled:pointer-events-none disabled:opacity-60"
               )}
             >
@@ -330,12 +328,12 @@ export function ImageGeneratorStudio({
           </section>
 
           {/* gallery */}
-          <section className="rounded-2xl border bg-card p-6 shadow-sm">
+          <section className="rounded-xl border bg-card p-6">
             <div className="mb-5 flex items-center gap-2.5">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <SmartIcon name="ImageIcon" size={15} />
               </span>
-              <h2 className="text-lg font-semibold text-foreground">{galleryTitle}</h2>
+              <h2 className="text-[15px] font-semibold tracking-tight text-foreground">{galleryTitle}</h2>
               {images.length > 0 ? (
                 <span className="ml-auto inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-primary/10 px-2 text-xs font-semibold text-primary">
                   {images.length}
