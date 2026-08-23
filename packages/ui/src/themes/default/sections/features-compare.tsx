@@ -15,11 +15,16 @@ interface CompareCardData {
 }
 
 const badgeStyles: Record<string, string> = {
-  red: 'bg-red-50 text-red-700 border-red-100 dark:bg-red-950 dark:text-red-300 dark:border-red-900',
-  green:
-    'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-900',
+  red: 'border-destructive/20 bg-destructive/10 text-destructive',
+  green: 'border-border bg-primary/10 text-primary',
 };
 
+/**
+ * FeaturesCompare — before/after comparison.
+ *
+ * Restrained editor style: two quiet cards with a hairline border, a
+ * semantic badge, and a neutral arrow connector. No hard-coded brand color.
+ */
 export function FeaturesCompare({ section, className, ...rest }: FeaturesCompareProps) {
   const before = (section.before ?? {}) as CompareCardData;
   const after = (section.after ?? {}) as CompareCardData;
@@ -29,13 +34,13 @@ export function FeaturesCompare({ section, className, ...rest }: FeaturesCompare
       id={section.id}
       className={cn('py-16 md:py-24', section.className, className)}
     >
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+      <div className="mx-auto max-w-5xl px-4 md:px-6">
         <ScrollAnimation>
-          <div className="mx-auto mb-10 max-w-2xl text-center md:mb-16">
-            <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
+          <div className="mx-auto mb-10 max-w-2xl text-center md:mb-14">
+            <h2 className="text-foreground mb-3 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
               {section.title}
             </h2>
-            <p className="text-muted-foreground text-lg text-balance">
+            <p className="text-muted-foreground text-base text-balance md:text-lg">
               {section.description}
             </p>
           </div>
@@ -49,8 +54,8 @@ export function FeaturesCompare({ section, className, ...rest }: FeaturesCompare
               className="flex items-center justify-center"
               aria-hidden="true"
             >
-              <div className="flex size-10 items-center justify-center rounded-full bg-[#6B8B5E] text-white shadow-lg shadow-[#6B8B5E]/20 transition-transform hover:scale-105 md:size-12">
-                <ArrowRight className="size-5" />
+              <div className="flex size-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:text-foreground md:size-11">
+                <ArrowRight className="size-4 md:size-5" />
               </div>
             </div>
 
@@ -64,9 +69,11 @@ export function FeaturesCompare({ section, className, ...rest }: FeaturesCompare
 
 function CompareCard({ data }: { data: CompareCardData }) {
   return (
-    <div className="flex-1 rounded-2xl border border-border bg-card p-3 sm:p-5 shadow-sm transition-shadow hover:shadow-md">
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <span className="text-sm font-medium text-foreground">{data.label}</span>
+    <div className="flex-1 rounded-xl border border-border bg-card p-5 sm:p-6">
+      <div className="mb-3 flex items-center justify-between gap-4">
+        <span className="text-sm font-semibold text-foreground">
+          {data.label}
+        </span>
         <Badge
           variant="outline"
           className={cn(
@@ -77,7 +84,7 @@ function CompareCard({ data }: { data: CompareCardData }) {
           {data.badge}
         </Badge>
       </div>
-      <p className="text-muted-foreground leading-relaxed break-words">
+      <p className="text-sm leading-relaxed text-muted-foreground">
         {data.text}
       </p>
     </div>
