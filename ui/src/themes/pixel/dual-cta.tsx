@@ -6,36 +6,64 @@ import { cn } from '../../lib/utils'
 import type { DualCtaProps } from '../../contracts/dual-cta'
 
 /**
- * DualCta — two stacked CTA buttons with pixel retro chrome. Pure
- * presentation; click handlers + labels are injected by the app (labels
- * optional, no defaults), so it's a reusable generic asset (no product
- * coupling).
+ * DualCta (pixel) — primary + secondary action pair in the retro style.
+ *
+ * Primary is a solid retro-cyan button with a forward arrow; secondary is a
+ * quiet retro-gold outline. Side by side on wide screens, stacked on narrow.
+ * Keeps the pixel language: pxl-corner corners, mono font, hard shadows.
  */
-export function DualCta({ onPrimary, onSecondary, primaryLabel, secondaryLabel, className, ...rest }: DualCtaProps) {
+
+function ArrowIcon({ className }: { className?: string }) {
   return (
-    <div {...rest} className={cn('mt-4 w-full space-y-3 md:max-w-2xl', className)}>
+    <svg
+      className={className}
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="square"
+      strokeLinejoin="miter"
+      aria-hidden
+    >
+      <path d="M3 8h10M9 4l4 4-4 4" />
+    </svg>
+  )
+}
+
+export function DualCta({
+  onPrimary,
+  onSecondary,
+  primaryLabel = 'Get started',
+  secondaryLabel = 'Learn more',
+  className,
+  ...rest
+}: DualCtaProps) {
+  return (
+    <div
+      {...rest}
+      className={cn(
+        'flex w-full flex-col gap-3 sm:flex-row sm:items-center md:max-w-2xl',
+        className
+      )}
+    >
       <button
         type="button"
         onClick={onPrimary}
-        className="flex w-full items-center justify-center gap-2 border-2 border-retro-cyan bg-retro-cyan/15 px-4 py-2.5 font-mono text-sm uppercase tracking-wider text-retro-cyan pxl-corner-md shadow-md transition-all duration-300 hover:bg-retro-cyan/25 hover:shadow-lg sm:text-base"
+        className="group inline-flex items-center justify-center gap-2 border-2 border-retro-cyan bg-retro-cyan px-6 py-3 font-mono text-sm font-bold uppercase tracking-wider text-retro-bg pxl-corner-md shadow-md transition-all duration-150 hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
       >
-        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-        </svg>
         {primaryLabel}
+        <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
       </button>
 
       <button
         type="button"
         onClick={onSecondary}
-        className="flex w-full items-center justify-center gap-2 border-2 border-retro-gold bg-retro-gold/15 px-4 py-2.5 font-mono text-sm uppercase tracking-wider text-retro-gold pxl-corner-md shadow-md transition-all duration-300 hover:bg-retro-gold/25 hover:shadow-lg sm:text-base"
+        className="inline-flex items-center justify-center gap-2 border-2 border-retro-gold/50 bg-transparent px-6 py-3 font-mono text-sm font-bold uppercase tracking-wider text-retro-gold pxl-corner-md shadow-md transition-all duration-150 hover:bg-retro-gold/10"
       >
-        <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-        </svg>
         {secondaryLabel}
       </button>
     </div>
   )
 }
+
+export default DualCta

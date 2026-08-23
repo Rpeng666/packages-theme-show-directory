@@ -12,10 +12,15 @@ import type {
 } from "../../../contracts/sections/compress-workbench";
 
 /**
- * Default CompressWorkbench - shadcn-styled fallback of the compression
- * studio section (see the Semi implementation for the full design notes).
- * Same contract: emerald lightweight hero, guided empty state, two-panel
- * workbench with control rail + before/after stage + export dock.
+ * Default CompressWorkbench — restrained editor-style layout.
+ *
+ * Design language (minimal utility):
+ *  - No accent-colored hero; a quiet eyebrow + large title + one-line copy.
+ *  - Left rail is a numbered control list (Source → Format → Quality), each
+ *    row separated by hairlines instead of floating cards.
+ *  - Right stage shows a big mono before/after figure, the two images, and
+ *    a single primary download action.
+ *  - The only color used is the semantic `primary` token (accent-free).
  */
 
 const EXTENSION: Record<CompressWorkbenchFormat, string> = {
@@ -29,6 +34,28 @@ function formatBytes(bytes?: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+}
+
+/** Small section heading with a step number (left rail rows). */
+function StepHeading({
+  n,
+  title,
+  right,
+}: {
+  n: string;
+  title: ReactNode;
+  right?: ReactNode;
+}) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span className="font-mono text-[11px] font-semibold text-muted-foreground">
+        {n}
+      </span>
+      <h2 className="text-[13px] font-semibold tracking-tight">{title}</h2>
+      <span className="flex-1" />
+      {right}
+    </div>
+  );
 }
 
 export function CompressWorkbench({
@@ -90,83 +117,56 @@ export function CompressWorkbench({
   const extension = EXTENSION[format];
   const saved = savingsPercent ?? 0;
   const savedPositive = saved > 0;
-  const meterRatio =
-    compressedSizeBytes && sourceSizeBytes
-      ? Math.min(
-          100,
-          Math.max(
-            0,
-            (compressedSizeBytes / Math.max(1, sourceSizeBytes)) * 100,
-          ),
-        )
-      : 0;
 
   return (
     <section
-      className={cn("mx-auto w-full max-w-6xl px-4 py-12", className)}
+      className={cn("mx-auto w-full max-w-5xl px-4 py-10 sm:py-14", className)}
       data-registry={dataRegistry}
     >
-      {/* Hero */}
-      <header className="relative overflow-hidden rounded-3xl border bg-gradient-to-b from-emerald-50 to-background p-8 sm:p-10 dark:from-emerald-950/40">
-        <div className="relative z-10 max-w-xl">
-          {eyebrow ? (
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-              {eyebrow}
-            </span>
-          ) : null}
-          {title ? (
-            <h1 className="mb-2.5 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              {title}
-            </h1>
-          ) : null}
-          {description ? (
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              {description}
-            </p>
-          ) : null}
-          {badges && badges.length > 0 ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {badges.map((badge) => (
-                <span
-                  key={badge.label}
-                  className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-bold",
-                    badge.tone === "pro"
-                      ? "border-indigo-300 bg-indigo-50 text-indigo-700"
-                      : badge.tone === "neutral"
-                        ? "border-border bg-muted text-muted-foreground"
-                        : "border-emerald-300 bg-emerald-50 text-emerald-700",
-                  )}
-                >
-                  {badge.label}
-                </span>
-              ))}
-            </div>
-          ) : null}
-          {meta && meta.length > 0 ? (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {meta.map((item) => (
-                <span
-                  key={item.text}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground"
-                >
-                  <SmartIcon
-                    name={item.icon}
-                    size={14}
-                    className="text-emerald-600"
-                  />
-                  {item.text}
-                </span>
-              ))}
-            </div>
-          ) : null}
-        </div>
+      {/* Header — quiet, no colored hero */}
+      <header className="border-b pb-8">
+        {eyebrow ? (
+          <div className="mb-3 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="h-1 w-1 rounded-full bg-primary" />
+            {eyebrow}
+          </div>
+        ) : null}
+        {title ? (
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            {title}
+          </h1>
+        ) : null}
+        {description ? (
+          <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            {description}
+          </p>
+        ) : null}
+        {(badges && badges.length > 0) || (meta && meta.length > 0) ? (
+          <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5">
+            {badges?.map((badge) => (
+              <span
+                key={badge.label}
+                className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground"
+              >
+                {badge.label}
+              </span>
+            ))}
+            {meta?.map((item) => (
+              <span
+                key={item.text}
+                className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground"
+              >
+                <SmartIcon name={item.icon} size={12} />
+                {item.text}
+              </span>
+            ))}
+          </div>
+        ) : null}
       </header>
 
       {!hasSource ? (
-        /* Empty state */
-        <div className="mt-6">
+        /* Empty state — minimal drop zone */
+        <div className="py-10">
           <button
             type="button"
             onClick={onReplace}
@@ -182,59 +182,60 @@ export function CompressWorkbench({
               if (file && onDropFile) onDropFile(file);
             }}
             className={cn(
-              "flex min-h-80 w-full flex-col items-center justify-center gap-2 rounded-3xl border-2 border-dashed border-emerald-400/60 bg-gradient-to-b from-emerald-50 to-background p-10 text-center transition-transform hover:border-emerald-500",
-              dragging && "scale-[1.005] border-emerald-500 bg-emerald-50",
+              "group flex min-h-64 w-full flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-muted/30 px-8 text-center transition-colors",
+              dragging ? "border-primary bg-muted/60" : "hover:border-primary/60",
             )}
           >
-            <span className="mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30">
-              <SmartIcon name="Shrink" size={26} />
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl border bg-card text-muted-foreground shadow-sm transition-colors group-hover:text-foreground">
+              <SmartIcon name="Image" size={22} />
             </span>
             {emptyPrimary ? (
-              <span className="text-lg font-bold">{emptyPrimary}</span>
+              <span className="text-[15px] font-medium text-foreground">
+                {emptyPrimary}
+              </span>
             ) : null}
             {emptyClickLabel ? (
-              <span className="text-sm font-semibold text-emerald-600">
+              <span className="text-[13px] text-muted-foreground">
                 {emptyClickLabel}
               </span>
             ) : null}
             {emptyHint ? (
-              <span className="mt-1.5 text-xs text-muted-foreground">
+              <span className="text-xs text-muted-foreground/70">
                 {emptyHint}
               </span>
             ) : null}
           </button>
           {privacyTip ? (
             <p className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-              <SmartIcon name="Shield" size={14} className="text-emerald-600" />
+              <SmartIcon name="Shield" size={13} />
               {privacyTip}
             </p>
           ) : null}
         </div>
       ) : (
-        /* Workspace */
-        <div className="mt-6 grid grid-cols-1 items-start gap-6 lg:grid-cols-[4fr_6fr]">
-          {/* Rail */}
-          <div className="flex flex-col gap-5">
+        /* Workspace — two columns: numbered control rail + stage */
+        <div className="grid grid-cols-1 items-start gap-10 py-10 lg:grid-cols-[5fr_7fr]">
+          {/* Left rail — control list with hairlines */}
+          <div className="flex flex-col">
             {/* Source */}
-            <section className="rounded-2xl border bg-card p-5">
-              <div className="mb-4 flex items-center gap-2.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
-                  <SmartIcon name="Image" size={15} />
-                </span>
-                <h2 className="text-sm font-bold">{sourceCardTitle}</h2>
-                <span className="flex-1" />
-                {replaceLabel && onReplace ? (
-                  <button
-                    type="button"
-                    onClick={onReplace}
-                    className="text-xs font-semibold text-muted-foreground hover:text-foreground"
-                  >
-                    {replaceLabel}
-                  </button>
-                ) : null}
-              </div>
+            <div className="border-b py-4 first:pt-0">
+              <StepHeading
+                n="01"
+                title={sourceCardTitle}
+                right={
+                  replaceLabel && onReplace ? (
+                    <button
+                      type="button"
+                      onClick={onReplace}
+                      className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {replaceLabel}
+                    </button>
+                  ) : null
+                }
+              />
               {sourceUrl ? (
-                <div className="overflow-hidden rounded-xl border bg-muted">
+                <div className="mt-3 overflow-hidden rounded-lg border bg-muted">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={sourceUrl}
@@ -243,11 +244,9 @@ export function CompressWorkbench({
                   />
                 </div>
               ) : null}
-              <div className="mt-3.5 flex items-center justify-between gap-2">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  {sourceMetaLabel}
-                </span>
-                <span className="text-xs font-semibold text-muted-foreground">
+              <div className="mt-2.5 flex items-center justify-between text-xs">
+                <span className="text-muted-foreground">{sourceMetaLabel}</span>
+                <span className="font-mono text-muted-foreground">
                   {sourceName || "—"}
                   {sourceSizeBytes ? ` · ${formatBytes(sourceSizeBytes)}` : ""}
                   {sourceWidth && sourceHeight
@@ -255,22 +254,17 @@ export function CompressWorkbench({
                     : ""}
                 </span>
               </div>
-            </section>
+            </div>
 
-            {/* Settings */}
-            <section className="rounded-2xl border bg-card p-5">
-              <div className="mb-4 flex items-center gap-2.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
-                  <SmartIcon name="Layers" size={15} />
-                </span>
-                <h2 className="text-sm font-bold">{settingsCardTitle}</h2>
-              </div>
+            {/* Format */}
+            <div className="border-b py-4">
+              <StepHeading n="02" title={settingsCardTitle} />
               {formatLabel ? (
-                <h3 className="mb-2 text-xs font-semibold text-muted-foreground">
+                <p className="mt-3 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                   {formatLabel}
-                </h3>
+                </p>
               ) : null}
-              <div className="mb-5 grid grid-cols-3 gap-2">
+              <div className="mt-2 grid grid-cols-3 gap-2">
                 {formatOptions.map((option) => {
                   const active = option.value === format;
                   return (
@@ -279,13 +273,13 @@ export function CompressWorkbench({
                       type="button"
                       onClick={() => onFormatChange(option.value)}
                       className={cn(
-                        "flex flex-col items-center gap-0.5 rounded-xl border px-2 py-2.5 transition-colors",
+                        "flex flex-col items-center gap-0.5 rounded-lg border px-2 py-2.5 transition-colors",
                         active
-                          ? "border-emerald-500 bg-emerald-50 text-emerald-700"
-                          : "border-border bg-muted hover:border-emerald-400",
+                          ? "border-primary bg-primary/10 text-foreground"
+                          : "border-border bg-transparent text-muted-foreground hover:border-primary/50 hover:text-foreground",
                       )}
                     >
-                      <span className="text-sm font-extrabold">
+                      <span className="text-[13px] font-semibold">
                         {option.label}
                       </span>
                       <span className="text-[10px] text-muted-foreground">
@@ -295,13 +289,17 @@ export function CompressWorkbench({
                   );
                 })}
               </div>
-              <div className="mb-1 flex items-center justify-between">
-                <span className="text-xs font-semibold text-muted-foreground">
-                  {qualityLabel}
-                </span>
-                <span className="font-mono text-xs font-bold text-emerald-700">
+            </div>
+
+            {/* Quality */}
+            <div className="py-4">
+              <StepHeading n="03" title={qualityLabel} />
+              <div className="mt-3 flex items-center justify-between text-xs">
+                <span className="text-muted-foreground">{smallerLabel}</span>
+                <span className="font-mono text-sm font-semibold">
                   {qualityValue}%
                 </span>
+                <span className="text-muted-foreground">{betterLabel}</span>
               </div>
               <input
                 type="range"
@@ -310,88 +308,29 @@ export function CompressWorkbench({
                 step={1}
                 value={qualityValue}
                 onChange={(e) => onQualityChange(Number(e.target.value))}
-                className="w-full accent-emerald-500"
+                className="mt-1.5 w-full accent-primary"
                 aria-label={
                   typeof qualityLabel === "string" ? qualityLabel : "quality"
                 }
               />
-              <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
-                <span>{smallerLabel}</span>
-                <span>{betterLabel}</span>
-              </div>
-            </section>
-
-            {/* Results */}
-            <section className="rounded-2xl border bg-card p-5">
-              <div className="mb-4 flex items-center gap-2.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
-                  <SmartIcon name="Shrink" size={15} />
-                </span>
-                <h2 className="text-sm font-bold">{resultsCardTitle}</h2>
-              </div>
-              <div className="space-y-1.5 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">{originalLabel}</span>
-                  <span className="font-mono">
-                    {formatBytes(sourceSizeBytes)}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">
-                    {compressedLabel}
-                  </span>
-                  <span className="font-mono font-bold text-emerald-700">
-                    {processing && !compressedSizeBytes
-                      ? "…"
-                      : formatBytes(compressedSizeBytes)}
-                  </span>
-                </div>
-                <div className="flex justify-between font-semibold">
-                  <span className="text-muted-foreground">{savedLabel}</span>
-                  <span
-                    className={cn(
-                      savedPositive
-                        ? "text-emerald-600"
-                        : "text-muted-foreground",
-                    )}
-                  >
-                    {savedPositive ? `−${saved}%` : "—"}
-                  </span>
-                </div>
-              </div>
-              {meterRatio > 0 ? (
-                <div className="mt-4">
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                    <div
-                      className="h-full rounded-full bg-emerald-500"
-                      style={{ width: `${meterRatio}%` }}
-                    />
-                  </div>
-                  <div className="mt-1 flex justify-between text-[10px] text-muted-foreground">
-                    <span>0%</span>
-                    <span>100%</span>
-                  </div>
-                </div>
-              ) : null}
-            </section>
+            </div>
           </div>
 
-          {/* Stage */}
-          <div className="flex flex-col gap-5">
-            {/* Before / after */}
-            <section className="rounded-2xl border bg-card p-5">
-              <div className="mb-4 flex items-center gap-2.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
-                  <SmartIcon name="EyeOpened" size={15} />
-                </span>
-                <h2 className="text-sm font-bold">{stageCardTitle}</h2>
+          {/* Right stage — big numbers + images + export */}
+          <div className="flex flex-col">
+            {/* Before / after images */}
+            <div>
+              <div className="flex items-center gap-2.5">
+                <h2 className="text-[13px] font-semibold tracking-tight">
+                  {stageCardTitle}
+                </h2>
                 <span className="flex-1" />
                 {compressedSizeBytes && sourceSizeBytes ? (
                   <span
                     className={cn(
-                      "rounded-full px-2.5 py-1 text-[11px] font-bold",
+                      "rounded-full px-2.5 py-1 text-[11px] font-semibold",
                       savedPositive
-                        ? "bg-emerald-100 text-emerald-700"
+                        ? "bg-primary/10 text-primary"
                         : "bg-muted text-muted-foreground",
                     )}
                   >
@@ -399,7 +338,7 @@ export function CompressWorkbench({
                   </span>
                 ) : null}
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="mt-4 grid grid-cols-2 gap-4">
                 {[
                   {
                     label: beforeLabel,
@@ -414,16 +353,14 @@ export function CompressWorkbench({
                     isBefore: false,
                   },
                 ].map((panel, i) => (
-                  <div key={i}>
-                    <div className="mb-2 flex items-center justify-between">
-                      <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  <figure key={i}>
+                    <figcaption className="mb-2 flex items-center justify-between text-[11px] text-muted-foreground">
+                      <span className="font-medium uppercase tracking-wider">
                         {panel.label}
                       </span>
-                      <span className="font-mono text-[11px] text-muted-foreground">
-                        {formatBytes(panel.size)}
-                      </span>
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border bg-muted">
+                      <span className="font-mono">{formatBytes(panel.size)}</span>
+                    </figcaption>
+                    <div className="relative aspect-video overflow-hidden rounded-lg border bg-muted">
                       {panel.url ? (
                         <>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -450,46 +387,70 @@ export function CompressWorkbench({
                         </div>
                       )}
                     </div>
-                  </div>
+                  </figure>
                 ))}
               </div>
-            </section>
+            </div>
 
-            {/* 2MB gauge */}
+            {/* Big number figure */}
+            {compressedSizeBytes && sourceSizeBytes ? (
+              <div className="mt-8 border-t pt-8">
+                <div className="flex items-baseline gap-3">
+                  <span className="font-mono text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                    {formatBytes(compressedSizeBytes)}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    from{" "}
+                    <span className="font-mono text-foreground">
+                      {formatBytes(sourceSizeBytes)}
+                    </span>
+                  </span>
+                  {savedPositive ? (
+                    <span className="rounded-full bg-primary/10 px-2.5 py-1 font-mono text-sm font-semibold text-primary">
+                      −{saved}%
+                    </span>
+                  ) : null}
+                </div>
+                <p className="mt-1.5 text-xs text-muted-foreground">
+                  {savedLabel}
+                </p>
+              </div>
+            ) : null}
+
+            {/* Limit notice */}
             {limitState !== "idle" ? (
               <div
                 className={cn(
-                  "flex items-center gap-2.5 rounded-xl border px-4 py-3 text-sm font-semibold",
+                  "mt-6 flex items-center gap-2.5 rounded-lg border px-4 py-3 text-sm",
                   limitState === "ok"
-                    ? "border-emerald-300 bg-emerald-50 text-emerald-700"
-                    : "border-amber-300 bg-amber-50 text-amber-700",
+                    ? "border-border bg-muted/40 text-foreground"
+                    : "border-border bg-muted/40 text-foreground",
                 )}
               >
                 <SmartIcon
                   name={limitState === "ok" ? "CheckCircle" : "Alert"}
                   size={15}
+                  className={
+                    limitState === "ok"
+                      ? "text-primary"
+                      : "text-amber-500"
+                  }
                 />
-                <span>
+                <span className="text-[13px]">
                   {limitState === "ok" ? limitOkMessage : limitOverMessage}
                 </span>
               </div>
             ) : null}
 
-            {/* Export dock */}
-            <section className="rounded-2xl border bg-card p-5">
-              <div className="mb-4 flex items-center gap-2.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
-                  <SmartIcon name="Download" size={15} />
-                </span>
-                <h2 className="text-sm font-bold">{exportCardTitle}</h2>
-              </div>
+            {/* Export */}
+            <div className="mt-6 border-t pt-6">
               <button
                 type="button"
                 onClick={onDownload}
                 disabled={busy || !compressedUrl}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
               >
-                <SmartIcon name="Download" size={17} />
+                <SmartIcon name="Download" size={16} />
                 <span>
                   {downloadLabel
                     ? downloadLabel
@@ -502,14 +463,14 @@ export function CompressWorkbench({
                 </p>
               ) : null}
               {error ? (
-                <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">
+                <div className="mt-4 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive">
                   {error}
                 </div>
               ) : null}
-            </section>
+            </div>
 
             {footerHint ? (
-              <p className="text-center text-xs text-muted-foreground">
+              <p className="mt-6 text-center text-xs text-muted-foreground">
                 {footerHint}
               </p>
             ) : null}
