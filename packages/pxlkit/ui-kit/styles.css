@@ -1,0 +1,9 @@
+/*
+ * @pxlkit/ui-kit — standalone entry.
+ *
+ * Imports the composable retro design system (theme.css) with its own
+ * Tailwind v4 entry. For app integration, prefer importing theme.css
+ * inside your existing Tailwind graph instead (see theme/pixel).
+ */
+@import "tailwindcss";
+@import "./theme.css";

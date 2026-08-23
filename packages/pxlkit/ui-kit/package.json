@@ -1,0 +1,40 @@
+{
+  "name": "@pxlkit/ui-kit",
+  "version": "2.1.1",
+  "description": "Local workspace copy of pxlkit ui-kit — 121 retro pixel React components (MIT). Ported from vendor/pxlkit; source consumed directly via TS.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.tsx",
+  "module": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "types": "./src/index.tsx",
+      "import": "./src/index.tsx",
+      "default": "./src/index.tsx"
+    },
+    "./styles.css": "./styles.css",
+    "./theme.css": "./theme.css"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "@floating-ui/react-dom": "^2.1.8",
+    "@pxlkit/core": "workspace:*",
+    "@pxlkit/gamification": "workspace:*",
+    "@pxlkit/ui": "workspace:*",
+    "@tanstack/react-table": "^8.21.3",
+    "clsx": "^2.1.0",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
+    "react-hook-form": "^7.76.1",
+    "tailwind-merge": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
+  }
+}

@@ -1,0 +1,22 @@
+.inputWrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Reset button style */
+.popoverTrigger {
+  all: unset;
+}
+
+.colorExample {
+  width: 20px;
+  height: 20px;
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  margin-left: -4px;
+}
+
+/* SketchPicker 自带样式；这里仅保证 z 层级/交互 */
+.colorInput {
+  position: relative;
+}
