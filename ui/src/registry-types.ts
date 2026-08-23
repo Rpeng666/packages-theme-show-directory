@@ -120,6 +120,30 @@ import type { CleanerWorkbenchProps } from "./contracts/sections/cleaner-workben
 import type { CleanerOutputProps } from "./themes/pixel/sections/cleaner";
 import type { ToolPageProps } from "./themes/semi/pages/tool-page";
 import type { ConsoleLayoutProps } from "./contracts";
+import type { WorkbenchHeaderProps } from "./themes/raycast/components/header";
+import type { WorkbenchInfoDialogProps } from "./themes/raycast/components/info-dialog";
+import type { WorkbenchColorInputProps } from "./themes/raycast/components/color-input";
+import type { WorkbenchPanelProps } from "./themes/raycast/components/panel";
+import type { WorkbenchToolbarActionsProps } from "./themes/raycast/components/toolbar-actions";
+import type { WorkbenchIconPickerProps } from "./themes/raycast/components/icon-picker";
+import type { WorkbenchIconPreviewStageProps } from "./themes/raycast/components/icon-preview-stage";
+import type { WorkbenchSidebarProps } from "./themes/raycast/components/sidebar";
+import type { WorkbenchSidebarNavItem } from "./themes/raycast/components/sidebar-nav";
+import type { WorkbenchSidebarFilterSection } from "./themes/raycast/components/sidebar-filter";
+import type { WorkbenchPromptCardProps } from "./themes/raycast/components/prompt-card";
+import type { WorkbenchSelectionSummaryProps } from "./themes/raycast/components/selection-summary";
+import type { WorkbenchFloatingActionBarProps } from "./themes/raycast/components/floating-action-bar";
+import type { WorkbenchThemeCardProps, WorkbenchThemeCardData } from "./themes/raycast/components/theme-card";
+import type { WorkbenchThemeSwitcherProps } from "./themes/raycast/components/theme-switcher";
+import type { WorkbenchThemeControlsProps } from "./themes/raycast/components/theme-controls";
+import type { WorkbenchActionMenuProps } from "./themes/raycast/components/action-menu";
+import type { WorkbenchDockProps } from "./themes/raycast/components/dock";
+import type { WorkbenchDesktopProps } from "./themes/raycast/components/desktop";
+import type { WorkbenchIconGridProps } from "./themes/raycast/components/icon-grid";
+import type { WorkbenchShortcut } from "./themes/raycast/components/kbd";
+import type { WorkbenchKeyboardShortcutsDialogProps } from "./themes/raycast/components/keyboard-shortcuts";
+import type { CodeWorkbenchProps } from "./themes/raycast/sections/code-workbench";
+import type { WorkbenchPageProps } from "./themes/raycast/pages/workbench";
 import type {
   PerlerToolBarProps,
   PerlerColorPaletteProps,
@@ -223,6 +247,47 @@ export interface ThemeComponents {
   CopyText: ComponentType<CopyTextProps>;
   ToolPage: ComponentType<ToolPageProps>;
   ConsoleLayout: ComponentType<ConsoleLayoutProps>;
+  /** Raycast workbench chrome (raycast theme). */
+  WorkbenchHeader: ComponentType<WorkbenchHeaderProps>;
+  WorkbenchActions: ComponentType<{ children?: ReactNode; className?: string }>;
+  WorkbenchFooter: ComponentType<{ children?: ReactNode; className?: string }>;
+  WorkbenchInfoDialog: ComponentType<WorkbenchInfoDialogProps>;
+  WorkbenchKbd: ComponentType<{ children?: ReactNode; size?: 'small' | 'medium'; className?: string }>;
+  WorkbenchKbds: ComponentType<{ children?: ReactNode; className?: string }>;
+  WorkbenchShortcutRow: ComponentType<WorkbenchShortcut>;
+  WorkbenchKeyboardShortcutsDialog: ComponentType<WorkbenchKeyboardShortcutsDialogProps>;
+  WorkbenchNoSSR: ComponentType<{ children?: ReactNode }>;
+  WorkbenchFrameProvider: ComponentType<{ children?: ReactNode }>;
+  WorkbenchToast: ComponentType<Record<string, unknown>>;
+  WorkbenchToastViewport: ComponentType<Record<string, unknown>>;
+  WorkbenchToastProvider: ComponentType<Record<string, unknown>>;
+  WorkbenchToastTitle: ComponentType<Record<string, unknown>>;
+  WorkbenchControlItem: ComponentType<{ title: string; children?: ReactNode; className?: string }>;
+  WorkbenchSwitch: ComponentType<Record<string, unknown>>;
+  WorkbenchInput: ComponentType<Record<string, unknown>>;
+  WorkbenchInputSlot: ComponentType<Record<string, unknown>>;
+  WorkbenchColorInput: ComponentType<WorkbenchColorInputProps>;
+  WorkbenchFormSection: ComponentType<{ title: string; children?: ReactNode; defaultOpen?: boolean; className?: string; [key: string]: unknown }>;
+  WorkbenchFormItem: ComponentType<{ label?: string; children?: ReactNode; disabled?: boolean; className?: string; [key: string]: unknown }>;
+  WorkbenchPanel: ComponentType<WorkbenchPanelProps>;
+  WorkbenchIconPicker: ComponentType<WorkbenchIconPickerProps>;
+  WorkbenchIconPreviewStage: ComponentType<WorkbenchIconPreviewStageProps>;
+  WorkbenchSidebar: ComponentType<WorkbenchSidebarProps>;
+  WorkbenchSidebarNav: ComponentType<{ title?: string; items: WorkbenchSidebarNavItem[]; className?: string }>;
+  WorkbenchSidebarFilter: ComponentType<{ sections: WorkbenchSidebarFilterSection[]; className?: string }>;
+  WorkbenchPromptCard: ComponentType<WorkbenchPromptCardProps>;
+  WorkbenchSelectionSummary: ComponentType<WorkbenchSelectionSummaryProps>;
+  WorkbenchFloatingActionBar: ComponentType<WorkbenchFloatingActionBarProps>;
+  WorkbenchThemeCard: ComponentType<WorkbenchThemeCardProps>;
+  WorkbenchThemeSwitcher: ComponentType<WorkbenchThemeSwitcherProps>;
+  WorkbenchThemeControls: ComponentType<WorkbenchThemeControlsProps>;
+  WorkbenchActionMenu: ComponentType<WorkbenchActionMenuProps>;
+  WorkbenchDot: ComponentType<{ color?: string; colorSecondary?: string; size?: number; className?: string }>;
+  WorkbenchDock: ComponentType<WorkbenchDockProps>;
+  WorkbenchDesktop: ComponentType<WorkbenchDesktopProps>;
+  WorkbenchIconGrid: ComponentType<WorkbenchIconGridProps>;
+  WorkbenchToolbarActions: ComponentType<WorkbenchToolbarActionsProps>;
+  WorkbenchPage: ComponentType<WorkbenchPageProps>;
 }
 
 /**
@@ -278,6 +343,8 @@ export interface SectionComponents {
   DesignerStudio: ComponentType<DesignerStudioProps>;
   HeroLive: ComponentType<HeroLiveProps>;
   Workbench: ComponentType<WorkbenchProps>;
+  /** Raycast code workbench — 首页中间区域（raycast theme section）。 */
+  CodeWorkbench: ComponentType<CodeWorkbenchProps>;
 }
 
 export type PartialSectionComponents = Partial<SectionComponents>;

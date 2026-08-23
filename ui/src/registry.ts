@@ -83,7 +83,7 @@ export function getActiveTheme(): ThemeName {
 }
 
 /** Known theme directories — the convention roots that the codegen scans. */
-export const THEME_NAMES: readonly ThemeName[] = ["default", "pixel", "semi"];
+export const THEME_NAMES: readonly ThemeName[] = ["default", "pixel", "semi", "raycast"];
 
 /** The "nothing exists anywhere" fallback — renders nothing, never throws. */
 const EmptyComponent: ComponentType<any> = () => null;

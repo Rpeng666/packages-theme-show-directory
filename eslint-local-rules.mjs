@@ -17,6 +17,82 @@ import { fileURLToPath } from 'node:url';
 const THEME_ALIAS = '@/themes';
 
 /**
+ * Package theme prefix — @template/ui/themes/<theme>/... is the packaged
+ * equivalent of the app alias: a CONCRETE theme implementation. Importing it
+ * directly (instead of resolveComponent/resolveSection) bypasses active-theme
+ * selection and the default fallback, same coupling as `@/themes/<theme>/...`.
+ * The root barrel `@template/ui` (registry API + theme-agnostic primitives) is
+ * NOT flagged — only the `themes/<theme>/` subpath is.
+ */
+const PACKAGE_THEME_PREFIX = '@template/ui/themes';
+
+/** Known theme names — matched as a suffix after @/themes/ or the package prefix. */
+const KNOWN_THEME_NAMES = ['default', 'pixel', 'semi', 'raycast'];
+
+/**
+ * Non-component orchestration primitives under themes/<theme> — contexts,
+ * providers, no-SSR wrappers: they carry no theme VISUAL coupling (no
+ * per-theme chrome to switch), so importing them directly is safe and required
+ * (a context object can't be resolved through the component registry).
+ * Exempted at the SPECIFIER level: a barrel import of these names is allowed,
+ * while importing any other (visual) theme component from the barrel isn't.
+ */
+const ORCHESTRATION_PRIMITIVES = new Set([
+  'WorkbenchFrameContext',
+  'WorkbenchFrameProvider',
+  'WorkbenchNoSSR',
+]);
+
+/** Direct subpath files that hold only orchestration primitives. */
+const ORCHESTRATION_PRIMITIVE_SOURCES = [
+  '/themes/raycast/components/frame-context',
+  '/themes/raycast/components/no-ssr',
+];
+
+function isConcreteThemeValue(value) {
+  if (value === THEME_ALIAS || value.startsWith(`${THEME_ALIAS}/`)) return true;
+  if (value === PACKAGE_THEME_PREFIX) return true;
+  for (const theme of KNOWN_THEME_NAMES) {
+    if (value.startsWith(`${PACKAGE_THEME_PREFIX}/${theme}`)) return true;
+  }
+  return false;
+}
+
+/**
+ * A theme import is a violation only when it pulls a VISUAL component: either
+ * a direct subpath (components/sections/pages) or a barrel specifier that is
+ * not an orchestration primitive.
+ */
+function isViolationImport(node, value) {
+  if (!isConcreteThemeValue(value)) return false;
+  // Type-only imports carry no runtime coupling.
+  if (node.importKind === 'type') return false;
+  const specifiers = node.specifiers || [];
+  if (specifiers.length > 0 && specifiers.every((s) => s.importKind === 'type')) return false;
+  // Direct subpath to an orchestration primitive file — exempt.
+  if (ORCHESTRATION_PRIMITIVE_SOURCES.some((p) => value.endsWith(p))) return false;
+  // Barrel import — exempt only if EVERY specifier is an orchestration primitive.
+  if (specifiers.length > 0) {
+    const names = specifiers.map((s) => {
+      const id = s.imported || s.local;
+      return id && id.name ? id.name : null;
+    });
+    if (names.length > 0 && names.every((n) => n && ORCHESTRATION_PRIMITIVES.has(n))) return false;
+  }
+  return true;
+}
+
+function isConcreteThemeImport(value) {
+  if (value === THEME_ALIAS || value.startsWith(`${THEME_ALIAS}/`)) return true;
+  if (value === PACKAGE_THEME_PREFIX) return true;
+  // @template/ui/themes/<theme>/... — a concrete theme implementation.
+  for (const theme of KNOWN_THEME_NAMES) {
+    if (value.startsWith(`${PACKAGE_THEME_PREFIX}/${theme}`)) return true;
+  }
+  return false;
+}
+
+/**
  * Contract source lookup for `section-in-props`.
  *
  * The registry section contracts live in packages/ui/src/contracts/sections.
@@ -103,7 +179,7 @@ export const rules = {
       },
       messages: {
         directThemeImport:
-          "Do not import a concrete theme block directly. Forward through the theme layer first — `const Footer = await getThemeBlock('footer')` — the theme block then resolves the component via resolveComponent.",
+          "Do not import a concrete theme block directly. Forward through the theme layer first — `const Footer = await getThemeBlock('footer')` / `resolveComponent('Footer')` — the theme block then resolves the component via resolveComponent.",
       },
       schema: [],
     },
@@ -113,10 +189,15 @@ export const rules = {
         if (!src || src.type !== 'Literal' || typeof src.value !== 'string') {
           return; // template-literal / non-literal specifiers (e.g. getThemeBlock) are not static theme imports
         }
+        // Type-only imports carry no runtime theme coupling — exempt `import type`.
+        if (node.importKind === 'type') return;
+        if (node.specifiers && node.specifiers.length > 0 && node.specifiers.every((s) => s.importKind === 'type')) {
+          return;
+        }
         const value = src.value;
-        if (value === THEME_ALIAS || value.startsWith(`${THEME_ALIAS}/`)) {
+        if (isViolationImport(node, value)) {
           // Exempt the active-theme CSS entry + any theme CSS path.
-          if (value === `${THEME_ALIAS}/style` || value.includes('/style/')) {
+          if (value === `${THEME_ALIAS}/style` || value.includes('/style/') || value.endsWith('.css')) {
             return;
           }
           context.report({

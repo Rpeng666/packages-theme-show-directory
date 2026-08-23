@@ -287,6 +287,7 @@ export type { Button, NavItem, Image } from "./types/common";
 export {
   ThemeRegistryProvider,
   useThemeComponent,
+  useThemeSection,
   useActiveTheme,
 } from "./context";
 
@@ -786,3 +787,76 @@ export { Steps, Step } from "./components/mdx/Steps";
 export { ProCon } from "./components/mdx/ProCon";
 export { Ingredients } from "./components/mdx/Ingredients";
 export { RelatedArticles } from "./components/mdx/RelatedArticles";
+
+// Raycast workbench theme — home-page chrome (workbench header / footer /
+// page shell / code workbench middle area). Data-driven with injected slots;
+// consumed by the app through @template/ui (thin forwarders in app components).
+export { WorkbenchHeader, WorkbenchActions } from "./themes/raycast/components/header";
+export type {
+  WorkbenchHeaderProps,
+  WorkbenchHeaderLink,
+} from "./themes/raycast/components/header";
+export { WorkbenchFooter, WorkbenchControlItem } from "./themes/raycast/components/footer";
+export { WorkbenchInfoDialog } from "./themes/raycast/components/info-dialog";
+export type { WorkbenchInfoDialogProps } from "./themes/raycast/components/info-dialog";
+export { WorkbenchKbd, WorkbenchKbds, WorkbenchShortcutRow } from "./themes/raycast/components/kbd";
+export type { WorkbenchShortcut } from "./themes/raycast/components/kbd";
+export { WorkbenchSwitch } from "./themes/raycast/components/switch";
+export { WorkbenchInput, WorkbenchInputSlot, inputVariants } from "./themes/raycast/components/input";
+export type { WorkbenchInputProps, WorkbenchInputSlotProps } from "./themes/raycast/components/input";
+export { WorkbenchColorInput } from "./themes/raycast/components/color-input";
+export type { WorkbenchColorInputProps } from "./themes/raycast/components/color-input";
+export { WorkbenchFormSection, WorkbenchFormItem } from "./themes/raycast/components/form-section";
+export { WorkbenchPanel } from "./themes/raycast/components/panel";
+export type { WorkbenchPanelProps } from "./themes/raycast/components/panel";
+export { WorkbenchToolbarActions } from "./themes/raycast/components/toolbar-actions";
+export type { WorkbenchToolbarActionsProps } from "./themes/raycast/components/toolbar-actions";
+export { WorkbenchIconPicker } from "./themes/raycast/components/icon-picker";
+export type { WorkbenchIconPickerProps } from "./themes/raycast/components/icon-picker";
+export { WorkbenchIconPreviewStage } from "./themes/raycast/components/icon-preview-stage";
+export type { WorkbenchIconPreviewStageProps } from "./themes/raycast/components/icon-preview-stage";
+export { WorkbenchSidebar } from "./themes/raycast/components/sidebar";
+export type { WorkbenchSidebarProps } from "./themes/raycast/components/sidebar";
+export { WorkbenchSidebarNav } from "./themes/raycast/components/sidebar-nav";
+export type { WorkbenchSidebarNavItem } from "./themes/raycast/components/sidebar-nav";
+export { WorkbenchSidebarFilter } from "./themes/raycast/components/sidebar-filter";
+export type { WorkbenchSidebarFilterSection } from "./themes/raycast/components/sidebar-filter";
+export { WorkbenchPromptCard } from "./themes/raycast/components/prompt-card";
+export type { WorkbenchPromptCardProps } from "./themes/raycast/components/prompt-card";
+export { WorkbenchSelectionSummary } from "./themes/raycast/components/selection-summary";
+export type { WorkbenchSelectionSummaryProps, WorkbenchSelectionSummaryItem } from "./themes/raycast/components/selection-summary";
+export { WorkbenchFloatingActionBar } from "./themes/raycast/components/floating-action-bar";
+export type { WorkbenchFloatingAction, WorkbenchFloatingActionBarProps } from "./themes/raycast/components/floating-action-bar";
+export { WorkbenchThemeCard } from "./themes/raycast/components/theme-card";
+export type { WorkbenchThemeCardProps, WorkbenchThemeCardData } from "./themes/raycast/components/theme-card";
+export { WorkbenchThemeSwitcher } from "./themes/raycast/components/theme-switcher";
+export type { WorkbenchThemeSwitcherProps } from "./themes/raycast/components/theme-switcher";
+export { WorkbenchThemeControls } from "./themes/raycast/components/theme-controls";
+export type { WorkbenchThemeControlsProps } from "./themes/raycast/components/theme-controls";
+export { WorkbenchActionMenu } from "./themes/raycast/components/action-menu";
+export type { WorkbenchActionMenuProps, WorkbenchActionMenuItem } from "./themes/raycast/components/action-menu";
+export { WorkbenchDot } from "./themes/raycast/components/dot";
+export { WorkbenchDock } from "./themes/raycast/components/dock";
+export type { WorkbenchDockProps } from "./themes/raycast/components/dock";
+export { WorkbenchDesktop } from "./themes/raycast/components/desktop";
+export type { WorkbenchDesktopProps } from "./themes/raycast/components/desktop";
+export { WorkbenchIconGrid } from "./themes/raycast/components/icon-grid";
+export type { WorkbenchIconGridProps, WorkbenchIconGridItem } from "./themes/raycast/components/icon-grid";
+export { useWorkbenchHotkeys } from "./themes/raycast/hooks/use-hotkeys";
+export {
+  WorkbenchToast,
+  WorkbenchToastViewport,
+  WorkbenchToastProvider,
+  WorkbenchToastTitle,
+} from "./themes/raycast/components/toast";
+export { WorkbenchKeyboardShortcutsDialog } from "./themes/raycast/components/keyboard-shortcuts";
+export type { WorkbenchKeyboardShortcutsDialogProps } from "./themes/raycast/components/keyboard-shortcuts";
+export { WorkbenchPage } from "./themes/raycast/pages/workbench";
+export type { WorkbenchPageProps } from "./themes/raycast/pages/workbench";
+export { CodeWorkbench } from "./themes/raycast/sections/code-workbench";
+export type { CodeWorkbenchProps } from "./themes/raycast/sections/code-workbench";
+export {
+  WorkbenchFrameContext,
+  WorkbenchFrameProvider,
+} from "./themes/raycast/components/frame-context";
+export { WorkbenchNoSSR } from "./themes/raycast/components/no-ssr";

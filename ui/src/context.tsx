@@ -5,6 +5,8 @@ import {
   defaultThemeName,
   resolveAmbient,
   resolveComponent,
+  resolveSection,
+  type SectionComponents,
   type ThemeComponents,
   type ThemeName,
 } from './registry'
@@ -71,4 +73,11 @@ export function useThemeComponent<K extends keyof ThemeComponents>(
 ): ThemeComponents[K] {
   const { theme } = React.useContext(ThemeRegistryContext)
   return resolveComponent(key, theme)
+}
+
+export function useThemeSection<K extends keyof SectionComponents>(
+  key: K,
+): SectionComponents[K] {
+  const { theme } = React.useContext(ThemeRegistryContext)
+  return resolveSection(key, theme)
 }
