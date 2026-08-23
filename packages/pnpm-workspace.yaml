@@ -1,4 +1,0 @@
-packages:
-  - "ui"
-  - "pxlkit/*"
-  - "external-link-cms"
