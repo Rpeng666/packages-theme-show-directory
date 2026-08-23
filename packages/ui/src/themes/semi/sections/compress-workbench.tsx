@@ -26,6 +26,19 @@ function cn(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(" ");
 }
 
+/** Semi-style step heading with a mono number. */
+function StepHeading({ n, title }: { n: string; title: ReactNode }) {
+  return (
+    <div className="mb-4 flex items-center gap-2.5">
+      <span className="font-mono text-[11px] font-bold tracking-[0.06em] text-[rgb(var(--semi-green-7))]">
+        {n}
+      </span>
+      <h2 className="m-0 text-[15px] font-bold text-[var(--semi-color-text-0)]">{title}</h2>
+      <span className="flex-1" />
+    </div>
+  )
+}
+
 function formatBytes(bytes?: number): string {
   if (!bytes || bytes <= 0) return "—";
   if (bytes < 1024) return `${bytes} B`;
@@ -253,12 +266,8 @@ export function CompressWorkbench({
             <div className="flex flex-col gap-4">
               {/* Source card */}
               <section className="rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <div className="mb-4 flex items-center gap-2.5">
-                  <span className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[10px] bg-[rgba(var(--semi-green-1),0.7)] text-[rgb(var(--semi-green-7))]">
-                    <SmartIcon name="Image" size={15} />
-                  </span>
-                  <h2 className="m-0 text-[15px] font-bold text-[var(--semi-color-text-0)]">{sourceCardTitle}</h2>
-                  <span className="flex-1" />
+                <StepHeading n="01" title={sourceCardTitle} />
+                <div className="mb-3 flex items-center justify-end">
                   {replaceLabel && onReplace ? (
                     <button type="button" className="cursor-pointer border-none bg-transparent p-0 text-xs font-bold text-[rgb(var(--semi-green-7))] transition-colors duration-[180ms]" onClick={onReplace}>{replaceLabel}</button>
                   ) : null}
@@ -285,12 +294,7 @@ export function CompressWorkbench({
 
               {/* Settings card */}
               <section className="rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <div className="mb-4 flex items-center gap-2.5">
-                  <span className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[10px] bg-[rgba(var(--semi-green-1),0.7)] text-[rgb(var(--semi-green-7))]">
-                    <SmartIcon name="Layers" size={15} />
-                  </span>
-                  <h2 className="m-0 text-[15px] font-bold text-[var(--semi-color-text-0)]">{settingsCardTitle}</h2>
-                </div>
+                <StepHeading n="02" title={settingsCardTitle} />
                 {formatLabel ? <h3 className="m-0 mb-2 text-xs font-semibold text-[var(--semi-color-text-2)]">{formatLabel}</h3> : null}
                 <div className="grid grid-cols-1 gap-2">
                   {formatOptions.map((option) => {
@@ -339,12 +343,7 @@ export function CompressWorkbench({
 
               {/* Results card */}
               <section className="rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <div className="mb-4 flex items-center gap-2.5">
-                  <span className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[10px] bg-[rgba(var(--semi-green-1),0.7)] text-[rgb(var(--semi-green-7))]">
-                    <SmartIcon name="Shrink" size={15} />
-                  </span>
-                  <h2 className="m-0 text-[15px] font-bold text-[var(--semi-color-text-0)]">{resultsCardTitle}</h2>
-                </div>
+                <StepHeading n="03" title={resultsCardTitle} />
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between gap-2.5 rounded-xl bg-[var(--semi-color-fill-0)] px-3 py-[9px]">
                     <span className="text-xs font-semibold text-[var(--semi-color-text-3)]">{originalLabel}</span>
@@ -381,9 +380,7 @@ export function CompressWorkbench({
               {/* Before / after comparison */}
               <section className="overflow-hidden rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
                 <div className="mb-4 flex items-center gap-2.5">
-                  <span className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[10px] bg-[rgba(var(--semi-green-1),0.7)] text-[rgb(var(--semi-green-7))]">
-                    <SmartIcon name="EyeOpened" size={15} />
-                  </span>
+                  <span className="font-mono text-[11px] font-bold tracking-[0.06em] text-[rgb(var(--semi-green-7))]">04</span>
                   <h2 className="m-0 text-[15px] font-bold text-[var(--semi-color-text-0)]">{stageCardTitle}</h2>
                   <span className="flex-1" />
                   {compressedSizeBytes && sourceSizeBytes ? (
@@ -392,7 +389,7 @@ export function CompressWorkbench({
                     </span>
                   ) : null}
                 </div>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div>
                     <div className="mb-2 flex items-center justify-between gap-2">
                       <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--semi-color-text-3)]">{beforeLabel}</span>
@@ -441,12 +438,7 @@ export function CompressWorkbench({
 
               {/* Export dock */}
               <section className="rounded-2xl border border-[var(--semi-color-border)] bg-[var(--semi-color-bg-0)] p-[18px]">
-                <div className="mb-4 flex items-center gap-2.5">
-                  <span className="inline-flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-[10px] bg-[rgba(var(--semi-green-1),0.7)] text-[rgb(var(--semi-green-7))]">
-                    <SmartIcon name="Download" size={15} />
-                  </span>
-                  <h2 className="m-0 text-[15px] font-bold text-[var(--semi-color-text-0)]">{exportCardTitle}</h2>
-                </div>
+                <StepHeading n="05" title={exportCardTitle} />
                 <Button type="button" size="lg" className="w-full" onClick={onDownload} disabled={busy || !compressedUrl} loading={Boolean(busy)}>
                   <SmartIcon name="Download" size={17} />
                   <span>{downloadLabel ? downloadLabel : `Download Compressed ${extension}`}</span>
