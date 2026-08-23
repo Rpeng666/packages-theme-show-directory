@@ -1,10 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { FeaturesAccordionProps } from '@template/ui';
 
-/** Default features-accordion block — forwarder to the registered FeaturesAccordion section. */
-export function FeaturesAccordion(props: FeaturesAccordionProps) {
-  const Comp = resolveSection('FeaturesAccordion');
+/**
+ * default FeaturesAccordion block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
+ */
+export function FeaturesAccordion(props: any) {
+  const Comp = resolveSection('FeaturesAccordion' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

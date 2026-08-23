@@ -1,10 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { BlogDetailProps } from '@template/ui';
 
-/** Default blog-detail block — forwarder to the registered BlogDetail section. */
-export function BlogDetail(props: BlogDetailProps) {
-  const Comp = resolveSection('BlogDetail');
+/**
+ * default BlogDetail block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
+ */
+export function BlogDetail(props: any) {
+  const Comp = resolveSection('BlogDetail' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

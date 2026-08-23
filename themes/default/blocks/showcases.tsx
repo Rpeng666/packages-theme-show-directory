@@ -1,10 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { ShowcasesProps } from '@template/ui';
 
-/** Default showcases block — forwarder to the registered Showcases section. */
-export function Showcases(props: ShowcasesProps) {
-  const Comp = resolveSection('Showcases');
+/**
+ * default Showcases block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
+ */
+export function Showcases(props: any) {
+  const Comp = resolveSection('Showcases' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

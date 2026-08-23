@@ -1,14 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { SubscribeProps } from '@template/ui';
 
 /**
- * Default subscribe block — forwarder to the registered Subscribe section.
- * The registry implementation renders the form UI; no toast bridge is
- * required here (toast is optional).
+ * default Subscribe block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
  */
-export function Subscribe(props: SubscribeProps) {
-  const Comp = resolveSection('Subscribe');
+export function Subscribe(props: any) {
+  const Comp = resolveSection('Subscribe' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

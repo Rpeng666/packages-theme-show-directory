@@ -1,10 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { TestimonialsProps } from '@template/ui';
 
-/** Default testimonials block — forwarder to the registered Testimonials section. */
-export function Testimonials(props: TestimonialsProps) {
-  const Comp = resolveSection('Testimonials');
+/**
+ * default Testimonials block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
+ */
+export function Testimonials(props: any) {
+  const Comp = resolveSection('Testimonials' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

@@ -1,10 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { BlogProps } from '@template/ui';
 
-/** Default blog block — forwarder to the registered Blog section. */
-export function Blog(props: BlogProps) {
-  const Comp = resolveSection('Blog');
+/**
+ * default Blog block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
+ */
+export function Blog(props: any) {
+  const Comp = resolveSection('Blog' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

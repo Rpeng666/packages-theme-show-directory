@@ -1,14 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { HeroProps } from '@template/ui';
 
 /**
- * Default hero block — forwarder. The visual hero lives in packages/ui
- * (registered Hero section); this block resolves it through the registry and
- * injects the section data. Link/Image fall back to native <a>/<img>.
+ * default Hero block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
  */
-export function Hero({ section, className }: HeroProps) {
-  const HeroComp = resolveSection('Hero');
-  return <HeroComp section={section} className={className} />;
+export function Hero(props: any) {
+  const Comp = resolveSection('Hero' as never) as React.ComponentType<any>;
+  return <Comp {...props} />;
 }

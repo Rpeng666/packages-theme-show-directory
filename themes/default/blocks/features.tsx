@@ -1,14 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { FeaturesProps } from '@template/ui';
 
 /**
- * Default features block — forwarder. The visual grid lives in packages/ui
- * (registered Features section); this block resolves it through the registry
- * and injects the section data.
+ * default Features block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
  */
-export function Features({ section, className }: FeaturesProps) {
-  const Comp = resolveSection('Features');
-  return <Comp section={section} className={className} />;
+export function Features(props: any) {
+  const Comp = resolveSection('Features' as never) as React.ComponentType<any>;
+  return <Comp {...props} />;
 }

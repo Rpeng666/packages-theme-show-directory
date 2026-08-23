@@ -1,10 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { CtaProps } from '@template/ui';
 
-/** Default cta block — forwarder to the registered Cta section. */
-export function Cta(props: CtaProps) {
-  const Comp = resolveSection('Cta');
+/**
+ * default Cta block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
+ */
+export function Cta(props: any) {
+  const Comp = resolveSection('Cta' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

@@ -2,24 +2,12 @@
 
 import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { PricingProps } from '@template/ui';
 
 /**
- * Default pricing block — forwarder to the registered Pricing section.
- * The registry implementation is presentational; this demo block injects
- * no-op handlers so the section renders without an app payment layer.
+ * default Pricing block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
  */
-export function Pricing({ section, className, ...rest }: PricingProps) {
-  const Comp = resolveSection('Pricing');
-  const demoProps: Partial<PricingProps> = {
-    isLoading: false,
-    productId: null,
-    itemCurrencies: {},
-    handleCurrencyChange: () => {},
-    onPayment: () => {},
-    paymentModal: null,
-    tCurrentPlan: 'Current plan',
-    tProcessing: 'Processing…',
-  };
-  return <Comp section={section} className={className} {...demoProps} {...rest} />;
+export function Pricing(props: any) {
+  const Comp = resolveSection('Pricing' as never) as React.ComponentType<any>;
+  return <Comp {...props} />;
 }

@@ -10,10 +10,13 @@
  * mirroring the reference's getThemeBlock().
  */
 import * as defaultBlocks from "./default/blocks";
+import * as pixelBlocks from "./pixel/blocks";
+import * as semiBlocks from "./semi/blocks";
+import * as raycastBlocks from "./raycast/blocks";
 
-export type ThemeName = "default" | "pixel" | "semi";
+export type ThemeName = "default" | "pixel" | "semi" | "raycast";
 
-export const themeNames: ThemeName[] = ["default", "pixel", "semi"];
+export const themeNames: ThemeName[] = ["default", "pixel", "semi", "raycast"];
 export const defaultTheme: ThemeName = "default";
 
 export interface ThemeBlockRef {
@@ -25,7 +28,9 @@ type BlockMap = Record<string, unknown>;
 
 const registries: Record<string, BlockMap> = {
   default: defaultBlocks as unknown as BlockMap,
-  // pixel / semi will register their own forwarders here as they are added.
+  pixel: pixelBlocks as unknown as BlockMap,
+  semi: semiBlocks as unknown as BlockMap,
+  raycast: raycastBlocks as unknown as BlockMap,
 };
 
 /**
@@ -51,4 +56,4 @@ export function isTheme(name: string): name is ThemeName {
   return themeNames.includes(name as ThemeName);
 }
 
-export { defaultBlocks };
+export { defaultBlocks, pixelBlocks, semiBlocks, raycastBlocks };

@@ -1,10 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { FeaturesCompareProps } from '@template/ui';
 
-/** Default features-compare block — forwarder to the registered FeaturesCompare section. */
-export function FeaturesCompare(props: FeaturesCompareProps) {
-  const Comp = resolveSection('FeaturesCompare');
+/**
+ * default FeaturesCompare block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
+ */
+export function FeaturesCompare(props: any) {
+  const Comp = resolveSection('FeaturesCompare' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }

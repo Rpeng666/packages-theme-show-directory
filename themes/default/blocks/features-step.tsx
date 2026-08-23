@@ -1,10 +1,13 @@
 'use client';
 
+import * as React from 'react';
 import { resolveSection } from '@template/ui';
-import type { FeaturesStepProps } from '@template/ui';
 
-/** Default features-step block — forwarder to the registered FeaturesStep section. */
-export function FeaturesStep(props: FeaturesStepProps) {
-  const Comp = resolveSection('FeaturesStep');
+/**
+ * default FeaturesStep block — forwarder. Resolves the registered section/component
+ * through the registry and forwards props. No hand-rolled markup.
+ */
+export function FeaturesStep(props: any) {
+  const Comp = resolveSection('FeaturesStep' as never) as React.ComponentType<any>;
   return <Comp {...props} />;
 }
