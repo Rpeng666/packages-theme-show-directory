@@ -89,9 +89,9 @@ export function EditorCanvas({
         className,
       )}
     >
-      {/* Zoom / view controls */}
+      {/* Zoom / view controls — retro chrome strip */}
       {hasResult && (
-        <div className="absolute right-3 top-3 z-10 flex items-center gap-1 border-2 border-foreground/10 bg-background/90 p-1 pxl-corner-sm">
+        <div className="absolute right-3 top-3 z-10 flex items-center gap-1 border-2 border-retro-border bg-background/95 p-1 pxl-corner-sm shadow-md">
           <PixelIconButton
             label={t('zoomOut')}
             size="sm"
@@ -99,7 +99,7 @@ export function EditorCanvas({
             icon={<PixelIcon name="search" size={13} />}
             onClick={() => onZoomChange(zoom * 0.8)}
           />
-          <span className="w-10 text-center font-mono text-[10px] tabular-nums text-foreground">
+          <span className="w-12 text-center font-mono text-[10px] tabular-nums text-foreground">
             {Math.round(zoom * 100)}%
           </span>
           <PixelIconButton
@@ -109,10 +109,11 @@ export function EditorCanvas({
             icon={<PixelIcon name="search" size={13} />}
             onClick={() => onZoomChange(zoom * 1.25)}
           />
+          <span className="mx-0.5 h-4 w-0.5 bg-retro-border" />
           <PixelIconButton
             label={t('zoomFit')}
             size="sm"
-            tone="neutral"
+            tone="cyan"
             icon={<PixelIcon name="grid" size={13} />}
             onClick={onFit}
           />
@@ -135,7 +136,7 @@ export function EditorCanvas({
                 transform: `scale(${zoom})`,
                 imageRendering: 'pixelated',
               }}
-              className="max-h-full max-w-full origin-center border-2 border-foreground/10 bg-retro-bg pxl-corner-sm"
+              className="max-h-full max-w-full origin-center border-2 border-retro-border bg-retro-bg pxl-corner-sm shadow-lg"
             />
 
             {/* Compare slider overlay — clips the original image over the canvas */}
