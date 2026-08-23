@@ -3,172 +3,144 @@
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { resolveComponent } from "@template/ui";
-import { THEME_NAMES } from "./catalog";
-import { cn } from "@/utils/cn";
 
-type Preview = {
-  key: string;
-  label: string;
-  render: (theme: string) => React.ReactNode;
-};
-
-const PREVIEWS: Preview[] = [
-  {
-    key: "Button",
-    label: "Button",
-    render: (theme) => {
-      const Button = resolveComponent("Button", theme as never);
-      if (!Button) return null;
-      return (
-        <div className="flex flex-wrap gap-3 items-center">
-          <Button variant="default">Default</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive">Destructive</Button>
-        </div>
-      );
-    },
-  },
-  {
-    key: "Badge",
-    label: "Badge",
-    render: (theme) => {
-      const Badge = resolveComponent("Badge", theme as never);
-      if (!Badge) return null;
-      return (
-        <div className="flex flex-wrap gap-3 items-center">
-          <Badge variant="default">Default</Badge>
-          <Badge variant="secondary">Secondary</Badge>
-          <Badge variant="outline">Outline</Badge>
-          <Badge variant="destructive">Destructive</Badge>
-        </div>
-      );
-    },
-  },
-  {
-    key: "Card",
-    label: "Card",
-    render: (theme) => {
-      const Card = resolveComponent("Card", theme as never);
-      if (!Card) return null;
-      return (
-        <Card
-          title="Getting Started"
-          description="A card title and description rendered by the active theme."
-          className="w-full max-w-sm"
-        >
-          <div className="text-sm">Card body content — styled by the active theme.</div>
-        </Card>
-      );
-    },
-  },
-  {
-    key: "Input",
-    label: "Input",
-    render: (theme) => {
-      const Input = resolveComponent("Input", theme as never);
-      if (!Input) return null;
-      return (
-        <div className="flex flex-col gap-3 w-full max-w-sm">
-          <Input placeholder="Search…" label="Search" />
-          <Input placeholder="Email address" error="This field is required" />
-        </div>
-      );
-    },
-  },
-  {
-    key: "Switch",
-    label: "Switch",
-    render: (theme) => {
-      const Switch = resolveComponent("Switch", theme as never);
-      if (!Switch) return null;
-      return (
-        <div className="flex flex-col gap-3">
-          <Switch defaultChecked label="Airplane mode" />
-          <Switch label="Wi-Fi" />
-        </div>
-      );
-    },
-  },
-  {
-    key: "Avatar",
-    label: "Avatar",
-    render: (theme) => {
-      const Avatar = resolveComponent("Avatar", theme as never);
-      if (!Avatar) return null;
-      return (
-        <div className="flex items-center gap-3">
-          <Avatar name="Linus Torvalds" size="sm" />
-          <Avatar name="Grace Hopper" size="md" />
-          <Avatar name="Ada Lovelace" size="lg" />
-        </div>
-      );
-    },
-  },
-  {
-    key: "Progress",
-    label: "Progress",
-    render: (theme) => {
-      const Progress = resolveComponent("Progress", theme as never);
-      if (!Progress) return null;
-      return (
-        <div className="flex flex-col gap-3 w-full max-w-sm">
-          <Progress value={30} showValue />
-          <Progress value={68} label="Uploading…" showValue />
-        </div>
-      );
-    },
-  },
-  {
-    key: "Skeleton",
-    label: "Skeleton",
-    render: (theme) => {
-      const Skeleton = resolveComponent("Skeleton", theme as never);
-      if (!Skeleton) return null;
-      return (
-        <div className="flex flex-col gap-3 w-full max-w-sm">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-4/5" />
-          <Skeleton className="h-4 w-3/5" />
-        </div>
-      );
-    },
-  },
-];
-
+/**
+ * Renders a single component resolved for the active theme. Deals with a few
+ * primitives we can preview with sample props; every other registered key is
+ * still included in the directory and renders as a placeholder card so the
+ * full registry is visible.
+ */
 export function ThemeShowcase({ theme }: { theme: string }) {
   const searchParams = useSearchParams();
-  const selected = searchParams?.get("c") ?? null;
-  const active = (THEME_NAMES as readonly string[]).includes(theme) ? theme : "default";
+  const selected = searchParams?.get("c") ?? "Button";
 
-  React.useEffect(() => {
-    if (!selected) return;
-    const el = document.getElementById(selected);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [selected]);
+  const Comp = resolveComponent(selected as never, theme as never);
+  if (!Comp) {
+    return (
+      <div className="flex flex-col gap-4 p-6 max-w-md rounded-xl border border-gray-5 bg-panel/40">
+        <p className="text-[13px] text-gray-9">
+          <code className="text-gray-11">{selected}</code> is registered for{" "}
+          <code className="text-gray-11">{theme}</code> but there&apos;s no preview fixture for it.
+          Pick another entry from the directory.
+        </p>
+      </div>
+    );
+  }
+
+  const props = demoProps(selected);
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl">
-      {PREVIEWS.map((p) => {
-        const isSelected = selected === p.key;
-        return (
-          <section
-            key={p.key}
-            id={p.key}
-            data-active={isSelected}
-            className={cn(
-              "flex flex-col gap-3 scroll-mt-6",
-              isSelected ? "rounded-xl border border-white/10 ring-1 ring-brand/40" : ""
-            )}
-          >
-            <h2 className="text-sm font-medium text-gray-11">{p.label}</h2>
-            <div className="grid gap-3 rounded-xl border border-panel bg-panel/40 p-5">
-              {p.render(active)}
-            </div>
-          </section>
-        );
-      })}
+      <header className="flex flex-col gap-1">
+        <h1 className="text-[15px] font-medium text-gray-12">{selected}</h1>
+        <p className="text-[13px] text-gray-9 capitalize">
+          {theme} theme
+        </p>
+      </header>
+      <div className="rounded-xl border border-gray-8 bg-panel/40 p-6">{renderWithProps(Comp, selected, props, theme)}</div>
     </div>
   );
+}
+
+function renderWithProps(
+  Comp: ComponentType<any>,
+  key: string,
+  props: Record<string, any>,
+  theme: string,
+) {
+  if (key === "Button") {
+    return (
+      <div className="flex flex-wrap gap-3 items-center">
+        <Comp variant="default">Default</Comp>
+        <Comp variant="secondary">Secondary</Comp>
+        <Comp variant="outline">Outline</Comp>
+        <Comp variant="ghost">Ghost</Comp>
+        <Comp variant="destructive">Destructive</Comp>
+      </div>
+    );
+  }
+  if (key === "Badge") {
+    return (
+      <div className="flex flex-wrap gap-3 items-center">
+        <Comp variant="default">Default</Comp>
+        <Comp variant="secondary">Secondary</Comp>
+        <Comp variant="outline">Outline</Comp>
+        <Comp variant="destructive">Destructive</Comp>
+      </div>
+    );
+  }
+  if (key === "Card") {
+    return (
+      <Comp
+        title="Getting Started"
+        description="A card title and description rendered by the active theme."
+        className="w-full max-w-md"
+      >
+        <div className="flex flex-col gap-2 text-sm">
+          Click around — this card is styled by the {theme} theme.
+        </div>
+      </Comp>
+    );
+  }
+  if (key === "Input") {
+    return (
+      <div className="flex flex-col gap-4 w-full max-w-sm">
+        <Comp placeholder="Search…" label="Search" />
+        <Comp placeholder="Email address" error="This field is required" />
+      </div>
+    );
+  }
+  if (key === "Switch") {
+    return (
+      <div className="flex flex-col gap-4">
+        <Comp defaultChecked label="Airplane mode" />
+        <Comp label="Wi-Fi" />
+      </div>
+    );
+  }
+  if (key === "Avatar") {
+    return (
+      <div className="flex items-center gap-3">
+        <Comp name="Linus Torvalds" size="sm" />
+        <Comp name="Grace Hopper" size="md" />
+        <Comp name="Ada Lovelace" size="lg" />
+      </div>
+    );
+  }
+  if (key === "Progress") {
+    return (
+      <div className="flex flex-col gap-4 w-full max-w-md">
+        <Comp value={30} showValue />
+        <Comp value={68} label="Uploading…" showValue />
+      </div>
+    );
+  }
+  if (key === "Skeleton") {
+    return (
+      <div className="flex flex-col gap-4 w-full max-w-md">
+        <Comp className="h-4 w-full" />
+        <Comp className="h-4 w-4/5" />
+        <Comp className="h-4 w-3/5" />
+      </div>
+    );
+  }
+  return <Comp {...props} className="w-full" />;
+}
+
+/** Sample props for components that don't need a bespoke fixture. */
+function demoProps(key: string): Record<string, any> {
+  switch (key) {
+    case "Label":
+      return { children: "Label text" };
+    case "Tag":
+      return { children: "Tag" };
+    case "Toggle":
+      return { value: "on", children: "Toggle" };
+    case "Divider":
+      return { label: "Divider" };
+    case "HintBanner":
+      return { actionHint: "Select all", recommendHint: "Press ⌘A" };
+    default:
+      return {};
+  }
 }

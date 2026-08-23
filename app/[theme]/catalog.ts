@@ -1,35 +1,39 @@
+import { conventionIndex } from "@template/ui/convention.generated";
+import { THEME_NAMES } from "@template/ui/registry";
+
 /**
- * Shared catalog — the list of component keys each theme directory entry
- * showcases, plus their display labels and directory descriptions.
+ * Shared catalog — enumerate EVERY component key the registry ships for a
+ * given theme, grouped by category (components / sections / pages / ...).
  */
-export interface CatalogEntry {
-  key: string;
+export interface CatalogGroup {
+  category: string;
   label: string;
-  children: string[];
+  keys: string[];
 }
 
-export const THEME_NAMES: readonly string[] = ["default", "pixel", "semi", "raycast"];
+/** Category → human label for directory display. */
+const CATEGORY_LABELS: Record<string, string> = {
+  components: "Components",
+  sections: "Sections",
+  pages: "Pages",
+  editor: "Editor",
+};
 
-/** Components rendered in the showcase, grouped by directory section. */
-export const COMPONENT_GROUPS: CatalogEntry[] = [
-  {
-    key: "primitives",
-    label: "Primitives",
-    children: ["Button", "Badge", "Card", "Input", "Switch", "Avatar"],
-  },
-  {
-    key: "feedback",
-    label: "Feedback & Progress",
-    children: ["Progress", "Skeleton"],
-  },
-];
+export function themeGroups(theme: string): CatalogGroup[] {
+  const record = conventionIndex?.[theme];
+  if (!record || typeof record !== "object") return [];
 
-/** Flattened list of component keys for sidebar navigation. */
-export function componentKeys(): string[] {
-  return COMPONENT_GROUPS.flatMap((g) => g.children);
+  return Object.entries(record).map(([category, compMap]) => ({
+    category,
+    label: CATEGORY_LABELS[category] ?? category,
+    keys: compMap && typeof compMap === "object" ? Object.keys(compMap) : [],
+  }));
 }
 
-/** Resolve an active theme name from the route segment, falling back to "default". */
+export function componentKeys(theme: string): string[] {
+  return themeGroups(theme).flatMap((g) => g.keys);
+}
+
 export function resolveTheme(theme: string): string {
   return THEME_NAMES.includes(theme) ? theme : "default";
 }
