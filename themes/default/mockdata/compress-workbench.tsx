@@ -1,0 +1,33 @@
+import type { Section } from "@template/ui";
+
+export const props = {
+    eyebrow: "Compress",
+    title: "Compress your image",
+    description: "Shrink file size without losing quality.",
+    badges: [{ label: "Free", tone: "free" }],
+    meta: [{ icon: "lock", text: "In-browser only" }],
+    emptyPrimary: "Drag & drop your image here",
+    emptyClickLabel: "or click to browse",
+    emptyHint: "PNG, JPG, WebP up to 10MB",
+    sourceName: "photo.jpg",
+    sourceWidth: 4032,
+    sourceHeight: 3024,
+    sourceSizeBytes: 4_800_000,
+    onDropFile: () => {},
+    formatOptions: [
+      { value: "image/jpeg", label: "JPEG", desc: "Best for photos" },
+      { value: "image/png", label: "PNG", desc: "Lossless" },
+      { value: "image/webp", label: "WebP", desc: "Modern" },
+    ],
+    format: "image/jpeg",
+    onFormatChange: () => {},
+    qualityValue: 80,
+    onQualityChange: () => {},
+    compressedSizeBytes: 980_000,
+    savingsPercent: 79,
+    processing: false,
+    limitState: "ok",
+    busy: false,
+    onDownload: () => {},
+    footerHint: "Files never leave your device.",
+  };
