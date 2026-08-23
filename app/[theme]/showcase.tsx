@@ -3,13 +3,13 @@
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { getThemeBlock, getThemeBlockNames } from "@/themes";
-import { DEMO_PROPS } from "@/themes/demo";
+import { getDemoProps } from "@/themes/demo";
 
 /**
  * Previews a single theme block. The block is a forwarder resolved from the
- * theme registry (themes/index.ts); demo props come from themes/demo.tsx
- * (keyed by block name). Data that isn't wired yet renders a placeholder so
- * the page never 500s.
+ * theme registry (themes/index.ts); demo props come from the theme's
+ * mockdata (themes/{theme}/mockdata, falling back to default). Data that
+ * isn't wired yet renders a placeholder so the page never 500s.
  */
 export function ThemeShowcase({ theme }: { theme: string }) {
   const searchParams = useSearchParams();
@@ -28,7 +28,7 @@ export function ThemeShowcase({ theme }: { theme: string }) {
     );
   }
 
-  const props = DEMO_PROPS[selected];
+  const props = getDemoProps(theme, selected);
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl">

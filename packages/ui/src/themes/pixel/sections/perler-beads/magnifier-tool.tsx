@@ -50,11 +50,14 @@ const MagnifierTool: React.FC<PerlerMagnifierToolProps> = ({
   highlightColorKey,
   t = defaultPerlerT,
 }) => {
-  // 计算初始位置，确保在屏幕中央
-  const getInitialPosition = () => ({
-    x: Math.max(50, (window.innerWidth - 400) / 2),
-    y: Math.max(50, (window.innerHeight - 400) / 2)
-  });
+  // 计算初始位置，确保在屏幕中央（SSR 安全：无 window 时用 0 兜底）
+  const getInitialPosition = () => {
+    if (typeof window === 'undefined') return { x: 0, y: 0 };
+    return {
+      x: Math.max(50, (window.innerWidth - 400) / 2),
+      y: Math.max(50, (window.innerHeight - 400) / 2)
+    };
+  };
   
   const [magnifierPosition, setMagnifierPosition] = useState<{ x: number; y: number }>(getInitialPosition);
   const [isDragging, setIsDragging] = useState<boolean>(false);
